@@ -85,6 +85,11 @@ namespace SilkyRing.Memory
         {
             public static IntPtr Base;
         }
+        
+        public static class LuaEventMan
+        {
+            public static IntPtr Base;
+        }
 
         public static class CsTargetingSystem
         {
@@ -107,6 +112,11 @@ namespace SilkyRing.Memory
             public static long InAirTimer;
             public static long NoClipKb;
             public static long NoClipTriggers;
+        }
+        
+        public static class Funcs
+        {
+            public static long GraceWarp;
         }
     }
 }

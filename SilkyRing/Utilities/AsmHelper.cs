@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SilkyRing.Memory
+namespace SilkyRing.Utilities
 {
     public static class AsmHelper
     {

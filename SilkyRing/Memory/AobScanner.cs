@@ -34,6 +34,7 @@ namespace SilkyRing.Memory
 
             Offsets.WorldChrMan.Base = FindAddressByPattern(Pattern.WorldChrMan);
             Offsets.FieldArea.Base = FindAddressByPattern(Pattern.FieldArea);
+            Offsets.LuaEventMan.Base = FindAddressByPattern(Pattern.LuaEventMan);
             
            
 
@@ -97,7 +98,7 @@ namespace SilkyRing.Memory
                     writer.WriteLine($"{pair.Key}={pair.Value:X}");
             }
 
-            // Offsets.Funcs.Warp = FindAddressByPattern(Patterns.WarpFunc).ToInt64();
+            Offsets.Funcs.GraceWarp = FindAddressByPattern(Pattern.GraceWarp).ToInt64();
             // Offsets.Funcs.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawnFunc).ToInt64();
             // Offsets.Funcs.BreakAllObjects = FindAddressByPattern(Patterns.BreakAllObjects).ToInt64();
             // Offsets.Funcs.RestoreAllObjects = FindAddressByPattern(Patterns.RestoreAllObjects).ToInt64();
@@ -120,6 +121,7 @@ namespace SilkyRing.Memory
 #if DEBUG
             Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
             Console.WriteLine($"FieldArea.Base: 0x{Offsets.FieldArea.Base.ToInt64():X}");
+            Console.WriteLine($"LuaEventMan.Base: 0x{Offsets.LuaEventMan.Base.ToInt64():X}");
            
 //             Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
 //            
@@ -128,7 +130,7 @@ namespace SilkyRing.Memory
              Console.WriteLine($"Hooks.NoClipKb: 0x{Offsets.Hooks.NoClipKb:X}");
              Console.WriteLine($"Hooks.NoClipTriggers: 0x{Offsets.Hooks.NoClipTriggers:X}");
 //             
-//             Console.WriteLine($"Funcs.SetSpEffect: 0x{Offsets.Funcs.SetSpEffect:X}");
+             Console.WriteLine($"Funcs.GraceWarp: 0x{Offsets.Funcs.GraceWarp:X}");
 #endif
         }
 

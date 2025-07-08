@@ -233,4 +233,442 @@ c6 44 24 37 00          mov    BYTE PTR [rsp+0x37],0x0
 0f b6 44 24 36          movzx  eax,BYTE PTR [rsp+0x36]
 e9 00 00 00 00          jmp    32 &lt;exit+0xa&gt;</value>
   </data>
+  <data name="Graces" xml:space="preserve">
+    <value>0,Roundtable Hold,Table of Lost Grace,11101950
+0,Limgrave,The First Step,1042361951
+0,Limgrave,Church of Elleh,1042361950
+0,Limgrave,Gatefront,1042371950
+0,Limgrave,Waypoint Ruins Cellar,1044361950
+0,Limgrave,Artist's Shack,1044381950
+0,Limgrave,Third Church of Marika,1046381950
+0,Limgrave,Fort Haight West,1045361950
+0,Limgrave,Agheel Lake South,1044351950
+0,Limgrave,Agheel Lake North,1043371950
+0,Limgrave,Church of Dragon Communion,1041351950
+0,Limgrave,Seaside Ruins,1043351950
+0,Limgrave,Mistwood Outskirts,1044371950
+0,Limgrave,Murkwater Coast,1043381950
+0,Limgrave,Summonwater Village Outskirts,1044391950
+0,Limgrave,Stormfoot Catacombs,30021950
+0,Limgrave,Murkwater Catacombs,30041950
+0,Limgrave,Groveside Cave,31031950
+0,Limgrave,Coastal Cave,31151950
+0,Limgrave,Murkwater Cave,31001950
+0,Limgrave,Highroad Cave,31171950
+0,Limgrave,Limgrave Tunnels,32011950
+0,Stranded Graveyard,Cave of Knowledge,18001950
+0,Stranded Graveyard,Stranded Graveyard,18001951
+0,Stormhill,Stormhill Shack,1041381950
+0,Stormhill,Castleward Tunnel,10001952
+0,Stormhill,Margit- the Fell Omen,10001951
+0,Stormhill,Warmaster's Shack,1042381950
+0,Stormhill,Saintsbridge,1043391950
+0,Stormhill,Deathtouched Catacombs,30111950
+0,Stormhill,Limgrave Tower Bridge,34101950
+0,Stormhill,Divine Tower of Limgrave,34101952
+0,Weeping Peninsula,Church of Pilgrimage,1043341950
+0,Weeping Peninsula,Castle Morne Rampart,1044331950
+0,Weeping Peninsula,Tombsward,1042332950
+0,Weeping Peninsula,South of the Lookout Tower,1044331951
+0,Weeping Peninsula,Ailing Village Outskirts,1044331952
+0,Weeping Peninsula,Beside the Crater-Pocked Glade,1045331950
+0,Weeping Peninsula,Isolated Merchant's Shack,1041321950
+0,Weeping Peninsula,Fourth Church of Marika,1041331950
+0,Weeping Peninsula,Bridge of Sacrifice,1044341950
+0,Weeping Peninsula,Castle Morne Lift,1043311950
+0,Weeping Peninsula,Behind the Castle,1043311951
+0,Weeping Peninsula,Beside the Rampart Gaol,1043311952
+0,Weeping Peninsula,Morne Moangrave,1043301950
+0,Weeping Peninsula,Impaler's Catacombs,30011950
+0,Weeping Peninsula,Tombsward Catacombs,30001950
+0,Weeping Peninsula,Earthbore Cave,31011950
+0,Weeping Peninsula,Tombsward Cave,31021950
+0,Weeping Peninsula,Morne Tunnel,32001950
+0,Stormveil Castle,Stormveil Main Gate,10001958
+0,Stormveil Castle,Gateside Chamber,10001953
+0,Stormveil Castle,Stormveil Cliffside,10001954
+0,Stormveil Castle,Rampart Tower,10001955
+0,Stormveil Castle,Liftside Chamber,10001956
+0,Stormveil Castle,Secluded Cell,10001957
+0,Stormveil Castle,Godrick the Grafted,10001950
+0,Liurnia of the Lakes,Lake-Facing Cliffs,1039401950
+0,Liurnia of the Lakes,Liurnia Lake Shore,1038401950
+0,Liurnia of the Lakes,Laskyar Ruins,1038411950
+0,Liurnia of the Lakes,Scenic Isle,1037421950
+0,Liurnia of the Lakes,Academy Gate Town,1037441950
+0,Liurnia of the Lakes,South Raya Lucaria Gate,1035451950
+0,Liurnia of the Lakes,Main Academy Gate,1035461950
+0,Liurnia of the Lakes,Liurnia Highway South,1039411950
+0,Liurnia of the Lakes,Liurnia Highway North,1039421950
+0,Liurnia of the Lakes,Gate Town Bridge,1038431950
+0,Liurnia of the Lakes,Artist's Shack,1038451950
+0,Liurnia of the Lakes,Eastern Liurnia Lake Shore,1038451951
+0,Liurnia of the Lakes,Ranni's Chamber,1034501951
+0,Liurnia of the Lakes,Jarburg,1039441950
+0,Liurnia of the Lakes,Eastern Tableland,1038461950
+0,Liurnia of the Lakes,Church of Vows,1037461950
+0,Liurnia of the Lakes,Ruined Labyrinth,1038471950
+0,Liurnia of the Lakes,Mausoleum Compound,1037481950
+0,Liurnia of the Lakes,Slumbering Wolf's Shack,1036411950
+0,Liurnia of the Lakes,Boilprawn Shack,1036431950
+0,Liurnia of the Lakes,Fallen Ruins of the Lake,1036431951
+0,Liurnia of the Lakes,Folly on the Lake,1035431950
+0,Liurnia of the Lakes,Village of the Albinaurics,1034421950
+0,Liurnia of the Lakes,Converted Tower,1034431950
+0,Liurnia of the Lakes,Revenger's Shack,1033441950
+0,Liurnia of the Lakes,Temple Quarter,1034441950
+0,Liurnia of the Lakes,Crystalline Woods,1034461950
+0,Liurnia of the Lakes,Foot of the Four Belfries,1033461950
+0,Liurnia of the Lakes,The Four Belfries,1033471950
+0,Liurnia of the Lakes,Sorcerer's Isle,1034471951
+0,Liurnia of the Lakes,East Gate Bridge Trestle,1035471950
+0,Liurnia of the Lakes,Gate Town North,1036451950
+0,Liurnia of the Lakes,Northern Liurnia Lake Shore,1034482950
+0,Liurnia of the Lakes,Road to the Manor,1034491950
+0,Liurnia of the Lakes,Main Caria Manor Gate,1035501953
+0,Liurnia of the Lakes,Manor Upper Level,1035501950
+0,Liurnia of the Lakes,Manor Lower Level,1035501951
+0,Liurnia of the Lakes,Royal Moongazing Grounds,1035501952
+0,Liurnia of the Lakes,Ranni's Rise,1034501950
+0,Liurnia of the Lakes,Behind Caria Manor,1036501950
+0,Liurnia of the Lakes,The Ravine,1036491951
+0,Liurnia of the Lakes,Ravine-Veiled Village,1038501951
+0,Liurnia of the Lakes,Cliffbottom Catacombs,30061950
+0,Liurnia of the Lakes,Road's End Catacombs,30031950
+0,Liurnia of the Lakes,Black Knife Catacombs,30051950
+0,Liurnia of the Lakes,Stillwater Cave,31041950
+0,Liurnia of the Lakes,Lakeside Crystal Cave,31051950
+0,Liurnia of the Lakes,Academy Crystal Cave,31061950
+0,Liurnia of the Lakes,Raya Lucaria Crystal Tunnel,32021950
+0,Liurnia of the Lakes,Study Hall Entrance,34111950
+0,Liurnia of the Lakes,Liurnia Tower Bridge,34111951
+0,Liurnia of the Lakes,Divine Tower of Liurnia,34111952
+0,Bellum Highway,East Raya Lucaria Gate,1036481950
+0,Bellum Highway,Bellum Church,1036491950
+0,Bellum Highway,Grand Lift of Dectus,1038501950
+0,Bellum Highway,Frenzied Flame Village Outskirts,1038481950
+0,Bellum Highway,Church of Inhibition,1037491950
+0,Ruin-Strewn Precipice,Ruin-Strewn Precipice,39201951
+0,Ruin-Strewn Precipice,Ruin-Strewn Precipice Overlook,39201952
+0,Ruin-Strewn Precipice,Magma Wyrm Makar,39201950
+0,Moonlight Altar,Moonlight Altar,1034411950
+0,Moonlight Altar,Cathedral of Manus Celes,1035421950
+0,Moonlight Altar,Altar South,1033401950
+0,Academy of Raya Lucaria,Schoolhouse Classroom,14001953
+0,Academy of Raya Lucaria,Church of the Cuckoo,14001952
+0,Academy of Raya Lucaria,Debate Parlor,14001951
+0,Academy of Raya Lucaria,Raya Lucaria Grand Library,14001950
+0,Altus Plateau,Abandoned Coffin,1037511950
+0,Altus Plateau,Erdtree-Gazing Hill,1038511950
+0,Altus Plateau,Altus Plateau,1038501952
+0,Altus Plateau,Altus Highway Junction,1039511950
+0,Altus Plateau,Forest-Spanning Greatbridge,1040521950
+0,Altus Plateau,Bower of Bounty,1040531950
+0,Altus Plateau,Windmill Village,1041541950
+0,Altus Plateau,Windmill Heights,1042551950
+0,Altus Plateau,Road of Iniquity Side Path,1040541950
+0,Altus Plateau,Rampartside Path,1041521951
+0,Altus Plateau,Shaded Castle Ramparts,1039541950
+0,Altus Plateau,Shaded castle Inner Gate,1039541951
+0,Altus Plateau,Castellan's Hall,1039541952
+0,Altus Plateau,Unsightly Catacombs,30121950
+0,Altus Plateau,Sainted Hero's Grave,30081950
+0,Altus Plateau,Sage's Cave,31191950
+0,Altus Plateau,Perfumer's Grotto,31181950
+0,Altus Plateau,Old Altus Tunnel,32041950
+0,Altus Plateau,Altus Tunnel,32051950
+0,Mt. Gelmir,Bridge of Iniquity,1039531950
+0,Mt. Gelmir,First Mt. Gelmir Campsite,1038541950
+0,Mt. Gelmir,Ninth Mt. Gelmir Campsite,1036541951
+0,Mt. Gelmir,Road of Iniquity,1036541952
+0,Mt. Gelmir,Seethewater River,1037521951
+0,Mt. Gelmir,Seethewater Terminus,1035531950
+0,Mt. Gelmir,Craftman's Shack,1036521950
+0,Mt. Gelmir,Primeval Sorcerer Azur,1037531950
+0,Mt. Gelmir,Wyndham Catacombs,30071950
+0,Mt. Gelmir,Gelmir Hero's Grave,30091950
+0,Mt. Gelmir,Seethewater Cave,31071950
+0,Mt. Gelmir,Volcano Cave,31091950
+0,Capital Outskirts,Outer Wall Phantom Tree,1042511950
+0,Capital Outskirts,Minor Erdtree Church,1043501950
+0,Capital Outskirts,Outer Wall Battleground,1043531951
+0,Capital Outskirts,Hermit Merchant's Shack,1043531950
+0,Capital Outskirts,Capital Rampart,1045521950
+0,Capital Outskirts,Auriza Side Tomb,30131950
+0,Capital Outskirts,Auriza Hero's Grave,30101950
+0,Capital Outskirts,Sealed Tunnel,34121951
+0,Capital Outskirts,Divine Tower of West Altus,34121950
+0,Capital Outskirts,Divine Tower of West Altus: Gate,34121952
+0,Volcano Manor,Volcano Manor,16001952
+0,Volcano Manor,Prison Town Church,16001953
+0,Volcano Manor,Temple of Eiglay,16001951
+0,Volcano Manor,Guest Hall,16001954
+0,Volcano Manor,Audience Pathway,16001960
+0,Volcano Manor,Abductor Virgin,16001962
+0,Volcano Manor,Subterranean Inquisition Chamber,16001964
+0,Volcano Manor,Rykard- Lord of Blasphemy,16001950
+0,Leyndell- Royal Capital,Erdtree Sanctuary,11001951
+0,Leyndell- Royal Capital,East Capital Rampart,11001952
+0,Leyndell- Royal Capital,Lower Capital Church,11001953
+0,Leyndell- Royal Capital,Avenue Balcony,11001954
+0,Leyndell- Royal Capital,West Capital Rampart,11001955
+0,Leyndell- Royal Capital,Queen's Bedchamber,11001957
+0,Leyndell- Royal Capital,Fortified Manor- First Floor,11001958
+0,Leyndell- Royal Capital,Divine Bridge,11001959
+0,Leyndell- Royal Capital,Elden Throne,11001950
+0,Subterranean Shunning-Grounds,Underground Roadside,35001951
+0,Subterranean Shunning-Grounds,Forsaken Depths,35001952
+0,Subterranean Shunning-Grounds,Leyndell Catacombs,35001953
+0,Subterranean Shunning-Grounds,Frenzied Flame Proscription,35001954
+0,Subterranean Shunning-Grounds,Cathedral of the Forsaken,35001950
+0,Leyndell- Ashen Capital,East Capital Rampart,11051952
+0,Leyndell- Ashen Capital,Leyndell- Capital of Ash,11051953
+0,Leyndell- Ashen Capital,Erdtree Sanctuary,11051951
+0,Leyndell- Ashen Capital,Queen's Bedchamber,11051954
+0,Leyndell- Ashen Capital,Divine Bridge,11051955
+0,Leyndell- Ashen Capital,Elden Throne,11051950
+0,Stone Platform,Fractured Marika,19001950
+0,Caelid,Smoldering Church,1046401950
+0,Caelid,Rotview Balcony,1046401951
+0,Caelid,Caelem Ruins,1047401950
+0,Caelid,Fort Gael North,1047391950
+0,Caelid,Smoldering Wall,1048391950
+0,Caelid,Caelid Highway South,1048371950
+0,Caelid,Cathedral of Dragon Communion,1048361950
+0,Caelid,Southern Aeonia Swamp Bank,1049371950
+0,Caelid,Sellia Backstreets,1049391950
+0,Caelid,Sellia Under-Stair,1049391952
+0,Caelid,Chair-Crypt of Sellia,1049391951
+0,Caelid,Church of the Plague,1050381950
+0,Caelid,Deep Siofra Well,1048401950
+0,Caelid,Impassable Greatbridge,1050361950
+0,Caelid,Chamber Outside the Plaza,1051361951
+0,Caelid,Redmane Castle Plaza,1051361950
+0,Caelid,Starscourge Radahn,1052381950
+0,Caelid,Minor Erdtree Catacombs,30141950
+0,Caelid,Caelid Catacombs,30151950
+0,Caelid,War-Dead Catacombs,30161950
+0,Caelid,Abandoned Cave,31201950
+0,Caelid,Gaol Cave,31211950
+0,Caelid,Gael Tunnel,32071950
+0,Caelid,Rear Gael Tunnel Entrance,32071951
+0,Caelid,Sellia Crystal Tunnel,32081950
+0,Swamp of Aeonia,Aeonia Swamp Shore,1048381950
+0,Swamp of Aeonia,Astray from Caelid Highway North,1048381951
+0,Swamp of Aeonia,Heart of Aeonia,1049381950
+0,Swamp of Aeonia,Inner Aeonia,1049381951
+0,Greyoll's Dragonbarrow,Dragonbarrow West,1048401951
+0,Greyoll's Dragonbarrow,Isolated Merchant's Shack,1048411950
+0,Greyoll's Dragonbarrow,Fort Faroth,1051391950
+0,Greyoll's Dragonbarrow,Dragonbarrow Fork,1050401950
+0,Greyoll's Dragonbarrow,Lenne's Rise,1052411950
+0,Greyoll's Dragonbarrow,Farum Greatbridge,1052421950
+0,Greyoll's Dragonbarrow,Bestial Sanctum,1051431950
+0,Greyoll's Dragonbarrow,Sellia Hideaway,31111950
+0,Greyoll's Dragonbarrow,Dragonbarrow Cave,31101950
+0,Greyoll's Dragonbarrow,Divine Tower of Caelid: Center,34131952
+0,Greyoll's Dragonbarrow,Divine Tower of Caelid: Basement,34131951
+0,Greyoll's Dragonbarrow,Isolated Divine Tower,34151950
+0,Forbidden Lands,Forbidden Lands,1047511950
+0,Forbidden Lands,Grand Lift of Rold,1049531951
+0,Forbidden Lands,Hidden Path to the Haligtree,30201950
+0,Forbidden Lands,Divine Tower of East Altus: Gate,34141950
+0,Forbidden Lands,Divine Tower of East Altus,34141951
+0,Mountaintops of the Giants,Zamor Ruins,1049531950
+0,Mountaintops of the Giants,Ancient Snow Valley Ruins,1051561950
+0,Mountaintops of the Giants,Freezing Lake,1052571950
+0,Mountaintops of the Giants,First Church of Marika,1054551950
+0,Mountaintops of the Giants,Whiteridge Road,1052561950
+0,Mountaintops of the Giants,Snow Valley Ruins Overlook,1051571950
+0,Mountaintops of the Giants,Castle Sol Main Gate,1051571951
+0,Mountaintops of the Giants,Church of the Eclipse,1051571952
+0,Mountaintops of the Giants,Castle Sol Rooftop,1051571953
+0,Mountaintops of the Giants,Spiritcaller's Cave,31221950
+0,Flame Peak,Giant's Gravepost,1052541950
+0,Flame Peak,Church of Repose,1051531950
+0,Flame Peak,Foot of the Forge,1052531950
+0,Flame Peak,Fire Giant,1053521950
+0,Flame Peak,Forge of the Giants,1054531950
+0,Flame Peak,Giants' Mountaintop Catacombs,30181950
+0,Flame Peak,Giant-Conquering Hero's Grave,30171950
+0,Consecrated Snowfield,Consecrated Snowfield,1049541950
+0,Consecrated Snowfield,Inner Consecrated Snowfield,1049551950
+0,Consecrated Snowfield,Ordina- Liturgical Town,1048571950
+0,Consecrated Snowfield,Apostate Derelict,1047581950
+0,Consecrated Snowfield,Consecrated Snowfield Catacombs,30191950
+0,Consecrated Snowfield,Cave of the Forlorn,31121950
+0,Consecrated Snowfield,Yelough Anix Tunnel,32111950
+0,Miquella's Haligtree,Haligtree Canopy,15001956
+0,Miquella's Haligtree,Haligtree Town,15001957
+0,Miquella's Haligtree,Haligtree Town Plaza,15001958
+0,Miquella's Haligtree,Haligtree Promenade,15001955
+0,Elphael- Brace of the Haligtree,Prayer Room,15001951
+0,Elphael- Brace of the Haligtree,Elphael Inner Wall,15001952
+0,Elphael- Brace of the Haligtree,Drainage Channel,15001953
+0,Elphael- Brace of the Haligtree,Haligtree Roots,15001954
+0,Elphael- Brace of the Haligtree,Malenia- Goddess of Rot,15001950
+0,Ainsel River,Ainsel River Well Depths,12011951
+0,Ainsel River,Ainsel River Sluice Gate,12011952
+0,Ainsel River,Ainsel River Downstream,12011953
+0,Ainsel River,Dragonkin Soldier of Nokstella,12011950
+0,Ainsel River,Astel- Naturalborn of the Void,12041950
+0,Ainsel River Main,Ainsel River Main,12011954
+0,Ainsel River Main,Nokstella- Eternal City,12011955
+0,Ainsel River Main,Nokstella Waterfall Basin,12011959
+0,Lake of Rot,Lake of Rot Shoreside,12011956
+0,Lake of Rot,Grand Cloister,12011958
+0,Nokron- Eternal City,Nokron- Eternal City,12071951
+0,Nokron- Eternal City,Mimic Tear,12021951
+0,Nokron- Eternal City,Ancestral Woods,12021956
+0,Nokron- Eternal City,Night's Sacred Ground,12021958
+0,Nokron- Eternal City,Aqueduct-Facing Cliffs,12021957
+0,Nokron- Eternal City,Great Waterfall Basin,12021950
+0,Siofra River,Siofra River Well Depths,12071950
+0,Siofra River,Siofra River Bank,12021953
+0,Siofra River,Worshippers' Woods,12021954
+0,Siofra River,Below the Well,12021959
+0,Mohgwyn Palace,Palace Approach Ledge-Road,12051951
+0,Mohgwyn Palace,Dynasty Mausoleum Entrance,12051952
+0,Mohgwyn Palace,Dynasty Mausoleum Midpoint,12051953
+0,Mohgwyn Palace,Cocoon of the Empyrean,12051950
+0,Deeproot Depths,Root-Facing Cliffs,12031951
+0,Deeproot Depths,Great Waterfall Crest,12031952
+0,Deeproot Depths,Deeproot Depths,12031953
+0,Deeproot Depths,The Nameless Eternal City,12031954
+0,Deeproot Depths,Across the Roots,12031955
+0,Deeproot Depths,Prince of Death's Throne,12031950
+0,Crumbling Farum Azula,Crumbling Beast Grave,13001953
+0,Crumbling Farum Azula,Crumbling Beast Grave Depths,13001954
+0,Crumbling Farum Azula,Tempest-Facing Balcony,13001955
+0,Crumbling Farum Azula,Dragon Temple,13001956
+0,Crumbling Farum Azula,Dragon Temple Transept,13001957
+0,Crumbling Farum Azula,Dragon Temple Altar,13001952
+0,Crumbling Farum Azula,Dragon Temple Lift,13001958
+0,Crumbling Farum Azula,Dragon Temple Rooftop,13001959
+0,Crumbling Farum Azula,Beside the Great Bridge,13001960
+0,Crumbling Farum Azula,Maliketh- the Black Blade,13001950
+0,Crumbling Farum Azula,Dragonlord Placidusax,13001951
+1,Gravesite Plain,Gravesite Plain,2046401950
+1,Gravesite Plain,Scorched Ruins,2047411950
+1,Gravesite Plain,Three-Path Cross,2046421950
+1,Gravesite Plain,Greatbridge- North,2046441950
+1,Gravesite Plain,Main Gate Cross,2045421950
+1,Gravesite Plain,Cliffroad Terminus,2045411950
+1,Gravesite Plain,Castle Front,2047441950
+1,Gravesite Plain,Pillar Path Cross,2048431950
+1,Gravesite Plain,Pillar Path Waypoint,2048421950
+1,Gravesite Plain,Ellac River Cave,2047431950
+1,Gravesite Plain,Ellac River Downstream,2047411951
+1,Gravesite Plain,Fog Rift Catacombs,40001950
+1,Gravesite Plain,Belurat Gaol,41001950
+1,Gravesite Plain,Ruined Forge Lava Intake,42001950
+1,Gravesite Plain,Rivermouth Cave,43001950
+1,Gravesite Plain,Dragon's Pit,43011950
+1,Gravesite Plain,Dragon's Pit Terminus,43011951
+1,Castle Ensis,Castle Ensis Checkpoint,2047441951
+1,Castle Ensis,Castle-Lord's Chamber,2048441951
+1,Castle Ensis,Ensis Moongazing Grounds,2048441950
+1,Castle Ensis,Castle Ensis Checkpoint,2047441951
+1,Castle Ensis,Castle-Lord's Chamber,2048441951
+1,Castle Ensis,Ensis Moongazing Grounds,2048441950
+1,Cerulean Coast,Cerulean Coast,2048391950
+1,Cerulean Coast,Cerulean Coast West,2046391950
+1,Cerulean Coast,Cerulean Coast Cross,2048371950
+1,Cerulean Coast,The Fissure,2047351950
+1,Cerulean Coast,Finger Ruins of Rhia,2050381950
+1,Charo's Hidden Grave,Charo's Hidden Grave,2048391951
+1,Charo's Hidden Grave,Lamenter's Gaol,41021950
+1,Stone Coffin Fissure,Stone Coffin Fissure,22001951
+1,Stone Coffin Fissure,Fissure Cross,22001952
+1,Stone Coffin Fissure,Fissure Waypoint,22001953
+1,Stone Coffin Fissure,Fissure Depths,22001954
+1,Stone Coffin Fissure,Garden of Deep Purple,22001950
+1,Foot of the Jagged Peak,Grand Altar of Dragon Communion,2049391950
+1,Foot of the Jagged Peak,Foot of the Jagged Peak,2052401950
+1,Jagged Peak,Jagged Peak Mountainside,2053391950
+1,Jagged Peak,Jagged Peak Summit,2054391950
+1,Jagged Peak,Rest of the Dread Dragon,2055391950
+1,Belurat- Tower Settlement,Belurat- Tower Settlement,20001951
+1,Belurat- Tower Settlement,Small Private Altar,20001952
+1,Belurat- Tower Settlement,Stagefront,20001953
+1,Belurat- Tower Settlement,Theatre of the Divine Beast,20001950
+1,Enir-Ilim,Enir-Ilim: Outer Wall,20011952
+1,Enir-Ilim,First Rise,20011953
+1,Enir-Ilim,Spiral Rise,20011954
+1,Enir-Ilim,Cleansing Chamber Anteroom,20011955
+1,Enir-Ilim,Divine Gate Front Staircase,20011956
+1,Enir-Ilim,Gate of Divinity,20011950
+1,Ancient Ruins of Rauh,Viaduct Minor Tower,2047471950
+1,Ancient Ruins of Rauh,Rauh Ancient Ruins- East,2046471950
+1,Ancient Ruins of Rauh,Rauh Ancient Ruins- West,2045451951
+1,Ancient Ruins of Rauh,Ancient Ruins- Grand Stairway,2044451950
+1,Ancient Ruins of Rauh,Church of the Bud- Main Entrance,2044461950
+1,Ancient Ruins of Rauh,Church of the Bud,2044451951
+1,Rauh Base,Ancient Ruins Base,2048471950
+1,Rauh Base,Temple Town Ruins,2045461950
+1,Rauh Base,Ravine North,2045471950
+1,Rauh Base,Scorpion River Catacombs,40011950
+1,Rauh Base,Taylew's Ruined Forge,42031950
+1,Scadu Altus,Highroad Cross,2048451950
+1,Scadu Altus,Scadu Altus- West,2047451950
+1,Scadu Altus,Moorth Ruins,2049441950
+1,Scadu Altus,Moorth Highway- South,2049431950
+1,Scadu Altus,Fort of Reprimand,2049431951
+1,Scadu Altus,Behind the Fort of Reprimand,2049431952
+1,Scadu Altus,Scaduview Cross,2050431950
+1,Scadu Altus,Bonny Village,2049441951
+1,Scadu Altus,Bridge Leading to the Village,2051441950
+1,Scadu Altus,Church District Highroad,2051471950
+1,Scadu Altus,Cathedral of Manus Metyr,2051451950
+1,Scadu Altus,Finger Birthing Grounds,25001950
+1,Scadu Altus,Castle Watering Hole,2049471950
+1,Scadu Altus,Recluses' River Upstream,2050451950
+1,Scadu Altus,Recluses' River Downstream,2050441950
+1,Scadu Altus,Darklight Catacombs,40021950
+1,Scadu Altus,Bonny Gaol,41011950
+1,Scadu Altus,Ruined Forge of Starfall Past,42021950
+1,Abyssal Woods,Forsaken Graveyard,2052431950
+1,Abyssal Woods,Woodland Trail,2051421950
+1,Abyssal Woods,Church Ruins,2053411950
+1,Abyssal Woods,Abyssal Woods,2050421950
+1,Abyssal Woods,Divided Falls,2048431951
+1,Midra's Manse,Manse Hall,28001951
+1,Midra's Manse,Midra's Library,28001952
+1,Midra's Manse,Second Floor Chamber,28001953
+1,Midra's Manse,Discussion Chamber,28001950
+1,Shadow Keep,Shadow Keep Main Gate,21001952
+1,Shadow Keep,Main Gate Plaza,21001951
+1,Shadow Keep- Church District,Church District Entrance,21001956
+1,Shadow Keep- Church District,Sunken Chapel,21001957
+1,Shadow Keep- Church District,Tree-Worship Passage,21001958
+1,Shadow Keep- Church District,Tree-Worship Sanctum,21001959
+1,Specimen Storehouse,Storehouse- First Floor,21011951
+1,Specimen Storehouse,Storehouse- Fourth Floor,21011952
+1,Specimen Storehouse,Storehouse- Seventh Floor,21011953
+1,Specimen Storehouse,Dark Chamber Entrance,21011954
+1,Specimen Storehouse,Storehouse- Back Section,21011956
+1,Specimen Storehouse,Storehouse- Loft,21011957
+1,Specimen Storehouse,West Rampart,21021951
+1,Specimen Storehouse,Messmer's Dark Chamber,21011950
+1,Scaduview,Scaduview,2049481950
+1,Scaduview,Shadow Keep- Back Gate,2049481951
+1,Scaduview,Scadutree Base,2050481951
+1,Scaduview,Hinterland,2050481950
+1,Scaduview,Hinterland Bridge,2051481951
+1,Scaduview,Fingerstone Hill,2051481950</value>
+  </data>
+  <data name="GraceWarp" xml:space="preserve">
+    <value>48 a1 00 00 00 00 00    movabs rax,ds:0x0
+00 00 00
+48 8b 48 18             mov    rcx,QWORD PTR [rax+0x18]
+48 8b 50 08             mov    rdx,QWORD PTR [rax+0x8]
+49 b8 00 00 00 00 00    movabs r8,0x0
+00 00 00
+48 83 ec 20             sub    rsp,0x20
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+48 83 c4 20             add    rsp,0x20
+c3                      ret</value>
+  </data>
 </root>

@@ -38,7 +38,16 @@
             7
         );
 
-        
+        public static readonly Pattern LuaEventMan = new Pattern(
+            new byte[] { 0x48, 0x83, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x84, 0x1D, 0x01, 0x00, 0x00 },
+            "xxx????xxxxxxx",
+            0,
+            AddressingMode.Relative,
+            3,
+            8
+        );
+
+
         //Hooks
         public static readonly Pattern UpdateCoords = new Pattern(
             new byte[] { 0x0F, 0x11, 0x43, 0x70, 0xC7, 0x43 },
@@ -68,17 +77,17 @@
             AddressingMode.Absolute
         );
 
+        //Funcs
 
 
+        public static readonly Pattern GraceWarp = new Pattern(
+            new byte[] { 0xC7, 0x44, 0x24, 0x30, 0x10, 0x27, 0x00, 0x00, 0x48, 0x8B, 0xCF },
+            "xxxxxxxxxxx",
+            -0x14,
+            AddressingMode.Absolute
+        );
     }
-    
-  
-    
-    
 
-    
-    
-    
 
     public enum AddressingMode
     {

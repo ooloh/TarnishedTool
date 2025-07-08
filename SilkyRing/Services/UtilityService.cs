@@ -1,5 +1,6 @@
 ﻿using System;
 using SilkyRing.Memory;
+using SilkyRing.Utilities;
 using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.Services

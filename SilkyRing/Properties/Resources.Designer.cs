@@ -60,6 +60,47 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 0,Roundtable Hold,Table of Lost Grace,11101950
+        ///0,Limgrave,The First Step,1042361951
+        ///0,Limgrave,Church of Elleh,1042361950
+        ///0,Limgrave,Gatefront,1042371950
+        ///0,Limgrave,Waypoint Ruins Cellar,1044361950
+        ///0,Limgrave,Artist&apos;s Shack,1044381950
+        ///0,Limgrave,Third Church of Marika,1046381950
+        ///0,Limgrave,Fort Haight West,1045361950
+        ///0,Limgrave,Agheel Lake South,1044351950
+        ///0,Limgrave,Agheel Lake North,1043371950
+        ///0,Limgrave,Church of Dragon Communion,1041351950
+        ///0,Limgrave,Seaside Ruins,1043351950
+        ///0,Limgrave,Mistw [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Graces {
+            get {
+                return ResourceManager.GetString("Graces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 a1 00 00 00 00 00    movabs rax,ds:0x0
+        ///00 00 00
+        ///48 8b 48 18             mov    rcx,QWORD PTR [rax+0x18]
+        ///48 8b 50 08             mov    rdx,QWORD PTR [rax+0x8]
+        ///49 b8 00 00 00 00 00    movabs r8,0x0
+        ///00 00 00
+        ///48 83 ec 20             sub    rsp,0x20
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 20             add    rsp,0x20
+        ///c3                      ret.
+        /// </summary>
+        internal static string GraceWarp {
+            get {
+                return ResourceManager.GetString("GraceWarp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
         ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
         ///00 00 00

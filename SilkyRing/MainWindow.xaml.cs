@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using SilkyRing.Memory;
 using SilkyRing.Services;
 using SilkyRing.ViewModels;
+using SilkyRing.Views;
 using UtilityTab = SilkyRing.Views.UtilityTab;
 
 namespace SilkyRing
@@ -24,7 +25,7 @@ namespace SilkyRing
         private readonly HookManager _hookManager;
 
         // private readonly PlayerViewModel _playerViewModel;
-        // private readonly TravelViewModel _travelViewModel;
+        private readonly TravelViewModel _travelViewModel;
         // private readonly EventViewModel _eventViewModel;
         private readonly UtilityViewModel _utilityViewModel;
         // private readonly EnemyViewModel _enemyViewModel;
@@ -57,7 +58,7 @@ namespace SilkyRing
             var utilityService = new UtilityService(_memoryIo, _hookManager);
             // var eventService = new EventService(_memoryIo, _hookManager);
             // var enemyService = new EnemyService(_memoryIo, _hookManager);
-            // var travelService = new TravelService(_memoryIo, _hookManager);
+            var travelService = new TravelService(_memoryIo, _hookManager);
             // var cinderService = new CinderService(_memoryIo, _hookManager);
             // var itemService = new ItemService(_memoryIo);
             // var settingsService = new SettingsService(_memoryIo);
@@ -66,7 +67,7 @@ namespace SilkyRing
             // _playerViewModel = new PlayerViewModel(playerService, hotkeyManager);
             _utilityViewModel =
                 new UtilityViewModel(utilityService);
-            // _travelViewModel = new TravelViewModel(travelService, hotkeyManager);
+            _travelViewModel = new TravelViewModel(travelService);
             // _eventViewModel = new EventViewModel(eventService);
             // var eventTab = new EventTab(_eventViewModel);
             // _enemyViewModel = new EnemyViewModel(enemyService, cinderService, hotkeyManager, _debugDrawService);
@@ -76,13 +77,13 @@ namespace SilkyRing
 
             // var playerTab = new PlayerTab(_playerViewModel);
             var utilityTab = new UtilityTab(_utilityViewModel);
-            // var travelTab = new TravelTab(_travelViewModel);
+            var travelTab = new TravelTab(_travelViewModel);
             // var enemyTab = new EnemyTab(_enemyViewModel);
             // var itemTab = new ItemTab(_itemViewModel);
             // var settingsTab = new SettingsTab(_settingsViewModel);
             //
             // MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
-            // MainTabControl.Items.Add(new TabItem { Header = "Travel", Content = travelTab });
+            MainTabControl.Items.Add(new TabItem { Header = "Travel", Content = travelTab });
             // MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
             MainTabControl.Items.Add(new TabItem { Header = "Utility", Content = utilityTab });
             // MainTabControl.Items.Add(new TabItem { Header = "Enemies", Content = enemyTab });

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace SilkyRing.Memory
+namespace SilkyRing.Utilities
 {
     public static class AsmLoader
     {
