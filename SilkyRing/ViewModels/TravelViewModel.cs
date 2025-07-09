@@ -15,18 +15,18 @@ namespace SilkyRing.ViewModels
         private bool _areButtonsEnabled = true;
         
         private ObservableCollection<string> _mainAreas;
-        private ObservableCollection<WarpLocation> _areaLocations;
+        private ObservableCollection<Grace> _areaLocations;
         
         private string _selectedMainArea;
-        private WarpLocation _selectedWarpLocation;
+        private Grace _selectedGrace;
         
-        private Dictionary<string, List<WarpLocation>> _locationDict;
-        private List<WarpLocation> _allLocations;
+        private Dictionary<string, List<Grace>> _locationDict;
+        private List<Grace> _allLocations;
         
         private string _searchText = string.Empty;
         private bool _isSearchActive;
         private string _preSearchMainArea;
-        private readonly ObservableCollection<WarpLocation> _searchResultsCollection = new ObservableCollection<WarpLocation>();
+        private readonly ObservableCollection<Grace> _searchResultsCollection = new ObservableCollection<Grace>();
         
         public TravelViewModel(TravelService travelService)
         {
@@ -34,7 +34,7 @@ namespace SilkyRing.ViewModels
             // _hotkeyManager = hotkeyManager;
             
             _mainAreas = new ObservableCollection<string>();
-            _areaLocations = new ObservableCollection<WarpLocation>();
+            _areaLocations = new ObservableCollection<Grace>();
 
             LoadLocations();
             // RegisterHotkeys();
@@ -65,7 +65,7 @@ namespace SilkyRing.ViewModels
             private set => SetProperty(ref _mainAreas, value);
         }
         
-        public ObservableCollection<WarpLocation> AreaLocations
+        public ObservableCollection<Grace> AreaLocations
         {
             get => _areaLocations;
             set => SetProperty(ref _areaLocations, value);
@@ -90,10 +90,10 @@ namespace SilkyRing.ViewModels
             }
         }
         
-        public WarpLocation SelectedWarpLocation
+        public Grace SelectedGrace
         {
-            get => _selectedWarpLocation;
-            set => SetProperty(ref _selectedWarpLocation, value);
+            get => _selectedGrace;
+            set => SetProperty(ref _selectedGrace, value);
         }
         
         public bool IsSearchActive
@@ -137,12 +137,12 @@ namespace SilkyRing.ViewModels
         {
             if (string.IsNullOrEmpty(SelectedMainArea) || !_locationDict.ContainsKey(SelectedMainArea))
             {
-                AreaLocations = new ObservableCollection<WarpLocation>();
+                AreaLocations = new ObservableCollection<Grace>();
                 return;
             }
             
-            AreaLocations = new ObservableCollection<WarpLocation>(_locationDict[SelectedMainArea]);
-            SelectedWarpLocation = AreaLocations.FirstOrDefault();
+            AreaLocations = new ObservableCollection<Grace>(_locationDict[SelectedMainArea]);
+            SelectedGrace = AreaLocations.FirstOrDefault();
         }
         
         private void ApplyFilter()
@@ -152,17 +152,40 @@ namespace SilkyRing.ViewModels
             
             foreach (var location in _allLocations)
             {
-                if (location.LocationName.ToLower().Contains(searchTextLower) || 
+                if (location.Name.ToLower().Contains(searchTextLower) || 
                     location.MainArea.ToLower().Contains(searchTextLower))
                 {
                     _searchResultsCollection.Add(location);
                 }
             }
             
-            AreaLocations = new ObservableCollection<WarpLocation>(_searchResultsCollection);
-            SelectedWarpLocation = AreaLocations.FirstOrDefault();
+            AreaLocations = new ObservableCollection<Grace>(_searchResultsCollection);
+            SelectedGrace = AreaLocations.FirstOrDefault();
         }
 
-        public void Warp() => _travelService.Warp(SelectedWarpLocation);
+        public void Warp() => _travelService.Warp(SelectedGrace);
+
+        public void UnlockMainGameGraces()
+        {
+            foreach (var grace in _allLocations)
+            {
+                if (grace.IsDlc) continue;
+                _travelService.UnlockGrace(grace);
+            }
+        }
+
+        public void UnlockDlcGraces()
+        {
+            foreach (var grace in _allLocations)
+            {
+                if (!grace.IsDlc) continue;
+                _travelService.UnlockGrace(grace);
+            }
+        }
+
+        public void Test()
+        {
+            _travelService.Test();
+        }
     }
 }

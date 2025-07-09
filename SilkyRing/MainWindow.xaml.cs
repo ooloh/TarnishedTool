@@ -24,7 +24,7 @@ namespace SilkyRing
         private readonly DispatcherTimer _gameLoadedTimer;
         private readonly HookManager _hookManager;
 
-        // private readonly PlayerViewModel _playerViewModel;
+        private readonly PlayerViewModel _playerViewModel;
         private readonly TravelViewModel _travelViewModel;
         // private readonly EventViewModel _eventViewModel;
         private readonly UtilityViewModel _utilityViewModel;
@@ -54,7 +54,7 @@ namespace SilkyRing
 
             // var hotkeyManager = new HotkeyManager(_memoryIo);
             //
-            // var playerService = new PlayerService(_memoryIo);
+            var playerService = new PlayerService(_memoryIo, _hookManager);
             var utilityService = new UtilityService(_memoryIo, _hookManager);
             // var eventService = new EventService(_memoryIo, _hookManager);
             // var enemyService = new EnemyService(_memoryIo, _hookManager);
@@ -64,7 +64,7 @@ namespace SilkyRing
             // var settingsService = new SettingsService(_memoryIo);
             // _debugDrawService = new DebugDrawService(_memoryIo);
 
-            // _playerViewModel = new PlayerViewModel(playerService, hotkeyManager);
+            _playerViewModel = new PlayerViewModel(playerService);
             _utilityViewModel =
                 new UtilityViewModel(utilityService);
             _travelViewModel = new TravelViewModel(travelService);
@@ -75,14 +75,14 @@ namespace SilkyRing
             // _settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager);
 
 
-            // var playerTab = new PlayerTab(_playerViewModel);
+            var playerTab = new PlayerTab(_playerViewModel);
             var utilityTab = new UtilityTab(_utilityViewModel);
             var travelTab = new TravelTab(_travelViewModel);
             // var enemyTab = new EnemyTab(_enemyViewModel);
             // var itemTab = new ItemTab(_itemViewModel);
             // var settingsTab = new SettingsTab(_settingsViewModel);
             //
-            // MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
+            MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
             MainTabControl.Items.Add(new TabItem { Header = "Travel", Content = travelTab });
             // MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
             MainTabControl.Items.Add(new TabItem { Header = "Utility", Content = utilityTab });

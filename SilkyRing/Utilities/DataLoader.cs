@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using SilkyRing.Models;
@@ -8,9 +9,9 @@ namespace SilkyRing.Utilities
 {
     public static class DataLoader
     {
-        public static Dictionary<string, List<WarpLocation>> GetGraces()
+        public static Dictionary<string, List<Grace>> GetGraces()
         {
-            Dictionary<string, List<WarpLocation>> graceDict = new Dictionary<string, List<WarpLocation>>();
+            Dictionary<string, List<Grace>> graceDict = new Dictionary<string, List<Grace>>();
             string csvData = Resources.Graces;
 
             if (string.IsNullOrWhiteSpace(csvData))
@@ -24,26 +25,28 @@ namespace SilkyRing.Utilities
                     if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#")) continue;
 
                     string[] parts = line.Split(',');
-                    if (parts.Length < 4) continue;
+                    if (parts.Length < 5) continue;
 
                     bool isDlc = parts[0] == "1";
                     string mainArea = parts[1];
                     string name = parts[2];
                     long graceEntityId = long.Parse(parts[3], CultureInfo.InvariantCulture);
+                    int flagId = int.Parse(parts[4], CultureInfo.InvariantCulture);
                     
-                    WarpLocation warpLocation = new WarpLocation
+                    Grace grace = new Grace
                     {
                         IsDlc = isDlc,
                         MainArea = mainArea,
-                        LocationName = name,
-                        GraceEntityId = graceEntityId
+                        Name = name,
+                        GraceEntityId = graceEntityId,
+                        FlagId = flagId
                     };
                     
                     if (!graceDict.ContainsKey(mainArea))
                     {
-                        graceDict[mainArea] = new List<WarpLocation>();
+                        graceDict[mainArea] = new List<Grace>();
                     }
-                    graceDict[mainArea].Add(warpLocation);
+                    graceDict[mainArea].Add(grace);
                 }
             }
 

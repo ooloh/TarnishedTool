@@ -20,6 +20,13 @@ namespace SilkyRing.Views
             _travelViewModel.Warp();
         }
 
-        // private void UnlockAllBonfires_Click(object sender, RoutedEventArgs e) => _travelViewModel.UnlockAllBonfires();
+        private void UnlockAllMainGameGraces_Click(object sender, RoutedEventArgs e) => _travelViewModel.UnlockMainGameGraces();
+
+        private void UnlockAllDlcGraces_Click(object sender, RoutedEventArgs e)=> _travelViewModel.UnlockDlcGraces();
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            _travelViewModel.Test();
+        }
     }
 }

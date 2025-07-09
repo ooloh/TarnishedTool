@@ -56,6 +56,11 @@ namespace SilkyRing.Memory
                     public static int CsSpecialEffectPtr { get; private set; }
                     public static int ModulesPtr { get; private set; }
 
+                    
+                    //TODO Chrdata modules + 0x19B -->
+                    //No Death flag 1 << 0
+                    // No damage flag 1 << 1
+                    
                     public static class Modules
                     {
                         public static void Initialize()
@@ -84,11 +89,25 @@ namespace SilkyRing.Memory
         public static class FieldArea
         {
             public static IntPtr Base;
+            
+            // +0xA0 = Current Dungeon / Boss flag
         }
         
         public static class LuaEventMan
         {
             public static IntPtr Base;
+        }
+        
+        public static class VirtualMemFlag
+        {
+            public static IntPtr Base;
+        }
+        
+        public static class DamageManager
+        {
+            public static IntPtr Base;
+            
+            //+0xA4, some debug draw
         }
 
         public static class CsTargetingSystem
@@ -117,6 +136,8 @@ namespace SilkyRing.Memory
         public static class Funcs
         {
             public static long GraceWarp;
+            public static long SetEvent;
+            public static long SetSpEffect;
         }
     }
 }

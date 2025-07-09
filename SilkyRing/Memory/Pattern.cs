@@ -47,6 +47,24 @@
             8
         );
 
+        public static readonly Pattern VirtualMemFlag = new Pattern(
+            new byte[] { 0x48, 0x8B, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x48, 0x85, 0xFF, 0x74, 0x53 },
+            "xxx????xxxxx",
+            0,
+            AddressingMode.Relative,
+            3,
+            7
+        );
+
+        public static readonly Pattern DamageManager = new Pattern(
+            new byte[] { 0x48, 0x3B, 0xDF, 0x0F, 0x84, 0x87, 0x01 },
+            "xxxxxxx",
+            0x27,
+            AddressingMode.Relative,
+            3,
+            7
+        );
+
 
         //Hooks
         public static readonly Pattern UpdateCoords = new Pattern(
@@ -85,6 +103,24 @@
             "xxxxxxxxxxx",
             -0x14,
             AddressingMode.Absolute
+        );
+
+        public static readonly Pattern SetEvent = new Pattern(
+            new byte[] { 0xE8, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xC3, 0x81, 0xFB, 0x3D },
+            "x????xxxxx",
+            0,
+            AddressingMode.Relative,
+            1,
+            5
+        );
+
+        public static readonly Pattern SetSpEffect = new Pattern(
+            new byte[] { 0x85, 0xD2, 0x78, 0x09, 0x48, 0x8B },
+            "xxxxxx",
+            0x8,
+            AddressingMode.Relative,
+            1,
+            5
         );
     }
 

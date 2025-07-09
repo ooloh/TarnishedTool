@@ -148,7 +148,7 @@
                     BorderThickness="1"
                     BorderBrush="#333">
                 <ListView ItemsSource="{Binding AreaLocations}"
-                          SelectedItem="{Binding SelectedWarpLocation}"
+                          SelectedItem="{Binding SelectedGrace}"
                           VirtualizingPanel.IsVirtualizing="True"
                           VirtualizingPanel.VirtualizationMode="Recycling"
                           ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -196,7 +196,7 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding LocationName}" VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                                 <TextBlock Grid.Column="1"
                                            Text="{Binding MainArea}"
                                            Foreground="#888888"
@@ -223,10 +223,20 @@
                      <Grid.ColumnDefinitions>
                          <ColumnDefinition Width="*" />
                          <ColumnDefinition Width="*" />
+                         <ColumnDefinition Width="*" />
                      </Grid.ColumnDefinitions>
                      
-                     <Button Grid.Column="0" Content="Unlock All Bonfires"
-                             
+                     
+                     <Button Grid.Column="0" Content="Unlock All Main Game Graces"
+                             Click="UnlockAllMainGameGraces_Click"
+                             IsEnabled="{Binding AreButtonsEnabled}"
+                             Margin="0,2" />
+                     <Button Grid.Column="1" Content="Unlock All DLC Graces"
+                             Click="UnlockAllDlcGraces_Click"
+                             IsEnabled="{Binding AreButtonsEnabled}"
+                             Margin="0,2" />
+                     <Button Grid.Column="2" Content="Test"
+                             Click="Test_Click"
                              IsEnabled="{Binding AreButtonsEnabled}"
                              Margin="0,2" />
                  </Grid>
