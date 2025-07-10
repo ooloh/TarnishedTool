@@ -22,7 +22,7 @@ namespace SilkyRing.ViewModels
         // private CharacterState _saveState1 = new CharacterState();
         // private CharacterState _saveState2 = new CharacterState();
         //
-        // private bool _isNoDeathEnabled;
+        private bool _isNoDeathEnabled;
         private bool _isNoDamageEnabled;
         // private bool _isInfiniteStaminaEnabled;
         // private bool _isNoGoodsConsumeEnabled;
@@ -64,7 +64,7 @@ namespace SilkyRing.ViewModels
         // private const float Epsilon = 0.0001f;
         //
         // private bool _pauseUpdates = true;
-        // private bool _areOptionsEnabled;
+        private bool _areOptionsEnabled;
         // private readonly DispatcherTimer _timer;
 
         private readonly PlayerService _playerService;
@@ -162,11 +162,11 @@ namespace SilkyRing.ViewModels
         //     _pauseUpdates = false;
         // }
 
-        // public bool AreOptionsEnabled
-        // {
-        //     get => _areOptionsEnabled;
-        //     set => SetProperty(ref _areOptionsEnabled, value);
-        // }
+        public bool AreOptionsEnabled
+        {
+            get => _areOptionsEnabled;
+            set => SetProperty(ref _areOptionsEnabled, value);
+        }
         //
         // public int CurrentHp
         // {
@@ -258,17 +258,6 @@ namespace SilkyRing.ViewModels
         //     get => _isStateIncluded;
         //     set => SetProperty(ref _isStateIncluded, value);
         // }
-        // public bool IsNoDeathEnabled
-        // {
-        //     get => _isNoDeathEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isNoDeathEnabled, value))
-        //         {
-        //             _playerService.ToggleNoDeath(_isNoDeathEnabled);
-        //         }
-        //     }
-        // }
         //
         // public float PosX
         // {
@@ -288,6 +277,22 @@ namespace SilkyRing.ViewModels
         //     set => SetProperty(ref _posZ, value);
         // }
         //
+        public bool IsNoDeathEnabled
+        {
+            get => _isNoDeathEnabled;
+            set
+            {
+                if (SetProperty(ref _isNoDeathEnabled, value))
+                {
+                    _playerService.ToggleChrDataFlag(
+                        WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flags,
+                        (byte)WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flag.NoDeath,
+                        _isNoDeathEnabled
+                    );
+                }
+            }
+        }
+        
         public bool IsNoDamageEnabled
         {
             get => _isNoDamageEnabled;
@@ -625,15 +630,24 @@ namespace SilkyRing.ViewModels
         // }
         //
         //
-        // public void TryEnableFeatures()
-        // {
-        //
-        //     if (IsNoDeathEnabled) _playerService.ToggleNoDeath(true);
-        //     
-        //     AreOptionsEnabled = true;
-        //     LoadStats();
-        //     _timer.Start();
-        // }
+        public void TryEnableFeatures()
+        {
+            if (IsNoDamageEnabled) _playerService.ToggleChrDataFlag(
+                WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flags,
+                (byte)WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flag.NoDamage,
+                _isNoDamageEnabled
+            );
+            
+            if (IsNoDeathEnabled) _playerService.ToggleChrDataFlag(
+                WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flags,
+                (byte)WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flag.NoDeath,
+                _isNoDeathEnabled
+            );
+            
+            AreOptionsEnabled = true;
+            // LoadStats();
+            // _timer.Start();
+        }
         //
         // public void TryApplyOneTimeFeatures()
         // {

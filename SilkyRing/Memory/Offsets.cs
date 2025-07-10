@@ -8,6 +8,8 @@ namespace SilkyRing.Memory
         {
             WorldChrMan.Offsets.Intialize();
             CsTargetingSystem.Initialize();
+            MenuMan.Offsets.Initialize();
+            TargetView.Offsets.Initialize();
             // GameManagerImp.Offsets.Initialize(edition);
             // GameManagerImp.CharacterManagerOffsets.Initialize(edition);
             // GameManagerImp.EventManagerOffsets.Initialize(edition);
@@ -24,12 +26,12 @@ namespace SilkyRing.Memory
             // GameManagerImp.ChrCtrlOffsets.Stats.Initialize(edition);
             // GameManagerImp.PxWorld.Initialize(edition);
         }
-        
-        
+
+
         public static class WorldChrMan
         {
             public static IntPtr Base;
-            
+
             public static class Offsets
             {
                 public static void Intialize()
@@ -40,7 +42,7 @@ namespace SilkyRing.Memory
                 }
 
                 public static int PlayerInsPtr { get; private set; }
-                
+
                 public static class PlayerIns
                 {
                     public static void Initialize()
@@ -55,8 +57,8 @@ namespace SilkyRing.Memory
                     public static int PlayerCtrlPtr { get; private set; }
                     public static int CsSpecialEffectPtr { get; private set; }
                     public static int ModulesPtr { get; private set; }
-                    
-                    
+
+
                     public static class Modules
                     {
                         public static void Initialize()
@@ -67,7 +69,7 @@ namespace SilkyRing.Memory
                             ChrData.Initialize();
                             ChrPhysics.Initialize();
                         }
-                        
+
                         public static int ChrDataPtr { get; private set; }
                         public static int ChrPhysicsPtr { get; private set; }
 
@@ -83,7 +85,7 @@ namespace SilkyRing.Memory
                                 NoDeath = 1 << 0,
                                 NoDamage = 1 << 1,
                             }
-                            
+
                             public static int Flags { get; private set; }
                         }
 
@@ -93,7 +95,7 @@ namespace SilkyRing.Memory
                             {
                                 Coords = 0x70;
                             }
-                            
+
                             public static int Coords { get; private set; }
                         }
                     }
@@ -104,25 +106,57 @@ namespace SilkyRing.Memory
         public static class FieldArea
         {
             public static IntPtr Base;
-            
+
             // +0xA0 = Current Dungeon / Boss flag
         }
-        
+
         public static class LuaEventMan
         {
             public static IntPtr Base;
         }
-        
+
         public static class VirtualMemFlag
         {
             public static IntPtr Base;
         }
-        
+
         public static class DamageManager
         {
             public static IntPtr Base;
-            
+
             //+0xA4, some debug draw
+        }
+
+        public static class MenuMan
+        {
+            public static IntPtr Base;
+
+            public static class Offsets
+            {
+                public static void Initialize()
+                {
+                    IsLoaded = 0x94;
+                }
+
+                public static int IsLoaded { get; private set; }
+            }
+        }
+        
+        public static class TargetView
+        {
+            public static IntPtr Base;
+
+            public static class Offsets
+            {
+                public static void Initialize()
+                {
+                    Blue = 0x0;
+                    Yellow = 0x1;
+                }
+
+                public static int Blue { get; private set; }
+                public static int Yellow { get; private set; }
+            }
         }
 
         public static class CsTargetingSystem
@@ -139,7 +173,7 @@ namespace SilkyRing.Memory
 
             public static int TargetingFlags { get; set; }
         }
-        
+
         public static class Hooks
         {
             public static long UpdateCoords;
@@ -148,8 +182,9 @@ namespace SilkyRing.Memory
             public static long NoClipTriggers;
             public static long AddSubGoal;
             public static long HasSpEffect;
+            public static long BlueTargetView;
         }
-        
+
         public static class Funcs
         {
             public static long GraceWarp;

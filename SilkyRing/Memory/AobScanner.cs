@@ -38,6 +38,8 @@ namespace SilkyRing.Memory
             LuaEventMan.Base = FindAddressByPattern(Pattern.LuaEventMan);
             VirtualMemFlag.Base = FindAddressByPattern(Pattern.VirtualMemFlag);
             DamageManager.Base = FindAddressByPattern(Pattern.DamageManager);
+            MenuMan.Base = FindAddressByPattern(Pattern.MenuMan);
+            TargetView.Base = FindAddressByPattern(Pattern.TargetView);
             
            
 
@@ -68,6 +70,8 @@ namespace SilkyRing.Memory
                 addr => Hooks.AddSubGoal = addr.ToInt64(), saved);
             TryPatternWithFallback("HasSpEffect", Pattern.HasSpEffect,
                 addr => Hooks.HasSpEffect = addr.ToInt64(), saved);
+            TryPatternWithFallback("BlueTargetView", Pattern.BlueTargetViewHook,
+                addr => Hooks.BlueTargetView = addr.ToInt64(), saved);
             // TryPatternWithFallback("AddSubGoal", Patterns.AddSubGoal, addr => Offsets.Hooks.AddSubGoal = addr.ToInt64(),
             //     saved);
             // TryPatternWithFallback("InAirTimer", Patterns.NoClipInAirTimer,
@@ -131,6 +135,8 @@ namespace SilkyRing.Memory
             Console.WriteLine($"LuaEventMan.Base: 0x{LuaEventMan.Base.ToInt64():X}");
             Console.WriteLine($"VirtualMemFlag.Base: 0x{VirtualMemFlag.Base.ToInt64():X}");
             Console.WriteLine($"DamageManager.Base: 0x{DamageManager.Base.ToInt64():X}");
+            Console.WriteLine($"MenuMan.Base: 0x{MenuMan.Base.ToInt64():X}");
+            Console.WriteLine($"TargetView.Base: 0x{TargetView.Base.ToInt64():X}");
            
              Console.WriteLine($"Patches.NoLogo: 0x{Patches.DungeonWarp.ToInt64():X}");
 //            
@@ -140,6 +146,7 @@ namespace SilkyRing.Memory
              Console.WriteLine($"Hooks.NoClipTriggers: 0x{Hooks.NoClipTriggers:X}");
              Console.WriteLine($"Hooks.AddSubGoal: 0x{Hooks.AddSubGoal:X}");
              Console.WriteLine($"Hooks.HasSpEffect: 0x{Hooks.HasSpEffect:X}");
+             Console.WriteLine($"Hooks.BlueTargetView: 0x{Hooks.BlueTargetView:X}");
 //             
              Console.WriteLine($"Funcs.GraceWarp: 0x{Funcs.GraceWarp:X}");
              Console.WriteLine($"Funcs.SetEvent: 0x{Funcs.SetEvent:X}");

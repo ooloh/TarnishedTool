@@ -345,8 +345,7 @@ namespace SilkyRing.Memory
 
         public bool IsGameLoaded()
         {
-            // return (IntPtr) ReadUInt64((IntPtr)ReadUInt64(Offsets.WorldChrMan.Base) + Offsets.WorldChrMan.PlayerIns)!= IntPtr.Zero;
-            return true;
+           return ReadUInt8((IntPtr)ReadUInt64(Offsets.MenuMan.Base) + Offsets.MenuMan.Offsets.IsLoaded) == 1;
         }
         
         public void AllocCodeCave()

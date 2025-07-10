@@ -179,6 +179,25 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 50                      push   rax
+        ///52                      push   rdx
+        ///41 50                   push   r8
+        ///41 51                   push   r9
+        ///48 83 ec 70             sub    rsp,0x70
+        ///0f 11 04 24             movups XMMWORD PTR [rsp],xmm0
+        ///0f 11 4c 24 10          movups XMMWORD PTR [rsp+0x10],xmm1
+        ///0f 11 54 24 20          movups XMMWORD PTR [rsp+0x20],xmm2
+        ///0f 11 5c 24 30          movups XMMWORD PTR [rsp+0x30],xmm3
+        ///0f 11 64 24 40          movups XMMWORD PTR [rsp+0x40],xmm4
+        ///0f 11 6c 24 50          movups XMM [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ReduceTargetView {
+            get {
+                return ResourceManager.GetString("ReduceTargetView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 8b 49 08             mov    rcx,QWORD PTR [rcx+0x8]
         ///81 fa a5 2e 00 00       cmp    edx,0x2ea5
         ///75 03                   jne    f &lt;normal&gt;

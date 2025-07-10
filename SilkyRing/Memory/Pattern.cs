@@ -65,6 +65,25 @@
             7
         );
 
+        public static readonly Pattern MenuMan = new Pattern(
+            new byte[] { 0x0F, 0x45, 0xF8, 0x48, 0x8B, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x48, 0x85, 0xC9, 0x75, 0x2E },
+            "xxxxxx????xxxxx",
+            3,
+            AddressingMode.Relative,
+            3,
+            7
+        );
+
+        public static readonly Pattern TargetView = new Pattern(
+            new byte[] { 0x75, 0x0D, 0x40, 0x38, 0x35, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x84, 0x41 },
+            "xxxxx????xxx",
+            0x2,
+            AddressingMode.Relative,
+            3,
+            7
+        );
+
+
 
         //Hooks
         public static readonly Pattern UpdateCoords = new Pattern(
@@ -106,6 +125,13 @@
             new byte[] { 0x39, 0x51, 0x08, 0x74, 0x0C, 0x48, 0x8B },
             "xxxxxxx",
             -0x10,
+            AddressingMode.Absolute
+        );
+
+        public static readonly Pattern BlueTargetViewHook = new Pattern(
+            new byte[] { 0x0F, 0x84, 0x41, 0x01, 0x00, 0x00, 0x48, 0x8D, 0x54 },
+            "xxxxxxxxx",
+            0x6,
             AddressingMode.Absolute
         );
 

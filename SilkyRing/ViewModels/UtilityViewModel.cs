@@ -43,12 +43,12 @@ namespace SilkyRing.ViewModels
         // }
 
 
-        // private bool _areButtonsEnabled;
-        // public bool AreButtonsEnabled
-        // {
-        //     get => _areButtonsEnabled;
-        //     set => SetProperty(ref _areButtonsEnabled, value);
-        // }
+        private bool _areOptionsEnabled;
+        public bool AreOptionsEnabled
+        {
+            get => _areOptionsEnabled;
+            set => SetProperty(ref _areOptionsEnabled, value);
+        }
         
         // public bool IsDrawHitboxEnabled
         // {
@@ -134,15 +134,46 @@ namespace SilkyRing.ViewModels
         //     }
         // }
         //
-        // public bool IsTargetingViewEnabled
-        // {
-        //     get => _isTargetingViewEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isTargetingViewEnabled, value)) return;
-        //         _utilityService.ToggleTargetingView(_isTargetingViewEnabled);
-        //     }
-        // }
+        
+        private bool _isTargetingViewEnabled;
+        public bool IsTargetingViewEnabled
+        {
+            get => _isTargetingViewEnabled;
+            set
+            {
+                if (!SetProperty(ref _isTargetingViewEnabled, value)) return;
+                _utilityService.ToggleTargetingView(_isTargetingViewEnabled);
+                if (!_isTargetingViewEnabled)
+                {
+                    IsDrawReducedTargetViewEnabled = false;
+                }
+            }
+        }
+        
+        private bool _isDrawReducedTargetViewEnabled;
+        public bool IsDrawReducedTargetViewEnabled
+        {
+            get => _isDrawReducedTargetViewEnabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawReducedTargetViewEnabled, value)) return;
+                _utilityService.ToggleReducedTargetingView(_isDrawReducedTargetViewEnabled);
+                _utilityService.SetTargetViewMaxDist(ReducedTargetViewDistance);
+            }
+        }
+        
+        private float _reducedTargetViewDistance = 100;
+        public float ReducedTargetViewDistance
+        {
+            get => _reducedTargetViewDistance;
+            set
+            {
+                if (!SetProperty(ref _reducedTargetViewDistance, value)) return;
+                if (!IsDrawReducedTargetViewEnabled) return;
+                _utilityService.SetTargetViewMaxDist(_reducedTargetViewDistance);
+            }
+        }
+        
         //
         //
         // public bool IsDrawRagdollsEnabled
@@ -261,5 +292,36 @@ namespace SilkyRing.ViewModels
             // _utilityService.SetNoClipSpeed(xBytes, yBytes);
         }
         
+        public void TryEnableFeatures()
+        {
+            AreOptionsEnabled = true;
+        }
+        public void TryApplyOneTimeFeatures()
+        {
+            // if (Is100DropEnabled) _utilityService.Toggle100Drop(true);
+            // if (IsCreditSkipEnabled) _utilityService.ToggleCreditSkip(true);
+            // if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
+            //
+            // if (IsDrawEventGeneralEnabled) _utilityService.ToggleDrawEvent(DrawType.EventGeneral, true);
+            // if (IsDrawEventSpawnEnabled) _utilityService.ToggleDrawEvent(DrawType.EventSpawn, true);
+            // if (IsDrawEventInvasionEnabled) _utilityService.ToggleDrawEvent(DrawType.EventInvasion, true);
+            // if (IsDrawEventLeashEnabled) _utilityService.ToggleDrawEvent(DrawType.EventLeash, true);
+            // if (IsDrawEventOtherEnabled) _utilityService.ToggleDrawEvent(DrawType.EventOther, true);
+            //
+            // if (IsDrawSoundEnabled) _utilityService.ToggleDrawSound(true);
+            if (IsTargetingViewEnabled) _utilityService.ToggleTargetingView(true);
+            if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled) _utilityService.ToggleReducedTargetingView(true);
+            if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled) _utilityService.SetTargetViewMaxDist(ReducedTargetViewDistance);
+            // if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
+            // if (IsHideCharactersEnabled) _utilityService.ToggleHideChr(true);
+            // if (IsLightGutterEnabled) _utilityService.ToggleLightGutter(true);
+            // if (IsDrawCollisionEnabled) _utilityService.ToggleDrawCol(true);
+            // if (IsNoFogEnabled) _utilityService.ToggleShadedFog(true);
+            // if (IsColWireframeEnabled) _utilityService.ToggleColWireframe(true);
+            // if (IsDrawKillboxEnabled) _utilityService.ToggleDrawKillbox(true);
+            // if (IsDrawRagdollsEnabled) _utilityService.ToggleRagdoll(true);
+            // if (IsSeeThroughWallsEnabled) _utilityService.ToggleRagdollEsp(true);
+        }
+
     }
 }

@@ -16,5 +16,12 @@ namespace SilkyRing.Memory
         }
 
         public const int Rykard = 0x300;
+
+        public enum TargetView
+        {
+            MaxDist = 0x350,
+            BlueTargetView = 0x360
+        }
+
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using SilkyRing.Memory;
+﻿using SilkyRing.Memory;
 using SilkyRing.Utilities;
 using static SilkyRing.Memory.Offsets;
 using Array = System.Array;

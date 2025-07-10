@@ -228,15 +228,15 @@ namespace SilkyRing
         private void ApplyOneTimeFeatures()
         {
             // _playerViewModel.TryApplyOneTimeFeatures();
-            // _utilityViewModel.TryApplyOneTimeFeatures();
+            _utilityViewModel.TryApplyOneTimeFeatures();
             // _enemyViewModel.TryApplyOneTimeFeatures();
             // _eventViewModel.TryApplyOneTimeFeatures();
         }
 
         private void TryEnableFeatures()
         {
-            // _playerViewModel.TryEnableFeatures();
-            // _utilityViewModel.TryEnableFeatures();
+            _playerViewModel.TryEnableFeatures();
+            _utilityViewModel.TryEnableFeatures();
             // _enemyViewModel.TryEnableFeatures();
             // _itemViewModel.TryEnableFeatures();
             // _travelViewModel.TryEnableFeatures();
