@@ -99,6 +99,17 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 8b 8f 88 00 00 00    mov    rcx,QWORD PTR [rdi+0x88]
+        ///48 89 05 00 00 00 00    mov    QWORD PTR [rip+0x0],rax        # e &lt;_main+0xe&gt;
+        ///e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;.
+        /// </summary>
+        internal static string LockedTarget {
+            get {
+                return ResourceManager.GetString("LockedTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
         ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
         ///00 00 00

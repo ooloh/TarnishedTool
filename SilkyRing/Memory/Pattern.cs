@@ -83,6 +83,14 @@
             7
         );
 
+        public static readonly Pattern GameMan = new Pattern(
+            new byte[] { 0x48, 0x8B, 0x05, 0x00, 0x00, 0x00, 0x00, 0x48, 0x85, 0xC0, 0x74, 0x07, 0x8B, 0x80, 0x84 },
+            "xxx????xxxxxxxx",
+            0,
+            AddressingMode.Relative,
+            3,
+            7
+        );
 
 
         //Hooks
@@ -114,7 +122,7 @@
             AddressingMode.Absolute
         );
 
-        public static readonly Pattern AddSubGoal = new Pattern(
+        public static readonly Pattern CreateGoalObj = new Pattern(
             new byte[] { 0x48, 0x8B, 0xF1, 0x85, 0xD2, 0x0F, 0x88, 0x78 },
             "xxxxxxxx",
             0,
@@ -132,6 +140,13 @@
             new byte[] { 0x0F, 0x84, 0x41, 0x01, 0x00, 0x00, 0x48, 0x8D, 0x54 },
             "xxxxxxxxx",
             0x6,
+            AddressingMode.Absolute
+        );
+
+        public static readonly Pattern LockedTargetPtr = new Pattern(
+            new byte[] { 0x74, 0x17, 0x48, 0x8B, 0x8F, 0x88 },
+            "xxxxxx",
+            2,
             AddressingMode.Absolute
         );
 

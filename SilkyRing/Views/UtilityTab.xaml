@@ -26,57 +26,57 @@
                 BorderBrush="#333"
                 CornerRadius="3"
                 Margin="0,0,0,5">
-            <!-- <StackPanel Margin="10"> -->
-            <!--     <Grid> -->
-            <!--         <Grid.ColumnDefinitions> -->
-            <!--             <ColumnDefinition Width="Auto" /> -->
-            <!--             <ColumnDefinition Width="*" /> -->
-            <!--         </Grid.ColumnDefinitions> -->
-            <!-- -->
-            <!--         <TextBlock Text="General" -->
-            <!--                    Grid.Column="0" /> -->
-            <!--     </Grid> -->
-            <!-- -->
-            <!--     <StackPanel Margin="0,5,0,0"> -->
-            <!--         <StackPanel Orientation="Horizontal" Margin="0,0,0,3" VerticalAlignment="Center"> -->
-            <!--             <CheckBox Content="Skip Credits" -->
-            <!--                       IsChecked="{Binding IsCreditSkipEnabled}" -->
-            <!--                       VerticalAlignment="Center" -->
-            <!--                       Margin="0,0,20,0" /> -->
-            <!--             <CheckBox Content="100% Drop Rate" -->
-            <!--                       IsChecked="{Binding Is100DropEnabled}" -->
-            <!--                       VerticalAlignment="Center" -->
-            <!--                       Margin="0,0,20,0" /> -->
-            <!--             <Button Content="Force Save" -->
-            <!--                     IsEnabled="{Binding AreButtonsEnabled}" -->
-            <!--                     Padding="5,3" -->
-            <!--                     Click="ForceSave_Click" -->
-            <!--                     Margin="0,0,20,0" /> -->
-            <!--         </StackPanel> -->
-            <!-- -->
-            <!--         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0"> -->
-            <!--             <xctk:DoubleUpDown x:Name="SpeedUpDown" -->
-            <!--                                Value="{Binding GameSpeed}" -->
-            <!--                                TextAlignment="Center" -->
-            <!--                                Width="80" -->
-            <!--                                Minimum="0" -->
-            <!--                                Maximum="5" -->
-            <!--                                Increment="0.50" -->
-            <!--                                FormatString="F2" -->
-            <!--                                BorderBrush="#3F3F46" /> -->
-            <!--             <TextBlock Text="Game Speed" VerticalAlignment="Center" Margin="10,0,30,0" /> -->
-            <!--             <CheckBox Content="Show Mad Warrior Spawn" -->
-            <!--                       IsChecked="{Binding IsMadWarriorSpawnEnabled}" -->
-            <!--                       VerticalAlignment="Center" -->
-            <!--                       Margin="0,0,10,0" /> -->
-            <!--             <TextBlock Text="{Binding MadWarriorStatusText}" -->
-            <!--                        Foreground="{Binding MadWarriorStatusColor}" -->
-            <!--                        VerticalAlignment="Center" -->
-            <!--                        FontWeight="Bold" -->
-            <!--                        Visibility="{Binding IsMadWarriorSpawnEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" /> -->
-            <!--         </StackPanel> -->
-            <!--     </StackPanel> -->
-            <!-- </StackPanel> -->
+            <StackPanel Margin="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+            
+                    <TextBlock Text="General"
+                               Grid.Column="0" />
+                </Grid>
+            
+                <StackPanel Margin="0,5,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,3" VerticalAlignment="Center">
+                        <CheckBox Content="Skip Credits"
+                                  IsChecked="{Binding IsCreditSkipEnabled}"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,20,0" />
+                        <CheckBox Content="100% Drop Rate"
+                                  IsChecked="{Binding Is100DropEnabled}"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,20,0" />
+                        <Button Content="Force Save"
+                                IsEnabled="{Binding AreButtonsEnabled}"
+                                Padding="5,3"
+                                Click="ForceSave_Click"
+                                Margin="0,0,20,0" />
+                    </StackPanel>
+            
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0">
+                        <xctk:DoubleUpDown x:Name="SpeedUpDown"
+                                           Value="{Binding GameSpeed}"
+                                           TextAlignment="Center"
+                                           Width="80"
+                                           Minimum="0"
+                                           Maximum="5"
+                                           Increment="0.50"
+                                           FormatString="F2"
+                                           BorderBrush="#3F3F46" />
+                        <TextBlock Text="Game Speed" VerticalAlignment="Center" Margin="10,0,30,0" />
+                        <CheckBox Content="Show Mad Warrior Spawn"
+                                  IsChecked="{Binding IsMadWarriorSpawnEnabled}"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,10,0" />
+                        <TextBlock Text="{Binding MadWarriorStatusText}"
+                                   Foreground="{Binding MadWarriorStatusColor}"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Visibility="{Binding IsMadWarriorSpawnEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
         </Border>
 
         <Border Grid.Row="1"

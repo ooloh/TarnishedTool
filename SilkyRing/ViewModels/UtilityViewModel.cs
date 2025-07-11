@@ -323,5 +323,6 @@ namespace SilkyRing.ViewModels
             // if (IsSeeThroughWallsEnabled) _utilityService.ToggleRagdollEsp(true);
         }
 
+        public void ForceSave() => _utilityService.ForceSave();
     }
 }

@@ -144,7 +144,9 @@ namespace SilkyRing.Services
             var maxDist = CodeCaveOffsets.Base + (int)CodeCaveOffsets.TargetView.MaxDist;
             _memoryIo.WriteFloat(maxDist, reducedTargetViewDistance * reducedTargetViewDistance);
         }
-        
-        
+
+
+        public void ForceSave() =>
+            _memoryIo.WriteByte((IntPtr)_memoryIo.ReadInt64(GameMan.Base) + GameMan.Offsets.ForceSave, 1);
     }
 }

@@ -603,7 +603,7 @@ namespace SilkyRing.Services
         {
             var bytes = AsmLoader.GetAsmBytes("SetSpEffect");
             var playerIns =
-                _memoryIo.ReadInt64((IntPtr)_memoryIo.ReadInt64(WorldChrMan.Base) + WorldChrMan.Offsets.PlayerInsPtr);
+                _memoryIo.ReadInt64((IntPtr)_memoryIo.ReadInt64(WorldChrMan.Base) + WorldChrMan.Offsets.ChrInsPtr);
             AsmHelper.WriteAbsoluteAddresses(bytes, new []
             {
                 (playerIns, 0x0 + 2),
@@ -617,9 +617,9 @@ namespace SilkyRing.Services
         {
             var chrData = _memoryIo.FollowPointers(WorldChrMan.Base, new[]
             {
-                (WorldChrMan.Offsets.PlayerInsPtr),
-                (WorldChrMan.Offsets.PlayerIns.ModulesPtr),
-                (WorldChrMan.Offsets.PlayerIns.Modules.ChrDataPtr)
+                (WorldChrMan.Offsets.ChrInsPtr),
+                (WorldChrMan.Offsets.ChrIns.ModulesPtr),
+                (WorldChrMan.Offsets.ChrIns.Modules.ChrDataPtr)
             }, true);
             
             _memoryIo.SetBitValue(chrData + offset, bitmask, isEnabled);

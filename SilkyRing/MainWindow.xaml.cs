@@ -237,7 +237,7 @@ namespace SilkyRing
         {
             _playerViewModel.TryEnableFeatures();
             _utilityViewModel.TryEnableFeatures();
-            // _enemyViewModel.TryEnableFeatures();
+            _enemyViewModel.TryEnableFeatures();
             // _itemViewModel.TryEnableFeatures();
             // _travelViewModel.TryEnableFeatures();
             // _eventViewModel.TryEnableFeatures();

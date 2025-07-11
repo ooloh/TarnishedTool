@@ -285,8 +285,8 @@ namespace SilkyRing.ViewModels
                 if (SetProperty(ref _isNoDeathEnabled, value))
                 {
                     _playerService.ToggleChrDataFlag(
-                        WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flags,
-                        (byte)WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flag.NoDeath,
+                        WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flags,
+                        (byte)WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flag.NoDeath,
                         _isNoDeathEnabled
                     );
                 }
@@ -301,8 +301,8 @@ namespace SilkyRing.ViewModels
                 if (SetProperty(ref _isNoDamageEnabled, value))
                 {
                     _playerService.ToggleChrDataFlag(
-                        WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flags,
-                        (byte)WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flag.NoDamage,
+                        WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flags,
+                        (byte)WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flag.NoDamage,
                         _isNoDamageEnabled
                     );
                 }
@@ -633,14 +633,14 @@ namespace SilkyRing.ViewModels
         public void TryEnableFeatures()
         {
             if (IsNoDamageEnabled) _playerService.ToggleChrDataFlag(
-                WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flags,
-                (byte)WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flag.NoDamage,
+                WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flags,
+                (byte)WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flag.NoDamage,
                 _isNoDamageEnabled
             );
             
             if (IsNoDeathEnabled) _playerService.ToggleChrDataFlag(
-                WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flags,
-                (byte)WorldChrMan.Offsets.PlayerIns.Modules.ChrData.Flag.NoDeath,
+                WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flags,
+                (byte)WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flag.NoDeath,
                 _isNoDeathEnabled
             );
             

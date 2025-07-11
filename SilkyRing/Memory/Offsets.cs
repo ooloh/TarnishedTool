@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SilkyRing.Memory
 {
+    [SuppressMessage("ReSharper", "MemberHidesStaticFromOuterClass")]
     public static class Offsets
     {
         public static void Initialize() // Patch
@@ -10,6 +12,7 @@ namespace SilkyRing.Memory
             CsTargetingSystem.Initialize();
             MenuMan.Offsets.Initialize();
             TargetView.Offsets.Initialize();
+            GameMan.Offsets.Initialize();
             // GameManagerImp.Offsets.Initialize(edition);
             // GameManagerImp.CharacterManagerOffsets.Initialize(edition);
             // GameManagerImp.EventManagerOffsets.Initialize(edition);
@@ -36,28 +39,61 @@ namespace SilkyRing.Memory
             {
                 public static void Intialize()
                 {
-                    PlayerInsPtr = 0x1E508;
+                    ChrInsPtr = 0x1E508;
 
-                    PlayerIns.Initialize();
+                    ChrIns.Initialize();
                 }
 
-                public static int PlayerInsPtr { get; private set; }
+                public static int ChrInsPtr { get; private set; }
 
-                public static class PlayerIns
+                public static class ChrIns
                 {
                     public static void Initialize()
                     {
-                        PlayerCtrlPtr = 0x58;
+                        ChrCtrlPtr = 0x58;
                         CsSpecialEffectPtr = 0x178;
                         ModulesPtr = 0x190;
+                        ComManipulatorPtr = 0x580;
 
+                        ChrCtrl.Initialize();
                         Modules.Initialize();
+                        ComManipulator.Initialize();
                     }
 
-                    public static int PlayerCtrlPtr { get; private set; }
+                    public static int ChrCtrlPtr { get; private set; }
                     public static int CsSpecialEffectPtr { get; private set; }
                     public static int ModulesPtr { get; private set; }
+                    public static int ComManipulatorPtr { get; private set; }
 
+                    
+                    public static class ChrCtrl
+                    {
+                        public static void Initialize()
+                        {
+                            UnkPtr = 0xC8;
+                            
+                            Unk.Initialize();
+                        }
+
+                        public static int UnkPtr { get; private set; }
+                        
+                        public static class Unk
+                        {
+                            public static void Initialize()
+                            {
+                                Flags = 0x24;
+                            }
+                            public enum Flag
+                            {
+                                DisableAi = 1 << 0,
+                            }
+                            
+
+                            public static int Flags { get; private set; }
+                        
+                        
+                        }
+                    }
 
                     public static class Modules
                     {
@@ -77,6 +113,8 @@ namespace SilkyRing.Memory
                         {
                             public static void Initialize()
                             {
+                                Health = 0x138;
+                                MaxHealth = 0x13C;
                                 Flags = 0x19B;
                             }
 
@@ -86,6 +124,8 @@ namespace SilkyRing.Memory
                                 NoDamage = 1 << 1,
                             }
 
+                            public static int Health { get; private set; }
+                            public static int MaxHealth { get; private set; }
                             public static int Flags { get; private set; }
                         }
 
@@ -97,6 +137,30 @@ namespace SilkyRing.Memory
                             }
 
                             public static int Coords { get; private set; }
+                        }
+                    }
+                    
+                    public static class ComManipulator
+                    {
+                        public static void Initialize()
+                        {
+                            AiPtr = 0xC0;
+                            
+                            Ai.Initialize();
+                        }
+
+                        public static int AiPtr { get; private set; }
+                        
+                        public static class Ai
+                        {
+                            public static void Initialize()
+                            {
+                                ForceAct = 0xE9C1;
+                                LastAct = 0xE9C2;
+                            }
+
+                            public static int ForceAct { get; private set; }
+                            public static int LastAct { get; private set; }
                         }
                     }
                 }
@@ -158,6 +222,39 @@ namespace SilkyRing.Memory
                 public static int Yellow { get; private set; }
             }
         }
+        
+        public static class GameMan
+        {
+            public static IntPtr Base;
+
+            public static class Offsets
+            {
+                public static void Initialize()
+                {
+                    ForceSave = 0xb72;
+                }
+
+                public static int ForceSave { get; private set; }
+            }
+        }
+        
+        public static class WorldChrManDbg
+        {
+            public static IntPtr Base;
+
+            public static class Offsets
+            {
+                public static void Initialize()
+                {
+                    AllChrsSpheres = 0x9;
+                    PoiseBarsFlag = 0x69;
+              
+                }
+
+                public static int AllChrsSpheres { get; private set; }
+                public static int PoiseBarsFlag { get; private set; }
+            }
+        }
 
         public static class CsTargetingSystem
         {
@@ -180,9 +277,10 @@ namespace SilkyRing.Memory
             public static long InAirTimer;
             public static long NoClipKb;
             public static long NoClipTriggers;
-            public static long AddSubGoal;
+            public static long CreateGoalObj;
             public static long HasSpEffect;
             public static long BlueTargetView;
+            public static long LockedTargetPtr;
         }
 
         public static class Funcs

@@ -23,5 +23,10 @@ namespace SilkyRing.Memory
             BlueTargetView = 0x360
         }
 
+        public enum LockedTarget
+        {
+            SavedPtr = 0x560,
+            Code = 0x570,
+        }
     }
 }

@@ -40,6 +40,7 @@ namespace SilkyRing.Memory
             DamageManager.Base = FindAddressByPattern(Pattern.DamageManager);
             MenuMan.Base = FindAddressByPattern(Pattern.MenuMan);
             TargetView.Base = FindAddressByPattern(Pattern.TargetView);
+            GameMan.Base = FindAddressByPattern(Pattern.GameMan);
             
            
 
@@ -66,12 +67,14 @@ namespace SilkyRing.Memory
                 addr => Hooks.NoClipKb = addr.ToInt64(), saved);
             TryPatternWithFallback("NoClipTriggers", Pattern.NoClipTriggers,
                 addr => Hooks.NoClipTriggers = addr.ToInt64(), saved);
-            TryPatternWithFallback("AddSubGoal", Pattern.AddSubGoal,
-                addr => Hooks.AddSubGoal = addr.ToInt64(), saved);
+            TryPatternWithFallback("AddSubGoal", Pattern.CreateGoalObj,
+                addr => Hooks.CreateGoalObj = addr.ToInt64(), saved);
             TryPatternWithFallback("HasSpEffect", Pattern.HasSpEffect,
                 addr => Hooks.HasSpEffect = addr.ToInt64(), saved);
             TryPatternWithFallback("BlueTargetView", Pattern.BlueTargetViewHook,
                 addr => Hooks.BlueTargetView = addr.ToInt64(), saved);
+            TryPatternWithFallback("LockedTargetPtr", Pattern.LockedTargetPtr,
+                addr => Hooks.LockedTargetPtr = addr.ToInt64(), saved);
             // TryPatternWithFallback("AddSubGoal", Patterns.AddSubGoal, addr => Offsets.Hooks.AddSubGoal = addr.ToInt64(),
             //     saved);
             // TryPatternWithFallback("InAirTimer", Patterns.NoClipInAirTimer,
@@ -137,6 +140,7 @@ namespace SilkyRing.Memory
             Console.WriteLine($"DamageManager.Base: 0x{DamageManager.Base.ToInt64():X}");
             Console.WriteLine($"MenuMan.Base: 0x{MenuMan.Base.ToInt64():X}");
             Console.WriteLine($"TargetView.Base: 0x{TargetView.Base.ToInt64():X}");
+            Console.WriteLine($"GameMan.Base: 0x{GameMan.Base.ToInt64():X}");
            
              Console.WriteLine($"Patches.NoLogo: 0x{Patches.DungeonWarp.ToInt64():X}");
 //            
@@ -144,7 +148,7 @@ namespace SilkyRing.Memory
              Console.WriteLine($"Hooks.InAirTimer: 0x{Hooks.InAirTimer:X}");
              Console.WriteLine($"Hooks.NoClipKb: 0x{Hooks.NoClipKb:X}");
              Console.WriteLine($"Hooks.NoClipTriggers: 0x{Hooks.NoClipTriggers:X}");
-             Console.WriteLine($"Hooks.AddSubGoal: 0x{Hooks.AddSubGoal:X}");
+             Console.WriteLine($"Hooks.AddSubGoal: 0x{Hooks.CreateGoalObj:X}");
              Console.WriteLine($"Hooks.HasSpEffect: 0x{Hooks.HasSpEffect:X}");
              Console.WriteLine($"Hooks.BlueTargetView: 0x{Hooks.BlueTargetView:X}");
 //             

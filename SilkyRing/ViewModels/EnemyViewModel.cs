@@ -10,21 +10,23 @@ namespace SilkyRing.ViewModels
 {
     public class EnemyViewModel : BaseViewModel
     {
-        // private bool _areOptionsEnabled = true;
-        // private bool _isTargetOptionsEnabled;
-        // private bool _isValidTarget;
-        // private readonly DispatcherTimer _targetOptionsTimer;
-        //
-        // private int _targetCurrentHealth;
-        // private int _targetMaxHealth;
-        // private long _currentTargetId;
+        private bool _areOptionsEnabled = true;
+        private bool _isTargetOptionsEnabled;
+        private bool _isValidTarget;
+        private readonly DispatcherTimer _targetOptionsTimer;
+        
+        private int _targetCurrentHealth;
+        private int _targetMaxHealth;
+        private long _currentTargetId;
         // private float _targetSpeed;
         // private bool _isFreezeHealthEnabled;
-        // private bool _isDisableTargetAiEnabled;
-        // private bool _isRepeatActEnabled;
-        //
-        // private int _lastAct;
-        //
+        private bool _isDisableTargetAiEnabled;
+        private bool _isRepeatActEnabled;
+
+        private int _lastAct;
+        private int _forceAct;
+        
+        
         // private ResistancesWindow _resistancesWindowWindow;
         // private bool _isResistancesWindowOpen;
         //
@@ -73,13 +75,11 @@ namespace SilkyRing.ViewModels
             // _hotkeyManager = hotkeyManager;
             RegisterHotkeys();
             
-            
-            
-            // _targetOptionsTimer = new DispatcherTimer
-            // {
-            //     Interval = TimeSpan.FromMilliseconds(64)
-            // };
-            // _targetOptionsTimer.Tick += TargetOptionsTimerTick;
+            _targetOptionsTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(64)
+            };
+            _targetOptionsTimer.Tick += TargetOptionsTimerTick;
         }
 
         private void RegisterHotkeys()
@@ -126,52 +126,64 @@ namespace SilkyRing.ViewModels
 
         private void TargetOptionsTimerTick(object sender, EventArgs e)
         {
-            // if (!IsTargetValid())
-            // {
-            //     IsValidTarget = false;
-            //     _enemyService.ClearLockedTarget();
-            //     _isDisableTargetAiEnabled = false;
-            //     OnPropertyChanged(nameof(IsDisableTargetAiEnabled));
-            //     TargetCurrentHealth = 0;
-            //     TargetCurrentLightPoise = 0;
-            //     TargetCurrentHeavyPoise = 0;
-            //     TargetCurrentBleed = 0;
-            //     TargetCurrentPoison = 0;
-            //     TargetCurrentToxic = 0;
-            //     return;
-            // }
-            //
-            // IsValidTarget = true;
-            // long targetId = _enemyService.GetTargetId();
-            // if (targetId != _currentTargetId)
-            // {
-            //     IsDisableTargetAiEnabled = _enemyService.IsAiDisabled(targetId);
-            //
-            //     _currentTargetId = targetId;
-            //     TargetMaxHeavyPoise = _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.HeavyPoiseMax);
-            //     TargetMaxLightPoise = _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.LightPoiseMax);
-            //     (IsPoisonToxicImmune, IsBleedImmune) = _enemyService.GetImmunities();
-            //     TargetMaxPoison = IsPoisonToxicImmune
-            //         ? 0
-            //         : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.PoisonMax);
-            //     TargetMaxToxic = IsPoisonToxicImmune
-            //         ? 0
-            //         : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.ToxicMax);
-            //     TargetMaxBleed = IsBleedImmune
-            //         ? 0
-            //         : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.BleedMax);
-            //
-            //     IsLightPoiseImmune = _enemyService.IsLightPoiseImmune();
-            //     UpdateDefenses();
-            //     
-            //     if (!IsResistancesWindowOpen || _resistancesWindowWindow == null) return;
-            //     _resistancesWindowWindow.DataContext = null;
-            //     _resistancesWindowWindow.DataContext = this;
-            //   
-            // }
-            // TargetCurrentHealth = _enemyService.GetTargetHp();
-            // TargetMaxHealth = _enemyService.GetTargetMaxHp();
-            // LastAct = _enemyService.GetLastAct();
+            if (!IsTargetValid())
+            {
+                IsValidTarget = false;
+                _enemyService.ClearLockedTarget();
+                _isDisableTargetAiEnabled = false;
+                OnPropertyChanged(nameof(IsDisableTargetAiEnabled));
+                TargetCurrentHealth = 0;
+                // TargetCurrentLightPoise = 0;
+                // TargetCurrentHeavyPoise = 0;
+                // TargetCurrentBleed = 0;
+                // TargetCurrentPoison = 0;
+                // TargetCurrentToxic = 0;
+                return;
+            }
+            
+            IsValidTarget = true;
+            long targetId = _enemyService.GetTargetPtr();
+            if (targetId != _currentTargetId)
+            {
+                IsDisableTargetAiEnabled = _enemyService.IsAiDisabled();
+               // IsTargetingViewEnabled = _enemyService.IsTargetViewEnabled();
+               int forceActValue = _enemyService.GetForceAct();
+               if (forceActValue != 0)
+               {
+                   IsRepeatActEnabled = true;
+                   ForceAct = forceActValue;
+               }
+               else
+               {
+                   ForceAct = 0;
+                   IsRepeatActEnabled = false;
+               }
+               
+                _currentTargetId = targetId;
+                // TargetMaxHeavyPoise = _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.HeavyPoiseMax);
+                // TargetMaxLightPoise = _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.LightPoiseMax);
+                // (IsPoisonToxicImmune, IsBleedImmune) = _enemyService.GetImmunities();
+                // TargetMaxPoison = IsPoisonToxicImmune
+                //     ? 0
+                //     : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.PoisonMax);
+                // TargetMaxToxic = IsPoisonToxicImmune
+                //     ? 0
+                //     : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.ToxicMax);
+                // TargetMaxBleed = IsBleedImmune
+                //     ? 0
+                //     : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.BleedMax);
+                //
+                // IsLightPoiseImmune = _enemyService.IsLightPoiseImmune();
+                // UpdateDefenses();
+                //
+                // if (!IsResistancesWindowOpen || _resistancesWindowWindow == null) return;
+                // _resistancesWindowWindow.DataContext = null;
+                // _resistancesWindowWindow.DataContext = this;
+              
+            }
+            TargetCurrentHealth = _enemyService.GetTargetHp();
+            TargetMaxHealth = _enemyService.GetTargetMaxHp();
+            LastAct = _enemyService.GetLastAct();
             //
             // TargetSpeed = _enemyService.GetTargetSpeed();
             // TargetCurrentHeavyPoise = _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.HeavyPoiseCurrent);
@@ -201,11 +213,11 @@ namespace SilkyRing.ViewModels
             // StrikeDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Strike);
         }
 
-        // public bool AreOptionsEnabled
-        // {
-        //     get => _areOptionsEnabled;
-        //     set => SetProperty(ref _areOptionsEnabled, value);
-        // }
+        public bool AreOptionsEnabled
+        {
+            get => _areOptionsEnabled;
+            set => SetProperty(ref _areOptionsEnabled, value);
+        }
         
         private bool _isRykardNoMegaEnabled;
         public bool IsRykardNoMegaEnabled
@@ -219,78 +231,77 @@ namespace SilkyRing.ViewModels
             
       
         }
-        //
-        // public bool IsValidTarget
-        // {
-        //     get => _isValidTarget;
-        //     set => SetProperty(ref _isValidTarget, value);
-        // }
-        //
-        // private bool IsTargetValid()
-        // {
-        //     long targetId = _enemyService.GetTargetId();
-        //     if (targetId == 0)
-        //         return false;
-        //
-        //     float health = _enemyService.GetTargetHp();
-        //     float maxHealth = _enemyService.GetTargetMaxHp();
-        //     if (health < 0 || maxHealth <= 0 || health > 10000000 || maxHealth > 10000000)
-        //         return false;
-        //
-        //     if (health > maxHealth * 1.5) return false;
-        //
-        //     var position = _enemyService.GetTargetPos();
-        //
-        //     if (float.IsNaN(position[0]) || float.IsNaN(position[1]) || float.IsNaN(position[2]))
-        //         return false;
-        //
-        //     if (Math.Abs(position[0]) > 10000 || Math.Abs(position[1]) > 10000 || Math.Abs(position[2]) > 10000)
-        //         return false;
-        //
-        //     return true;
-        // }
-        //
-        // public bool IsTargetOptionsEnabled
-        // {
-        //     get => _isTargetOptionsEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isTargetOptionsEnabled, value)) return;
-        //         if (value)
-        //         {
-        //             _enemyService.ToggleTargetHook(true);
-        //             _targetOptionsTimer.Start();
-        //             _enemyService.ToggleCurrentActHook(true);
-        //             ShowAllResistances = true;
-        //         }
-        //         else
-        //         {
-        //             _targetOptionsTimer.Stop();
-        //             _enemyService.ToggleCurrentActHook(false);
-        //             ShowAllResistances = false;
-        //             IsResistancesWindowOpen = false;
-        //             IsFreezeHealthEnabled = false;
-        //             _enemyService.ToggleTargetHook(false);
-        //             ShowHeavyPoise = false;
-        //             ShowLightPoise = false;
-        //             ShowBleed = false;
-        //             ShowPoison = false;
-        //             ShowToxic = false;
-        //         }
-        //     }
-        // }
-        //
-        // public bool IsDisableTargetAiEnabled
-        // {
-        //     get => _isDisableTargetAiEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isDisableTargetAiEnabled, value))
-        //         {
-        //             _enemyService.ToggleTargetAi(_isDisableTargetAiEnabled);
-        //         }
-        //     }
-        // }
+
+        public bool IsValidTarget
+        {
+            get => _isValidTarget;
+            set => SetProperty(ref _isValidTarget, value);
+        }
+        
+        private bool IsTargetValid()
+        {
+            long targetId = _enemyService.GetTargetPtr();
+            if (targetId == 0)
+                return false;
+        
+            float health = _enemyService.GetTargetHp();
+            float maxHealth = _enemyService.GetTargetMaxHp();
+            if (health < 0 || maxHealth <= 0 || health > 10000000 || maxHealth > 10000000)
+                return false;
+        
+            if (health > maxHealth * 1.5) return false;
+        
+            var position = _enemyService.GetTargetPos();
+        
+            if (float.IsNaN(position[0]) || float.IsNaN(position[1]) || float.IsNaN(position[2]))
+                return false;
+        
+            if (Math.Abs(position[0]) > 10000 || Math.Abs(position[1]) > 10000 || Math.Abs(position[2]) > 10000)
+                return false;
+        
+            return true;
+        }
+        
+        public bool IsTargetOptionsEnabled
+        {
+            get => _isTargetOptionsEnabled;
+            set
+            {
+                if (!SetProperty(ref _isTargetOptionsEnabled, value)) return;
+                if (value)
+                {
+                    _enemyService.ToggleTargetHook(true);
+                    _targetOptionsTimer.Start();
+                    // ShowAllResistances = true;
+                }
+                else
+                {
+                    _targetOptionsTimer.Stop();
+                    IsRepeatActEnabled = false;
+                    // ShowAllResistances = false;
+                    // IsResistancesWindowOpen = false;
+                    // IsFreezeHealthEnabled = false;
+                    _enemyService.ToggleTargetHook(false);
+                    // ShowHeavyPoise = false;
+                    // ShowLightPoise = false;
+                    // ShowBleed = false;
+                    // ShowPoison = false;
+                    // ShowToxic = false;
+                }
+            }
+        }
+        
+        public bool IsDisableTargetAiEnabled
+        {
+            get => _isDisableTargetAiEnabled;
+            set
+            {
+                if (SetProperty(ref _isDisableTargetAiEnabled, value))
+                {
+                    _enemyService.ToggleTargetAi(_isDisableTargetAiEnabled);
+                }
+            }
+        }
         //
         // private void UpdateResistancesDisplay()
         // {
@@ -348,39 +359,62 @@ namespace SilkyRing.ViewModels
         //     _resistancesWindowWindow = null;
         // }
         //
-        // public bool IsRepeatActEnabled
-        // {
-        //     get => _isRepeatActEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isRepeatActEnabled, value)) return;
-        //         _enemyService.ToggleRepeatAct(_isRepeatActEnabled);
-        //     }
-        // }
-        //
-        // public int LastAct
-        // {
-        //     get => _lastAct;
-        //     set => SetProperty(ref _lastAct, value);
-        // }
-        //
-        // public int TargetCurrentHealth
-        // {
-        //     get => _targetCurrentHealth;
-        //     set => SetProperty(ref _targetCurrentHealth, value);
-        // }
-        //
-        // public int TargetMaxHealth
-        // {
-        //     get => _targetMaxHealth;
-        //     set => SetProperty(ref _targetMaxHealth, value);
-        // }
-        //
-        // public void SetTargetHealth(int value)
-        // {
-        //     int health = TargetMaxHealth * value / 100;
-        //     _enemyService.SetTargetHp(health);
-        // }
+        public bool IsRepeatActEnabled
+        {
+            get => _isRepeatActEnabled;
+            set
+            {
+                if (!SetProperty(ref _isRepeatActEnabled, value)) return;
+
+                bool isRepeating = _enemyService.IsTargetRepeating();
+
+                switch (value)
+                {
+                    case true when !isRepeating:
+                        _enemyService.ToggleRepeatAct(true);
+                        ForceAct = _enemyService.GetLastAct();
+                        break;
+                    case false when isRepeating:
+                        _enemyService.ToggleRepeatAct(false);
+                        ForceAct = 0;
+                        break;
+                }
+            }
+        }
+        
+        public int ForceAct
+        {
+            get => _forceAct;
+            set
+            {
+                if (!SetProperty(ref _forceAct, value)) return;
+                _enemyService.ForceAct(_forceAct);
+                if (_forceAct == 0) IsRepeatActEnabled = false;
+            }
+        }
+        
+        public int LastAct
+        {
+            get => _lastAct;
+            set => SetProperty(ref _lastAct, value);
+        }
+        public int TargetCurrentHealth
+        {
+            get => _targetCurrentHealth;
+            set => SetProperty(ref _targetCurrentHealth, value);
+        }
+        
+        public int TargetMaxHealth
+        {
+            get => _targetMaxHealth;
+            set => SetProperty(ref _targetMaxHealth, value);
+        }
+        
+        public void SetTargetHealth(int value)
+        {
+            int health = TargetMaxHealth * value / 100;
+            _enemyService.SetTargetHp(health);
+        }
         //
         // public float TargetSpeed
         // {
@@ -665,25 +699,25 @@ namespace SilkyRing.ViewModels
         //     }
         // }
         //
-        // public void TryEnableFeatures()
-        // {
-        //     if (IsTargetOptionsEnabled)
-        //     {
-        //         _enemyService.ToggleTargetHook(true);
-        //         _targetOptionsTimer.Start();
-        //     }
-        //     _enemyService.ClearDisableEntities();
-        //     _enemyService.ToggleTargetAi(false);
-        //     AreOptionsEnabled = true;
-        // }
-        //
-        // public void DisableFeatures()
-        // {
-        //     _targetOptionsTimer.Stop();
-        //     IsFreezeHealthEnabled = false;
-        //     LastAct = 0;
-        //     AreOptionsEnabled = false;
-        // }
+        public void TryEnableFeatures()
+        {
+            if (IsTargetOptionsEnabled)
+            {
+                _enemyService.ToggleTargetHook(true);
+                _targetOptionsTimer.Start();
+            }
+            _enemyService.ToggleTargetAi(false);
+            AreOptionsEnabled = true;
+        }
+
+        public void DisableFeatures()
+        {
+            _targetOptionsTimer.Stop();
+            // IsFreezeHealthEnabled = false;
+            LastAct = 0;
+            ForceAct = 0;
+            AreOptionsEnabled = false;
+        }
         //
         // public void TryApplyOneTimeFeatures()
         // {
