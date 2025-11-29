@@ -53,7 +53,6 @@ namespace SilkyRing.ViewModels
 
 
         private readonly ITargetService _targetService;
-        // private readonly DamageControlService _damageControlService;
         // private readonly HotkeyManager _hotkeyManager;
 
         public TargetViewModel(ITargetService targetService, IStateService stateService)
@@ -70,6 +69,10 @@ namespace SilkyRing.ViewModels
             SetHpPercentageCommand = new DelegateCommand(SetHpPercentage);
             SetCustomHpCommand = new DelegateCommand(SetCustomHp);
 
+
+
+            KillAllCommand = new DelegateCommand(KillAllBesidesTarget);
+
             _targetTick = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(64)
@@ -77,7 +80,21 @@ namespace SilkyRing.ViewModels
             _targetTick.Tick += TargetTick;
         }
 
+      
 
+        #region Commands
+
+        public ICommand SetHpCommand { get; set; }
+        public ICommand SetHpPercentageCommand { get; set; }
+        public ICommand SetCustomHpCommand { get; set; }
+        
+        
+        
+        public ICommand KillAllCommand { get; set; }
+
+        #endregion
+        
+        
         #region Properties
 
         private bool _areOptionsEnabled = true;
@@ -225,13 +242,7 @@ namespace SilkyRing.ViewModels
 
         #endregion
 
-        #region Commands
-
-        public ICommand SetHpCommand { get; set; }
-        public ICommand SetHpPercentageCommand { get; set; }
-        public ICommand SetCustomHpCommand { get; set; }
-
-        #endregion
+   
 
 
         #region Private Methods
@@ -418,6 +429,8 @@ namespace SilkyRing.ViewModels
             // ThrustDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Thrust);
             // StrikeDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Strike);
         }
+
+        private void KillAllBesidesTarget() => _targetService.KillAllBesidesTarget();
 
         #endregion
 

@@ -1,7 +1,6 @@
-﻿using System.Windows;
-using SilkyRing.ViewModels;
+﻿using SilkyRing.ViewModels;
 
-namespace SilkyRing.Views
+namespace SilkyRing.Views.Tabs
 {
     public partial class EventTab
     {

@@ -222,6 +222,15 @@
             5
         );
 
+        public static readonly Pattern LookupByFieldInsHandle = new Pattern(
+            [0xE8, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8B, 0x5C, 0x24, 0x30, 0x48, 0x85, 0xC0, 0x74, 0x15],
+            "x????xxxxxxxxxx",
+            0,
+            AddressingMode.Relative,
+            1,
+            5
+        );
+
 
         //Patches
 

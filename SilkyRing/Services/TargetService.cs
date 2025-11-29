@@ -116,6 +116,21 @@ namespace SilkyRing.Services
             return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage);
         }
 
+        public void KillAllBesidesTarget()
+        {
+            var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
+            var lockedTarget =
+                memoryService.ReadInt64(CodeCaveOffsets.Base + (int)CodeCaveOffsets.LockedTarget.SavedPtr);
+            var bytes = AsmLoader.GetAsmBytes("KillAll");
+            AsmHelper.WriteAbsoluteAddresses(bytes, new []
+            {
+                (lockedTarget, 0x4 + 2),
+                (worldChrMan, 0xE + 2),
+            });
+            
+            memoryService.AllocateAndExecute(bytes);
+        }
+
         private IntPtr GetChrFlagsPtr()
         {
             return memoryService.FollowPointers(

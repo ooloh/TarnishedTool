@@ -29,4 +29,6 @@ public interface ITargetService
     bool IsTargetViewEnabled();
     void ToggleTargetNoDamage(bool isFreezeHealthEnabled);
     bool IsTargetNoDamageEnabled();
+
+    void KillAllBesidesTarget();
 }

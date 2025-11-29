@@ -123,23 +123,8 @@ namespace SilkyRing.Memory
             Funcs.SetEvent = FindAddressByPattern(Pattern.SetEvent).ToInt64();
             Funcs.SetSpEffect = FindAddressByPattern(Pattern.SetSpEffect).ToInt64();
             Funcs.GiveRunes = FindAddressByPattern(Pattern.GiveRunes).ToInt64();
-            // Offsets.Funcs.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawnFunc).ToInt64();
-            // Offsets.Funcs.BreakAllObjects = FindAddressByPattern(Patterns.BreakAllObjects).ToInt64();
-            // Offsets.Funcs.RestoreAllObjects = FindAddressByPattern(Patterns.RestoreAllObjects).ToInt64();
-            // Offsets.Funcs.SetEvent = FindAddressByPattern(Patterns.SetEvent).ToInt64();
-            // Offsets.Funcs.Travel = FindAddressByPattern(Patterns.TravelFunc).ToInt64();
-            // Offsets.Funcs.GetEvent = FindAddressByPattern(Patterns.GetEvent).ToInt64();
-            // Offsets.Funcs.SetSpEffect = FindAddressByPattern(Patterns.SetSpEffect).ToInt64();
-            // Offsets.Funcs.LevelUp = Offsets.Funcs.Travel - 0x720;
-            // Offsets.Funcs.ReinforceWeapon = Offsets.Funcs.Travel - 0x1620;
-            // Offsets.Funcs.InfuseWeapon = Offsets.Funcs.Travel - 0x1CB0;
-            // Offsets.Funcs.Repair = Offsets.Funcs.Travel - 0x14C0;
-            // Offsets.Funcs.Attunement = Offsets.Funcs.Travel - 0xB10;
-            // Offsets.Funcs.AllotEstus = Offsets.Funcs.Travel - 0x2010;
-            // Offsets.Funcs.Transpose = Offsets.Funcs.Travel - 0x1A10;
-            // Offsets.Funcs.RegularShop = Offsets.Funcs.Travel - 0x1B50;
-            // Offsets.Funcs.CombineMenuFlagAndEventFlag =
-            //     FindAddressByPattern(Patterns.CombineMenuFlagAndEventFlag).ToInt64();
+            Funcs.LookupByFieldInsHandle = FindAddressByPattern(Pattern.LookupByFieldInsHandle).ToInt64();
+      
 
 
 #if DEBUG
@@ -174,6 +159,7 @@ namespace SilkyRing.Memory
              Console.WriteLine($"Funcs.SetEvent: 0x{Funcs.SetEvent:X}");
              Console.WriteLine($"Funcs.SetSpEffect: 0x{Funcs.SetSpEffect:X}");
              Console.WriteLine($"Funcs.GiveRunes: 0x{Funcs.GiveRunes:X}");
+             Console.WriteLine($"Funcs.LookupByFieldInsHandle: 0x{Funcs.LookupByFieldInsHandle:X}");
 #endif
         }
 

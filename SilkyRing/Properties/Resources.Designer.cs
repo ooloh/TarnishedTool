@@ -138,6 +138,27 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
+        ///49 be 00 00 00 00 00    movabs r14,0x0
+        ///00 00 00
+        ///49 bf 00 00 00 00 00    movabs r15,0x0
+        ///00 00 00
+        ///49 8b 8f 08 e5 01 00    mov    rcx,QWORD PTR [r15+0x1e508]
+        ///48 8b 01                mov    rax,QWORD PTR [rcx]
+        ///ff 10                   call   QWORD PTR [rax]
+        ///48 89 c6                mov    rsi,rax
+        ///49 8b bf b8 f1 01 00    mov    rdi,QWORD PTR [r15+0x1f1b8]
+        ///49 8b 9f c0 f1 01 00    mov    rbx,QWORD PTR [r15+0x1f1c0]
+        ///000000000035 &lt;loop_start&gt;:
+        ///48 39 df                [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string KillAll {
+            get {
+                return ResourceManager.GetString("KillAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 8b 8f 88 00 00 00    mov    rcx,QWORD PTR [rdi+0x88]
         ///48 89 05 00 00 00 00    mov    QWORD PTR [rip+0x0],rax        # e &lt;_main+0xe&gt;
         ///e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;.

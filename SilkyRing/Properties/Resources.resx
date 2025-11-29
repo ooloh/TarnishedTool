@@ -795,4 +795,50 @@ ff d0                   call   rax
 48 83 c4 20             add    rsp,0x20
 c3                      ret</value>
   </data>
+  <data name="KillAll" xml:space="preserve">
+    <value>48 83 ec 28             sub    rsp,0x28
+49 be 00 00 00 00 00    movabs r14,0x0
+00 00 00
+49 bf 00 00 00 00 00    movabs r15,0x0
+00 00 00
+49 8b 8f 08 e5 01 00    mov    rcx,QWORD PTR [r15+0x1e508]
+48 8b 01                mov    rax,QWORD PTR [rcx]
+ff 10                   call   QWORD PTR [rax]
+48 89 c6                mov    rsi,rax
+49 8b bf b8 f1 01 00    mov    rdi,QWORD PTR [r15+0x1f1b8]
+49 8b 9f c0 f1 01 00    mov    rbx,QWORD PTR [r15+0x1f1c0]
+000000000035 &lt;loop_start&gt;:
+48 39 df                cmp    rdi,rbx
+74 4c                   je     86 &lt;exit&gt;
+4c 8b 27                mov    r12,QWORD PTR [rdi]
+4d 85 e4                test   r12,r12
+74 3e                   je     80 &lt;skip&gt;
+4d 39 f4                cmp    r12,r14
+74 39                   je     80 &lt;skip&gt;
+41 81 7c 24 60 00 b4    cmp    DWORD PTR [r12+0x60],0x4c4b400
+c4 04
+74 2e                   je     80 &lt;skip&gt;
+49 8b 04 24             mov    rax,QWORD PTR [r12]
+4c 89 e1                mov    rcx,r12
+ff 10                   call   QWORD PTR [rax]
+00000000005b &lt;runtime_class_loop&gt;:
+48 85 c0                test   rax,rax
+74 0b                   je     6b &lt;process_non_player&gt;
+48 39 f0                cmp    rax,rsi
+74 1b                   je     80 &lt;skip&gt;
+48 8b 40 08             mov    rax,QWORD PTR [rax+0x8]
+eb f0                   jmp    5b &lt;runtime_class_loop&gt;
+00000000006b &lt;process_non_player&gt;:
+49 8b 84 24 90 01 00    mov    rax,QWORD PTR [r12+0x190]
+00
+48 8b 00                mov    rax,QWORD PTR [rax]
+c7 80 38 01 00 00 00    mov    DWORD PTR [rax+0x138],0x0
+00 00 00
+000000000080 &lt;skip&gt;:
+48 83 c7 08             add    rdi,0x8
+eb af                   jmp    35 &lt;loop_start&gt;
+000000000086 &lt;exit&gt;:
+48 83 c4 28             add    rsp,0x28
+c3                      ret</value>
+  </data>
 </root>

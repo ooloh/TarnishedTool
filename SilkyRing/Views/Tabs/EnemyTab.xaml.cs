@@ -1,14 +1,12 @@
-﻿// 
-
-using System.Windows.Controls;
-using SilkyRing.ViewModels;
+﻿using SilkyRing.ViewModels;
 
 namespace SilkyRing.Views.Tabs;
 
-public partial class EnemyTab : UserControl
+public partial class EnemyTab
 {
     public EnemyTab(EnemyViewModel enemyViewModel)
     {
         InitializeComponent();
+        DataContext = enemyViewModel;
     }
 }

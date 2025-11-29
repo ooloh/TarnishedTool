@@ -1,11 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using SilkyRing.Utilities;
+﻿using SilkyRing.Utilities;
 using SilkyRing.ViewModels;
-using Xceed.Wpf.Toolkit;
 
-namespace SilkyRing.Views
+namespace SilkyRing.Views.Tabs
 {
     public partial class TargetTab
     {

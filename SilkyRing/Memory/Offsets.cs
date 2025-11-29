@@ -180,6 +180,7 @@ namespace SilkyRing.Memory
             public static long SetEvent;
             public static long SetSpEffect;
             public static long GiveRunes;
+            public static long LookupByFieldInsHandle;
         }
 
         public static class Patches
