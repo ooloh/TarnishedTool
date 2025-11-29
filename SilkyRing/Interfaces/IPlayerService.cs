@@ -4,5 +4,22 @@ namespace SilkyRing.Interfaces;
 
 public interface IPlayerService
 {
-    
+    void SetHp(int hp);
+    int GetCurrentHp();
+    int GetMaxHp();
+    void SetFullHp();
+    void SetRtsr();
+    float GetSpeed();
+    void SetSpeed(float speed);
+    void ToggleInfinitePoise(bool isInfinitePoiseEnabled);
+    void ApplySpEffect(long spEffectId);
+    void ToggleChrDataFlag(int offset, byte bitmask, bool isEnabled);
+    void ToggleDebugFlag(int offset, bool isEnabled);
+    void ToggleNoRuneGain(bool isNoRuneGainEnabled);
+    void ToggleNoRuneArcLoss(bool isNoRuneArcLossEnabled);
+    void ToggleNoRuneLoss(bool isNoRuneLossEnabled);
+    void SetNewGame(int value);
+    int GetNewGame();
+    void GiveRunes(int runes);
+    int GetRuneLevel();
 }

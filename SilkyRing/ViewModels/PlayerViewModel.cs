@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Reflection;
 using System.Windows.Threading;
+using SilkyRing.Enums;
 using SilkyRing.Interfaces;
 using SilkyRing.Memory;
-using SilkyRing.Services;
 using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.ViewModels
@@ -11,7 +10,9 @@ namespace SilkyRing.ViewModels
     public class PlayerViewModel : BaseViewModel
     {
         private int _currentHp;
+
         private int _currentMaxHp;
+
         //
         // private bool _isPos1Saved;
         // private bool _isPos2Saved;
@@ -35,7 +36,9 @@ namespace SilkyRing.ViewModels
         private bool _isNoRuneGainEnabled;
         private bool _isNoRuneLossEnabled;
         private bool _isNoRuneArcLossEnabled;
+
         private bool _isInfinitePoiseEnabled;
+
         // private bool _isAutoSetNewGameSevenEnabled;
         //
         // private bool _isDisableSoulMemWriteEnabled;
@@ -50,35 +53,38 @@ namespace SilkyRing.ViewModels
         // private int _adp;
         // private int _vitality;
         private int _runeLevel;
+
         // private int _soulMemory;
-        private int _runes = 10000; 
+        private int _runes = 10000;
         private int _newGame;
 
         private int _currentRuneLevel;
-        
+
         // private HealthWindow _healthWindow;
 
         // private bool _isHealthWindowOpen;
-        
+
         private float _playerSpeed;
         private float _playerDesiredSpeed = -1f;
         private const float DefaultSpeed = 1f;
         private const float Epsilon = 0.0001f;
-        
+
         private bool _pauseUpdates = true;
         private bool _areOptionsEnabled;
         private readonly DispatcherTimer _timer;
 
-        private readonly PlayerService _playerService;
+        private readonly IPlayerService _playerService;
         // private readonly DamageControlService _damageControlService;
         // private readonly HotkeyManager _hotkeyManager;
 
-        public PlayerViewModel(PlayerService playerService, IStateService stateService)
+        public PlayerViewModel(IPlayerService playerService, IStateService stateService)
         {
             _playerService = playerService;
 
-
             RegisterHotkeys();
+
+            stateService.Subscribe(State.Loaded, OnGameLoaded);
+            stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
 
             _timer = new DispatcherTimer
             {
@@ -87,10 +93,10 @@ namespace SilkyRing.ViewModels
             _timer.Tick += (s, e) =>
             {
                 if (_pauseUpdates) return;
-            
+
                 CurrentHp = _playerService.GetCurrentHp();
                 CurrentMaxHp = _playerService.GetMaxHp();
-                PlayerSpeed = _playerService.GetPlayerSpeed();
+                PlayerSpeed = _playerService.GetSpeed();
                 int newRuneLevel = _playerService.GetRuneLevel();
                 // SoulMemory = _playerService.GetSoulMemory();
                 // _coords = _playerService.GetCoords();
@@ -105,60 +111,18 @@ namespace SilkyRing.ViewModels
             _timer.Start();
         }
 
-        private void RegisterHotkeys()
-        {
-            // _hotkeyManager.RegisterAction("SavePos1", () => SavePos(0));
-            // _hotkeyManager.RegisterAction("SavePos2", () => SavePos(1));
-            // _hotkeyManager.RegisterAction("RestorePos1", () => RestorePos(0));
-            // _hotkeyManager.RegisterAction("RestorePos2", () => RestorePos(1));
-            // _hotkeyManager.RegisterAction("RTSR", SetRtsr);
-            // _hotkeyManager.RegisterAction("NoDeath", () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
-            // _hotkeyManager.RegisterAction("OneShot", () => { IsOneShotEnabled = !IsOneShotEnabled; });
-            // _hotkeyManager.RegisterAction("DealNoDamage", () => { IsDealNoDamageEnabled = !IsDealNoDamageEnabled; });
-            // _hotkeyManager.RegisterAction("PlayerNoDamage", () => { IsNoDamageEnabled = !IsNoDamageEnabled; });
-            // _hotkeyManager.RegisterAction("RestoreSpellcasts", () =>
-            // {
-            //     if (!AreOptionsEnabled) return;
-            //     _playerService.RestoreSpellcasts();
-            // });
-            // _hotkeyManager.RegisterAction("RestoreHumanity", () =>
-            // {
-            //     if (!AreOptionsEnabled) return;
-            //     _playerService.SetSpEffect(GameIds.SpEffects.SpEffectData.RestoreHumanity);
-            // });
-            //
-            // _hotkeyManager.RegisterAction("Rest", () =>
-            // {
-            //     if (!AreOptionsEnabled) return;
-            //     _playerService.SetSpEffect(GameIds.SpEffects.SpEffectData.BonfireRest);
-            // });
-            // _hotkeyManager.RegisterAction("TogglePlayerSpeed", ToggleSpeed);
-            // _hotkeyManager.RegisterAction("IncreasePlayerSpeed", () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
-            // _hotkeyManager.RegisterAction("DecreasePlayerSpeed", () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
-        }
+       
 
-        private void LoadStats()
-        {
-            // Vigor = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Vigor);
-            // Endurance = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Endurance);
-            // Vitality = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Vitality);
-            // Attunement = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Attunement);
-            // Strength = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Strength);
-            // Dexterity = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Dexterity);
-            // Adp = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Adp);
-            // Intelligence = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Intelligence);
-            // Faith = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Faith);
-            RuneLevel = _playerService.GetRuneLevel();
-            NewGame = _playerService.GetNewGame();
-            // PlayerSpeed = _playerService.GetPlayerSpeed();
-        }
+        #region Commands
+
+        #endregion
 
 
         public void PauseUpdates()
         {
             _pauseUpdates = true;
         }
-        
+
         public void ResumeUpdates()
         {
             _pauseUpdates = false;
@@ -175,22 +139,23 @@ namespace SilkyRing.ViewModels
             get => _currentHp;
             set => SetProperty(ref _currentHp, value);
         }
-        
+
         public int CurrentMaxHp
         {
             get => _currentMaxHp;
             set => SetProperty(ref _currentMaxHp, value);
         }
-        
+
         public void SetHp(int hp)
         {
             _playerService.SetHp(hp);
             CurrentHp = hp;
         }
-        
+
         public void SetRtsr() => _playerService.SetRtsr();
-        
-        public void SetMaxHp() =>_playerService.SetFullHp();
+
+        public void SetMaxHp() => _playerService.SetFullHp();
+
         //
         //
         // public bool IsHealthWindowOpen
@@ -286,6 +251,8 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isNoDeathEnabled, value))
                 {
+                    
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.PlayerNoDeath, true);
                     // _playerService.ToggleChrDataFlag(
                     //     WorldChrMan.ChrIns.Modules.ChrData.Flags,
                     //     (byte)WorldChrMan.ChrIns.Modules.ChrData.Flag.NoDeath,
@@ -294,7 +261,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         public bool IsNoDamageEnabled
         {
             get => _isNoDamageEnabled;
@@ -311,7 +278,7 @@ namespace SilkyRing.ViewModels
             }
         }
 
-        
+
         public bool IsInfiniteStaminaEnabled
         {
             get => _isInfiniteStaminaEnabled;
@@ -323,7 +290,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         public bool IsInfiniteGoodsEnabled
         {
             get => _isInfiniteGoodsEnabled;
@@ -336,7 +303,7 @@ namespace SilkyRing.ViewModels
             }
         }
 
-        
+
         public bool IsOneShotEnabled
         {
             get => _isOneShotEnabled;
@@ -348,7 +315,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         public bool IsHiddenEnabled
         {
             get => _isHiddenEnabled;
@@ -360,7 +327,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         public bool IsSilentEnabled
         {
             get => _isSilentEnabled;
@@ -372,7 +339,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         public bool IsInfiniteArrowsEnabled
         {
             get => _isInfiniteArrowsEnabled;
@@ -384,7 +351,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         public bool IsInfiniteFpEnabled
         {
             get => _isInfiniteFpEnabled;
@@ -396,10 +363,8 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
-        
-        
-        
+
+
         public bool IsNoRuneLossEnabled
         {
             get => _isNoRuneLossEnabled;
@@ -411,7 +376,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         public bool IsNoRuneGainEnabled
         {
             get => _isNoRuneGainEnabled;
@@ -423,7 +388,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         public bool IsNoRuneArcLossEnabled
         {
             get => _isNoRuneArcLossEnabled;
@@ -435,7 +400,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         public bool IsInfinitePoiseEnabled
         {
             get => _isInfinitePoiseEnabled;
@@ -447,6 +412,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
+
         //
         // public bool IsAutoSetNewGameSevenEnabled
         // {
@@ -536,7 +502,7 @@ namespace SilkyRing.ViewModels
             get => _runeLevel;
             private set => SetProperty(ref _runeLevel, value);
         }
- 
+
         // public void SetStat(string statName, int value)
         // {
         //     var property = typeof(GameManagerImp.ChrCtrlStats)
@@ -560,7 +526,7 @@ namespace SilkyRing.ViewModels
             get => _runes;
             set => SetProperty(ref _runes, value);
         }
-        
+
         public int NewGame
         {
             get => _newGame;
@@ -572,7 +538,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         public float PlayerSpeed
         {
             get => _playerSpeed;
@@ -584,13 +550,13 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         public void SetSpeed(float value) => PlayerSpeed = value;
-        
+
         private void ToggleSpeed()
         {
             if (!AreOptionsEnabled) return;
-        
+
             if (!IsApproximately(PlayerSpeed, DefaultSpeed))
             {
                 _playerDesiredSpeed = PlayerSpeed;
@@ -601,13 +567,13 @@ namespace SilkyRing.ViewModels
                 SetSpeed(_playerDesiredSpeed);
             }
         }
-        
+
         private bool IsApproximately(float a, float b)
         {
             return Math.Abs(a - b) < Epsilon;
         }
-        
-        
+
+
         public void TryEnableFeatures()
         {
             // if (IsNoDamageEnabled) _playerService.ToggleChrDataFlag(
@@ -622,34 +588,16 @@ namespace SilkyRing.ViewModels
             //     _isNoDeathEnabled
             // );
             
-            AreOptionsEnabled = true;
-            LoadStats();
-            _timer.Start();
-        }
-
-        public void TryApplyOneTimeFeatures()
-        {
-            if (IsOneShotEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.OneShot, true);
-            if (IsInfiniteStaminaEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteStam, true);
-            if (IsInfiniteGoodsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteGoods, true);
-            if (IsSilentEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Silent, true);
-            if (IsHiddenEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Hidden, true);
-            if (IsInfiniteFpEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteFp, true);
-            if (IsInfiniteArrowsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteArrows, true);
-            if (IsInfinitePoiseEnabled) _playerService.ToggleInfinitePoise(true);
-            if (IsNoRuneGainEnabled) _playerService.ToggleNoRuneGain(true);
-            if (IsNoRuneLossEnabled) _playerService.ToggleNoRuneLoss(true);
-            if (IsNoRuneArcLossEnabled) _playerService.ToggleNoRuneArcLoss(true);
-            _pauseUpdates = false;
         }
         
+
         public void DisableFeatures()
         {
             AreOptionsEnabled = false;
-            
+
             _timer.Stop();
         }
-        
+
         //
         // public void RestoreSpellcasts() => _playerService.RestoreSpellcasts();
         //
@@ -663,7 +611,7 @@ namespace SilkyRing.ViewModels
         // public void Rest() => _playerService.SetSpEffect(GameIds.SpEffects.SpEffectData.BonfireRest);
         public void RestoreSpellcasts()
         {
-            throw new NotImplementedException();
+         
         }
 
         public void DoRuneArc()
@@ -677,9 +625,87 @@ namespace SilkyRing.ViewModels
             {
                 _playerService.ApplySpEffect(id);
             }
-            
         }
 
         public void GiveRunes() => _playerService.GiveRunes(Runes);
+
+
+        #region Private Methods
+
+        private void OnGameLoaded()
+        {
+            AreOptionsEnabled = true;
+            LoadStats();
+            _timer.Start();
+        }
+        
+        private void OnGameFirstLoaded()
+        {
+            
+            if (IsOneShotEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.OneShot, true);
+            if (IsInfiniteStaminaEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteStam, true);
+            if (IsInfiniteGoodsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteGoods, true);
+            if (IsSilentEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Silent, true);
+            if (IsHiddenEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Hidden, true);
+            if (IsInfiniteFpEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteFp, true);
+            if (IsInfiniteArrowsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteArrows, true);
+            if (IsInfinitePoiseEnabled) _playerService.ToggleInfinitePoise(true);
+            if (IsNoRuneGainEnabled) _playerService.ToggleNoRuneGain(true);
+            if (IsNoRuneLossEnabled) _playerService.ToggleNoRuneLoss(true);
+            if (IsNoRuneArcLossEnabled) _playerService.ToggleNoRuneArcLoss(true);
+            _pauseUpdates = false;
+        }
+
+
+        private void RegisterHotkeys()
+        {
+            // _hotkeyManager.RegisterAction("SavePos1", () => SavePos(0));
+            // _hotkeyManager.RegisterAction("SavePos2", () => SavePos(1));
+            // _hotkeyManager.RegisterAction("RestorePos1", () => RestorePos(0));
+            // _hotkeyManager.RegisterAction("RestorePos2", () => RestorePos(1));
+            // _hotkeyManager.RegisterAction("RTSR", SetRtsr);
+            // _hotkeyManager.RegisterAction("NoDeath", () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
+            // _hotkeyManager.RegisterAction("OneShot", () => { IsOneShotEnabled = !IsOneShotEnabled; });
+            // _hotkeyManager.RegisterAction("DealNoDamage", () => { IsDealNoDamageEnabled = !IsDealNoDamageEnabled; });
+            // _hotkeyManager.RegisterAction("PlayerNoDamage", () => { IsNoDamageEnabled = !IsNoDamageEnabled; });
+            // _hotkeyManager.RegisterAction("RestoreSpellcasts", () =>
+            // {
+            //     if (!AreOptionsEnabled) return;
+            //     _playerService.RestoreSpellcasts();
+            // });
+            // _hotkeyManager.RegisterAction("RestoreHumanity", () =>
+            // {
+            //     if (!AreOptionsEnabled) return;
+            //     _playerService.SetSpEffect(GameIds.SpEffects.SpEffectData.RestoreHumanity);
+            // });
+            //
+            // _hotkeyManager.RegisterAction("Rest", () =>
+            // {
+            //     if (!AreOptionsEnabled) return;
+            //     _playerService.SetSpEffect(GameIds.SpEffects.SpEffectData.BonfireRest);
+            // });
+            // _hotkeyManager.RegisterAction("TogglePlayerSpeed", ToggleSpeed);
+            // _hotkeyManager.RegisterAction("IncreasePlayerSpeed", () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
+            // _hotkeyManager.RegisterAction("DecreasePlayerSpeed", () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
+        }
+
+
+        private void LoadStats()
+        {
+            // Vigor = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Vigor);
+            // Endurance = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Endurance);
+            // Vitality = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Vitality);
+            // Attunement = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Attunement);
+            // Strength = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Strength);
+            // Dexterity = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Dexterity);
+            // Adp = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Adp);
+            // Intelligence = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Intelligence);
+            // Faith = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Faith);
+            RuneLevel = _playerService.GetRuneLevel();
+            NewGame = _playerService.GetNewGame();
+            // PlayerSpeed = _playerService.GetPlayerSpeed();
+        }
+
+        #endregion
     }
 }

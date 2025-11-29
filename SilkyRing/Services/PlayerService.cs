@@ -1,11 +1,12 @@
 ﻿using System;
+using SilkyRing.Interfaces;
 using SilkyRing.Memory;
 using SilkyRing.Utilities;
 using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.Services
 {
-    public class PlayerService(MemoryService memoryService, HookManager hookManager)
+    public class PlayerService(MemoryService memoryService, HookManager hookManager) : IPlayerService
     {
         public void SetHp(int hp) =>
             memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, hp);
@@ -34,7 +35,7 @@ namespace SilkyRing.Services
         // public void SetSp(int sp) =>
         //     _memoryIo.WriteInt32(GetPlayerCtrlField(GameManagerImp.ChrCtrlOffsets.Stamina), sp);
         
-        public float GetPlayerSpeed() =>
+        public float GetSpeed() =>
             memoryService.ReadFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed);
 
         public void SetSpeed(float speed) =>
@@ -94,8 +95,8 @@ namespace SilkyRing.Services
         public void ToggleNoRuneGain(bool isNoRuneGainEnabled) =>
             memoryService.WriteBytes(Patches.NoRunesFromEnemies,
                 isNoRuneGainEnabled
-                    ? new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }
-                    : new byte[] { 0x41, 0xFF, 0x91, 0xC8, 0x05, 0x00, 0x00 });
+                    ? [0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90]
+                    : [0x41, 0xFF, 0x91, 0xC8, 0x05, 0x00, 0x00]);
 
         public void ToggleNoRuneArcLoss(bool isNoRuneArcLossEnabled) =>
             memoryService.WriteUInt8(Patches.NoRuneArcLoss, isNoRuneArcLossEnabled ? 0xEB : 0x74);
@@ -103,8 +104,8 @@ namespace SilkyRing.Services
         public void ToggleNoRuneLoss(bool isNoRuneLossEnabled) =>
             memoryService.WriteBytes(Patches.NoRuneLossOnDeath,
                 isNoRuneLossEnabled
-                    ? new byte[] { 0x90, 0x90, 0x90 }
-                    : new byte[] { 0x89, 0x45, 0x6C });
+                    ? [0x90, 0x90, 0x90]
+                    : [0x89, 0x45, 0x6C]);
 
         public void SetNewGame(int value) =>
             memoryService.WriteInt32((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.NewGame, value);

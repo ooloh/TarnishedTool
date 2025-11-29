@@ -77,6 +77,7 @@
         <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
         <Compile Include="Converters\SpellIdToVisibilityConverter.cs" />
         <Compile Include="Converters\StringToVisibilityConverter.cs" />
+        <Compile Include="Core\DelegateCommand.cs" />
         <Compile Include="Enums\State.cs" />
         <Compile Include="Interfaces\IEnemyService.cs" />
         <Compile Include="Interfaces\IEventService.cs" />
@@ -100,6 +101,7 @@
         <Compile Include="Utilities\AsmHelper.cs" />
         <Compile Include="Utilities\AsmLoader.cs" />
         <Compile Include="Utilities\DataLoader.cs" />
+        <Compile Include="Utilities\UpDownHelper.cs" />
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
         <Compile Include="ViewModels\TargetViewModel.cs" />

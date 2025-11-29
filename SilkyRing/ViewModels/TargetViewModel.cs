@@ -1,29 +1,22 @@
 ﻿using System;
+using System.Windows.Input;
 using System.Windows.Threading;
+using SilkyRing.Core;
+using SilkyRing.Enums;
 using SilkyRing.Interfaces;
 
 namespace SilkyRing.ViewModels
 {
     public class TargetViewModel : BaseViewModel
     {
-        private bool _areOptionsEnabled = true;
-        private bool _isTargetOptionsEnabled;
-        private bool _isValidTarget;
-        private readonly DispatcherTimer _targetOptionsTimer;
+        private readonly DispatcherTimer _targetTick;
 
         private int _targetCurrentHealth;
         private int _targetMaxHealth;
 
         private ulong _currentTargetId;
 
-        // private float _targetSpeed;
-        private bool _isFreezeHealthEnabled;
-        private bool _isTargetingViewEnabled;
-        private bool _isDisableTargetAiEnabled;
-        private bool _isRepeatActEnabled;
-
-        private int _lastAct;
-        private int _forceAct;
+        
 
 
         // private ResistancesWindow _resistancesWindowWindow;
@@ -59,10 +52,6 @@ namespace SilkyRing.ViewModels
         //
 
 
-        //
-        // private Forlorn _selectedForlorn;
-        // private ObservableCollection<Forlorn> _availableForlorns;
-        //
         private readonly ITargetService _targetService;
         // private readonly DamageControlService _damageControlService;
         // private readonly HotkeyManager _hotkeyManager;
@@ -74,11 +63,198 @@ namespace SilkyRing.ViewModels
             // _hotkeyManager = hotkeyManager;
             RegisterHotkeys();
 
-            _targetOptionsTimer = new DispatcherTimer
+            stateService.Subscribe(State.Loaded, OnGameLoaded);
+            stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
+
+            SetHpCommand = new DelegateCommand(SetHp);
+            SetHpPercentageCommand = new DelegateCommand(SetHpPercentage);
+            SetCustomHpCommand = new DelegateCommand(SetCustomHp);
+
+            _targetTick = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(64)
             };
-            _targetOptionsTimer.Tick += TargetOptionsTimerTick;
+            _targetTick.Tick += TargetTick;
+        }
+
+
+        #region Properties
+
+        private bool _areOptionsEnabled = true;
+
+        public bool AreOptionsEnabled
+        {
+            get => _areOptionsEnabled;
+            set => SetProperty(ref _areOptionsEnabled, value);
+        }
+
+        private bool _isValidTarget;
+
+        public bool IsValidTarget
+        {
+            get => _isValidTarget;
+            set => SetProperty(ref _isValidTarget, value);
+        }
+
+
+        private bool _isTargetOptionsEnabled;
+
+        public bool IsTargetOptionsEnabled
+        {
+            get => _isTargetOptionsEnabled;
+            set
+            {
+                if (!SetProperty(ref _isTargetOptionsEnabled, value)) return;
+                if (value)
+                {
+                    _targetService.ToggleTargetHook(true);
+                    _targetTick.Start();
+                    // ShowAllResistances = true;
+                }
+                else
+                {
+                    _targetTick.Stop();
+                    IsRepeatActEnabled = false;
+                    // ShowAllResistances = false;
+                    // IsResistancesWindowOpen = false;
+                    IsFreezeHealthEnabled = false;
+                    _targetService.ToggleTargetHook(false);
+                    // ShowHeavyPoise = false;
+                    // ShowLightPoise = false;
+                    // ShowBleed = false;
+                    // ShowPoison = false;
+                    // ShowToxic = false;
+                }
+            }
+        }
+
+        private bool _isDisableTargetAiEnabled;
+
+        public bool IsDisableTargetAiEnabled
+        {
+            get => _isDisableTargetAiEnabled;
+            set
+            {
+                if (SetProperty(ref _isDisableTargetAiEnabled, value))
+                {
+                    _targetService.ToggleTargetAi(_isDisableTargetAiEnabled);
+                }
+            }
+        }
+
+        private bool _isRepeatActEnabled;
+
+        public bool IsRepeatActEnabled
+        {
+            get => _isRepeatActEnabled;
+            set
+            {
+                if (!SetProperty(ref _isRepeatActEnabled, value)) return;
+
+                bool isRepeating = _targetService.IsTargetRepeating();
+
+                switch (value)
+                {
+                    case true when !isRepeating:
+                        _targetService.ToggleRepeatAct(true);
+                        ForceAct = _targetService.GetLastAct();
+                        break;
+                    case false when isRepeating:
+                        _targetService.ToggleRepeatAct(false);
+                        ForceAct = 0;
+                        break;
+                }
+            }
+        }
+
+        private int _forceAct;
+
+        public int ForceAct
+        {
+            get => _forceAct;
+            set
+            {
+                if (!SetProperty(ref _forceAct, value)) return;
+                _targetService.ForceAct(_forceAct);
+                if (_forceAct == 0) IsRepeatActEnabled = false;
+            }
+        }
+
+        private int _lastAct;
+
+        public int LastAct
+        {
+            get => _lastAct;
+            set => SetProperty(ref _lastAct, value);
+        }
+
+        public int TargetCurrentHealth
+        {
+            get => _targetCurrentHealth;
+            set => SetProperty(ref _targetCurrentHealth, value);
+        }
+
+        public int TargetMaxHealth
+        {
+            get => _targetMaxHealth;
+            set => SetProperty(ref _targetMaxHealth, value);
+        }
+
+        private bool _isFreezeHealthEnabled;
+
+        public bool IsFreezeHealthEnabled
+        {
+            get => _isFreezeHealthEnabled;
+            set
+            {
+                SetProperty(ref _isFreezeHealthEnabled, value);
+                _targetService.ToggleTargetNoDamage(_isFreezeHealthEnabled);
+            }
+        }
+
+        private bool _isTargetingViewEnabled;
+        public bool IsTargetingViewEnabled
+        {
+            get => _isTargetingViewEnabled;
+            set
+            {
+                if (!SetProperty(ref _isTargetingViewEnabled, value)) return;
+                _targetService.ToggleTargetingView(_isTargetingViewEnabled);
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
+        public ICommand SetHpCommand { get; set; }
+        public ICommand SetHpPercentageCommand { get; set; }
+        public ICommand SetCustomHpCommand { get; set; }
+
+        #endregion
+
+
+        #region Private Methods
+
+        private void OnGameLoaded()
+        {
+            if (IsTargetOptionsEnabled)
+            {
+                _targetService.ToggleTargetHook(true);
+                _targetTick.Start();
+            }
+
+            _targetService.ToggleTargetAi(false);
+            AreOptionsEnabled = true;
+        }
+
+        private void OnGameNotLoaded()
+        {
+            _targetTick.Stop();
+            // IsFreezeHealthEnabled = false;
+            LastAct = 0;
+            ForceAct = 0;
+            AreOptionsEnabled = false;
         }
 
         private void RegisterHotkeys()
@@ -123,20 +299,28 @@ namespace SilkyRing.ViewModels
             // _hotkeyManager.RegisterAction("DisableAi", () => { IsAllDisableAiEnabled = !IsAllDisableAiEnabled; });
         }
 
-        private void TargetOptionsTimerTick(object sender, EventArgs e)
+        private void SetHp(object parameter) =>
+            _targetService.SetHp(Convert.ToInt32(parameter));
+
+        private void SetHpPercentage(object parameter)
+        {
+            int healthPercentage = Convert.ToInt32(parameter);
+            int newHealth = TargetMaxHealth * healthPercentage / 100;
+            _targetService.SetHp(newHealth);
+        }
+
+        private void SetCustomHp()
+        {
+            // if (!_customHpHasBeenSet) return;
+            // if (CustomHp > TargetMaxHealth) CustomHp = TargetMaxHealth;
+            // _targetService.SetHp(CustomHp);
+        }
+
+        private void TargetTick(object sender, EventArgs e)
         {
             if (!IsTargetValid())
             {
                 IsValidTarget = false;
-                _targetService.ClearLockedTarget();
-                _isDisableTargetAiEnabled = false;
-                OnPropertyChanged(nameof(IsDisableTargetAiEnabled));
-                TargetCurrentHealth = 0;
-                // TargetCurrentLightPoise = 0;
-                // TargetCurrentHeavyPoise = 0;
-                // TargetCurrentBleed = 0;
-                // TargetCurrentPoison = 0;
-                // TargetCurrentToxic = 0;
                 return;
             }
 
@@ -184,8 +368,7 @@ namespace SilkyRing.ViewModels
             TargetCurrentHealth = _targetService.GetCurrentHp();
             TargetMaxHealth = _targetService.GetMaxHp();
             LastAct = _targetService.GetLastAct();
-            //
-            // TargetSpeed = _enemyService.GetTargetSpeed();
+            TargetSpeed = _targetService.GetSpeed();
             // TargetCurrentHeavyPoise = _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.HeavyPoiseCurrent);
             // TargetCurrentLightPoise = _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.LightPoiseCurrent);
             // TargetCurrentPoison = IsPoisonToxicImmune
@@ -197,31 +380,6 @@ namespace SilkyRing.ViewModels
             // TargetCurrentBleed = IsBleedImmune
             //     ? 0
             //     : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.BleedCurrent);
-        }
-
-        private void UpdateDefenses()
-        {
-            // MagicResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.MagicResist);
-            // LightningResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.LightningResist);
-            // FireResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.FireResist);
-            // DarkResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.DarkResist);
-            // PoisonToxicResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.PoisonToxicResist);
-            // BleedResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.BleedResist);
-            // SlashDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Slash);
-            // ThrustDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Thrust);
-            // StrikeDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Strike);
-        }
-
-        public bool AreOptionsEnabled
-        {
-            get => _areOptionsEnabled;
-            set => SetProperty(ref _areOptionsEnabled, value);
-        }
-
-        public bool IsValidTarget
-        {
-            get => _isValidTarget;
-            set => SetProperty(ref _isValidTarget, value);
         }
 
         private bool IsTargetValid()
@@ -248,46 +406,21 @@ namespace SilkyRing.ViewModels
             return true;
         }
 
-        public bool IsTargetOptionsEnabled
+        private void UpdateDefenses()
         {
-            get => _isTargetOptionsEnabled;
-            set
-            {
-                if (!SetProperty(ref _isTargetOptionsEnabled, value)) return;
-                if (value)
-                {
-                    _targetService.ToggleTargetHook(true);
-                    _targetOptionsTimer.Start();
-                    // ShowAllResistances = true;
-                }
-                else
-                {
-                    _targetOptionsTimer.Stop();
-                    IsRepeatActEnabled = false;
-                    // ShowAllResistances = false;
-                    // IsResistancesWindowOpen = false;
-                    IsFreezeHealthEnabled = false;
-                    _targetService.ToggleTargetHook(false);
-                    // ShowHeavyPoise = false;
-                    // ShowLightPoise = false;
-                    // ShowBleed = false;
-                    // ShowPoison = false;
-                    // ShowToxic = false;
-                }
-            }
+            // MagicResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.MagicResist);
+            // LightningResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.LightningResist);
+            // FireResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.FireResist);
+            // DarkResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.DarkResist);
+            // PoisonToxicResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.PoisonToxicResist);
+            // BleedResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.BleedResist);
+            // SlashDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Slash);
+            // ThrustDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Thrust);
+            // StrikeDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Strike);
         }
 
-        public bool IsDisableTargetAiEnabled
-        {
-            get => _isDisableTargetAiEnabled;
-            set
-            {
-                if (SetProperty(ref _isDisableTargetAiEnabled, value))
-                {
-                    _targetService.ToggleTargetAi(_isDisableTargetAiEnabled);
-                }
-            }
-        }
+        #endregion
+
 
         //
         // private void UpdateResistancesDisplay()
@@ -346,57 +479,7 @@ namespace SilkyRing.ViewModels
         //     _resistancesWindowWindow = null;
         // }
         //
-        public bool IsRepeatActEnabled
-        {
-            get => _isRepeatActEnabled;
-            set
-            {
-                if (!SetProperty(ref _isRepeatActEnabled, value)) return;
 
-                bool isRepeating = _targetService.IsTargetRepeating();
-
-                switch (value)
-                {
-                    case true when !isRepeating:
-                        _targetService.ToggleRepeatAct(true);
-                        ForceAct = _targetService.GetLastAct();
-                        break;
-                    case false when isRepeating:
-                        _targetService.ToggleRepeatAct(false);
-                        ForceAct = 0;
-                        break;
-                }
-            }
-        }
-
-        public int ForceAct
-        {
-            get => _forceAct;
-            set
-            {
-                if (!SetProperty(ref _forceAct, value)) return;
-                _targetService.ForceAct(_forceAct);
-                if (_forceAct == 0) IsRepeatActEnabled = false;
-            }
-        }
-
-        public int LastAct
-        {
-            get => _lastAct;
-            set => SetProperty(ref _lastAct, value);
-        }
-
-        public int TargetCurrentHealth
-        {
-            get => _targetCurrentHealth;
-            set => SetProperty(ref _targetCurrentHealth, value);
-        }
-
-        public int TargetMaxHealth
-        {
-            get => _targetMaxHealth;
-            set => SetProperty(ref _targetMaxHealth, value);
-        }
 
         public void SetTargetHealth(int value)
         {
@@ -404,43 +487,21 @@ namespace SilkyRing.ViewModels
             _targetService.SetHp(health);
         }
 
-        //
-        // public float TargetSpeed
-        // {
-        //     get => _targetSpeed;
-        //     set
-        //     {
-        //         if (SetProperty(ref _targetSpeed, value))
-        //         {
-        //             _enemyService.SetTargetSpeed(value);
-        //         }
-        //     }
-        // }
-        //
-        // public void SetSpeed(float value)
-        // {
-        //     TargetSpeed = value;
-        // }
-        //
-        public bool IsFreezeHealthEnabled
+        private float _targetSpeed;
+        public float TargetSpeed
         {
-            get => _isFreezeHealthEnabled;
+            get => _targetSpeed;
             set
             {
-                SetProperty(ref _isFreezeHealthEnabled, value);
-                _targetService.ToggleTargetNoDamage(_isFreezeHealthEnabled);
+                if (SetProperty(ref _targetSpeed, value))
+                {
+                    _targetService.SetSpeed(value);
+                }
             }
         }
-
-        public bool IsTargetingViewEnabled
-        {
-            get => _isTargetingViewEnabled;
-            set
-            {
-                if (!SetProperty(ref _isTargetingViewEnabled, value)) return;
-                _targetService.ToggleTargetingView(_isTargetingViewEnabled);
-            }
-        }
+        
+        public void SetSpeed(double value) => TargetSpeed = (float)value;
+        
 
         //
         // public bool ShowLightPoiseAndNotImmune => ShowLightPoise && !IsLightPoiseImmune;
@@ -699,26 +760,7 @@ namespace SilkyRing.ViewModels
         //     }
         // }
         //
-        public void TryEnableFeatures()
-        {
-            if (IsTargetOptionsEnabled)
-            {
-                _targetService.ToggleTargetHook(true);
-                _targetOptionsTimer.Start();
-            }
 
-            _targetService.ToggleTargetAi(false);
-            AreOptionsEnabled = true;
-        }
-
-        public void DisableFeatures()
-        {
-            _targetOptionsTimer.Stop();
-            // IsFreezeHealthEnabled = false;
-            LastAct = 0;
-            ForceAct = 0;
-            AreOptionsEnabled = false;
-        }
 
         //
         // public void TryApplyOneTimeFeatures()

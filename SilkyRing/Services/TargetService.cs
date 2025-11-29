@@ -46,8 +46,7 @@ namespace SilkyRing.Services
         public float[] GetPosition()
         {
             var posPtr = memoryService.FollowPointers(CodeCaveOffsets.Base + (int)CodeCaveOffsets.LockedTarget.SavedPtr,
-                [..ChrIns.ChrPhysicsModule, (int)ChrIns.ChrPhysicsOffsets.Coords]
-                , false);
+                [..ChrIns.ChrPhysicsModule, (int)ChrIns.ChrPhysicsOffsets.Coords], false);
 
             float[] position = new float[3];
             position[0] = memoryService.ReadFloat(posPtr);
@@ -57,21 +56,15 @@ namespace SilkyRing.Services
             return position;
         }
 
-        public void ClearLockedTarget() =>
-            memoryService.WriteBytes(CodeCaveOffsets.Base + (int)CodeCaveOffsets.LockedTarget.SavedPtr, new byte[]
-                { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
+        public float GetSpeed() =>
+            memoryService.ReadFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed);
+
+        public void SetSpeed(float speed) =>
+            memoryService.WriteFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed, speed);
 
         public void ToggleTargetAi(bool isDisableTargetAiEnabled) =>
             memoryService.SetBitValue(GetChrFlagsPtr() + ChrIns.DisableAi.Offset, ChrIns.DisableAi.Bit,
                 isDisableTargetAiEnabled);
-
-        private IntPtr GetChrFlagsPtr()
-        {
-            return memoryService.FollowPointers(
-                CodeCaveOffsets.Base + (int)CodeCaveOffsets.LockedTarget.SavedPtr,
-                [ChrIns.ChrCtrl, ..ChrIns.ChrCtrlFlags], false
-            );
-        }
 
         public bool IsAiDisabled() =>
             memoryService.IsBitSet(GetChrFlagsPtr() + ChrIns.DisableAi.Offset, ChrIns.DisableAi.Bit);
@@ -123,8 +116,22 @@ namespace SilkyRing.Services
             return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage);
         }
 
+        private IntPtr GetChrFlagsPtr()
+        {
+            return memoryService.FollowPointers(
+                CodeCaveOffsets.Base + (int)CodeCaveOffsets.LockedTarget.SavedPtr,
+                [ChrIns.ChrCtrl, ..ChrIns.ChrCtrlFlags], false
+            );
+        }
+
         private IntPtr GetChrDataPtr() =>
-            memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrDataModule], true);
+            memoryService.FollowPointers(CodeCaveOffsets.Base + (int)CodeCaveOffsets.LockedTarget.SavedPtr,
+                [..ChrIns.ChrDataModule], true);
+
+        private IntPtr GetChrBehaviorPtr() =>
+            memoryService.FollowPointers(CodeCaveOffsets.Base + (int)CodeCaveOffsets.LockedTarget.SavedPtr,
+                [..ChrIns.ChrBehaviorModule], true);
+
 
         private IntPtr GetAiThinkPtr()
         {

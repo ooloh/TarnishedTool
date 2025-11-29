@@ -66,7 +66,9 @@
                         </Grid.ColumnDefinitions>
 
                         <UniformGrid Grid.Column="0" Rows="1" Columns="5">
-                            <Button Content="Kill" Margin="1" Click="OnHealthButtonClick" CommandParameter="0">
+                            <Button Content="Kill" Margin="1" 
+                                    Command="{Binding SetHpCommand}"
+                                    CommandParameter="0">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                         <Binding Path="AreOptionsEnabled" />
@@ -74,7 +76,9 @@
                                     </MultiBinding>
                                 </Button.IsEnabled>
                             </Button>
-                            <Button Content="25%" Margin="1" Click="OnHealthButtonClick" CommandParameter="25">
+                            <Button Content="25%" Margin="1"
+                                    Command="{Binding SetHpPercentageCommand}"
+                                    CommandParameter="25">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                         <Binding Path="AreOptionsEnabled" />
@@ -82,7 +86,9 @@
                                     </MultiBinding>
                                 </Button.IsEnabled>
                             </Button>
-                            <Button Content="50%" Margin="1" Click="OnHealthButtonClick" CommandParameter="50">
+                            <Button Content="50%" Margin="1"
+                                    Command="{Binding SetHpPercentageCommand}"
+                                    CommandParameter="50">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                         <Binding Path="AreOptionsEnabled" />
@@ -90,7 +96,9 @@
                                     </MultiBinding>
                                 </Button.IsEnabled>
                             </Button>
-                            <Button Content="75%" Margin="1" Click="OnHealthButtonClick" CommandParameter="75">
+                            <Button Content="75%" Margin="1"
+                                    Command="{Binding SetHpPercentageCommand}"
+                                    CommandParameter="75">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                         <Binding Path="AreOptionsEnabled" />
@@ -98,7 +106,9 @@
                                     </MultiBinding>
                                 </Button.IsEnabled>
                             </Button>
-                            <Button Content="100%" Margin="1" Click="OnHealthButtonClick" CommandParameter="100">
+                            <Button Content="100%" Margin="1"
+                                    Command="{Binding SetHpPercentageCommand}"
+                                    CommandParameter="100">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                         <Binding Path="AreOptionsEnabled" />
@@ -391,8 +401,7 @@
                                            Maximum="5"
                                            Increment="0.50"
                                            Width="100"
-                                           PreviewKeyDown="SpeedUpDown_PreviewKeyDown"
-                                           LostFocus="SpeedUpDown_LostFocus"
+                                     
                                            HorizontalAlignment="Left">
                             <xctk:DoubleUpDown.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
@@ -473,7 +482,7 @@
                                 IsEnabled="{Binding AreOptionsEnabled}"
                                 HorizontalAlignment="Right"
                                 Margin="130,0,0,0"
-                              Click="OpenDefenseWindow"
+                          
                         />
                     </StackPanel>
                 </StackPanel>

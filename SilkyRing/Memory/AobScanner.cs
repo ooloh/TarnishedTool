@@ -167,6 +167,8 @@ namespace SilkyRing.Memory
              Console.WriteLine($"Hooks.AddSubGoal: 0x{Hooks.CreateGoalObj:X}");
              Console.WriteLine($"Hooks.HasSpEffect: 0x{Hooks.HasSpEffect:X}");
              Console.WriteLine($"Hooks.BlueTargetView: 0x{Hooks.BlueTargetView:X}");
+             Console.WriteLine($"Hooks.LockedTargetPtr: 0x{Hooks.LockedTargetPtr:X}");
+             Console.WriteLine($"Hooks.InfinitePoise: 0x{Hooks.InfinitePoise:X}");
 //             
              Console.WriteLine($"Funcs.GraceWarp: 0x{Funcs.GraceWarp:X}");
              Console.WriteLine($"Funcs.SetEvent: 0x{Funcs.SetEvent:X}");

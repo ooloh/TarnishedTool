@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using SilkyRing.Utilities;
 using SilkyRing.ViewModels;
 using Xceed.Wpf.Toolkit;
 
@@ -15,38 +16,16 @@ namespace SilkyRing.Views
             InitializeComponent();
             _targetViewModel = targetViewModel;
             DataContext = _targetViewModel;
-        }
-        
-        private void OnHealthButtonClick(object sender, RoutedEventArgs e)
-        {
-            Button button = (Button)sender;
-            string parameter = button.CommandParameter.ToString();
-            int healthPercentage = int.Parse(parameter);
-            _targetViewModel.SetTargetHealth(healthPercentage);
-        }
-        
-        private void SpeedUpDown_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
             
-            if (e.Key != Key.Enter && e.Key != Key.Return) return;
-            var upDown = sender as DoubleUpDown;
-            if (upDown?.Value.HasValue == true)
-            {
-                // _enemyViewModel.SetSpeed((float)upDown.Value);
-            }
-            Focus();
-            e.Handled = true;
+            InitializeUpDownHelpers();
         }
-
-        private void SpeedUpDown_LostFocus(object sender, RoutedEventArgs routedEventArgs)
+        
+        private void InitializeUpDownHelpers()
         {
-            var upDown = sender as DoubleUpDown;
-            if (upDown?.Value.HasValue == true)
-            {
-                // _enemyViewModel.SetSpeed((float)upDown.Value);
-            }
+            _ = new UpDownHelper<double>(
+                SpeedUpDown,
+                _targetViewModel.SetSpeed
+            );
         }
-
-        private void OpenDefenseWindow(object sender, RoutedEventArgs e) => _targetViewModel.OpenDefenseWindow();
     }
 }

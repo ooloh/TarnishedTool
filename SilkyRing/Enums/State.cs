@@ -9,6 +9,7 @@ public enum State
     Detached,
     Loaded,
     NotLoaded,
+    FirstLoaded,
     GameStart,
     AppClosing,
     AppStarting,

@@ -26,7 +26,6 @@ namespace SilkyRing
         private readonly AoBScanner _aobScanner;
 
         private readonly DispatcherTimer _gameLoadedTimer;
-        private readonly HookManager _hookManager;
         
         // private readonly ItemViewModel _itemViewModel;
         // private readonly SettingsViewModel _settingsViewModel;
@@ -54,7 +53,7 @@ namespace SilkyRing
             var hookManager = new HookManager(_memoryService, _stateService);
             // var hotkeyManager = new HotkeyManager(_memoryIo);
             //
-            var playerService = new PlayerService(_memoryService, hookManager);
+            IPlayerService playerService = new PlayerService(_memoryService, hookManager);
             var utilityService = new UtilityService(_memoryService, hookManager);
             var eventService = new EventService(_memoryService, hookManager);
             ITargetService targetService = new TargetService(_memoryService, hookManager);
@@ -155,6 +154,7 @@ namespace SilkyRing
                     _stateService.Publish(State.Loaded);
                     // _settingsViewModel.ApplyLoadedOptions();
                     if (_appliedOneTimeFeatures) return;
+                    _stateService.Publish(State.FirstLoaded);
                     _appliedOneTimeFeatures = true;
                 }
                 else if (_loaded)
@@ -164,7 +164,7 @@ namespace SilkyRing
             }
             else
             {
-                _hookManager.ClearHooks();
+                // _hookManager.ClearHooks();
                 _hasScanned = false;
                 _loaded = false;
                 _hasAllocatedMemory = false;
@@ -200,7 +200,7 @@ namespace SilkyRing
             // SettingsManager.Default.WindowTop = Top;
             // SettingsManager.Default.Save();
             // _itemService.SignalClose();
-            _hookManager.UninstallAllHooks();
+            // _hookManager.UninstallAllHooks();
             // _nopManager.RestoreAll();
         }
 

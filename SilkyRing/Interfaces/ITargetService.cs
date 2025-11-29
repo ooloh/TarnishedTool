@@ -16,8 +16,8 @@ public interface ITargetService
     // float GetPoiseTimer();
     
     float[] GetPosition();
-
-    void ClearLockedTarget();
+    float GetSpeed();
+    void SetSpeed(float speed);
     void ToggleTargetAi(bool isDisableTargetAiEnabled);
     bool IsAiDisabled();
     void ForceAct(int forceAct);

@@ -146,6 +146,7 @@ namespace SilkyRing.Memory
         {
             public static IntPtr Base;
 
+            public const int PlayerNoDeath = 0x8;
             public const int AllChrsSpheres = 0x9;
             public const int OneShot = 0xA;
             public const int InfiniteGoods = 0xB;
