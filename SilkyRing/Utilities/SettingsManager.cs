@@ -19,6 +19,8 @@ public class SettingsManager
     public double ResistancesWindowWidth { get; set; }
     public double ResistancesWindowLeft { get; set; }
     public double ResistancesWindowTop { get; set; }
+    public string HotkeyActionIds { get; set; } = "";
+    public bool EnableHotkeys { get; set; }
 
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -42,6 +44,8 @@ public class SettingsManager
                 $"ResistancesWindowWidth={ResistancesWindowWidth}",
                 $"ResistancesWindowLeft={ResistancesWindowLeft}",
                 $"ResistancesWindowTop={ResistancesWindowTop}",
+                $"HotkeyActionIds={HotkeyActionIds}",
+                $"EnableHotkeys={EnableHotkeys}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -105,6 +109,11 @@ public class SettingsManager
                             case "ResistancesWindowWidth":
                                 double.TryParse(value, out double rww);
                                 settings.ResistancesWindowWidth = rww;
+                                break;
+                            case "HotkeyActionIds": settings.HotkeyActionIds = value; break;
+                            case "EnableHotkeys":
+                                bool.TryParse(value, out bool eh);
+                                settings.EnableHotkeys = eh;
                                 break;
                         }
                     }

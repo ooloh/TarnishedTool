@@ -6,6 +6,7 @@ using SilkyRing.Enums;
 using SilkyRing.Interfaces;
 using SilkyRing.Memory;
 using SilkyRing.Models;
+using SilkyRing.Utilities;
 using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.ViewModels
@@ -41,11 +42,7 @@ namespace SilkyRing.ViewModels
         private int _newGame;
 
         private int _currentRuneLevel;
-
-        // private HealthWindow _healthWindow;
-
-        // private bool _isHealthWindowOpen;
-
+        
         private float _playerSpeed;
         private float _playerDesiredSpeed = -1f;
         private const float DefaultSpeed = 1f;
@@ -60,7 +57,7 @@ namespace SilkyRing.ViewModels
         private readonly CharacterState _saveState1 = new();
         private readonly CharacterState _saveState2 = new();
 
-        // private readonly HotkeyManager _hotkeyManager;
+        private readonly HotkeyManager _hotkeyManager;
 
         public PlayerViewModel(IPlayerService playerService, IStateService stateService)
         {
@@ -160,72 +157,8 @@ namespace SilkyRing.ViewModels
         public void SetRtsr() => _playerService.SetRtsr();
 
         public void SetMaxHp() => _playerService.SetFullHp();
-
-        //
-        //
-        // public bool IsHealthWindowOpen
-        // {
-        //     get => _isHealthWindowOpen;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isHealthWindowOpen, value)) return;
-        //         if (value)
-        //         {
-        //             if (_healthWindow != null && _healthWindow.IsVisible) return;
-        //             _healthWindow = new HealthWindow { DataContext = this };
-        //             _healthWindow.Closed += (sender, args) => _isHealthWindowOpen = false;
-        //             _healthWindow.Show();
-        //         }
-        //         else
-        //         {
-        //             if (_healthWindow == null || !_healthWindow.IsVisible) return;
-        //             _healthWindow.Close();
-        //             _healthWindow = null;
-        //         }
-        //     }
-        // }
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        // public void SavePos(int index)
-        // {
-        //     var state = index == 0 ? _saveState1 : _saveState2;
-        //     if (index == 0) IsPos1Saved = true;
-        //     else IsPos2Saved = true;
-        //
-        //     state.IncludesState = IsStateIncluded;
-        //     if (IsStateIncluded)
-        //     {
-        //         state.Hp = CurrentHp;
-        //         state.Sp = _playerService.GetSp();
-        //     }
-        //     _playerService.SavePos(index);
-        // }
-        //
-        // public void RestorePos(int index)
-        // {
-        //     _playerService.RestorePos(index);
-        //     if (!IsStateIncluded) return;
-        //
-        //     var state = index == 0 ? _saveState1 : _saveState2;
-        //     if (IsStateIncluded && state.IncludesState)
-        //     {
-        //         _playerService.SetHp(state.Hp);
-        //         _playerService.SetSp(state.Sp);
-        //     }
-        // }
-        //
-
+        
+        
         //
         // public float PosX
         // {
@@ -709,7 +642,7 @@ namespace SilkyRing.ViewModels
         private void PlayerTick(object sender, EventArgs e)
         {
             if (_pauseUpdates) return;
-
+            
             CurrentHp = _playerService.GetCurrentHp();
             CurrentMaxHp = _playerService.GetMaxHp();
             PlayerSpeed = _playerService.GetSpeed();

@@ -9,8 +9,15 @@ namespace SilkyRing.Memory
         {
             public static IntPtr Base;
 
-            public const int PlayerIns = 0x1E508;
+            public const int ChrSetPool = 0x1DED8;
 
+            public enum ChrSetOffsets
+            {
+                ChrSetEntries = 0x18
+            }
+            
+            public const int PlayerIns = 0x1E508;
+            
             public enum PlayerInsOffsets
             {
                 CurrentBlockId = 0x6D0,
@@ -46,6 +53,7 @@ namespace SilkyRing.Memory
             public static readonly int[] ChrBehaviorModule = [Modules, 0x28];
             public static readonly int[] ChrSuperArmorModule = [Modules, 0x40];
             public static readonly int[] ChrPhysicsModule = [Modules, 0x68];
+            public static readonly int[] ChrRideModule = [Modules, 0xE8];
 
             public enum ChrDataOffsets
             {
@@ -95,7 +103,19 @@ namespace SilkyRing.Memory
             public enum ChrPhysicsOffsets
             {
                 Coords = 0x70,
+                NoGravity = 0x1D6,
                 HurtCapsuleRadius = 0x344
+            }
+
+            public enum ChrRideOffsets
+            {
+                RideNode = 0x10,
+            }
+
+            public enum RideNodeOffsets
+            {
+                HorseHandle = 0x18,
+                IsRiding = 0x50
             }
 
             public static readonly int[] AiThink = [ChrManipulator, 0xC0];
@@ -128,6 +148,7 @@ namespace SilkyRing.Memory
                 LightningAbsorption = 0x1BC, 
                 HolyAbsorption = 0x1C0,
             }
+            
             
             public static readonly BitFlag BlueTargetView = new(0xC8, 1 << 4);
             public static readonly BitFlag YellowTargetView = new(0xC8, 1 << 5);

@@ -180,9 +180,9 @@ namespace SilkyRing.Services
             return waitResult == 0;
         }
 
-        public IntPtr FollowPointers(IntPtr baseAddress, int[] offsets, bool readFinalPtr)
+        public IntPtr FollowPointers(IntPtr baseAddress, int[] offsets, bool readFinalPtr, bool derefBase = true)
         {
-            ulong ptr = ReadUInt64(baseAddress);
+            ulong ptr = derefBase ? ReadUInt64(baseAddress) : (ulong)baseAddress;
 
             for (int i = 0; i < offsets.Length - 1; i++)
             {
@@ -193,7 +193,6 @@ namespace SilkyRing.Services
 
             if (readFinalPtr)
                 return (IntPtr)ReadUInt64(finalAddress);
-
 
             return finalAddress;
         }
