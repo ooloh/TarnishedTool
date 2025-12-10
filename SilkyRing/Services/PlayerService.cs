@@ -75,7 +75,7 @@ namespace SilkyRing.Services
                     });
                 }
             }
-            
+
             else
             {
                 _ = Task.Run(() => WarpToBlockId(savedPos));
@@ -213,17 +213,23 @@ namespace SilkyRing.Services
             memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, full);
         }
 
-        public void SetRtsr()
+        public void SetRfbs()
         {
             var full = memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxHealth);
             memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, (full * 20) / 100 - 1);
         }
 
-        // public int GetSp() =>
-        //     _memoryIo.ReadInt32(GetPlayerCtrlField(GameManagerImp.ChrCtrlOffsets.Stamina));
-        //
-        // public void SetSp(int sp) =>
-        //     _memoryIo.WriteInt32(GetPlayerCtrlField(GameManagerImp.ChrCtrlOffsets.Stamina), sp);
+        public void SetFp(int fp) =>
+            memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, fp);
+
+        public int GetCurrentFp() =>
+            memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Fp);
+
+        public void SetSp(int sp) =>
+            memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, sp);
+
+        public int GetCurrentSp() =>
+            memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Sp);
 
         public float GetSpeed() =>
             memoryService.ReadFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed);

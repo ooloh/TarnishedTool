@@ -59,14 +59,18 @@ namespace SilkyRing.ViewModels
 
         private readonly HotkeyManager _hotkeyManager;
 
-        public PlayerViewModel(IPlayerService playerService, IStateService stateService)
+        public PlayerViewModel(IPlayerService playerService, IStateService stateService, HotkeyManager hotkeyManager)
         {
             _playerService = playerService;
+            _hotkeyManager = hotkeyManager;
 
             RegisterHotkeys();
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
+
+            SetRfbsCommand = new DelegateCommand(SetRfbs);
+            SetMaxHpCommand = new DelegateCommand(SetMaxHp);
 
             SavePositionCommand = new DelegateCommand(SavePosition);
             RestorePositionCommand = new DelegateCommand(RestorePosition);
@@ -78,9 +82,12 @@ namespace SilkyRing.ViewModels
             };
             _playerTick.Tick += PlayerTick;
         }
-
+        
         #region Commands
 
+        public ICommand SetRfbsCommand { get; set; }
+        public ICommand SetMaxHpCommand { get; set; }
+        
         public ICommand SavePositionCommand { get; set; }
         public ICommand RestorePositionCommand { get; set; }
 
@@ -153,10 +160,9 @@ namespace SilkyRing.ViewModels
             _playerService.SetHp(hp);
             CurrentHp = hp;
         }
+        
 
-        public void SetRtsr() => _playerService.SetRtsr();
-
-        public void SetMaxHp() => _playerService.SetFullHp();
+        
         
         
         //
@@ -609,11 +615,19 @@ namespace SilkyRing.ViewModels
 
         private void RegisterHotkeys()
         {
+            // _hotkeyManager.RegisterAction(HotkeyActions.SetRfbs.ToString(), () => SavePosition(0));
+            // _hotkeyManager.RegisterAction(HotkeyActions.SetMaxHp.ToString(), () => SavePosition(0));
+            
+            _hotkeyManager.RegisterAction(HotkeyActions.SavePos1.ToString(), () => SavePosition(0));
+            _hotkeyManager.RegisterAction(HotkeyActions.SavePos2.ToString(), () => SavePosition(1));
+            _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
+            _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
+            
             // _hotkeyManager.RegisterAction("SavePos1", () => SavePos(0));
             // _hotkeyManager.RegisterAction("SavePos2", () => SavePos(1));
             // _hotkeyManager.RegisterAction("RestorePos1", () => RestorePos(0));
             // _hotkeyManager.RegisterAction("RestorePos2", () => RestorePos(1));
-            // _hotkeyManager.RegisterAction("RTSR", SetRtsr);
+         
             // _hotkeyManager.RegisterAction("NoDeath", () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
             // _hotkeyManager.RegisterAction("OneShot", () => { IsOneShotEnabled = !IsOneShotEnabled; });
             // _hotkeyManager.RegisterAction("DealNoDamage", () => { IsDealNoDamageEnabled = !IsDealNoDamageEnabled; });
@@ -673,6 +687,9 @@ namespace SilkyRing.ViewModels
             NewGame = _playerService.GetNewGame();
             // PlayerSpeed = _playerService.GetPlayerSpeed();
         }
+        
+        private void SetRfbs() => _playerService.SetRfbs();
+        private void SetMaxHp() => _playerService.SetFullHp();
 
         private void SavePosition(object parameter)
         {

@@ -95,12 +95,14 @@
         <Compile Include="Converters\SpellIdToVisibilityConverter.cs" />
         <Compile Include="Converters\StringToVisibilityConverter.cs" />
         <Compile Include="Core\DelegateCommand.cs" />
+        <Compile Include="Enums\HotkeyActions.cs" />
         <Compile Include="Enums\State.cs" />
         <Compile Include="Interfaces\IAttackInfoService.cs" />
         <Compile Include="Interfaces\IEnemyService.cs" />
         <Compile Include="Interfaces\IEventService.cs" />
         <Compile Include="Interfaces\IMemoryService.cs" />
         <Compile Include="Interfaces\IPlayerService.cs" />
+        <Compile Include="Interfaces\ISettingsService.cs" />
         <Compile Include="Interfaces\IStateService.cs" />
         <Compile Include="Interfaces\ITargetService.cs" />
         <Compile Include="Interfaces\ITravelService.cs" />
@@ -116,6 +118,7 @@
         <Compile Include="Models\PosWithHurtbox.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
         <Compile Include="Services\EnemyService.cs" />
+        <Compile Include="Services\SettingsService.cs" />
         <Compile Include="Services\TargetService.cs" />
         <Compile Include="Services\EventService.cs" />
         <Compile Include="Services\MemoryService.cs" />
@@ -134,6 +137,8 @@
         <Compile Include="ViewModels\AttackInfoViewModel.cs" />
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
+        <Compile Include="ViewModels\HotkeyBindingViewModel.cs" />
+        <Compile Include="ViewModels\SettingsViewModel.cs" />
         <Compile Include="ViewModels\TargetViewModel.cs" />
         <Compile Include="ViewModels\EventViewModel.cs" />
         <Compile Include="ViewModels\PlayerViewModel.cs" />
@@ -141,6 +146,9 @@
         <Compile Include="ViewModels\UtilityViewModel.cs" />
         <Compile Include="Views\Tabs\EnemyTab.xaml.cs">
           <DependentUpon>EnemyTab.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Tabs\SettingsTab.xaml.cs">
+          <DependentUpon>SettingsTab.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\Tabs\TargetTab.xaml.cs">
           <DependentUpon>TargetTab.xaml</DependentUpon>
@@ -182,6 +190,7 @@
             <SubType>Code</SubType>
         </Compile>
         <Page Include="Views\Tabs\EnemyTab.xaml" />
+        <Page Include="Views\Tabs\SettingsTab.xaml" />
         <Page Include="Views\Tabs\TargetTab.xaml" />
         <Page Include="Views\Tabs\EventTab.xaml" />
         <Page Include="Views\Tabs\PlayerTab.xaml" />

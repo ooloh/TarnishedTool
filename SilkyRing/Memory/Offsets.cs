@@ -59,6 +59,10 @@ namespace SilkyRing.Memory
             {
                 Health = 0x138,
                 MaxHealth = 0x13C,
+                Fp = 0x148,
+                MaxFp = 0x14C,
+                Sp = 0x154,
+                MaxSp = 0x158,
                 Flags = 0x19B,
             }
 

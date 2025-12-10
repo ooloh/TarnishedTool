@@ -9,6 +9,7 @@ using SilkyRing.Enums;
 using SilkyRing.Interfaces;
 using SilkyRing.Memory;
 using SilkyRing.Services;
+using SilkyRing.Utilities;
 using SilkyRing.ViewModels;
 using SilkyRing.Views;
 using SilkyRing.Views.Tabs;
@@ -51,7 +52,7 @@ namespace SilkyRing
             _stateService = new StateService(_memoryService);
         
             var hookManager = new HookManager(_memoryService, _stateService);
-            // var hotkeyManager = new HotkeyManager(_memoryIo);
+            var hotkeyManager = new HotkeyManager(_memoryService);
 
             IPlayerService playerService = new PlayerService(_memoryService, hookManager);
             var utilityService = new UtilityService(_memoryService, hookManager);
@@ -60,19 +61,19 @@ namespace SilkyRing
             ITargetService targetService = new TargetService(_memoryService, hookManager, playerService);
             IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
             var travelService = new TravelService(_memoryService, hookManager);
+            ISettingsService settingsService = new SettingsService(_memoryService, hookManager);
             
             // var itemService = new ItemService(_memoryIo);
-            // var settingsService = new SettingsService(_memoryIo);
             // _debugDrawService = new DebugDrawService(_memoryIo);
 
-            PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService);
+            PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService, hotkeyManager);
             TravelViewModel travelViewModel = new TravelViewModel(travelService, eventService, _stateService);
             EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService); 
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService, attackInfoService);
             EventViewModel eventViewModel = new EventViewModel(eventService, _stateService);
             UtilityViewModel utilityViewModel = new UtilityViewModel(utilityService, _stateService);
             // _itemViewModel = new ItemViewModel(itemService);
-            // _settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager);
+            SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager);
             
             var playerTab = new PlayerTab(playerViewModel);
             var travelTab = new TravelTab(travelViewModel);
@@ -81,7 +82,7 @@ namespace SilkyRing
             var utilityTab = new UtilityTab(utilityViewModel);
             // var itemTab = new ItemTab(_itemViewModel);
             var eventTab = new EventTab(eventViewModel);
-            // var settingsTab = new SettingsTab(_settingsViewModel);
+            var settingsTab = new SettingsTab(settingsViewModel);
 
 
             //
@@ -92,7 +93,7 @@ namespace SilkyRing
             MainTabControl.Items.Add(new TabItem { Header = "Utility", Content = utilityTab });
             MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
             // MainTabControl.Items.Add(new TabItem { Header = "Items", Content = itemTab });
-            // MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
+            MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
             //
             // _settingsViewModel.ApplyStartUpOptions();
             // Closing += MainWindow_Closing;

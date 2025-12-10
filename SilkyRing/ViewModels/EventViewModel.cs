@@ -9,7 +9,7 @@ namespace SilkyRing.ViewModels
 {
     public class EventViewModel : BaseViewModel
     {
-        private readonly EventService _eventService;
+
         //
         // private NpcInfo _selectedNpc;
         // private ObservableCollection<NpcInfo> _npcList;

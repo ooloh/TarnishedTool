@@ -16,7 +16,11 @@ public interface IPlayerService
     int GetCurrentHp();
     int GetMaxHp();
     void SetFullHp();
-    void SetRtsr();
+    void SetRfbs();
+    void SetFp(int fp);
+    int GetCurrentFp();
+    void SetSp(int sp);
+    int GetCurrentSp();
     float GetSpeed();
     void SetSpeed(float speed);
     void ToggleInfinitePoise(bool isInfinitePoiseEnabled);
