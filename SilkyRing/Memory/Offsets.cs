@@ -213,10 +213,22 @@ namespace SilkyRing.Memory
             public static IntPtr Base;
 
             public const int PlayerGameData = 0x8;
+
+            public enum PlayerGameDataOffsets
+            {
+                Vigor = 0x3C,
+                Mind = 0x40,
+                Endurance = 0x44,
+                Strength = 0x48,
+                Dexterity = 0x4C,
+                Intelligence = 0x50,
+                Faith = 0x54,
+                Arcane = 0x58,
+                RuneLevel = 0x68,
+                Runes = 0x6C,
+                RuneMemory = 0x70
+            }
             public const int NewGame = 0x120;
-
-
-            public const int RuneLevel = 0x68;
         }
 
         public static class TargetView

@@ -116,6 +116,7 @@
         <Compile Include="Models\Grace.cs" />
         <Compile Include="Models\Position.cs" />
         <Compile Include="Models\PosWithHurtbox.cs" />
+        <Compile Include="Models\Stats.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
         <Compile Include="Services\EnemyService.cs" />
         <Compile Include="Services\SettingsService.cs" />

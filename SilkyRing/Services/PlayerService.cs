@@ -14,6 +14,12 @@ namespace SilkyRing.Services
     {
         private const float LongDistanceRestore = 500f;
 
+        private const float InitialLevelUpCost = 0.1f;
+        private const float InitialLevelUpOffset = 1f;
+        private const float LevelUpCostIncrease = 0.02f;
+        private const float LevelUpIncreaseInterval = 92f;
+        private const int BaseLevelOffset = 80;
+
         private readonly Position[] _positions =
         [
             new(0, Vector3.Zero, 0f),
@@ -275,7 +281,7 @@ namespace SilkyRing.Services
             });
             memoryService.AllocateAndExecute(bytes);
         }
-        
+
         public void ToggleDebugFlag(int offset, bool isEnabled) =>
             memoryService.WriteUInt8(WorldChrManDbg.Base + offset, isEnabled ? 1 : 0);
 
@@ -323,7 +329,65 @@ namespace SilkyRing.Services
         }
 
         public int GetRuneLevel() =>
-            memoryService.ReadInt32((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.RuneLevel);
+            memoryService.ReadInt32(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.RuneLevel);
+
+        public Stats GetStats()
+        {
+            Stats stats = new Stats();
+            var gameData = GetGameDataPtr();
+            stats.Vigor = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Vigor);
+            stats.Mind = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Mind);
+            stats.Endurance = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Endurance);
+            stats.Strength = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Strength);
+            stats.Dexterity = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Dexterity);
+            stats.Intelligence =
+                memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Intelligence);
+            stats.Faith = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Faith);
+            stats.Arcane = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Arcane);
+            return stats;
+        }
+
+        public void SetStat(int offset, int newValue)
+        {
+            var gameData = GetGameDataPtr();
+            var currentStatVal = memoryService.ReadInt32(gameData + offset);
+    
+            if (currentStatVal == newValue) return;
+    
+            var diff = newValue - currentStatVal;
+            var levelPtr = gameData + (int)GameDataMan.PlayerGameDataOffsets.RuneLevel;
+            var currentLevel = memoryService.ReadInt32(levelPtr);
+            
+            if (newValue > currentStatVal)
+            {
+                long runeCost = 0;
+                for (int i = 1; i <= diff; i++)
+                {
+                    runeCost += CalculateLevelUpCost(currentLevel + i);
+                }
+
+                var runeMemPtr = gameData + (int)GameDataMan.PlayerGameDataOffsets.RuneMemory;
+                var currentRuneMem = memoryService.ReadUInt32(runeMemPtr);
+                var newRuneMem = Math.Min(currentRuneMem + (ulong)runeCost, 0xFFFFFFFF);
+                memoryService.WriteUInt32(runeMemPtr, (uint)newRuneMem);
+            }
+            memoryService.WriteInt32(levelPtr, currentLevel + diff);
+            memoryService.WriteInt32(gameData + offset, newValue);
+        }
+
+        private int CalculateLevelUpCost(int nextLevel)
+        {
+            float baseLevel = nextLevel + BaseLevelOffset;
+            float adjustedLevel = Math.Max(0f, baseLevel - LevelUpIncreaseInterval);
+            float cost = baseLevel * baseLevel
+                                   * (LevelUpCostIncrease * adjustedLevel + InitialLevelUpCost)
+                         + InitialLevelUpOffset;
+
+            return (int)cost;
+        }
+
+        private nint GetGameDataPtr() =>
+            memoryService.FollowPointers(GameDataMan.Base, [GameDataMan.PlayerGameData], true);
 
         private IntPtr GetChrDataPtr() =>
             memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrDataModule], true);

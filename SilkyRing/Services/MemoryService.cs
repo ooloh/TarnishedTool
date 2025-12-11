@@ -114,6 +114,11 @@ namespace SilkyRing.Services
         {
             WriteBytes(addr, BitConverter.GetBytes(val));
         }
+        
+        public void WriteUInt32(IntPtr addr, uint val)
+        {
+            WriteBytes(addr, BitConverter.GetBytes(val));
+        }
 
         public void WriteFloat(IntPtr addr, float val)
         {

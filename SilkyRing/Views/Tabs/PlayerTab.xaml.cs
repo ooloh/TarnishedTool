@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using SilkyRing.Memory;
 using SilkyRing.Utilities;
 using SilkyRing.ViewModels;
 using Xceed.Wpf.Toolkit;
@@ -30,6 +31,26 @@ namespace SilkyRing.Views
                 _playerViewModel.PauseUpdates,
                 _playerViewModel.ResumeUpdates
             );
+            
+            var statControls = new[] 
+            { 
+                VigorUpDown, MindUpDown, EnduranceUpDown, 
+                StrengthUpDown, DexterityUpDown, IntelligenceUpDown, 
+                FaithUpDown, ArcaneUpDown 
+            };
+    
+            foreach (var control in statControls)
+            {
+                var statName = control.Tag?.ToString();
+                if (string.IsNullOrEmpty(statName)) continue;
+        
+                _ = new UpDownHelper<int>(
+                    control,
+                    value => _playerViewModel.SetStat(statName, value),
+                    _playerViewModel.PauseUpdates,
+                    _playerViewModel.ResumeUpdates
+                );
+            }
         }
     }
 }

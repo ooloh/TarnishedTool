@@ -34,4 +34,6 @@ public interface IPlayerService
     int GetNewGame();
     void GiveRunes(int runes);
     int GetRuneLevel();
+    Stats GetStats();
+    void SetStat(int offset, int newValue);
 }

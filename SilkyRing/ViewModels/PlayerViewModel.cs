@@ -20,19 +20,11 @@ namespace SilkyRing.ViewModels
         //
         // private bool _isDisableSoulMemWriteEnabled;
         //
-        // private int _vigor;
-        // private int _attunement;
-        // private int _endurance;
-        // private int _strength;
-        // private int _dexterity;
-        // private int _intelligence;
-        // private int _faith;
-        // private int _adp;
-        // private int _vitality;
-        private int _runeLevel;
+
+     
 
         // private int _soulMemory;
-        private int _runes = 10000;
+
         private int _newGame;
 
         private int _currentRuneLevel;
@@ -69,6 +61,9 @@ namespace SilkyRing.ViewModels
             SavePositionCommand = new DelegateCommand(SavePosition);
             RestorePositionCommand = new DelegateCommand(RestorePosition);
 
+            GiveRunesCommand = new DelegateCommand(GiveRunes);
+            ApplyRuneArcCommand = new DelegateCommand(ApplyRuneArc);
+
 
             _playerTick = new DispatcherTimer
             {
@@ -84,6 +79,9 @@ namespace SilkyRing.ViewModels
 
         public ICommand SavePositionCommand { get; set; }
         public ICommand RestorePositionCommand { get; set; }
+
+        public ICommand GiveRunesCommand { get; set; }
+        public ICommand ApplyRuneArcCommand { get; set; }
 
         #endregion
 
@@ -216,7 +214,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private bool _isInfiniteArrowsEnabled;
 
         public bool IsInfiniteArrowsEnabled
@@ -258,7 +256,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private bool _isInfinitePoiseEnabled;
 
         public bool IsInfinitePoiseEnabled
@@ -272,7 +270,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private bool _isSilentEnabled;
 
         public bool IsSilentEnabled
@@ -300,7 +298,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private bool _isNoRuneLossEnabled;
 
         public bool IsNoRuneLossEnabled
@@ -314,7 +312,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private bool _isNoRuneArcLossEnabled;
 
         public bool IsNoRuneArcLossEnabled
@@ -343,7 +341,86 @@ namespace SilkyRing.ViewModels
             }
         }
         
+        private int _runeLevel;
         
+        public int RuneLevel
+        {
+            get => _runeLevel;
+            private set => SetProperty(ref _runeLevel, value);
+        }
+
+        private int _vigor;
+
+        public int Vigor
+        {
+            get => _vigor;
+            set => SetProperty(ref _vigor, value);
+        }
+
+        private int _mind;
+
+        public int Mind
+        {
+            get => _mind;
+            set => SetProperty(ref _mind, value);
+        }
+
+        private int _endurance;
+
+        public int Endurance
+        {
+            get => _endurance;
+            set => SetProperty(ref _endurance, value);
+        }
+
+        private int _strength;
+
+        public int Strength
+        {
+            get => _strength;
+            set => SetProperty(ref _strength, value);
+        }
+
+        private int _dexterity;
+
+        public int Dexterity
+        {
+            get => _dexterity;
+            set => SetProperty(ref _dexterity, value);
+        }
+
+        private int _intelligence;
+
+        public int Intelligence
+        {
+            get => _intelligence;
+            set => SetProperty(ref _intelligence, value);
+        }
+
+        private int _faith;
+
+        public int Faith
+        {
+            get => _faith;
+            set => SetProperty(ref _faith, value);
+        }
+
+        private int _arcane;
+
+        public int Arcane
+        {
+            get => _arcane;
+            set => SetProperty(ref _arcane, value);
+        }
+
+        private int _runes = 10000;
+
+        public int Runes
+        {
+            get => _runes;
+            set => SetProperty(ref _runes, value);
+        }
+
         #endregion
 
         #region Public Methods
@@ -351,6 +428,14 @@ namespace SilkyRing.ViewModels
         public void PauseUpdates() => _pauseUpdates = true;
         public void ResumeUpdates() => _pauseUpdates = false;
         public void SetHp(int hp) => _playerService.SetHp(hp);
+        
+        public void SetStat(string statName, int value)
+        {
+            if (Enum.TryParse<GameDataMan.PlayerGameDataOffsets>(statName, out var offset))
+            {
+                _playerService.SetStat((int)offset, value);
+            }
+        }
 
         #endregion
 
@@ -384,90 +469,8 @@ namespace SilkyRing.ViewModels
         //     set => SetProperty(ref _isDisableSoulMemWriteEnabled, value);
         // }
         //
-        // public int Vigor
-        // {
-        //     get => _vigor;
-        //     set => SetProperty(ref _vigor, value);
-        // }
-        //
-        // public int Attunement
-        // {
-        //     get => _attunement;
-        //     set => SetProperty(ref _attunement, value);
-        // }
-        //
-        // public int Endurance
-        // {
-        //     get => _endurance;
-        //     set => SetProperty(ref _endurance, value);
-        // }
-        //
-        // public int Strength
-        // {
-        //     get => _strength;
-        //     set => SetProperty(ref _strength, value);
-        // }
-        //
-        // public int Dexterity
-        // {
-        //     get => _dexterity;
-        //     set => SetProperty(ref _dexterity, value);
-        // }
-        //
-        // public int Intelligence
-        // {
-        //     get => _intelligence;
-        //     set => SetProperty(ref _intelligence, value);
-        // }
-        //
-        // public int Faith
-        // {
-        //     get => _faith;
-        //     set => SetProperty(ref _faith, value);
-        // }
-        //
-        // public int Adp
-        // {
-        //     get => _adp;
-        //     set => SetProperty(ref _adp, value);
-        // }
-        //
-        // public int Vitality
-        // {
-        //     get => _vitality;
-        //     set => SetProperty(ref _vitality, value);
-        // }
-        //
-        public int RuneLevel
-        {
-            get => _runeLevel;
-            private set => SetProperty(ref _runeLevel, value);
-        }
-
-        // public void SetStat(string statName, int value)
-        // {
-        //     var property = typeof(GameManagerImp.ChrCtrlStats)
-        //         .GetProperty(statName, BindingFlags.Public | BindingFlags.Static);
-        //
-        //     if (property != null)
-        //     {
-        //         int statOffset = (int)property.GetValue(null);
-        //         if (IsDisableSoulMemWriteEnabled) _playerService.ToggleSoulMemWrite(true);
-        //         _playerService.SetPlayerStat(statOffset, (byte)value);
-        //         if (IsDisableSoulMemWriteEnabled) _playerService.ToggleSoulMemWrite(false);
-        //     }
-        //     else
-        //     {
-        //         throw new ArgumentException($"Invalid stat name: {statName}");
-        //     }
-        // }
-        //
-        public int Runes
-        {
-            get => _runes;
-            set => SetProperty(ref _runes, value);
-        }
-
+        
+        
         public int NewGame
         {
             get => _newGame;
@@ -551,10 +554,7 @@ namespace SilkyRing.ViewModels
         {
         }
 
-        public void DoRuneArc()
-        {
-            _playerService.ApplySpEffect(GameIds.SpEffect.RuneArc);
-        }
+     
 
         public void SpEffectTest()
         {
@@ -563,9 +563,7 @@ namespace SilkyRing.ViewModels
                 _playerService.ApplySpEffect(id);
             }
         }
-
-        public void GiveRunes() => _playerService.GiveRunes(Runes);
-
+        
         #region Private Methods
 
         private void OnGameLoaded()
@@ -601,15 +599,23 @@ namespace SilkyRing.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.SavePos2.ToString(), () => SavePosition(1));
             _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
             _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
-            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteStamina.ToString(), () => { IsInfiniteStaminaEnabled = !IsInfiniteStaminaEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteConsumables.ToString(),() => { IsInfiniteConsumablesEnabled = !IsInfiniteConsumablesEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteArrows.ToString(),() => { IsInfiniteArrowsEnabled = !IsInfiniteArrowsEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteFp.ToString(),() => { IsInfiniteFpEnabled = !IsInfiniteFpEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.OneShot.ToString(),() => { IsOneShotEnabled = !IsOneShotEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.InfinitePoise.ToString(),() => { IsInfinitePoiseEnabled = !IsInfinitePoiseEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.Silent.ToString(),() => { IsSilentEnabled = !IsSilentEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.Hidden.ToString(),() => { IsHiddenEnabled = !IsHiddenEnabled; });
-            
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteStamina.ToString(),
+                () => { IsInfiniteStaminaEnabled = !IsInfiniteStaminaEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteConsumables.ToString(),
+                () => { IsInfiniteConsumablesEnabled = !IsInfiniteConsumablesEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteArrows.ToString(),
+                () => { IsInfiniteArrowsEnabled = !IsInfiniteArrowsEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteFp.ToString(),
+                () => { IsInfiniteFpEnabled = !IsInfiniteFpEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.OneShot.ToString(),
+                () => { IsOneShotEnabled = !IsOneShotEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfinitePoise.ToString(),
+                () => { IsInfinitePoiseEnabled = !IsInfinitePoiseEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.Silent.ToString(),
+                () => { IsSilentEnabled = !IsSilentEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.Hidden.ToString(),
+                () => { IsHiddenEnabled = !IsHiddenEnabled; });
+
             // _hotkeyManager.RegisterAction("OneShot", () => { IsOneShotEnabled = !IsOneShotEnabled; });
             // _hotkeyManager.RegisterAction("DealNoDamage", () => { IsDealNoDamageEnabled = !IsDealNoDamageEnabled; });
             // _hotkeyManager.RegisterAction("PlayerNoDamage", () => { IsNoDamageEnabled = !IsNoDamageEnabled; });
@@ -655,15 +661,16 @@ namespace SilkyRing.ViewModels
 
         private void LoadStats()
         {
-            // Vigor = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Vigor);
-            // Endurance = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Endurance);
-            // Vitality = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Vitality);
-            // Attunement = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Attunement);
-            // Strength = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Strength);
-            // Dexterity = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Dexterity);
-            // Adp = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Adp);
-            // Intelligence = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Intelligence);
-            // Faith = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Faith);
+            Stats stats = _playerService.GetStats();
+            Vigor = stats.Vigor;
+            Mind = stats.Mind;
+            Endurance = stats.Endurance;
+            Strength = stats.Strength;
+            Dexterity = stats.Dexterity;
+            Intelligence = stats.Intelligence;
+            Faith = stats.Faith;
+            Arcane = stats.Arcane;
+
             RuneLevel = _playerService.GetRuneLevel();
             NewGame = _playerService.GetNewGame();
             // PlayerSpeed = _playerService.GetPlayerSpeed();
@@ -707,7 +714,11 @@ namespace SilkyRing.ViewModels
                 _playerService.SetSp(state.Sp);
             }
         }
+        
+        private void ApplyRuneArc() =>  _playerService.ApplySpEffect(GameIds.SpEffect.RuneArc);
+        private void GiveRunes() => _playerService.GiveRunes(Runes);
 
         #endregion
+        
     }
 }
