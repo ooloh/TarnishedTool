@@ -45,6 +45,78 @@ public class EnemyViewModel : BaseViewModel
         set => SetProperty(ref _areOptionsEnabled, value);
     }
     
+    private bool _isNoDeathEnabled;
+
+    public bool IsNoDeathEnabled
+    {
+        get => _isNoDeathEnabled;
+        set
+        {
+            SetProperty(ref _isNoDeathEnabled, value);
+            _enemyService.ToggleNoDeath(_isNoDeathEnabled);
+        }
+    }
+
+    private bool _isNoDamageEnabled;
+
+    public bool IsNoDamageEnabled
+    {
+        get => _isNoDamageEnabled;
+        set
+        {
+            SetProperty(ref _isNoDamageEnabled, value);
+            _enemyService.ToggleNoDamage(_isNoDamageEnabled);
+        }
+    }
+
+    private bool _isNoHitEnabled;
+
+    public bool IsNoHitEnabled
+    {
+        get => _isNoHitEnabled;
+        set
+        {
+            SetProperty(ref _isNoHitEnabled, value);
+            _enemyService.ToggleNoHit(_isNoHitEnabled);
+        }
+    }
+
+    private bool _isNoAttackEnabled;
+
+    public bool IsNoAttackEnabled
+    {
+        get => _isNoAttackEnabled;
+        set
+        {
+            SetProperty(ref _isNoAttackEnabled, value);
+            _enemyService.ToggleNoAttack(_isNoAttackEnabled);
+        }
+    }
+
+    private bool _isNoMoveEnabled;
+
+    public bool IsNoMoveEnabled
+    {
+        get => _isNoMoveEnabled;
+        set
+        {
+            SetProperty(ref _isNoMoveEnabled, value);
+            _enemyService.ToggleNoMove(_isNoMoveEnabled);
+        }
+    }
+
+    private bool _isDisableAiEnabled;
+
+    public bool IsDisableAiEnabled
+    {
+        get => _isDisableAiEnabled;
+        set
+        {
+            SetProperty(ref _isDisableAiEnabled, value);
+            _enemyService.ToggleDisableAi(_isDisableAiEnabled);
+        }
+    }
+    
     private ObservableCollection<Act> _acts;
     
     public ObservableCollection<Act> Acts

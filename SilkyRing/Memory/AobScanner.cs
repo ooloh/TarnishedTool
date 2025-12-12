@@ -109,6 +109,8 @@ namespace SilkyRing.Memory
             Functions.GiveRunes = FindAddressByPattern(Pattern.GiveRunes).ToInt64();
             Functions.LookupByFieldInsHandle = FindAddressByPattern(Pattern.LookupByFieldInsHandle).ToInt64();
             Functions.WarpToBlock = FindAddressByPattern(Pattern.WarpToBlock).ToInt64();
+            Functions.ExternalEventTempCtor = FindAddressByPattern(Pattern.ExternalEventTempCtor).ToInt64();
+            Functions.ExecuteTalkCommand = FindAddressByPattern(Pattern.ExecuteTalkCommand).ToInt64();
 
 
 #if DEBUG

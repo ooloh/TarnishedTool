@@ -97,9 +97,12 @@
         <Compile Include="Core\DelegateCommand.cs" />
         <Compile Include="Enums\HotkeyActions.cs" />
         <Compile Include="Enums\State.cs" />
+        <Compile Include="GameIds\EzState.cs" />
+        <Compile Include="GameIds\SpEffect.cs" />
         <Compile Include="Interfaces\IAttackInfoService.cs" />
         <Compile Include="Interfaces\IEnemyService.cs" />
         <Compile Include="Interfaces\IEventService.cs" />
+        <Compile Include="Interfaces\IEzStateService.cs" />
         <Compile Include="Interfaces\IMemoryService.cs" />
         <Compile Include="Interfaces\IPlayerService.cs" />
         <Compile Include="Interfaces\ISettingsService.cs" />
@@ -108,7 +111,6 @@
         <Compile Include="Interfaces\ITravelService.cs" />
         <Compile Include="Interfaces\IUtilityService.cs" />
         <Compile Include="Memory\BitFlag.cs" />
-        <Compile Include="Memory\GameIds.cs" />
         <Compile Include="Models\Act.cs" />
         <Compile Include="Models\AttackInfo.cs" />
         <Compile Include="Models\AttackInfoEntry.cs" />
@@ -119,6 +121,7 @@
         <Compile Include="Models\Stats.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
         <Compile Include="Services\EnemyService.cs" />
+        <Compile Include="Services\EzStateService.cs" />
         <Compile Include="Services\SettingsService.cs" />
         <Compile Include="Services\TargetService.cs" />
         <Compile Include="Services\EventService.cs" />

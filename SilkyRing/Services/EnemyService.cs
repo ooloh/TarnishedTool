@@ -9,7 +9,30 @@ namespace SilkyRing.Services;
 public class EnemyService(MemoryService memoryService, HookManager hookManager) : IEnemyService
 {
     private const int MaxNumOfActs = 10;
-    
+
+    public void ToggleNoDeath(bool isEnabled) =>
+        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoDeath, isEnabled ? 1 : 0);
+
+    public void ToggleNoDamage(bool isEnabled) =>
+        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoDamage, isEnabled ? 1 : 0);
+
+    public void ToggleNoHit(bool isEnabled) =>
+        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoHit, isEnabled ? 1 : 0);
+
+    public void ToggleNoAttack(bool isEnabled) =>
+        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoAttack, isEnabled ? 1 : 0);
+
+    public void ToggleNoMove(bool isEnabled) =>
+        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoMove, isEnabled ? 1 : 0);
+
+    public void ToggleDisableAi(bool isEnabled) =>
+        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllDisableAi, isEnabled ? 1 : 0);
+
+    public void ToggleTargetingView(bool isEnabled)
+    {
+       //TODO 
+    }
+
     public void ToggleRykardMega(bool isRykardNoMegaEnabled)
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.Rykard;

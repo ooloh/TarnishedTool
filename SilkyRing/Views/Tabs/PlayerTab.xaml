@@ -232,7 +232,6 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46"
                                             Tag="Vigor" />
@@ -251,7 +250,6 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-
                                             Tag="Mind"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -270,7 +268,6 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-
                                             Tag="Endurance"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -289,7 +286,6 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-
                                             Tag="Strength"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -307,7 +303,6 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-
                                             Tag="Dexterity"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -316,7 +311,6 @@
 
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-
                     <Grid Margin="0,2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -329,7 +323,6 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-
                                             Tag="Intelligence"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -348,7 +341,6 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-
                                             Tag="Faith"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -368,7 +360,6 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-
                                             Tag="Arcane"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />

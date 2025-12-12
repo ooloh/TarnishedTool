@@ -47,6 +47,9 @@ public class SettingsViewModel : BaseViewModel
             new("Infinite Poise", HotkeyActions.InfinitePoise),
             new("Silent", HotkeyActions.Silent),
             new("Hidden", HotkeyActions.Hidden),
+            new("Toggle Speed", HotkeyActions.TogglePlayerSpeed),
+            new("Increase Speed", HotkeyActions.IncreasePlayerSpeed),
+            new("Decrease Speed", HotkeyActions.DecreasePlayerSpeed),
         ];
         EnemyHotkeys = new ObservableCollection<HotkeyBindingViewModel>
         {

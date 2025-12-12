@@ -20,6 +20,9 @@ public enum HotkeyActions
     InfinitePoise,
     Silent,
     Hidden,
+    TogglePlayerSpeed,
+    IncreasePlayerSpeed,
+    DecreasePlayerSpeed
     
     
     

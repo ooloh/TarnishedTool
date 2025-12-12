@@ -261,6 +261,9 @@ namespace SilkyRing.Memory
             public const int Silent = 0x11;
             public const int AllNoDeath = 0x12;
             public const int AllNoDamage = 0x13;
+            public const int AllNoHit = 0x14;
+            public const int AllNoAttack = 0x15;
+            public const int AllNoMove = 0x16;
             public const int AllDisableAi = 0x17;
             public const int PoiseBarsFlag = 0x69;
         }
@@ -293,6 +296,8 @@ namespace SilkyRing.Memory
             public static long GiveRunes;
             public static long LookupByFieldInsHandle;
             public static long WarpToBlock;
+            public static long ExternalEventTempCtor;
+            public static long ExecuteTalkCommand;
         }
 
         public static class Patches

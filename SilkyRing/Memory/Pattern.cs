@@ -279,6 +279,20 @@
             5
         );
 
+        public static readonly Pattern ExternalEventTempCtor = new Pattern(
+            new byte[] { 0xC7, 0x41, 0x10, 0x02, 0x00, 0x00, 0x00, 0x89, 0x51 },
+            "xxxxxxxxx",
+            -0xD,
+            AddressingMode.Absolute
+        );
+
+        public static readonly Pattern ExecuteTalkCommand = new Pattern(
+            new byte[] { 0x89, 0x7D, 0x80, 0x48, 0x8B, 0x02, 0x48, 0x8B, 0xCA },
+            "xxxxxxxxx",
+            -0x4F,
+            AddressingMode.Absolute
+        );
+
         //Patches
 
         public static readonly Pattern DungeonWarp = new Pattern(

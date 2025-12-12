@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using H.Hooks;
+using SilkyRing.Enums;
 using SilkyRing.Interfaces;
 
 namespace SilkyRing.Utilities;
@@ -33,9 +34,9 @@ public class HotkeyManager
         _keyboardHook.Stop();
     }
     
-    public void RegisterAction(string actionId, Action action)
+    public void RegisterAction(HotkeyActions actionId, Action action)
     {
-        _actions[actionId] = action;
+        _actions[actionId.ToString()] = action;
     }
     
     

@@ -72,15 +72,10 @@
                               IsChecked="{Binding IsDisableAiEnabled}"
                               Grid.Column="1" Grid.Row="1"
                               Margin="0,2" />
-
-                    <CheckBox Content="No Posture Buildup"
-                              IsChecked="{Binding IsNoPostureBuildupEnabled}"
-                              Grid.Column="1" Grid.Row="2"
-                              Margin="0,2" />
-
+                    
                     <CheckBox Content="Targeting View"
                               IsChecked="{Binding IsTargetingViewEnabled}"
-                              Grid.Column="1" Grid.Row="3"
+                              Grid.Column="1" Grid.Row="2"
                               Margin="0,2" />
 
                 </Grid>
