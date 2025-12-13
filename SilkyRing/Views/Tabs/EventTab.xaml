@@ -63,36 +63,36 @@
 
                 </Grid>
                 
-                <!-- <StackPanel Orientation="Horizontal" Margin="10,10,0,0"> -->
-                <!--     <TextBlock Text="Event ID:" VerticalAlignment="Center" Margin="0,0,10,0" /> -->
-                <!--     <TextBox Width="100" Text="{Binding GetFlagId}" Margin="0,0,10,0" /> -->
-                <!-- -->
-                <!--     <Button Content="Get Event" -->
-                <!--             IsEnabled="{Binding AreButtonsEnabled}" -->
-                <!--             Padding="10,3" -->
-                <!--             Margin="10,0,0,0" -->
-                <!--             Click="GetEvent_Click" /> -->
-                <!-- -->
-                <!--     <TextBlock Text="State:" VerticalAlignment="Center" Margin="10,0,5,0" /> -->
-                <!--     <TextBlock Text="{Binding EventStatusText}" -->
-                <!--                Foreground="{Binding EventStatusColor}" -->
-                <!--                VerticalAlignment="Center" Margin="5,0,10,0" /> -->
-                <!-- </StackPanel> -->
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <TextBlock Text="Event ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBox Width="100" Text="{Binding GetFlagId}" Margin="0,0,10,0" />
+                
+                    <Button Content="Get Event"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Padding="10,3"
+                            Margin="10,0,0,0"
+                            Command="{Binding GetEventCommand}" />
+                
+                    <TextBlock Text="State:" VerticalAlignment="Center" Margin="10,0,5,0" />
+                    <TextBlock Text="{Binding EventStatusText}"
+                               Foreground="{Binding EventStatusColor}"
+                               VerticalAlignment="Center" Margin="5,0,10,0" />
+                </StackPanel>
                 
                 <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                     <TextBlock Text="Event ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
                     <TextBox Width="100" Text="{Binding SetFlagId}" Margin="0,0,10,0" />
                     
-                    <ComboBox Width="70" SelectedIndex="{Binding FlagStateIndex}" Margin="0,0,10,0">
+                    <ComboBox Width="70" SelectedIndex="{Binding FlagStateIndex}" Margin="10,0,0,0">
                         <ComboBoxItem Content="ON" />
                         <ComboBoxItem Content="OFF" />
                     </ComboBox>
 
-                    <!-- <Button Content="Set Event" -->
-                    <!--         IsEnabled="{Binding AreButtonsEnabled}" -->
-                    <!--         Padding="10,3" -->
-                    <!--         Margin="10,0,0,0" -->
-                    <!--         Click="" /> -->
+                    <Button Content="Set Event"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Padding="10,3"
+                            Margin="10,0,0,0"
+                            Command="{Binding SetEventCommand}" />
                 </StackPanel>
             </StackPanel>
         </Border>

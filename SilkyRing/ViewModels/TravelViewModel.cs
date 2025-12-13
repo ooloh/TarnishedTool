@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using SilkyRing.Core;
 using SilkyRing.Enums;
 using SilkyRing.Interfaces;
@@ -81,7 +78,7 @@ namespace SilkyRing.ViewModels
             foreach (var grace in Graces.AllItems)
             {
                 if (grace.IsDlc) continue;
-                _travelService.UnlockGrace(grace);
+                _eventService.SetEvent(grace.FlagId, true);
             }
         }
 
@@ -90,7 +87,7 @@ namespace SilkyRing.ViewModels
             foreach (var grace in Graces.AllItems)
             {
                 if (!grace.IsDlc) continue;
-                _travelService.UnlockGrace(grace);
+                _eventService.SetEvent(grace.FlagId, true);
             }
         }
 

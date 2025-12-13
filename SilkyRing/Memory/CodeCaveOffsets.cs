@@ -50,6 +50,8 @@ namespace SilkyRing.Memory
 
         public const int EzStateTalkParams = 0x1000;
         public const int EzStateTalkCode = 0x1040;
+        
+        public const int GetEventResult = 0x1240;
 
     }
 }

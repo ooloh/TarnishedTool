@@ -299,6 +299,7 @@ namespace SilkyRing.Memory
             public static long WarpToBlock;
             public static long ExternalEventTempCtor;
             public static long ExecuteTalkCommand;
+            public static long GetEvent;
         }
 
         public static class Patches

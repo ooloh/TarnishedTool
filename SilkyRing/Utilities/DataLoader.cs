@@ -164,12 +164,15 @@ namespace SilkyRing.Utilities
             while ((line = reader.ReadLine()) != null)
             {
                 string[] parts = line.Split(',');
+                
+                var affinityBytes = HexStringToByteArray(parts[2]);
+                var affinity = (Affinity)(affinityBytes[0] | (affinityBytes[1] << 8));
 
                 aowList.Add(new AshOfWar
                 {
                     Id = int.Parse(parts[0]),
                     Name = parts[1],
-                    AvailableAffinities = (Affinity)Convert.ToUInt16(parts[2], 16),
+                    AvailableAffinities = affinity,
                     WeaponTypeFlags = HexStringToByteArray(parts[3])
                 });
             }

@@ -105,6 +105,53 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 60120,Obtained Crafting Kit
+        ///67000,Nomadic Warrior&apos;s Cookbook [1]
+        ///67110,Nomadic Warrior&apos;s Cookbook [2]
+        ///67010,Nomadic Warrior&apos;s Cookbook [3]
+        ///67800,Nomadic Warrior&apos;s Cookbook [4]
+        ///67830,Nomadic Warrior&apos;s Cookbook [5]
+        ///67020,Nomadic Warrior&apos;s Cookbook [6]
+        ///67050,Nomadic Warrior&apos;s Cookbook [7]
+        ///67880,Nomadic Warrior&apos;s Cookbook [8]
+        ///67430,Nomadic Warrior&apos;s Cookbook [9]
+        ///67030,Nomadic Warrior&apos;s Cookbook [10]
+        ///67220,Nomadic Warrior&apos;s Cookbook [11]
+        ///67060,Nomadic Warrior&apos;s Cookbook [12]
+        ///67080,Nomadic Warrior&apos;s  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string BaseCookbooks {
+            get {
+                return ResourceManager.GetString("BaseCookbooks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 11004,Cerulean Crystal Tear
+        ///11005,Cerulean Crystal Tear
+        ///11025,Cerulean Hidden Tear
+        ///11007,Crimson Bubbletear
+        ///11002,Crimson Crystal Tear
+        ///11003,Crimson Crystal Tear
+        ///11009,Crimsonburst Crystal Tear
+        ///11000,Crimsonspill Crystal Tear
+        ///11020,Crimsonwhorl Bubbletear
+        ///11022,Dexterity-knot Crystal Tear
+        ///11024,Faith-knot Crystal Tear
+        ///11028,Flame-Shrouding Cracked Tear
+        ///11010,Greenburst Crystal Tear
+        ///11001,Greenspill Crystal Tear
+        ///11031,Holy-Shrouding Cracked Tear
+        ///11023,Intelligence-knot Crystal Tear
+        ///11018,Lead [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string BaseCrystalTears {
+            get {
+                return ResourceManager.GetString("BaseCrystalTears", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,Limgrave,Beast of Farum Azula,520290304,-94.56|89.93|63.94|1,2.50
         ///0,Limgrave,Bell Bearing Hunter,1009395200,-2.71|188.32|102.02|1,-0.87
         ///0,Limgrave,Black Knife Assassin,504037376,-171.94|177.79|23.30|1,1.47
@@ -136,6 +183,43 @@ namespace SilkyRing.Properties {
         internal static string DisableAllExceptTarget {
             get {
                 return ResourceManager.GetString("DisableAllExceptTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 68590,Greater Potentate&apos;s Cookbook [1]
+        ///68730,Greater Potentate&apos;s Cookbook [2]
+        ///68690,Greater Potentate&apos;s Cookbook [3]
+        ///68600,Greater Potentate&apos;s Cookbook [4]
+        ///68610,Greater Potentate&apos;s Cookbook [5]
+        ///68720,Greater Potentate&apos;s Cookbook [6]
+        ///68630,Greater Potentate&apos;s Cookbook [7]
+        ///68680,Greater Potentate&apos;s Cookbook [8]
+        ///68640,Greater Potentate&apos;s Cookbook [9]
+        ///68650,Greater Potentate&apos;s Cookbook [10]
+        ///68660,Greater Potentate&apos;s Cookbook [11]
+        ///68620,Greater Potentate&apos;s Cookbook [12]
+        ///68700,Greater Potentate&apos;s Coo [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DLCCookbooks {
+            get {
+                return ResourceManager.GetString("DLCCookbooks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2011050,Bloodsucking Cracked Tear
+        ///2011030,Cerulean-Sapping Cracked Tear
+        ///2011010,Crimsonburst Dried Tear
+        ///2011020,Crimson-Sapping Cracked Tear
+        ///2011070,Deflecting Hardtear
+        ///2011060,Glovewort Crystal Tear
+        ///2011040,Oil-Soaked Tear
+        ///2011000,Viridian Hidden Tear.
+        /// </summary>
+        internal static string DLCCrystalTears {
+            get {
+                return ResourceManager.GetString("DLCCrystalTears", resourceCulture);
             }
         }
         
@@ -198,6 +282,27 @@ namespace SilkyRing.Properties {
         internal static string ForceActSequence {
             get {
                 return ResourceManager.GetString("ForceActSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
+        ///48 ba 00 00 00 00 00    movabs rdx,0x0
+        ///00 00 00
+        ///48 83 ec 20             sub    rsp,0x20
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 20             add    rsp,0x20
+        ///48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
+        ///88 01                   mov    BYTE PTR [rcx],al
+        ///c3                      ret.
+        /// </summary>
+        internal static string GetEvent {
+            get {
+                return ResourceManager.GetString("GetEvent", resourceCulture);
             }
         }
         
@@ -483,6 +588,33 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1000,Crimson Amber Medallion
+        ///1001,Crimson Amber Medallion +1
+        ///1002,Crimson Amber Medallion +2
+        ///1010,Cerulean Amber Medallion
+        ///1011,Cerulean Amber Medallion +1
+        ///1012,Cerulean Amber Medallion +2
+        ///1020,Viridian Amber Medallion
+        ///1021,Viridian Amber Medallion +1
+        ///1022,Viridian Amber Medallion +2
+        ///1030,Arsenal Charm
+        ///1031,Arsenal Charm +1
+        ///1032,Great-Jar&apos;s Arsenal
+        ///1040,Erdtree&apos;s Favor
+        ///1041,Erdtree&apos;s Favor +1
+        ///1042,Erdtree&apos;s Favor +2
+        ///1050,Radagon&apos;s Scarseal
+        ///1051,Radagon&apos;s Soreseal
+        ///1060,Starscourge Heirloom
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Talismans {
+            get {
+                return ResourceManager.GetString("Talismans", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
         ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
         ///48 3b 47 08             cmp    rax,QWORD PTR [rdi+0x8]
@@ -548,6 +680,28 @@ namespace SilkyRing.Properties {
         internal static string Weapons {
             get {
                 return ResourceManager.GetString("Weapons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 65600,Upgrade - Standard
+        ///65610,Iron Whetblade (Heavy)
+        ///65620,Iron Whetblade (Keen)
+        ///65630,Iron Whetblade (Quality)
+        ///65640,Red-Hot Whetblade (Fire)
+        ///65650,Red-Hot Whetblade (Flame Art)
+        ///65660,Sanctified Whetblade (Lightning)
+        ///65670,Sanctified Whetblade (Sacred)
+        ///65680,Glintstone Whetblade (Magic)
+        ///65690,Glintstone Whetblade (Frost)
+        ///65700,Black Whetblade (Poison)
+        ///65710,Black Whetblade (Blood)
+        ///65720,Black Whetblade (Occult)
+        ///.
+        /// </summary>
+        internal static string Whetblades {
+            get {
+                return ResourceManager.GetString("Whetblades", resourceCulture);
             }
         }
     }

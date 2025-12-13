@@ -293,6 +293,15 @@
             AddressingMode.Absolute
         );
 
+        public static readonly Pattern GetEvent = new Pattern(
+            [0x48, 0xB9, 0xA9, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0x0A, 0x48, 0x8B, 0x83, 0xE8, 0x00, 0x00, 0x00],
+            "xxxxxxxxxxxxxxxxx",
+            -0x2E,
+            AddressingMode.Relative,
+            1,
+            5
+        );
+
         //Patches
 
         public static readonly Pattern DungeonWarp = new Pattern(

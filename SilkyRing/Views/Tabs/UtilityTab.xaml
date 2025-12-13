@@ -48,7 +48,7 @@
                                   VerticalAlignment="Center"
                                   Margin="0,0,20,0" />
                         <Button Content="Force Save"
-                                IsEnabled="{Binding AreButtonsEnabled}"
+                                IsEnabled="{Binding AreOptionsEnabled}"
                                 Padding="5,3"
                                 Click="ForceSave_Click"
                                 Margin="0,0,20,0" />

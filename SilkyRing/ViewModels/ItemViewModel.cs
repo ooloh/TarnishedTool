@@ -1,7 +1,6 @@
 ﻿// 
 
 using SilkyRing.Interfaces;
-using SilkyRing.Utilities;
 
 namespace SilkyRing.ViewModels;
 
@@ -12,6 +11,5 @@ public class ItemViewModel
     public ItemViewModel(IItemService itemService)
     {
         _itemService = itemService;
-        
     }
 }

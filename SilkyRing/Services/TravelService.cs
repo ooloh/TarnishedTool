@@ -21,19 +21,6 @@ namespace SilkyRing.Services
             
             memoryService.AllocateAndExecute(bytes);
         }
-
-        public void UnlockGrace(Grace grace)
-        {
-            var bytes = AsmLoader.GetAsmBytes("SetEvent");
-            AsmHelper.WriteAbsoluteAddresses(bytes, new []
-            {
-                (memoryService.ReadInt64(VirtualMemFlag.Base), 0x4 + 2 ),
-                (grace.FlagId, 0xE + 2),
-                (1, 0x18 + 2),
-                (Functions.SetEvent, 0x22 + 2)
-            });
-            memoryService.AllocateAndExecute(bytes);
-        }
         
     }
 }
