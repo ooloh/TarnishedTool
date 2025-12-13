@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Numerics;
+using SilkyRing.Enums;
 using SilkyRing.Models;
 using SilkyRing.Properties;
 
@@ -53,7 +55,7 @@ namespace SilkyRing.Utilities
 
             return graceDict;
         }
-        
+
         public static Dictionary<string, List<BossWarp>> GetBossWarps()
         {
             Dictionary<string, List<BossWarp>> warpDict = new Dictionary<string, List<BossWarp>>();
@@ -69,21 +71,21 @@ namespace SilkyRing.Utilities
                     if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#")) continue;
 
                     string[] parts = line.Split(',');
-                    
+
                     bool isDlc = parts[0] == "1";
                     string mainArea = parts[1];
                     string name = parts[2];
                     uint blockId = uint.Parse(parts[3], CultureInfo.InvariantCulture);
-                    
+
                     var coordParts = parts[4].Split('|');
                     Vector3 coords = new Vector3(
                         float.Parse(coordParts[0], CultureInfo.InvariantCulture),
                         float.Parse(coordParts[1], CultureInfo.InvariantCulture),
                         float.Parse(coordParts[2], CultureInfo.InvariantCulture)
                     );
-                    
+
                     float angle = float.Parse(parts[5], CultureInfo.InvariantCulture);
-                    
+
                     BossWarp bossWarp = new BossWarp
                     {
                         IsDlc = isDlc,
@@ -119,8 +121,71 @@ namespace SilkyRing.Utilities
                 string name = parts[1];
                 ebActs.Add(new Act(actIdx, name));
             }
-            
+
             return ebActs;
+        }
+
+        public static List<Weapon> GetWeapons()
+        {
+            List<Weapon> weapons = new List<Weapon>();
+            string csvData = Resources.Weapons;
+            if (string.IsNullOrWhiteSpace(csvData)) return weapons;
+
+            using StringReader reader = new StringReader(csvData);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                string[] parts = line.Split(',');
+                
+                weapons.Add(new Weapon
+                {
+                    Id = int.Parse(parts[0]),
+                    Name = parts[1],
+                    WeaponType = ushort.Parse(parts[2]),
+                    GemMountType = byte.Parse(parts[3]),
+                    UpgradeType = byte.Parse(parts[4]),
+                    CategoryName = "Weapons",
+                    StackSize = 1,
+                    MaxStorage = 1
+                });
+            }
+
+            return weapons;
+        }
+
+        public static List<AshOfWar> GetAshOfWars()
+        {
+            List<AshOfWar> aowList = new List<AshOfWar>();
+            string csvData = Resources.AoW;
+            if (string.IsNullOrWhiteSpace(csvData)) return aowList;
+
+            using StringReader reader = new StringReader(csvData);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                string[] parts = line.Split(',');
+
+                aowList.Add(new AshOfWar
+                {
+                    Id = int.Parse(parts[0]),
+                    Name = parts[1],
+                    AvailableAffinities = (Affinity)Convert.ToUInt16(parts[2], 16),
+                    WeaponTypeFlags = HexStringToByteArray(parts[3])
+                });
+            }
+
+            return aowList;
+        }
+
+        private static byte[] HexStringToByteArray(string hex)
+        {
+            byte[] bytes = new byte[hex.Length / 2];
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                bytes[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
+            }
+
+            return bytes;
         }
     }
 }

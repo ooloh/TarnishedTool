@@ -73,7 +73,7 @@ namespace SilkyRing.ViewModels
 
         #region Properties
 
-        private bool _areOptionsEnabled = true;
+        private bool _areOptionsEnabled;
 
         public bool AreOptionsEnabled
         {

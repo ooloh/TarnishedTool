@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using SilkyRing.Core;
+using SilkyRing.Enums;
 using SilkyRing.Interfaces;
 using SilkyRing.Models;
 using SilkyRing.Services;
@@ -15,10 +16,7 @@ namespace SilkyRing.ViewModels
         private readonly ITravelService _travelService;
 
         private readonly EventService _eventService;
-        // private readonly HotkeyManager _hotkeyManager;
-
-        private bool _areButtonsEnabled = true;
-
+        
         public SearchableGroupedCollection<string, Grace> Graces { get; }
         public SearchableGroupedCollection<string, BossWarp> Bosses { get; }
 
@@ -26,7 +24,8 @@ namespace SilkyRing.ViewModels
         {
             _travelService = travelService;
             
-            
+            stateService.Subscribe(State.Loaded, OnGameLoaded);
+            stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
             
             Graces = new SearchableGroupedCollection<string, Grace>(
                 DataLoader.GetGraces(),
@@ -50,8 +49,30 @@ namespace SilkyRing.ViewModels
         
         #endregion
 
+        #region Properties
+
+        private bool _areOptionsEnabled;
+
+        public bool AreOptionsEnabled
+        {
+            get => _areOptionsEnabled;
+            set => SetProperty(ref _areOptionsEnabled, value);
+        }
+
+        #endregion
+
 
         #region Private Methods
+        
+        private void OnGameLoaded()
+        {
+            AreOptionsEnabled = true;
+        }
+
+        private void OnGameNotLoaded()
+        {
+            AreOptionsEnabled = false;
+        }
 
         private void Warp() => _travelService.Warp(Graces.SelectedItem);
 

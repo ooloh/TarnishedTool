@@ -60,6 +60,51 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 200100,Aspects of the Crucible: Wings,cf00,ff8306008006
+        ///60200,Assassin&apos;s Gambit,0f1c,c30100008002
+        ///65000,Barbaric Roar,ff1f,fefcbe00100e
+        ///40100,Barrage,0100,000000010000
+        ///30100,Barricade Shield,ff1f,000000004700
+        ///65200,Beast&apos;s Roar,ff1f,fffffe00f00f
+        ///22100,Black Flame Tornado,3f00,80800e000000
+        ///409000,Blind Spot,ff1f,000000000001
+        ///413000,Blinkbolt,cf00,fffffe00d00f
+        ///22400,Blood Blade,0f1c,d30100008003
+        ///10800,Blood Tax,0f1c,c7830600c006
+        ///80100,Bloodhound&apos;s Step,ff1f,fffffe00f00f
+        ///20400,Bloody Slash,0f1c,f70 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AoW {
+            get {
+                return ResourceManager.GetString("AoW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 50000000,Arrow,99,600
+        ///53000000,Ballista Bolt,20,600
+        ///52030000,Black-Key Bolt,99,600
+        ///50310000,Bloodbone Arrow,99,600
+        ///50300000,Bloodbone Arrow (Fletched),99,600
+        ///52150000,Bloodbone Bolt,99,600
+        ///52000000,Bolt,99,600
+        ///50110000,Bone Arrow,99,600
+        ///50030000,Bone Arrow (Fletched),99,600
+        ///53030000,Bone Ballista Bolt,20,600
+        ///52090000,Bone Bolt,99,600
+        ///51060000,Bone Great Arrow,30,600
+        ///51050000,Bone Great Arrow (Fletched),30,600
+        ///52040000,Burred Bolt,99,600
+        ///50330000,Coldbone Arrow,99,600
+        ///50320000,Coldbone Arrow ( [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Arrows {
+            get {
+                return ResourceManager.GetString("Arrows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,Limgrave,Beast of Farum Azula,520290304,-94.56|89.93|63.94|1,2.50
         ///0,Limgrave,Bell Bearing Hunter,1009395200,-2.71|188.32|102.02|1,-0.87
         ///0,Limgrave,Black Knife Assassin,504037376,-171.94|177.79|23.30|1,1.47
@@ -480,6 +525,29 @@ namespace SilkyRing.Properties {
         internal static string WarpToBlock {
             get {
                 return ResourceManager.GetString("WarpToBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 33200000,Academy Glintstone Staff,57,2,0
+        ///3070000,Alabaster Lord&apos;s Sword,5,0,1
+        ///41010000,Albinauric Bow,51,2,0
+        ///31040000,Albinauric Shield,67,2,0
+        ///33190000,Albinauric Staff,57,2,0
+        ///4500000,Ancient Meteoric Ore Greatsword,7,0,1
+        ///41510000,Ansbach&apos;s Longbow,51,0,1
+        ///32220000,Ant&apos;s Skull Plate,69,0,1
+        ///5040000,Antspur Rapier,15,2,0
+        ///12510000,Anvil Hammer,41,0,1
+        ///43080000,Arbalest,55,0,0
+        ///33130000,Astrologer&apos;s Staff,57,2,0
+        ///23050000,Axe of Godfrey,41,0,1
+        ///15040000,Axe of Godrick,19,0,1
+        ///33230000,Azur&apos;s Glintstone  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Weapons {
+            get {
+                return ResourceManager.GetString("Weapons", resourceCulture);
             }
         }
     }

@@ -63,9 +63,8 @@ namespace SilkyRing
             ITravelService travelService = new TravelService(_memoryService, hookManager);
             ISettingsService settingsService = new SettingsService(_memoryService, hookManager);
             IEzStateService ezStateService = new EzStateService(_memoryService);
-            
-            // var itemService = new ItemService(_memoryIo);
-            // _debugDrawService = new DebugDrawService(_memoryIo);
+            IItemService itemService = new ItemService(_memoryService);
+     
 
             PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService, hotkeyManager);
             TravelViewModel travelViewModel = new TravelViewModel(travelService, eventService, _stateService);
@@ -73,7 +72,7 @@ namespace SilkyRing
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService, attackInfoService);
             EventViewModel eventViewModel = new EventViewModel(eventService, _stateService);
             UtilityViewModel utilityViewModel = new UtilityViewModel(utilityService, _stateService, ezStateService, playerService);
-            // _itemViewModel = new ItemViewModel(itemService);
+            ItemViewModel itemViewModel = new ItemViewModel(itemService);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager);
             
             var playerTab = new PlayerTab(playerViewModel);
@@ -81,7 +80,7 @@ namespace SilkyRing
             var enemyTab = new EnemyTab(enemyViewModel);
             var targetTab = new TargetTab(targetViewModel);
             var utilityTab = new UtilityTab(utilityViewModel);
-            // var itemTab = new ItemTab(_itemViewModel);
+            var itemTab = new ItemTab(itemViewModel);
             var eventTab = new EventTab(eventViewModel);
             var settingsTab = new SettingsTab(settingsViewModel);
 
@@ -93,7 +92,7 @@ namespace SilkyRing
             MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
             MainTabControl.Items.Add(new TabItem { Header = "Utility", Content = utilityTab });
             MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
-            // MainTabControl.Items.Add(new TabItem { Header = "Items", Content = itemTab });
+            MainTabControl.Items.Add(new TabItem { Header = "Items", Content = itemTab });
             MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
             //
             // _settingsViewModel.ApplyStartUpOptions();
@@ -162,6 +161,7 @@ namespace SilkyRing
                 }
                 else if (_loaded)
                 {
+                    _stateService.Publish(State.NotLoaded);
                     _loaded = false;
                 }
             }

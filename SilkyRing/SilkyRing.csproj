@@ -95,6 +95,7 @@
         <Compile Include="Converters\SpellIdToVisibilityConverter.cs" />
         <Compile Include="Converters\StringToVisibilityConverter.cs" />
         <Compile Include="Core\DelegateCommand.cs" />
+        <Compile Include="Enums\Affinity.cs" />
         <Compile Include="Enums\HotkeyActions.cs" />
         <Compile Include="Enums\State.cs" />
         <Compile Include="GameIds\EzState.cs" />
@@ -103,6 +104,7 @@
         <Compile Include="Interfaces\IEnemyService.cs" />
         <Compile Include="Interfaces\IEventService.cs" />
         <Compile Include="Interfaces\IEzStateService.cs" />
+        <Compile Include="Interfaces\IItemService.cs" />
         <Compile Include="Interfaces\IMemoryService.cs" />
         <Compile Include="Interfaces\IPlayerService.cs" />
         <Compile Include="Interfaces\ISettingsService.cs" />
@@ -112,17 +114,21 @@
         <Compile Include="Interfaces\IUtilityService.cs" />
         <Compile Include="Memory\BitFlag.cs" />
         <Compile Include="Models\Act.cs" />
+        <Compile Include="Models\AshOfWar.cs" />
         <Compile Include="Models\AttackInfo.cs" />
         <Compile Include="Models\AttackInfoEntry.cs" />
         <Compile Include="Models\BossWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
         <Compile Include="Models\Grace.cs" />
+        <Compile Include="Models\Item.cs" />
         <Compile Include="Models\Position.cs" />
         <Compile Include="Models\PosWithHurtbox.cs" />
         <Compile Include="Models\Stats.cs" />
+        <Compile Include="Models\Weapon.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
         <Compile Include="Services\EnemyService.cs" />
         <Compile Include="Services\EzStateService.cs" />
+        <Compile Include="Services\ItemService.cs" />
         <Compile Include="Services\SettingsService.cs" />
         <Compile Include="Services\TargetService.cs" />
         <Compile Include="Services\EventService.cs" />
@@ -143,6 +149,7 @@
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
         <Compile Include="ViewModels\HotkeyBindingViewModel.cs" />
+        <Compile Include="ViewModels\ItemViewModel.cs" />
         <Compile Include="ViewModels\SearchableGroupedCollection.cs" />
         <Compile Include="ViewModels\SettingsViewModel.cs" />
         <Compile Include="ViewModels\TargetViewModel.cs" />
@@ -152,6 +159,9 @@
         <Compile Include="ViewModels\UtilityViewModel.cs" />
         <Compile Include="Views\Tabs\EnemyTab.xaml.cs">
           <DependentUpon>EnemyTab.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Tabs\ItemTab.xaml.cs">
+          <DependentUpon>ItemTab.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\Tabs\SettingsTab.xaml.cs">
           <DependentUpon>SettingsTab.xaml</DependentUpon>
@@ -196,6 +206,7 @@
             <SubType>Code</SubType>
         </Compile>
         <Page Include="Views\Tabs\EnemyTab.xaml" />
+        <Page Include="Views\Tabs\ItemTab.xaml" />
         <Page Include="Views\Tabs\SettingsTab.xaml" />
         <Page Include="Views\Tabs\TargetTab.xaml" />
         <Page Include="Views\Tabs\EventTab.xaml" />
