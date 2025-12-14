@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using SilkyRing.Core;
+using SilkyRing.Enums;
 using SilkyRing.GameIds;
 using SilkyRing.Interfaces;
 using SilkyRing.Services;
@@ -23,33 +24,53 @@ namespace SilkyRing.ViewModels
         private int _colDrawMode = 1;
         private bool _isDrawRagdollEnabled;
 
-
-        private readonly UtilityService _utilityService;
+        private readonly IUtilityService _utilityService;
         private readonly IEzStateService _ezStateService;
         private readonly IPlayerService _playerService;
 
-        public UtilityViewModel(UtilityService utilityService, IStateService stateService,
+        public UtilityViewModel(IUtilityService utilityService, IStateService stateService,
             IEzStateService ezStateService, IPlayerService playerService)
         {
             _utilityService = utilityService;
             _ezStateService = ezStateService;
             _playerService = playerService;
 
-            TestCommand = new DelegateCommand(Test);
+            stateService.Subscribe(State.Loaded, OnGameLoaded);
+            stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
 
+            
             // RegisterHotkeys();
         }
 
-        private void Test()
-        {
-            
-            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenPhysick); 
-        }
+       
 
         #region Commands 
         
-        public ICommand TestCommand { get; set; }
+      
         
+        #endregion
+
+
+        #region Properties
+
+        
+
+        #endregion
+
+
+        #region Private Methods
+
+         
+        private void OnGameLoaded()
+        {
+            AreOptionsEnabled = true;
+        }
+
+        private void OnGameNotLoaded()
+        {
+            AreOptionsEnabled = false;
+        }
+
         #endregion
 
         // private void RegisterHotkeys()
@@ -86,48 +107,48 @@ namespace SilkyRing.ViewModels
         }
 
 
-        public bool IsDrawHitboxEnabled
-        {
-            get => _isDrawHitboxEnabled;
-            set
-            {
-                if (!SetProperty(ref _isDrawHitboxEnabled, value)) return;
-                _utilityService.ToggleDrawHitbox(_isDrawHitboxEnabled);
-                _utilityService.SetColDrawMode(ColDrawMode);
-            }
-        }
-
-        public bool IsDrawLowHitEnabled
-        {
-            get => _isDrawLowHitEnabled;
-            set
-            {
-                if (!SetProperty(ref _isDrawLowHitEnabled, value)) return;
-                // _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.LowHit, _isDrawLowHitEnabled);
-                _utilityService.SetColDrawMode(ColDrawMode);
-            }
-        }
-
-        public bool IsDrawHighHitEnabled
-        {
-            get => _isDrawHighHitEnabled;
-            set
-            {
-                if (!SetProperty(ref _isDrawHighHitEnabled, value)) return;
-                // _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.HighHit, _isDrawHighHitEnabled);
-            }
-        }
-
-        public int ColDrawMode
-        {
-            get => _colDrawMode;
-            set
-            {
-                if (!SetProperty(ref _colDrawMode, value)) return;
-                if (!IsDrawHighHitEnabled && !IsDrawLowHitEnabled) return;
-                _utilityService.SetColDrawMode(_colDrawMode);
-            }
-        }
+        // public bool IsDrawHitboxEnabled
+        // {
+        //     get => _isDrawHitboxEnabled;
+        //     set
+        //     {
+        //         if (!SetProperty(ref _isDrawHitboxEnabled, value)) return;
+        //         _utilityService.ToggleDrawHitbox(_isDrawHitboxEnabled);
+        //         _utilityService.SetColDrawMode(ColDrawMode);
+        //     }
+        // }
+        //
+        // public bool IsDrawLowHitEnabled
+        // {
+        //     get => _isDrawLowHitEnabled;
+        //     set
+        //     {
+        //         if (!SetProperty(ref _isDrawLowHitEnabled, value)) return;
+        //         // _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.LowHit, _isDrawLowHitEnabled);
+        //         _utilityService.SetColDrawMode(ColDrawMode);
+        //     }
+        // }
+        //
+        // public bool IsDrawHighHitEnabled
+        // {
+        //     get => _isDrawHighHitEnabled;
+        //     set
+        //     {
+        //         if (!SetProperty(ref _isDrawHighHitEnabled, value)) return;
+        //         // _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.HighHit, _isDrawHighHitEnabled);
+        //     }
+        // }
+        //
+        // public int ColDrawMode
+        // {
+        //     get => _colDrawMode;
+        //     set
+        //     {
+        //         if (!SetProperty(ref _colDrawMode, value)) return;
+        //         if (!IsDrawHighHitEnabled && !IsDrawLowHitEnabled) return;
+        //         _utilityService.SetColDrawMode(_colDrawMode);
+        //     }
+        // }
         //
         // public bool IsDrawEventEnabled
         // {
@@ -204,59 +225,59 @@ namespace SilkyRing.ViewModels
         // }
         //
 
-        private bool _isTargetingViewEnabled;
-
-        public bool IsTargetingViewEnabled
-        {
-            get => _isTargetingViewEnabled;
-            set
-            {
-                if (!SetProperty(ref _isTargetingViewEnabled, value)) return;
-                _utilityService.ToggleTargetingView(_isTargetingViewEnabled);
-                if (!_isTargetingViewEnabled)
-                {
-                    IsDrawReducedTargetViewEnabled = false;
-                }
-            }
-        }
-
-        private bool _isDrawReducedTargetViewEnabled;
-
-        public bool IsDrawReducedTargetViewEnabled
-        {
-            get => _isDrawReducedTargetViewEnabled;
-            set
-            {
-                if (!SetProperty(ref _isDrawReducedTargetViewEnabled, value)) return;
-                _utilityService.ToggleReducedTargetingView(_isDrawReducedTargetViewEnabled);
-                _utilityService.SetTargetViewMaxDist(ReducedTargetViewDistance);
-            }
-        }
-
-        private float _reducedTargetViewDistance = 100;
-
-        public float ReducedTargetViewDistance
-        {
-            get => _reducedTargetViewDistance;
-            set
-            {
-                if (!SetProperty(ref _reducedTargetViewDistance, value)) return;
-                if (!IsDrawReducedTargetViewEnabled) return;
-                _utilityService.SetTargetViewMaxDist(_reducedTargetViewDistance);
-            }
-        }
-
+        // private bool _isTargetingViewEnabled;
         //
-
-        public bool IsDrawRagdollsEnabled
-        {
-            get => _isDrawRagdollEnabled;
-            set
-            {
-                if (!SetProperty(ref _isDrawRagdollEnabled, value)) return;
-                // _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.Ragdoll, _isDrawRagdollEnabled);
-            }
-        }
+        // public bool IsTargetingViewEnabled
+        // {
+        //     get => _isTargetingViewEnabled;
+        //     set
+        //     {
+        //         if (!SetProperty(ref _isTargetingViewEnabled, value)) return;
+        //         _utilityService.ToggleTargetingView(_isTargetingViewEnabled);
+        //         if (!_isTargetingViewEnabled)
+        //         {
+        //             IsDrawReducedTargetViewEnabled = false;
+        //         }
+        //     }
+        // }
+        //
+        // private bool _isDrawReducedTargetViewEnabled;
+        //
+        // public bool IsDrawReducedTargetViewEnabled
+        // {
+        //     get => _isDrawReducedTargetViewEnabled;
+        //     set
+        //     {
+        //         if (!SetProperty(ref _isDrawReducedTargetViewEnabled, value)) return;
+        //         _utilityService.ToggleReducedTargetingView(_isDrawReducedTargetViewEnabled);
+        //         _utilityService.SetTargetViewMaxDist(ReducedTargetViewDistance);
+        //     }
+        // }
+        //
+        // private float _reducedTargetViewDistance = 100;
+        //
+        // public float ReducedTargetViewDistance
+        // {
+        //     get => _reducedTargetViewDistance;
+        //     set
+        //     {
+        //         if (!SetProperty(ref _reducedTargetViewDistance, value)) return;
+        //         if (!IsDrawReducedTargetViewEnabled) return;
+        //         _utilityService.SetTargetViewMaxDist(_reducedTargetViewDistance);
+        //     }
+        // }
+        //
+        // //
+        //
+        // public bool IsDrawRagdollsEnabled
+        // {
+        //     get => _isDrawRagdollEnabled;
+        //     set
+        //     {
+        //         if (!SetProperty(ref _isDrawRagdollEnabled, value)) return;
+        //         // _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.Ragdoll, _isDrawRagdollEnabled);
+        //     }
+        // }
         //
         // public bool IsSeeThroughWallsEnabled
         // {
@@ -385,8 +406,5 @@ namespace SilkyRing.ViewModels
             // if (IsDrawRagdollsEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.Ragdoll, true);
             //
         }
-
-        public void ForceSave() => _utilityService.ForceSave();
-        
     }
 }

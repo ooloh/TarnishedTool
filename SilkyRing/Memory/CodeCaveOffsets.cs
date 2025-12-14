@@ -53,5 +53,10 @@ namespace SilkyRing.Memory
         
         public const int GetEventResult = 0x1240;
 
+        public const int ShouldCheckQuantity = 0x1244;
+        public const int MaxQuantity = 0x1248;
+        public const int ItemSpawnStruct = 0x1250;
+        public const int ItemSpawnCode = 0x1350;
+
     }
 }

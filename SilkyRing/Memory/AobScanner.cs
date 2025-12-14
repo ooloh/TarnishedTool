@@ -7,15 +7,8 @@ using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.Memory
 {
-    public class AoBScanner
+    public class AoBScanner(MemoryService memoryService)
     {
-        private readonly MemoryService _memoryService;
-
-        public AoBScanner(MemoryService memoryService)
-        {
-            _memoryService = memoryService;
-        }
-
         public void Scan()
         {
             string appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -46,6 +39,7 @@ namespace SilkyRing.Memory
             WorldChrManDbg.Base = FindAddressByPattern(Pattern.WorldChrManDbg);
             GameDataMan.Base = FindAddressByPattern(Pattern.GameDataMan);
             CsDlcImp.Base = FindAddressByPattern(Pattern.CsDlcImp);
+            MapItemManImpl.Base = FindAddressByPattern(Pattern.MapItemManImpl);
 
 
             TryPatternWithFallback("DungeonWarp", Pattern.DungeonWarp, addr => Patches.DungeonWarp = addr, saved);
@@ -114,6 +108,7 @@ namespace SilkyRing.Memory
             Functions.ExecuteTalkCommand = FindAddressByPattern(Pattern.ExecuteTalkCommand).ToInt64();
             Functions.GetEvent = FindAddressByPattern(Pattern.GetEvent).ToInt64();
             Functions.GetPlayerItemQuantityById = FindAddressByPattern(Pattern.GetPlayerItemQuantityById).ToInt64();
+            Functions.ItemSpawn = FindAddressByPattern(Pattern.ItemSpawn).ToInt64();
 
 
 #if DEBUG
@@ -129,6 +124,7 @@ namespace SilkyRing.Memory
             Console.WriteLine($"WorldChrManDbg.Base: 0x{WorldChrManDbg.Base.ToInt64():X}");
             Console.WriteLine($"GameDataMan.Base: 0x{GameDataMan.Base.ToInt64():X}");
             Console.WriteLine($"CsDlcImp.Base: 0x{CsDlcImp.Base.ToInt64():X}");
+            Console.WriteLine($"MapItemManImpl.Base: 0x{MapItemManImpl.Base.ToInt64():X}");
 
             Console.WriteLine($"Patches.NoLogo: 0x{Patches.DungeonWarp.ToInt64():X}");
             Console.WriteLine($"NoRunesFromEnemies.NoLogo: 0x{Patches.NoRunesFromEnemies.ToInt64():X}");
@@ -159,6 +155,7 @@ namespace SilkyRing.Memory
             Console.WriteLine($"Funcs.WarpToBlock: 0x{Functions.WarpToBlock:X}");
             Console.WriteLine($"Funcs.GetEvent: 0x{Functions.GetEvent:X}");
             Console.WriteLine($"Funcs.GetPlayerItemQuantityById: 0x{Functions.GetPlayerItemQuantityById:X}");
+            Console.WriteLine($"Funcs.ItemSpawn: 0x{Functions.ItemSpawn:X}");
 #endif
         }
 
@@ -196,7 +193,7 @@ namespace SilkyRing.Memory
                 }
                 else
                 {
-                    int offset = _memoryService.ReadInt32(IntPtr.Add(instructionAddress, pattern.OffsetLocation));
+                    int offset = memoryService.ReadInt32(IntPtr.Add(instructionAddress, pattern.OffsetLocation));
                     addresses[i] = IntPtr.Add(instructionAddress, offset + pattern.InstructionLength);
                 }
             }
@@ -209,8 +206,8 @@ namespace SilkyRing.Memory
             const int chunkSize = 4096 * 16;
             byte[] buffer = new byte[chunkSize];
 
-            IntPtr currentAddress = _memoryService.BaseAddress;
-            int memSize = _memoryService.ModuleMemorySize;
+            IntPtr currentAddress = memoryService.BaseAddress;
+            int memSize = memoryService.ModuleMemorySize;
             IntPtr endAddress = IntPtr.Add(currentAddress, memSize);
 
             List<IntPtr> addresses = new List<IntPtr>();
@@ -223,7 +220,7 @@ namespace SilkyRing.Memory
                 if (bytesToRead < pattern.Length)
                     break;
 
-                buffer = _memoryService.ReadBytes(currentAddress, bytesToRead);
+                buffer = memoryService.ReadBytes(currentAddress, bytesToRead);
 
                 for (int i = 0; i <= bytesToRead - pattern.Length; i++)
                 {

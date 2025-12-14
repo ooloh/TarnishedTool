@@ -126,7 +126,7 @@
             
             <StackPanel Grid.Row="4" Margin="0,5,0,0">
                 <Button Content="Spawn"
-               
+                        Command="{Binding SpawnItemCommand}"
                         IsEnabled="{Binding AreOptionsEnabled}"
                         Height="25" />
             </StackPanel>

@@ -1,8 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using SilkyRing.ViewModels;
 
-namespace SilkyRing.Views
+namespace SilkyRing.Views.Tabs
 {
     public partial class UtilityTab : UserControl
     {
@@ -13,9 +12,7 @@ namespace SilkyRing.Views
             _utilityViewModel = utilityViewModel;
             DataContext = utilityViewModel;
         }
-
-        private void ForceSave_Click(object sender, RoutedEventArgs e) => _utilityViewModel.ForceSave();
-
+        
         
     }
 }

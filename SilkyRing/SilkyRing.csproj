@@ -120,6 +120,7 @@
         <Compile Include="Models\AttackInfoEntry.cs" />
         <Compile Include="Models\BossWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
+        <Compile Include="Models\EventItem.cs" />
         <Compile Include="Models\Grace.cs" />
         <Compile Include="Models\Item.cs" />
         <Compile Include="Models\Position.cs" />

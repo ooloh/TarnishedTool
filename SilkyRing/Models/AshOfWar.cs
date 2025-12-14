@@ -14,7 +14,7 @@ public class AshOfWar
     public Affinity AvailableAffinities { get; set; }
     public byte[] WeaponTypeFlags { get; set; }
     
-    private static readonly Dictionary<ushort, int> _weaponTypeToBit = new()
+    private static readonly Dictionary<ushort, int> WeaponTypeToBit = new()
     {
         [1] = 0,    [3] = 1,    [5] = 2,    [7] = 3,
         [9] = 4,    [0xB] = 5,  [0xD] = 6,  [0xE] = 7,
@@ -31,7 +31,7 @@ public class AshOfWar
     
     public bool SupportsWeaponType(ushort weaponType)
     {
-        if (!_weaponTypeToBit.TryGetValue(weaponType, out int bitIndex))
+        if (!WeaponTypeToBit.TryGetValue(weaponType, out int bitIndex))
             return false;
         
         return (WeaponTypeFlags[bitIndex / 8] & (1 << (bitIndex % 8))) != 0;

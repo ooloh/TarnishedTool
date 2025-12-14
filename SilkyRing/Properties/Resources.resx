@@ -1843,232 +1843,232 @@ c3                      ret</value>
 </value>
   </data>
   <data name="Arrows" xml:space="preserve">
-    <value>0,50000000,Arrow,99,600
-0,53000000,Ballista Bolt,20,600
-0,52030000,Black-Key Bolt,99,600
-0,50310000,Bloodbone Arrow,99,600
-0,50300000,Bloodbone Arrow (Fletched),99,600
-0,52150000,Bloodbone Bolt,99,600
-0,52000000,Bolt,99,600
-0,50110000,Bone Arrow,99,600
-0,50030000,Bone Arrow (Fletched),99,600
-0,53030000,Bone Ballista Bolt,20,600
-0,52090000,Bone Bolt,99,600
-0,51060000,Bone Great Arrow,30,600
-0,51050000,Bone Great Arrow (Fletched),30,600
-0,52040000,Burred Bolt,99,600
-0,50330000,Coldbone Arrow,99,600
-0,50320000,Coldbone Arrow (Fletched),99,600
-0,52160000,Coldbone Bolt,99,600
-0,50100000,Dwelling Arrow,99,600
-0,52060000,Explosive Bolt,99,600
-0,53020000,Explosive Greatbolt,20,600
-0,50010000,Fire Arrow,99,600
-0,50140000,Firebone Arrow,99,600
-0,50130000,Firebone Arrow (Fletched),99,600
-0,52100000,Firebone Bolt,99,600
-0,52190000,Flaming Bolt,99,600
-0,50090000,Golden Arrow,99,600
-0,52070000,Golden Bolt,99,600
-0,51020000,Golden Great Arrow,30,600
-0,51010000,Golem's Great Arrow,30,600
-0,51030000,Golem's Magic Arrow,30,600
-0,51000000,Great Arrow,30,600
-0,50290000,Haligbone Arrow,99,600
-0,50280000,Haligbone Arrow (Fletched),99,600
-0,52130000,Haligbone Bolt,99,600
-0,51500000,Igon's Harpoon,30,600
-0,52010000,Lightning Bolt,99,600
-0,53010000,Lightning Greatbolt,20,600
-0,50210000,Lightningbone Arrow,99,600
-0,50200000,Lightningbone Arrow (Fletched),99,600
-0,52110000,Lightningbone Bolt,99,600
-0,52080000,Lordsworn's Bolt,99,600
-0,50270000,Magicbone Arrow,99,600
-0,50260000,Magicbone Arrow (Fletched),99,600
-0,52120000,Magicbone Bolt,99,600
-0,52050000,Meteor Bolt,99,600
-0,52020000,Perfumer's Bolt,99,600
-0,50550000,Piquebone Arrow,99,600
-0,50540000,Piquebone Arrow (Fletched),99,600
-0,52520000,Piquebone Bolt,99,600
-0,50160000,Poisonbone Arrow,99,600
-0,50150000,Poisonbone Arrow (Fletched),99,600
-0,52140000,Poisonbone Bolt,99,600
-0,53500000,Rabbath's Greatbolt,20,600
-0,51040000,Radahn's Spear,30,600
-0,50220000,Rainbow Stone Arrow,99,600
-0,50080000,Rainbow Stone Arrow (Fletched),99,600
-0,50350000,Rotbone Arrow,99,600
-0,50340000,Rotbone Arrow (Fletched),99,600
-0,52170000,Rotbone Bolt,99,600
-0,50020000,Serpent Arrow,99,600
-0,50230000,Shattershard Arrow,99,600
-0,50060000,Shattershard Arrow (Fletched),99,600
-0,50180000,Sleepbone Arrow,99,600
-0,50170000,Sleepbone Arrow (Fletched),99,600
-0,52180000,Sleepbone Bolt,99,600
-0,50240000,Spiritflame Arrow,99,600
-0,50040000,St. Trina's Arrow,99,600
-0,50190000,Stormwing Bone Arrow,99,600
+    <value>0,02faf080,Arrow,99,600
+0,02fb1790,Fire Arrow,99,600
+0,02fb3ea0,Serpent Arrow,99,600
+0,02fb65b0,Bone Arrow (Fletched),99,600
+0,02fb8cc0,St. Trina's Arrow,99,600
+0,02fbdae0,Shattershard Arrow (Fletched),99,600
+0,02fc2900,Rainbow Stone Arrow (Fletched),99,600
+0,02fc5010,Golden Arrow,99,600
+0,02fc7720,Dwelling Arrow,99,600
+0,02fc9e30,Bone Arrow,99,600
+0,02fcec50,Firebone Arrow (Fletched),99,600
+0,02fd1360,Firebone Arrow,99,600
+0,02fd3a70,Poisonbone Arrow (Fletched),99,600
+0,02fd6180,Poisonbone Arrow,99,600
+0,02fd8890,Sleepbone Arrow (Fletched),99,600
+0,02fdafa0,Sleepbone Arrow,99,600
+0,02fdd6b0,Stormwing Bone Arrow,99,600
+0,02fdfdc0,Lightningbone Arrow (Fletched),99,600
+0,02fe24d0,Lightningbone Arrow,99,600
+0,02fe4be0,Rainbow Stone Arrow,99,600
+0,02fe72f0,Shattershard Arrow,99,600
+0,02fe9a00,Spiritflame Arrow,99,600
+0,02fee820,Magicbone Arrow (Fletched),99,600
+0,02ff0f30,Magicbone Arrow,99,600
+0,02ff3640,Haligbone Arrow (Fletched),99,600
+0,02ff5d50,Haligbone Arrow,99,600
+0,02ff8460,Bloodbone Arrow (Fletched),99,600
+0,02ffab70,Bloodbone Arrow,99,600
+0,02ffd280,Coldbone Arrow (Fletched),99,600
+0,02fff990,Coldbone Arrow,99,600
+0,030020a0,Rotbone Arrow (Fletched),99,600
+0,030047b0,Rotbone Arrow,99,600
+0,030a32c0,Great Arrow,30,600
+0,030a59d0,Golem's Great Arrow,30,600
+0,030a80e0,Golden Great Arrow,30,600
+0,030aa7f0,Golem's Magic Arrow,30,600
+0,030acf00,Radahn's Spear,30,600
+0,030af610,Bone Great Arrow (Fletched),30,600
+0,030b1d20,Bone Great Arrow,30,600
+0,03197500,Bolt,99,600
+0,03199c10,Lightning Bolt,99,600
+0,0319c320,Perfumer's Bolt,99,600
+0,0319ea30,Black-Key Bolt,99,600
+0,031a1140,Burred Bolt,99,600
+0,031a3850,Meteor Bolt,99,600
+0,031a5f60,Explosive Bolt,99,600
+0,031a8670,Golden Bolt,99,600
+0,031aad80,Lordsworn's Bolt,99,600
+0,031ad490,Bone Bolt,99,600
+0,031afba0,Firebone Bolt,99,600
+0,031b22b0,Lightningbone Bolt,99,600
+0,031b49c0,Magicbone Bolt,99,600
+0,031b70d0,Haligbone Bolt,99,600
+0,031b97e0,Poisonbone Bolt,99,600
+0,031bbef0,Bloodbone Bolt,99,600
+0,031be600,Coldbone Bolt,99,600
+0,031c0d10,Rotbone Bolt,99,600
+0,031c3420,Sleepbone Bolt,99,600
+0,031c5b30,Flaming Bolt,99,600
+0,0328b740,Ballista Bolt,20,600
+0,0328de50,Lightning Greatbolt,20,600
+0,03290560,Explosive Greatbolt,20,600
+0,03292c70,Bone Ballista Bolt,20,600
+0,03032de0,Piquebone Arrow (Fletched),99,600
+0,030354f0,Piquebone Arrow,99,600
+0,0311d3e0,Igon's Harpoon,30,600
+0,03216440,Piquebone Bolt,99,600
+0,03305860,Rabbath's Greatbolt,20,600
 </value>
   </data>
   <data name="Talismans" xml:space="preserve">
-    <value>0,1000,Crimson Amber Medallion,1,1
-0,1001,Crimson Amber Medallion +1,1,1
-0,1002,Crimson Amber Medallion +2,1,1
-0,1010,Cerulean Amber Medallion,1,1
-0,1011,Cerulean Amber Medallion +1,1,1
-0,1012,Cerulean Amber Medallion +2,1,1
-0,1020,Viridian Amber Medallion,1,1
-0,1021,Viridian Amber Medallion +1,1,1
-0,1022,Viridian Amber Medallion +2,1,1
-0,1030,Arsenal Charm,1,1
-0,1031,Arsenal Charm +1,1,1
-0,1032,Great-Jar's Arsenal,1,1
-0,1040,Erdtree's Favor,1,1
-0,1041,Erdtree's Favor +1,1,1
-0,1042,Erdtree's Favor +2,1,1
-0,1050,Radagon's Scarseal,1,1
-0,1051,Radagon's Soreseal,1,1
-0,1060,Starscourge Heirloom,1,1
-0,1070,Prosthesis-Wearer Heirloom,1,1
-0,1080,Stargazer Heirloom,1,1
-0,1090,Two Fingers Heirloom,1,1
-0,1100,Silver Scarab,1,1
-0,1110,Gold Scarab,1,1
-0,1140,Moon of Nokstella,1,1
-0,1150,Green Turtle Talisman,1,1
-0,1160,Stalwart Horn Charm,1,1
-0,1161,Stalwart Horn Charm +1,1,1
-0,1170,Immunizing Horn Charm,1,1
-0,1171,Immunizing Horn Charm +1,1,1
-0,1180,Clarifying Horn Charm,1,1
-0,1181,Clarifying Horn Charm +1,1,1
-0,1190,Prince of Death's Pustule,1,1
-0,1191,Prince of Death's Cyst,1,1
-0,1200,Mottled Necklace,1,1
-0,1201,Mottled Necklace +1,1,1
-0,1210,Bull-Goat's Talisman,1,1
-0,1220,Marika's Scarseal,1,1
-0,1221,Marika's Soreseal,1,1
-0,1230,Warrior Jar Shard,1,1
-0,1231,Shard of Alexander,1,1
-0,1250,Millicent's Prosthesis,1,1
-0,2000,Magic Scorpion Charm,1,1
-0,2010,Lightning Scorpion Charm,1,1
-0,2020,Fire Scorpion Charm,1,1
-0,2030,Sacred Scorpion Charm,1,1
-0,2040,Red-Feathered Branchsword,1,1
-0,2050,Ritual Sword Talisman,1,1
-0,2060,Spear Talisman,1,1
-0,2070,Hammer Talisman,1,1
-0,2080,Winged Sword Insignia,1,1
-0,2081,Rotten Winged Sword Insignia,1,1
-0,2090,Dagger Talisman,1,1
-0,2100,Arrow's Reach Talisman,1,1
-0,2110,Blue Dancer Charm,1,1
-0,2120,Twinblade Talisman,1,1
-0,2130,Axe Talisman,1,1
-0,2140,Lance Talisman,1,1
-0,2150,Arrow's Sting Talisman,1,1
-0,2160,Lord of Blood's Exultation,1,1
-0,2170,Kindred of Rot's Exultation,1,1
-0,2180,Claw Talisman,1,1
-0,2190,Roar Medallion,1,1
-0,2200,Curved Sword Talisman,1,1
-0,2210,Companion Jar,1,1
-0,2220,Perfumer's Talisman,1,1
-0,3000,Graven-School Talisman,1,1
-0,3001,Graven-Mass Talisman,1,1
-0,3040,Faithful's Canvas Talisman,1,1
-0,3050,Flock's Canvas Talisman,1,1
-0,3060,Old Lord's Talisman,1,1
-0,3070,Radagon Icon,1,1
-0,3080,Primal Glintstone Blade,1,1
-0,3090,Godfrey Icon,1,1
-0,4000,Dragoncrest Shield Talisman,1,1
-0,4001,Dragoncrest Shield Talisman +1,1,1
-0,4002,Dragoncrest Shield Talisman +2,1,1
-0,4003,Dragoncrest Greatshield Talisman,1,1
-0,4010,Spelldrake Talisman,1,1
-0,4011,Spelldrake Talisman +1,1,1
-0,4012,Spelldrake Talisman +2,1,1
-0,4020,Flamedrake Talisman,1,1
-0,4021,Flamedrake Talisman +1,1,1
-0,4022,Flamedrake Talisman +2,1,1
-0,4030,Boltdrake Talisman,1,1
-0,4031,Boltdrake Talisman +1,1,1
-0,4032,Boltdrake Talisman +2,1,1
-0,4040,Haligdrake Talisman,1,1
-0,4041,Haligdrake Talisman +1,1,1
-0,4042,Haligdrake Talisman +2,1,1
-0,4050,Pearldrake Talisman,1,1
-0,4051,Pearldrake Talisman +1,1,1
-0,4052,Pearldrake Talisman +2,1,1
-0,4060,Crucible Scale Talisman,1,1
-0,4070,Crucible Feather Talisman,1,1
-0,4080,Blue-Feathered Branchsword,1,1
-0,4090,Ritual Shield Talisman,1,1
-0,4100,Greatshield Talisman,1,1
-0,4110,Crucible Knot Talisman,1,1
-0,5000,Crimson Seed Talisman,1,1
-0,5010,Cerulean Seed Talisman,1,1
-0,5020,Blessed Dew Talisman,1,1
-0,5030,Taker's Cameo,1,1
-0,5040,Godskin Swaddling Cloth,1,1
-0,5050,Assassin's Crimson Dagger,1,1
-0,5060,Assassin's Cerulean Dagger,1,1
-0,6000,Crepus's Vial,1,1
-0,6010,Concealing Veil,1,1
-0,6020,Carian Filigreed Crest,1,1
-0,6040,Longtail Cat Talisman,1,1
-0,6050,Shabriri's Woe,1,1
-0,6060,Daedicar's Woe,1,1
-0,6070,Sacrificial Twig,1,1
-0,6080,Furled Finger's Trick-Mirror,1,1
-0,6090,Host's Trick-Mirror,1,1
-0,6100,Entwining Umbilical Cord,1,1
-0,6110,Ancestral Spirit's Horne,1,1
-0,7000,Crimson Amber Medallion +3,1,1
-0,7010,Cerulean Amber Medallion +3,1,1
-0,7020,Viridian Amber Medallion +3,1,1
-0,7030,Two-Headed Turtle Talisman,1,1
-0,7040,Stalwart Horn Charm +2,1,1
-0,7050,Immunizing Horn Charm +2,1,1
-0,7060,Clarifying Horn Charm +2,1,1
-0,7080,Mottled Necklace +2,1,1
-0,7090,Spelldrake Talisman +3,1,1
-0,7100,Flamedrake Talisman +3,1,1
-0,7110,Boltdrake Talisman +3,1,1
-0,7120,Golden Braid,1,1
-0,7130,Pearldrake Talisman +3,1,1
-0,7140,Crimson Seed Talisman +1,1,1
-0,7150,Cerulean Seed Talisman +1,1,1
-0,8000,Blessed Blue Dew Talisman,1,1
-0,8010,Fine Crucible Feather Talisman,1,1
-0,8020,Outer God Heirloom,1,1
-0,8030,Shattered Stone Talisman,1,1
-0,8040,Two-Handed Sword Talisman,1,1
-0,8050,Crusade Insignia,1,1
-0,8060,Aged One's Exultation,1,1
-0,8070,Arrow's Soaring Sting Talisman,1,1
-0,8090,Pearl Shield Talisman,1,1
-0,8100,Dried Bouquet,1,1
-0,8110,Smithing Talisman,1,1
-0,8120,Ailment Talisman,1,1
-0,8130,Retaliatory Crossed-Tree,1,1
-0,8140,Lacerating Crossed-Tree,1,1
-0,8150,Sharpshot Talisman,1,1
-0,8160,St. Trina's Smile,1,1
-0,8170,Talisman of the Dread,1,1
-0,8180,Enraged Divine Beast,1,1
-0,8190,Beloved Stardust,1,1
-0,8200,Talisman of Lord's Bestowal,1,1
-0,8210,Verdigris Discus,1,1
-0,8220,Rellana's Cameo,1,1
-0,8230,Blade of Mercy,1,1
-0,8240,Talisman of All Crucibles,1,1
+    <value>0,200003e8,Crimson Amber Medallion,1,1
+0,200003e9,Crimson Amber Medallion +1,1,1
+0,200003ea,Crimson Amber Medallion +2,1,1
+0,200003f2,Cerulean Amber Medallion,1,1
+0,200003f3,Cerulean Amber Medallion +1,1,1
+0,200003f4,Cerulean Amber Medallion +2,1,1
+0,200003fc,Viridian Amber Medallion,1,1
+0,200003fd,Viridian Amber Medallion +1,1,1
+0,200003fe,Viridian Amber Medallion +2,1,1
+0,20000406,Arsenal Charm,1,1
+0,20000407,Arsenal Charm +1,1,1
+0,20000408,Great-Jar's Arsenal,1,1
+0,20000410,Erdtree's Favor,1,1
+0,20000411,Erdtree's Favor +1,1,1
+0,20000412,Erdtree's Favor +2,1,1
+0,2000041a,Radagon's Scarseal,1,1
+0,2000041b,Radagon's Soreseal,1,1
+0,20000424,Starscourge Heirloom,1,1
+0,2000042e,Prosthesis-Wearer Heirloom,1,1
+0,20000438,Stargazer Heirloom,1,1
+0,20000442,Two Fingers Heirloom,1,1
+0,2000044c,Silver Scarab,1,1
+0,20000456,Gold Scarab,1,1
+0,20000474,Moon of Nokstella,1,1
+0,2000047e,Green Turtle Talisman,1,1
+0,20000488,Stalwart Horn Charm,1,1
+0,20000489,Stalwart Horn Charm +1,1,1
+0,20000492,Immunizing Horn Charm,1,1
+0,20000493,Immunizing Horn Charm +1,1,1
+0,2000049c,Clarifying Horn Charm,1,1
+0,2000049d,Clarifying Horn Charm +1,1,1
+0,200004a6,Prince of Death's Pustule,1,1
+0,200004a7,Prince of Death's Cyst,1,1
+0,200004b0,Mottled Necklace,1,1
+0,200004b1,Mottled Necklace +1,1,1
+0,200004ba,Bull-Goat's Talisman,1,1
+0,200004c4,Marika's Scarseal,1,1
+0,200004c5,Marika's Soreseal,1,1
+0,200004ce,Warrior Jar Shard,1,1
+0,200004cf,Shard of Alexander,1,1
+0,200004e2,Millicent's Prosthesis,1,1
+0,200007d0,Magic Scorpion Charm,1,1
+0,200007da,Lightning Scorpion Charm,1,1
+0,200007e4,Fire Scorpion Charm,1,1
+0,200007ee,Sacred Scorpion Charm,1,1
+0,200007f8,Red-Feathered Branchsword,1,1
+0,20000802,Ritual Sword Talisman,1,1
+0,2000080c,Spear Talisman,1,1
+0,20000816,Hammer Talisman,1,1
+0,20000820,Winged Sword Insignia,1,1
+0,20000821,Rotten Winged Sword Insignia,1,1
+0,2000082a,Dagger Talisman,1,1
+0,20000834,Arrow's Reach Talisman,1,1
+0,2000083e,Blue Dancer Charm,1,1
+0,20000848,Twinblade Talisman,1,1
+0,20000852,Axe Talisman,1,1
+0,2000085c,Lance Talisman,1,1
+0,20000866,Arrow's Sting Talisman,1,1
+0,20000870,Lord of Blood's Exultation,1,1
+0,2000087a,Kindred of Rot's Exultation,1,1
+0,20000884,Claw Talisman,1,1
+0,2000088e,Roar Medallion,1,1
+0,20000898,Curved Sword Talisman,1,1
+0,200008a2,Companion Jar,1,1
+0,200008ac,Perfumer's Talisman,1,1
+0,20000bb8,Graven-School Talisman,1,1
+0,20000bb9,Graven-Mass Talisman,1,1
+0,20000be0,Faithful's Canvas Talisman,1,1
+0,20000bea,Flock's Canvas Talisman,1,1
+0,20000bf4,Old Lord's Talisman,1,1
+0,20000bfe,Radagon Icon,1,1
+0,20000c08,Primal Glintstone Blade,1,1
+0,20000c12,Godfrey Icon,1,1
+0,20000fa0,Dragoncrest Shield Talisman,1,1
+0,20000fa1,Dragoncrest Shield Talisman +1,1,1
+0,20000fa2,Dragoncrest Shield Talisman +2,1,1
+0,20000fa3,Dragoncrest Greatshield Talisman,1,1
+0,20000faa,Spelldrake Talisman,1,1
+0,20000fab,Spelldrake Talisman +1,1,1
+0,20000fac,Spelldrake Talisman +2,1,1
+0,20000fb4,Flamedrake Talisman,1,1
+0,20000fb5,Flamedrake Talisman +1,1,1
+0,20000fb6,Flamedrake Talisman +2,1,1
+0,20000fbe,Boltdrake Talisman,1,1
+0,20000fbf,Boltdrake Talisman +1,1,1
+0,20000fc0,Boltdrake Talisman +2,1,1
+0,20000fc8,Haligdrake Talisman,1,1
+0,20000fc9,Haligdrake Talisman +1,1,1
+0,20000fca,Haligdrake Talisman +2,1,1
+0,20000fd2,Pearldrake Talisman,1,1
+0,20000fd3,Pearldrake Talisman +1,1,1
+0,20000fd4,Pearldrake Talisman +2,1,1
+0,20000fdc,Crucible Scale Talisman,1,1
+0,20000fe6,Crucible Feather Talisman,1,1
+0,20000ff0,Blue-Feathered Branchsword,1,1
+0,20000ffa,Ritual Shield Talisman,1,1
+0,20001004,Greatshield Talisman,1,1
+0,2000100e,Crucible Knot Talisman,1,1
+0,20001388,Crimson Seed Talisman,1,1
+0,20001392,Cerulean Seed Talisman,1,1
+0,2000139c,Blessed Dew Talisman,1,1
+0,200013a6,Taker's Cameo,1,1
+0,200013b0,Godskin Swaddling Cloth,1,1
+0,200013ba,Assassin's Crimson Dagger,1,1
+0,200013c4,Assassin's Cerulean Dagger,1,1
+0,20001770,Crepus's Vial,1,1
+0,2000177a,Concealing Veil,1,1
+0,20001784,Carian Filigreed Crest,1,1
+0,20001798,Longtail Cat Talisman,1,1
+0,200017a2,Shabriri's Woe,1,1
+0,200017ac,Daedicar's Woe,1,1
+0,200017b6,Sacrificial Twig,1,1
+0,200017c0,Furled Finger's Trick-Mirror,1,1
+0,200017ca,Host's Trick-Mirror,1,1
+0,200017d4,Entwining Umbilical Cord,1,1
+0,200017de,Ancestral Spirit's Horne,1,1
+0,20001b58,Crimson Amber Medallion +3,1,1
+0,20001b62,Cerulean Amber Medallion +3,1,1
+0,20001b6c,Viridian Amber Medallion +3,1,1
+0,20001b76,Two-Headed Turtle Talisman,1,1
+0,20001b80,Stalwart Horn Charm +2,1,1
+0,20001b8a,Immunizing Horn Charm +2,1,1
+0,20001b94,Clarifying Horn Charm +2,1,1
+0,20001ba8,Mottled Necklace +2,1,1
+0,20001bb2,Spelldrake Talisman +3,1,1
+0,20001bbc,Flamedrake Talisman +3,1,1
+0,20001bc6,Boltdrake Talisman +3,1,1
+0,20001bd0,Golden Braid,1,1
+0,20001bda,Pearldrake Talisman +3,1,1
+0,20001be4,Crimson Seed Talisman +1,1,1
+0,20001bee,Cerulean Seed Talisman +1,1,1
+0,20001f40,Blessed Blue Dew Talisman,1,1
+0,20001f4a,Fine Crucible Feather Talisman,1,1
+0,20001f54,Outer God Heirloom,1,1
+0,20001f5e,Shattered Stone Talisman,1,1
+0,20001f68,Two-Handed Sword Talisman,1,1
+0,20001f72,Crusade Insignia,1,1
+0,20001f7c,Aged One's Exultation,1,1
+0,20001f86,Arrow's Soaring Sting Talisman,1,1
+0,20001f9a,Pearl Shield Talisman,1,1
+0,20001fa4,Dried Bouquet,1,1
+0,20001fae,Smithing Talisman,1,1
+0,20001fb8,Ailment Talisman,1,1
+0,20001fc2,Retaliatory Crossed-Tree,1,1
+0,20001fcc,Lacerating Crossed-Tree,1,1
+0,20001fd6,Sharpshot Talisman,1,1
+0,20001fe0,St. Trina's Smile,1,1
+0,20001fea,Talisman of the Dread,1,1
+0,20001ff4,Enraged Divine Beast,1,1
+0,20001ffe,Beloved Stardust,1,1
+0,20002008,Talisman of Lord's Bestowal,1,1
+0,20002012,Verdigris Discus,1,1
+0,2000201c,Rellana's Cameo,1,1
+0,20002026,Blade of Mercy,1,1
+0,20002030,Talisman of All Crucibles,1,1
 </value>
   </data>
   <data name="Whetblades" xml:space="preserve">
@@ -2088,112 +2088,170 @@ c3                      ret</value>
 </value>
   </data>
   <data name="Cookbooks" xml:space="preserve">
-    <value>0,60120,Obtained Crafting Kit,1,1
-0,67000,Nomadic Warrior's Cookbook [1],1,1
-0,67110,Nomadic Warrior's Cookbook [2],1,1
-0,67010,Nomadic Warrior's Cookbook [3],1,1
-0,67800,Nomadic Warrior's Cookbook [4],1,1
-0,67830,Nomadic Warrior's Cookbook [5],1,1
-0,67020,Nomadic Warrior's Cookbook [6],1,1
-0,67050,Nomadic Warrior's Cookbook [7],1,1
-0,67880,Nomadic Warrior's Cookbook [8],1,1
-0,67430,Nomadic Warrior's Cookbook [9],1,1
-0,67030,Nomadic Warrior's Cookbook [10],1,1
-0,67220,Nomadic Warrior's Cookbook [11],1,1
-0,67060,Nomadic Warrior's Cookbook [12],1,1
-0,67080,Nomadic Warrior's Cookbook [13],1,1
-0,67870,Nomadic Warrior's Cookbook [14],1,1
-0,67900,Nomadic Warrior's Cookbook [15],1,1
-0,67290,Nomadic Warrior's Cookbook [16],1,1
-0,67100,Nomadic Warrior's Cookbook [17],1,1
-0,67270,Nomadic Warrior's Cookbook [18],1,1
-0,67070,Nomadic Warrior's Cookbook [19],1,1
-0,67230,Nomadic Warrior's Cookbook [20],1,1
-0,67120,Nomadic Warrior's Cookbook [21],1,1
-0,67890,Nomadic Warrior's Cookbook [22],1,1
-0,67090,Nomadic Warrior's Cookbook [23],1,1
-0,67910,Nomadic Warrior's Cookbook [24],1,1
-0,67200,Armorer's Cookbook [1],1,1
-0,67210,Armorer's Cookbook [2],1,1
-0,67280,Armorer's Cookbook [3],1,1
-0,67260,Armorer's Cookbook [4],1,1
-0,67310,Armorer's Cookbook [5],1,1
-0,67300,Armorer's Cookbook [6],1,1
-0,67250,Armorer's Cookbook [7],1,1
-0,67410,Glintstone Craftsman's Cookbook [1],1,1
-0,67450,Glintstone Craftsman's Cookbook [2],1,1
-0,67480,Glintstone Craftsman's Cookbook [3],1,1
-0,67400,Glintstone Craftsman's Cookbook [4],1,1
-0,67420,Glintstone Craftsman's Cookbook [5],1,1
-0,67460,Glintstone Craftsman's Cookbook [6],1,1
-0,67470,Glintstone Craftsman's Cookbook [7],1,1
-0,67440,Glintstone Craftsman's Cookbook [8],1,1
-0,67610,Missionary's Cookbook [1],1,1
-0,67600,Missionary's Cookbook [2],1,1
-0,67650,Missionary's Cookbook [3],1,1
-0,67640,Missionary's Cookbook [4],1,1
-0,67630,Missionary's Cookbook [5],1,1
-0,67130,Missionary's Cookbook [6],1,1
-0,68230,Missionary's Cookbook [7],1,1
-0,68000,Ancient Dragon Apostle's Cookbook [1],1,1
-0,68010,Ancient Dragon Apostle's Cookbook [2],1,1
-0,68030,Ancient Dragon Apostle's Cookbook [3],1,1
-0,68020,Ancient Dragon Apostle's Cookbook [4],1,1
-0,67840,Perfumer's Cookbook [1],1,1
-0,67850,Perfumer's Cookbook [2],1,1
-0,67860,Perfumer's Cookbook [3],1,1
-0,67920,Perfumer's Cookbook [4],1,1
-0,68200,Fevor's Cookbook [1],1,1
-0,68220,Fevor's Cookbook [2],1,1
-0,68210,Fevor's Cookbook [3],1,1
-0,68400,Frenzied's Cookbook [1],1,1
-0,68410,Frenzied's Cookbook [2],1,1
-1,68590,Greater Potentate's Cookbook [1],1,1
-1,68730,Greater Potentate's Cookbook [2],1,1
-1,68690,Greater Potentate's Cookbook [3],1,1
-1,68600,Greater Potentate's Cookbook [4],1,1
-1,68610,Greater Potentate's Cookbook [5],1,1
-1,68720,Greater Potentate's Cookbook [6],1,1
-1,68630,Greater Potentate's Cookbook [7],1,1
-1,68680,Greater Potentate's Cookbook [8],1,1
-1,68640,Greater Potentate's Cookbook [9],1,1
-1,68650,Greater Potentate's Cookbook [10],1,1
-1,68660,Greater Potentate's Cookbook [11],1,1
-1,68620,Greater Potentate's Cookbook [12],1,1
-1,68700,Greater Potentate's Cookbook [13],1,1
-1,68710,Greater Potentate's Cookbook [14],1,1
-1,68750,Mad Craftsman's Cookbook [1],1,1
-1,68670,Mad Craftsman's Cookbook [2],1,1
-1,68880,Mad Craftsman's Cookbook [3],1,1
-1,68740,Ancient Dragon Knight's Cookbook [1],1,1
-1,68780,Ancient Dragon Knight's Cookbook [2],1,1
-1,68760,St. Trina Desciple's Cookbook [1],1,1
-1,68950,St. Trina Desciple's Cookbook [2],1,1
-1,68840,St. Trina Desciple's Cookbook [3],1,1
-1,68520,Forager Brood Cookbook [1],1,1
-1,68530,Forager Brood Cookbook [2],1,1
-1,68540,Forager Brood Cookbook [3],1,1
-1,68550,Forager Brood Cookbook [4],1,1
-1,68560,Forager Brood Cookbook [5],1,1
-1,68510,Forager Brood Cookbook [6],1,1
-1,68830,Forager Brood Cookbook [7],1,1
-1,68810,Igon's Cookbook [1],1,1
-1,68570,Igon's Cookbook [2],1,1
-1,68920,Finger-Weaver's Cookbook [1],1,1
-1,68580,Finger-Weaver's Cookbook [2],1,1
-1,68770,Fire Knight's Cookbook [1],1,1
-1,68900,Fire Knight's Cookbook [2],1,1
-1,68800,Battlefield Priest's Cookbook [1],1,1
-1,68820,Battlefield Priest's Cookbook [2],1,1
-1,68890,Battlefield Priest's Cookbook [3],1,1
-1,68930,Battlefield Priest's Cookbook [4],1,1
-1,68940,Grave Keeper's Cookbook [1],1,1
-1,68850,Grave Keeper's Cookbook [2],1,1
-1,68910,Antiquity Scholar's Cookbook [1],1,1
-1,68860,Antiquity Scholar's Cookbook [2],1,1
-1,68870,Tibia's Cookbook,1,1
-1,68790,Loyal Knight's Cookbook,1,1
-</value>
+    <value>0,40002134,Crafting Kit,1,1,60120
+0,40002454,Nomadic Warrior's Cookbook [1],1,1,67000
+0,4000245F,Nomadic Warrior's Cookbook [2],1,1,67110
+0,40002455,Nomadic Warrior's Cookbook [3],1,1,67010
+0,400024A4,Nomadic Warrior's Cookbook [4],1,1,67800
+0,400024A7,Nomadic Warrior's Cookbook [5],1,1,67830
+0,40002456,Nomadic Warrior's Cookbook [6],1,1,67020
+0,40002459,Nomadic Warrior's Cookbook [7],1,1,67050
+0,400024AC,Nomadic Warrior's Cookbook [8],1,1,67880
+0,4000247F,Nomadic Warrior's Cookbook [9],1,1,67430
+0,40002457,Nomadic Warrior's Cookbook [10],1,1,67030
+0,4000246A,Nomadic Warrior's Cookbook [11],1,1,67220
+0,4000245A,Nomadic Warrior's Cookbook [12],1,1,67060
+0,4000245C,Nomadic Warrior's Cookbook [13],1,1,67080
+0,400024AB,Nomadic Warrior's Cookbook [14],1,1,67870
+0,400024AE,Nomadic Warrior's Cookbook [15],1,1,67900
+0,40002471,Nomadic Warrior's Cookbook [16],1,1,67290
+0,4000245E,Nomadic Warrior's Cookbook [17],1,1,67100
+0,4000246F,Nomadic Warrior's Cookbook [18],1,1,67270
+0,4000245B,Nomadic Warrior's Cookbook [19],1,1,67070
+0,4000246B,Nomadic Warrior's Cookbook [20],1,1,67230
+0,40002460,Nomadic Warrior's Cookbook [21],1,1,67120
+0,400024AD,Nomadic Warrior's Cookbook [22],1,1,67890
+0,4000245D,Nomadic Warrior's Cookbook [23],1,1,67090
+0,400024AF,Nomadic Warrior's Cookbook [24],1,1,67910
+0,40002468,Armorer's Cookbook [1],1,1,67200
+0,40002469,Armorer's Cookbook [2],1,1,67210
+0,40002470,Armorer's Cookbook [3],1,1,67280
+0,4000246E,Armorer's Cookbook [4],1,1,67260
+0,40002473,Armorer's Cookbook [5],1,1,67310
+0,40002472,Armorer's Cookbook [6],1,1,67300
+0,4000246D,Armorer's Cookbook [7],1,1,67250
+0,4000247D,Glintstone Craftsman's Cookbook [1],1,1,67410
+0,40002481,Glintstone Craftsman's Cookbook [2],1,1,67450
+0,40002484,Glintstone Craftsman's Cookbook [3],1,1,67480
+0,4000247C,Glintstone Craftsman's Cookbook [4],1,1,67400
+0,4000247E,Glintstone Craftsman's Cookbook [5],1,1,67420
+0,40002482,Glintstone Craftsman's Cookbook [6],1,1,67460
+0,40002483,Glintstone Craftsman's Cookbook [7],1,1,67470
+0,40002480,Glintstone Craftsman's Cookbook [8],1,1,67440
+0,40002491,Missionary's Cookbook [1],1,1,67610
+0,40002490,Missionary's Cookbook [2],1,1,67600
+0,40002495,Missionary's Cookbook [3],1,1,67650
+0,40002494,Missionary's Cookbook [4],1,1,67640
+0,40002493,Missionary's Cookbook [5],1,1,67630
+0,40002461,Missionary's Cookbook [6],1,1,67130
+0,400024CF,Missionary's Cookbook [7],1,1,68230
+0,400024B8,Ancient Dragon Apostle's Cookbook [1],1,1,68000
+0,400024B9,Ancient Dragon Apostle's Cookbook [2],1,1,68010
+0,400024BB,Ancient Dragon Apostle's Cookbook [3],1,1,68030
+0,400024BA,Ancient Dragon Apostle's Cookbook [4],1,1,68020
+0,400024A8,Perfumer's Cookbook [1],1,1,67840
+0,400024A9,Perfumer's Cookbook [2],1,1,67850
+0,400024AA,Perfumer's Cookbook [3],1,1,67860
+0,400024B0,Perfumer's Cookbook [4],1,1,67920
+0,400024CC,Fevor's Cookbook [1],1,1,68200
+0,400024CE,Fevor's Cookbook [2],1,1,68220
+0,400024CD,Fevor's Cookbook [3],1,1,68210
+0,400024E0,Frenzied's Cookbook [1],1,1,68400
+0,400024E1,Frenzied's Cookbook [2],1,1,68410
+0,40002134,Crafting Kit,1,1,60120
+0,40002454,Nomadic Warrior's Cookbook [1],1,1,67000
+0,4000245F,Nomadic Warrior's Cookbook [2],1,1,67110
+0,40002455,Nomadic Warrior's Cookbook [3],1,1,67010
+0,400024A4,Nomadic Warrior's Cookbook [4],1,1,67800
+0,400024A7,Nomadic Warrior's Cookbook [5],1,1,67830
+0,40002456,Nomadic Warrior's Cookbook [6],1,1,67020
+0,40002459,Nomadic Warrior's Cookbook [7],1,1,67050
+0,400024AC,Nomadic Warrior's Cookbook [8],1,1,67880
+0,4000247F,Nomadic Warrior's Cookbook [9],1,1,67430
+0,40002457,Nomadic Warrior's Cookbook [10],1,1,67030
+0,4000246A,Nomadic Warrior's Cookbook [11],1,1,67220
+0,4000245A,Nomadic Warrior's Cookbook [12],1,1,67060
+0,4000245C,Nomadic Warrior's Cookbook [13],1,1,67080
+0,400024AB,Nomadic Warrior's Cookbook [14],1,1,67870
+0,400024AE,Nomadic Warrior's Cookbook [15],1,1,67900
+0,40002471,Nomadic Warrior's Cookbook [16],1,1,67290
+0,4000245E,Nomadic Warrior's Cookbook [17],1,1,67100
+0,4000246F,Nomadic Warrior's Cookbook [18],1,1,67270
+0,4000245B,Nomadic Warrior's Cookbook [19],1,1,67070
+0,4000246B,Nomadic Warrior's Cookbook [20],1,1,67230
+0,40002460,Nomadic Warrior's Cookbook [21],1,1,67120
+0,400024AD,Nomadic Warrior's Cookbook [22],1,1,67890
+0,4000245D,Nomadic Warrior's Cookbook [23],1,1,67090
+0,400024AF,Nomadic Warrior's Cookbook [24],1,1,67910
+0,40002468,Armorer's Cookbook [1],1,1,67200
+0,40002469,Armorer's Cookbook [2],1,1,67210
+0,40002470,Armorer's Cookbook [3],1,1,67280
+0,4000246E,Armorer's Cookbook [4],1,1,67260
+0,40002473,Armorer's Cookbook [5],1,1,67310
+0,40002472,Armorer's Cookbook [6],1,1,67300
+0,4000246D,Armorer's Cookbook [7],1,1,67250
+0,4000247D,Glintstone Craftsman's Cookbook [1],1,1,67410
+0,40002481,Glintstone Craftsman's Cookbook [2],1,1,67450
+0,40002484,Glintstone Craftsman's Cookbook [3],1,1,67480
+0,4000247C,Glintstone Craftsman's Cookbook [4],1,1,67400
+0,4000247E,Glintstone Craftsman's Cookbook [5],1,1,67420
+0,40002482,Glintstone Craftsman's Cookbook [6],1,1,67460
+0,40002483,Glintstone Craftsman's Cookbook [7],1,1,67470
+0,40002480,Glintstone Craftsman's Cookbook [8],1,1,67440
+0,40002491,Missionary's Cookbook [1],1,1,67610
+0,40002490,Missionary's Cookbook [2],1,1,67600
+0,40002495,Missionary's Cookbook [3],1,1,67650
+0,40002494,Missionary's Cookbook [4],1,1,67640
+0,40002493,Missionary's Cookbook [5],1,1,67630
+0,40002461,Missionary's Cookbook [6],1,1,67130
+0,400024CF,Missionary's Cookbook [7],1,1,68230
+0,400024B8,Ancient Dragon Apostle's Cookbook [1],1,1,68000
+0,400024B9,Ancient Dragon Apostle's Cookbook [2],1,1,68010
+0,400024BB,Ancient Dragon Apostle's Cookbook [3],1,1,68030
+0,400024BA,Ancient Dragon Apostle's Cookbook [4],1,1,68020
+0,400024A8,Perfumer's Cookbook [1],1,1,67840
+0,400024A9,Perfumer's Cookbook [2],1,1,67850
+0,400024AA,Perfumer's Cookbook [3],1,1,67860
+0,400024B0,Perfumer's Cookbook [4],1,1,67920
+0,400024CC,Fevor's Cookbook [1],1,1,68200
+0,400024CE,Fevor's Cookbook [2],1,1,68220
+0,400024CD,Fevor's Cookbook [3],1,1,68210
+0,400024E0,Frenzied's Cookbook [1],1,1,68400
+0,400024E1,Frenzied's Cookbook [2],1,1,684101,401EA8DD,Greater Potentate's Cookbook [1],1,1,68590
+1,401EA8EB,Greater Potentate's Cookbook [2],1,1,68730
+1,401EA8E7,Greater Potentate's Cookbook [3],1,1,68690
+1,401EA8DE,Greater Potentate's Cookbook [4],1,1,68600
+1,401EA8DF,Greater Potentate's Cookbook [5],1,1,68610
+1,401EA8EA,Greater Potentate's Cookbook [6],1,1,68720
+1,401EA8E1,Greater Potentate's Cookbook [7],1,1,68630
+1,401EA8E6,Greater Potentate's Cookbook [8],1,1,68680
+1,401EA8E2,Greater Potentate's Cookbook [9],1,1,68640
+1,401EA8E3,Greater Potentate's Cookbook [10],1,1,68650
+1,401EA8E4,Greater Potentate's Cookbook [11],1,1,68660
+1,401EA8E0,Greater Potentate's Cookbook [12],1,1,68620
+1,401EA8E8,Greater Potentate's Cookbook [13],1,1,68700
+1,401EA8E9,Greater Potentate's Cookbook [14],1,1,68710
+1,401EA8ED,Mad Craftsman's Cookbook [1],1,1,68750
+1,401EA8E5,Mad Craftsman's Cookbook [2],1,1,68670
+1,401EA8FA,Mad Craftsman's Cookbook [3],1,1,68880
+1,401EA8EC,Ancient Dragon Knight's Cookbook [1],1,1,68740
+1,401EA8F0,Ancient Dragon Knight's Cookbook [2],1,1,68780
+1,401EA8EE,St. Trina Disciple's Cookbook [1],1,1,68760
+1,401EA901,St. Trina Disciple's Cookbook [2],1,1,68950
+1,401EA8F6,St. Trina Disciple's Cookbook [3],1,1,68840
+1,401EA8D6,Forager Brood Cookbook [1],1,1,68520
+1,401EA8D7,Forager Brood Cookbook [2],1,1,68530
+1,401EA8D8,Forager Brood Cookbook [3],1,1,68540
+1,401EA8D9,Forager Brood Cookbook [4],1,1,68550
+1,401EA8DA,Forager Brood Cookbook [5],1,1,68560
+1,401EA8D5,Forager Brood Cookbook [6],1,1,68510
+1,401EA8F5,Forager Brood Cookbook [7],1,1,68830
+1,401EA8F3,Igon's Cookbook [1],1,1,68810
+1,401EA8DB,Igon's Cookbook [2],1,1,68570
+1,401EA8FE,Finger-Weaver's Cookbook [1],1,1,68920
+1,401EA8DC,Finger-Weaver's Cookbook [2],1,1,68580
+1,401EA8EF,Fire Knight's Cookbook [1],1,1,68770
+1,401EA8FC,Fire Knight's Cookbook [2],1,1,68900
+1,401EA8F2,Battlefield Priest's Cookbook [1],1,1,68800
+1,401EA8F4,Battlefield Priest's Cookbook [2],1,1,68820
+1,401EA8FB,Battlefield Priest's Cookbook [3],1,1,68890
+1,401EA8FF,Battlefield Priest's Cookbook [4],1,1,68930
+1,401EA900,Grave Keeper's Cookbook [1],1,1,68940
+1,401EA8F7,Grave Keeper's Cookbook [2],1,1,68850
+1,401EA8FD,Antiquity Scholar's Cookbook [1],1,1,68910
+1,401EA8F8,Antiquity Scholar's Cookbook [2],1,1,68860
+1,401EA8F9,Tibia's Cookbook,1,1,68870
+1,401EA8F1,Loyal Knight's Cookbook,1,1,68790</value>
   </data>
   <data name="CrystalTears" xml:space="preserve">
     <value>0,11004,Cerulean Crystal Tear,1,1
@@ -2252,5 +2310,265 @@ ff d0                   call   rax
 00 00 00
 88 01                   mov    BYTE PTR [rcx],al
 c3                      ret</value>
+  </data>
+  <data name="ItemSpawn" xml:space="preserve">
+    <value>48 83 ec 28             sub    rsp,0x28
+48 8d 1d 00 00 00 00    lea    rbx,[rip+0x0]        # b &lt;_main+0xb&gt;
+80 3d 00 00 00 00 00    cmp    BYTE PTR [rip+0x0],0x0        # 12 &lt;_main+0x12&gt;
+74 1d                   je     31 &lt;skip_quantity_adjust&gt;
+48 8d 4b 44             lea    rcx,[rbx+0x44]
+e8 00 00 00 00          call   1d &lt;_main+0x1d&gt;
+8b 3d 00 00 00 00       mov    edi,DWORD PTR [rip+0x0]        # 23 &lt;_main+0x23&gt;
+8b 53 48                mov    edx,DWORD PTR [rbx+0x48]
+01 c2                   add    edx,eax
+39 fa                   cmp    edx,edi
+7e 05                   jle    31 &lt;skip_quantity_adjust&gt;
+29 c7                   sub    edi,eax
+89 7b 48                mov    DWORD PTR [rbx+0x48],edi
+000000000031 &lt;skip_quantity_adjust&gt;:
+48 8b 0d 00 00 00 00    mov    rcx,QWORD PTR [rip+0x0]        # 38 &lt;skip_quantity_adjust+0x7&gt;
+48 8d 53 40             lea    rdx,[rbx+0x40]
+4c 8d 83 e4 00 00 00    lea    r8,[rbx+0xe4]
+45 31 c9                xor    r9d,r9d
+e8 00 00 00 00          call   4b &lt;skip_quantity_adjust+0x1a&gt;
+48 83 c4 28             add    rsp,0x28
+c3                      ret</value>
+  </data>
+  <data name="CraftingMaterials" xml:space="preserve">
+    <value>0,40003a98,Sliver of Meat,999,999
+0,40003aa2,Beast Liver,999,999
+0,40003aac,Lump of Flesh,999,999
+0,40003ab6,Beast Blood,999,999
+0,40003ac0,Old Fang,999,999
+0,40003aca,Budding Horn,999,999
+0,40003ad4,Flight Pinion,999,999
+0,40003ae8,Four-Toed Fowl Foot,999,999
+0,40003af2,Turtle Neck Meat,999,999
+0,40003afc,Human Bone Shard,999,999
+0,40003b06,Great Dragonfly Head,999,999
+0,40003b10,Slumbering Egg,999,999
+0,40003b1a,Crab Eggs,999,999
+0,40003b24,Land Octopus Ovary,999,999
+0,40003b38,Strip of White Flesh,999,999
+0,40003bec,Thin Beast Bones,999,999
+0,40003bed,Hefty Beast Bone,999,999
+0,40003c32,Living Jar Shard,999,999
+0,40003c3c,Albinauric Bloodclot,999,999
+0,40003c46,Stormhawk Feather,999,999
+0,40005140,Nascent Butterfly,999,999
+0,40005141,Aeonian Butterfly,999,999
+0,40005142,Smoldering Butterfly,999,999
+0,4000514a,Silver Firefly,999,999
+0,4000514b,Gold Firefly,999,999
+0,4000514c,Glintstone Firefly,999,999
+0,40005154,Golden Centipede,999,999
+0,40005159,Silver Tear Husk,999,999
+0,4000515e,Gold-Tinged Excrement,999,999
+0,4000515f,Blood-Tainted Excrement,999,999
+0,4000516d,Yellow Ember,999,999
+0,40003b2e,Miranda Powder,999,999
+0,400050aa,Poisonbloom,999,999
+0,400050ab,Trina's Lily,999,999
+0,400050ac,Fulgurbloom,999,999
+0,400050ad,Miquella's Lily,999,999
+0,400050ae,Grave Violet,999,999
+0,400050b4,Faded Erdleaf Flower,999,999
+0,400050c8,Erdleaf Flower,999,999
+0,400050c9,Altus Bloom,999,999
+0,400050ca,Fire Blossom,999,999
+0,400050cb,Golden Sunflower,999,999
+0,400050cd,Tarnished Golden Sunflower,999,999
+0,400050d2,Herba,999,999
+0,400050d3,Arteria Leaf,999,999
+0,400050e6,Dewkissed Herba,999,999
+0,400050f0,Rowa Fruit,999,999
+0,400050f1,Golden Rowa,999,999
+0,400050f2,Rimed Rowa,999,999
+0,400050f3,Bloodrose,999,999
+0,40005104,Eye of Yelough,999,999
+0,4000510e,Crystal Bud,999,999
+0,4000510f,Rimed Crystal Bud,999,999
+0,40005111,Sacramental Bud,999,999
+0,40005118,Mushroom,999,999
+0,40005119,Melted Mushroom,999,999
+0,40005122,Toxic Mushroom,999,999
+0,40005127,Root Resin,999,999
+0,40005168,Cave Moss,999,999
+0,40005169,Budding Cave Moss,999,999
+0,4000516a,Crystal Cave Moss,999,999
+0,40006e0,Ruin Fragment,999,999
+0,40003c28,String,999,999
+0,4000512c,Cracked Crystal,999,999
+0,4000513b,Sanctuary Stone,999,999
+0,40005172,Volcanic Stone,999,999
+0,40005174,Formic Rock,999,999
+0,40005177,Gravel Stone,999,999
+1,401ebf18,Beast Horn,999,999
+1,401ebf22,Spirit Calculus,999,999
+1,401ebf2c,Pearlescent Scale,999,999
+1,401ebf36,Scorpion Liver,999,999
+1,401ebf40,Fly Mold,999,999
+1,401ed2a1,Rada Fruit,999,999
+1,401ed2a2,Redflesh Mushroom,999,999
+1,401ed2a3,Whiteflesh Mushroom,999,999
+1,401ed2a4,Knot Resin,999,999
+1,401ed2a5,Dewgem,999,999
+1,401ed2a6,Black Pyrefly,999,999
+1,401ed2a7,Glintslab Firefly,999,999
+1,401ed2a8,Yellow Fulgurbloom,999,999
+1,401ed2a9,Shadow Sunflower,999,999
+1,401ed2aa,Toxic Mossling,999,999
+1,401ed2ab,Scarlet Bud,999,999
+1,401ed2ac,Sanguine Amaryllis,999,999
+1,401ed2ad,Frozen Maggot,999,999
+1,401ed2ae,Deep-Purple Lily,999,999
+1,401ed2af,Nectarblood Burgeon,999,999
+1,401ed2b0,Winter-Lantern Fly,999,999
+1,401ed2b1,Swollen Grape,999,999
+1,401ed2b2,Grave Keeper's Brainpan,999,999
+1,401ed2b3,Horn-Strewn Excrement,999,999
+1,401ed2b4,Gas Stone,999,999
+1,401ed2b5,Ghostflame Bloom,999,999
+1,401ed2b6,Grave Cricket,999,999
+1,401ed2b7,Dragon's Calorbloom,999,999
+1,401ed2b8,Finger Mimic,999,999
+1,401ed2b9,Empyrean-Blood Burgeon,999,999
+1,401ed2ba,Congealed Putrescence,999,999
+1,401ed2bb,Roundrock,999,999
+1,401ed2bc,Spiritgrave Stone,999,999
+1,401ed2bd,Rauh Burrow,999,999
+1,401ed2be,Ember of Messmer,999,999
+1,401ed2bf,Blessed Bone Shard,999,999
+1,401ed2c0,Red Fulgurbloom,999,999
+1,401ed2c1,Nailstone,999,999
+1,401ed2c2,Sharp Gravel Stone,999,999
+1,401ed2c3,Furnace Visage,999,999
+</value>
+  </data>
+  <data name="Consumables" xml:space="preserve">
+    <value>0,40000D16,Bewitching Branch,10,600
+0,401E8804,Blessing of Marika,1,600
+0,400005A0,Blood Grease,10,600
+0,40000334,Boiled Crab,99,600
+0,401E9038,Bondstone,1,600
+0,400006AE,Bone Dart,40,600
+0,401E90CE,Call of Tibia,10,600
+0,401E9196,Charming Branch,10,600
+0,400003C0,Clarifying Boluses,99,600
+0,4000046A,Clarifying Cured Meat,10,999
+0,40000532,Clarifying White Cured Meat,10,999
+0,400006CC,Crystal Dart,40,600
+0,40000BD6,Cuckoo Glintstone,10,600
+0,40000474,Dappled Cured Meat,10,999
+0,4000053C,Dappled White Cured Meat,10,999
+0,401E88CC,Dragon Communion Flesh,10,999
+0,401E8A48,Dragon Communion Grease,10,600
+0,401E8B2E,Dragon Communion Harpoon,5,600
+0,401E8A02,Dragonbolt Grease,10,600
+0,401E88D1,Dragonscale Flesh,10,999
+0,400005C8,Dragonwound Grease,10,600
+0,40000604,Drawstring Blood Grease,30,600
+0,401E8A66,Drawstring Dragonbolt Grease,30,600
+0,401E8A8E,Drawstring Eternal Sleep Grease,30,600
+0,400005DC,Drawstring Fire Grease,30,600
+0,401E8A7A,Drawstring Golden Grease,30,600
+0,400005FA,Drawstring Holy Grease,30,600
+0,400005E6,Drawstring Lightning Grease,30,600
+0,400005F0,Drawstring Magic Grease,30,600
+0,401E8A5C,Drawstring Messmerfire Grease,30,600
+0,40000618,Drawstring Poison Grease,30,600
+0,40000636,Drawstring Rot Grease,30,600
+0,401E8A70,Drawstring Royal Magic Grease,30,600
+0,4000060E,Drawstring Soporific Grease,30,600
+0,401E8A2A,Eternal Sleep Grease,10,600
+0,400004BA,Exalted Flesh,10,999
+0,40000726,Explosive Stone,20,600
+0,40000727,Explosive Stone Clump,20,600
+0,400006D6,Fan Daggers,40,600
+0,401E8AC0,Festive Grease,10,600
+0,401E88D6,Fingerprint Nostrum,10,999
+0,401E90EC,Fire Coil,10,600
+0,40000578,Fire Grease,10,600
+0,401E90F6,Fire Spritestone,10,600
+0,40000488,Fireproof Dried Liver,5,999
+0,401E88EA,Fireproof Pickled Liver,5,999
+0,400005BE,Freezing Grease,10,600
+0,40000CEF,Frenzyflame Stone,10,600
+0,4000032C,Frozen Raisin,30,600
+0,40000096,Furlcalling Finger Remedy,999,0
+0,401E9100,Glinting Nail,10,600
+0,40000BEA,Glintstone Scrap,10,600
+0,400007EE,Glowstone,99,600
+0,401E8A16,Golden Grease,10,600
+0,401E894E,Golden Horn Tender,10,999
+0,401E90E2,Golden Vow,10,600
+0,400004B0,Gold-Pickled Fowl Foot,10,999
+0,401E8931,Gourmet Scorpion Stew,1,1
+0,401E8931,Gourmet Scorpion Stew,1,1
+0,40000802,Grace Mimic,99,600
+0,40000BFE,Gravity Stone Chunk,10,600
+0,40000BF4,Gravity Stone Fan,10,600
+0,40000596,Holy Grease,10,600
+0,4000049C,Holyproof Dried Liver,5,999
+0,401E88FE,Holyproof Pickled Liver,5,999
+0,401E90BA,Horned Bairn,1,600
+0,40000456,Immunizing Cured Meat,10,999
+0,4000051E,Immunizing White Cured Meat,10,999
+0,401E8B24,Innard Meat,40,600
+0,40000460,Invigorating Cured Meat,10,999
+0,40000528,Invigorating White Cured Meat,10,999
+0,401E8CC8,Iris of Grace,99,600
+0,401E8CD2,Iris of Occultation,99,600
+0,400006C2,Kukri,30,600
+0,40000BEB,Large Glintstone Scrap,10,600
+0,40000582,Lightning Grease,10,600
+0,40000492,Lightningproof Dried Liver,5,999
+0,401E88F4,Lightningproof Pickled Liver,5,999
+0,40000B67,Lord's Rune,99,600
+0,401E880E,Lulling Branch,10,600
+0,4000058C,Magic Grease,10,600
+0,401E89F8,Messmerfire Grease,10,600
+0,40000384,Neutralizing Boluses,99,600
+0,401E8908,Opaline Pickled Liver,5,999
+0,401E90C4,Perfumed Oil of Ranah,1,600
+0,4000044C,Pickled Turtle Neck,10,999
+0,400005B4,Poison Grease,10,600
+0,400006B8,Poisonbone Dart,40,600
+0,40000730,Poisoned Stone,20,600
+0,40000731,Poisoned Stone Clump,20,600
+0,401E8C50,Polter Stone,99,600
+0,400003AC,Preserving Boluses,99,600
+0,40000D21,Radiant Baldachin's Blessing,1,600
+0,400007E4,Rainbow Stone,99,600
+0,400004D3,Raw Meat Dumpling,3,999
+0,400003B6,Rejuvenating Boluses,99,600
+0,400005D2,Rot Grease,10,600
+0,401E8A0C,Royal Magic Grease,10,600
+0,400006E0,Ruin Fragment,999,999
+0,400000BE,Rune Arc,99,600
+0,401E893A,Sacred Bloody Flesh,10,999
+0,401E8930,Scorpion Stew,1,1
+0,401E8930,Scorpion Stew,1,1
+0,40000CF8,Scriptstone,10,600
+0,4000069A,Shield Grease,10,600
+0,401E8944,Silver Horn Tender,10,999
+0,400004A6,Silver-Pickled Fowl Foot,10,999
+0,40000834,Soft Cotton,99,600
+0,400005AA,Soporific Grease,10,600
+0,4000047E,Spellproof Dried Liver,5,999
+0,401E88E0,Spellproof Pickled Liver,5,999
+0,401E87A0,Spirit Raisin,30,600
+0,401E9039,Spritestone,10,600
+0,4000038E,Stanching Boluses,99,600
+0,4000050A,Starlight Shards,10,999
+0,400003A2,Stimulating Boluses,99,600
+0,40001F40,Stonesword Key,99,600
+0,401E916E,Sunwarmth Stone,10,600
+0,401E90D8,Surging Frenzied Flame,10,600
+0,40000398,Thawfrost Boluses,99,600
+0,401E8CDC,Thiollier's Concoction,99,600
+0,400006A4,Throwing Dagger,40,600
+0,40000CEE,Warming Stone,10,600
+0,401E8912,Well-Pickled Turtle Neck,10,999</value>
   </data>
 </root>

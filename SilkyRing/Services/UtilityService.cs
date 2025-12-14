@@ -1,11 +1,12 @@
 ﻿using System;
+using SilkyRing.Interfaces;
 using SilkyRing.Memory;
 using SilkyRing.Utilities;
 using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.Services
 {
-    public class UtilityService(MemoryService memoryService, HookManager hookManager)
+    public class UtilityService(MemoryService memoryService, HookManager hookManager) : IUtilityService
     {
         public void ToggleNoClip(bool isNoClipEnabled)
         {

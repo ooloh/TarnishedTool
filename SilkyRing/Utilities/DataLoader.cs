@@ -174,10 +174,44 @@ namespace SilkyRing.Utilities
                     items.Add(new Item
                     {
                         IsDlc = byte.Parse(parts[0]) == 1,
-                        Id = int.Parse(parts[1]),
+                        Id = Convert.ToInt32(parts[1], 16),
                         Name = parts[2],
                         StackSize = int.Parse(parts[3]),
                         MaxStorage = int.Parse(parts[4]),
+                        CategoryName = name
+                    });
+                }
+            }
+
+            return items;
+        }
+        
+        public static List<EventItem> GetEventItems(string name)
+        {
+            List<EventItem> items = new List<EventItem>();
+
+            string csvData = Resources.ResourceManager.GetString(name);
+
+            if (string.IsNullOrEmpty(csvData)) return new List<EventItem>();
+
+            using (StringReader reader = new StringReader(csvData))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    string[] parts = line.Split(',');
+
+
+                    items.Add(new EventItem
+                    {
+                        IsDlc = byte.Parse(parts[0]) == 1,
+                        Id = Convert.ToInt32(parts[1], 16),
+                        Name = parts[2],
+                        StackSize = int.Parse(parts[3]),
+                        MaxStorage = int.Parse(parts[4]),
+                        EventId = int.Parse(parts[5]),
                         CategoryName = name
                     });
                 }

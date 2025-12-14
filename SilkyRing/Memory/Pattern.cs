@@ -128,6 +128,15 @@
             7
         );
 
+        public static readonly Pattern MapItemManImpl = new Pattern(
+            new byte[] { 0xC7, 0x44, 0x24, 0x3C, 0x01, 0x00, 0x00, 0x00, 0xC7, 0x44, 0x24, 0x40 },
+            "xxxxxxxxxxxx",
+            0x10,
+            AddressingMode.Relative,
+            3,
+            7
+        );
+
         //Hooks
         public static readonly Pattern UpdateCoords = new Pattern(
             new byte[] { 0x0F, 0x11, 0x43, 0x70, 0xC7, 0x43 },
@@ -315,6 +324,15 @@
             new byte[] { 0xE8, 0x00, 0x00, 0x00, 0x00, 0x3B, 0xC6, 0x7D, 0x07 },
             "x????xxxx",
             0,
+            AddressingMode.Relative,
+            1,
+            5
+        );
+
+        public static readonly Pattern ItemSpawn = new Pattern(
+            new byte[] { 0x4C, 0x8D, 0x45, 0x34 },
+            "xxxx",
+            0xB,
             AddressingMode.Relative,
             1,
             5

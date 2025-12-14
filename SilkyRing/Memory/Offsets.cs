@@ -248,6 +248,11 @@ namespace SilkyRing.Memory
             public const int ForceSave = 0xb72;
         }
         
+        public static class MapItemManImpl
+        {
+            public static IntPtr Base;
+        }
+        
         public static class WorldChrManDbg
         {
             public static IntPtr Base;
@@ -314,6 +319,7 @@ namespace SilkyRing.Memory
             public static long ExecuteTalkCommand;
             public static long GetEvent;
             public static long GetPlayerItemQuantityById;
+            public static long ItemSpawn;
         }
 
         public static class Patches

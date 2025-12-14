@@ -13,7 +13,7 @@ using SilkyRing.Utilities;
 using SilkyRing.ViewModels;
 using SilkyRing.Views;
 using SilkyRing.Views.Tabs;
-using UtilityTab = SilkyRing.Views.UtilityTab;
+using UtilityTab = SilkyRing.Views.Tabs.UtilityTab;
 
 namespace SilkyRing
 {
@@ -56,7 +56,7 @@ namespace SilkyRing
             var hotkeyManager = new HotkeyManager(_memoryService);
 
             IPlayerService playerService = new PlayerService(_memoryService, hookManager);
-            var utilityService = new UtilityService(_memoryService, hookManager);
+            IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
             IEventService eventService = new EventService(_memoryService, hookManager);
             IAttackInfoService attackInfoService = new AttackInfoService(_memoryService, hookManager);
             ITargetService targetService = new TargetService(_memoryService, hookManager, playerService);
@@ -75,7 +75,7 @@ namespace SilkyRing
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService, attackInfoService);
             EventViewModel eventViewModel = new EventViewModel(eventService, _stateService);
             UtilityViewModel utilityViewModel = new UtilityViewModel(utilityService, _stateService, ezStateService, playerService);
-            ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService);
+            ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService, eventService);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager);
             
             var playerTab = new PlayerTab(playerViewModel);

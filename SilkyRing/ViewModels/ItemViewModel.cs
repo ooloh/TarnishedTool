@@ -17,7 +17,8 @@ public class ItemViewModel : BaseViewModel
 {
     private readonly IItemService _itemService;
     private readonly IDlcService _dlcService;
-    
+    private readonly IEventService _eventService;
+
     private readonly Dictionary<string, List<Item>> _itemsByCategory = new();
     private readonly List<Item> _allItems = new();
     private List<AshOfWar> _allAshesOfWar;
@@ -26,11 +27,13 @@ public class ItemViewModel : BaseViewModel
     private string _preSearchCategory;
     private bool _isSearchActive;
 
-    public ItemViewModel(IItemService itemService, IDlcService dlcService, IStateService stateService)
+    public ItemViewModel(IItemService itemService, IDlcService dlcService, IStateService stateService,
+        IEventService eventService)
     {
         _itemService = itemService;
         _dlcService = dlcService;
-        
+        _eventService = eventService;
+
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
 
@@ -277,6 +280,12 @@ public class ItemViewModel : BaseViewModel
     {
         _itemsByCategory["Weapons"] = DataLoader.GetWeapons().Cast<Item>().ToList();
         _itemsByCategory["Talismans"] = DataLoader.GetItems("Talismans");
+        _itemsByCategory["Crafting Materials"] = DataLoader.GetItems("CraftingMaterials");
+        _itemsByCategory["Arrows"] = DataLoader.GetItems("Arrows");
+        _itemsByCategory["Consumables"] = DataLoader.GetItems("Consumables");
+        _itemsByCategory["Cookbooks"] = DataLoader.GetEventItems("Cookbooks").Cast<Item>().ToList();
+     
+        
         
         _allItems.AddRange(_itemsByCategory.Values.SelectMany(x => x));
         _allAshesOfWar = DataLoader.GetAshOfWars();
@@ -338,7 +347,31 @@ public class ItemViewModel : BaseViewModel
     
     private void SpawnItem()
     {
+        if (_selectedItem == null) return;
         
+        int itemId = SelectedItem.Id;
+        int quantity = SelectedQuantity;
+        int aowId = -1;
+        int maxQuantity = SelectedItem.MaxStorage + SelectedItem.StackSize;
+        bool shouldQuantityAdjust = SelectedItem.StackSize > 1;
+
+        if (SelectedItem is Weapon weapon)
+        {
+            if (CanUpgrade) itemId += SelectedUpgrade;
+        
+            if (weapon.CanApplyAow && SelectedAshOfWar != null)
+            {
+                itemId += SelectedAffinity.GetIdOffset();
+                aowId = SelectedAshOfWar.Id;
+            }
+        }
+
+        if (SelectedItem is EventItem eventItem)
+        {
+            _eventService.SetEvent(eventItem.EventId, true);
+        }
+        
+        _itemService.SpawnItem(itemId, quantity, aowId, shouldQuantityAdjust, maxQuantity);
     }
 
 
