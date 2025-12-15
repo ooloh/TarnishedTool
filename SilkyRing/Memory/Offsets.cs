@@ -167,6 +167,13 @@ namespace SilkyRing.Memory
 
             // +0xA0 = Current Dungeon / Boss flag
         }
+        
+        public static class InputManager
+        {
+            public static IntPtr Base;
+
+            // +0xA0 = Current Dungeon / Boss flag
+        }
 
         public static class LuaEventMan
         {

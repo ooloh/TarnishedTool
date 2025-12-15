@@ -116,69 +116,85 @@
   </resheader>
   <data name="NoClip_UpdateCoords" xml:space="preserve">
     <value>50                      push   rax
-48 a1 00 00 00 00 00    movabs rax,ds:0x0
-00 00 00
+48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
 48 8b 80 08 e5 01 00    mov    rax,QWORD PTR [rax+0x1e508]
 48 8b 80 90 01 00 00    mov    rax,QWORD PTR [rax+0x190]
 48 3b 58 68             cmp    rbx,QWORD PTR [rax+0x68]
-0f 85 d3 00 00 00       jne    f6 &lt;skip&gt;
+0f 85 14 01 00 00       jne    134 &lt;skip&gt;
 0f 10 43 70             movups xmm0,XMMWORD PTR [rbx+0x70]
+41 51                   push   r9
 41 50                   push   r8
 52                      push   rdx
-48 a1 00 00 00 00 00    movabs rax,ds:0x0
-00 00 00
-48 8b 80 08 e5 01 00    mov    rax,QWORD PTR [rax+0x1e508]
-48 8b 50 58             mov    rdx,QWORD PTR [rax+0x58]
-48 8b 52 18             mov    rdx,QWORD PTR [rdx+0x18]
-8b 82 c4 01 00 00       mov    eax,DWORD PTR [rdx+0x1c4]
-f3 44 0f 10 bc 82 24    movss  xmm15,DWORD PTR [rdx+rax*4+0x124]
-01 00 00
-45 0f c6 ff 00          shufps xmm15,xmm15,0x0
+51                      push   rcx
+53                      push   rbx
+48 83 ec 40             sub    rsp,0x40
+48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 36 &lt;_main+0x36&gt;
+48 8b 80 e0 00 00 00    mov    rax,QWORD PTR [rax+0xe0]
+48 8b 08                mov    rcx,QWORD PTR [rax]
+48 89 cb                mov    rbx,rcx
+48 8b 01                mov    rax,QWORD PTR [rcx]
+48 8b 40 20             mov    rax,QWORD PTR [rax+0x20]
+48 8d 54 24 20          lea    rdx,[rsp+0x20]
+41 b8 a4 01 00 00       mov    r8d,0x1a4
+41 b9 a1 01 00 00       mov    r9d,0x1a1
+ff d0                   call   rax
+f3 44 0f 10 6c 24 20    movss  xmm13,DWORD PTR [rsp+0x20]
+f3 44 0f 10 7c 24 24    movss  xmm15,DWORD PTR [rsp+0x24]
+48 89 d9                mov    rcx,rbx
+48 8b 01                mov    rax,QWORD PTR [rcx]
+48 8b 40 20             mov    rax,QWORD PTR [rax+0x20]
+48 8d 54 24 20          lea    rdx,[rsp+0x20]
+41 b8 a3 01 00 00       mov    r8d,0x1a3
+41 b9 a2 01 00 00       mov    r9d,0x1a2
+ff d0                   call   rax
+f3 44 0f 58 6c 24 20    addss  xmm13,DWORD PTR [rsp+0x20]
+f3 44 0f 58 7c 24 24    addss  xmm15,DWORD PTR [rsp+0x24]
+45 0f 57 f6             xorps  xmm14,xmm14
+f3 45 0f 10 f5          movss  xmm14,xmm13
+66 45 0f 3a 21 f7 20    insertps xmm14,xmm15,0x20
 b8 cd cc 4c 3e          mov    eax,0x3e4ccccd
-66 44 0f 6e f0          movd   xmm14,eax
-45 0f c6 f6 00          shufps xmm14,xmm14,0x0
-45 0f 59 fe             mulps  xmm15,xmm14
-49 b8 00 00 00 00 00    movabs r8,0x0
-00 00 00
-4d 8b 00                mov    r8,QWORD PTR [r8]
+66 44 0f 6e e0          movd   xmm12,eax
+45 0f c6 e4 00          shufps xmm12,xmm12,0x0
+45 0f 59 f4             mulps  xmm14,xmm12
+4c 8b 05 00 00 00 00    mov    r8,QWORD PTR [rip+0x0]        # c0 &lt;_main+0xc0&gt;
 4d 8b 40 20             mov    r8,QWORD PTR [r8+0x20]
 4d 8b 40 18             mov    r8,QWORD PTR [r8+0x18]
-45 0f 59 78 30          mulps  xmm15,XMMWORD PTR [r8+0x30]
-41 0f 58 c7             addps  xmm0,xmm15
-8b 82 c4 01 00 00       mov    eax,DWORD PTR [rdx+0x1c4]
-f3 44 0f 10 bc 82 74    movss  xmm15,DWORD PTR [rdx+rax*4+0x174]
-01 00 00
-45 0f c6 ff 00          shufps xmm15,xmm15,0x0
-b8 9a 99 19 3e          mov    eax,0x3e19999a
-66 44 0f 6e f0          movd   xmm14,eax
-45 0f c6 f6 00          shufps xmm14,xmm14,0x0
-45 0f 59 fe             mulps  xmm15,xmm14
-45 0f 59 78 10          mulps  xmm15,XMMWORD PTR [r8+0x10]
-41 0f 58 c7             addps  xmm0,xmm15
-8a 15 00 00 00 00       mov    dl,BYTE PTR [rip+0x0]        # c0 &lt;_main+0xc0&gt;
+45 0f c6 ee 00          shufps xmm13,xmm14,0x0
+45 0f c6 fe aa          shufps xmm15,xmm14,0xaa
+45 0f 59 68 10          mulps  xmm13,XMMWORD PTR [r8+0x10]
+45 0f 59 78 20          mulps  xmm15,XMMWORD PTR [r8+0x20]
+45 0f 58 ef             addps  xmm13,xmm15
+41 0f 58 c5             addps  xmm0,xmm13
+8a 15 00 00 00 00       mov    dl,BYTE PTR [rip+0x0]        # ea &lt;_main+0xea&gt;
 80 fa 01                cmp    dl,0x1
-75 07                   jne    cc &lt;check_up&gt;
+75 07                   jne    f6 &lt;check_up&gt;
 b8 cd cc 4c be          mov    eax,0xbe4ccccd
-eb 0a                   jmp    d6 &lt;add_z&gt;
-0000000000cc &lt;check_up&gt;:
+eb 0a                   jmp    100 &lt;add_z&gt;
+0000000000f6 &lt;check_up&gt;:
 80 fa 02                cmp    dl,0x2
-75 1a                   jne    eb &lt;coord_update&gt;
+75 1a                   jne    115 &lt;coord_update&gt;
 b8 cd cc 4c 3e          mov    eax,0x3e4ccccd
-0000000000d6 &lt;add_z&gt;:
+00000100 &lt;add_z&gt;:
 66 44 0f 6e f8          movd   xmm15,eax
 45 0f c6 ff e1          shufps xmm15,xmm15,0xe1
 41 0f 58 c7             addps  xmm0,xmm15
-c6 05 00 00 00 00 00    mov    BYTE PTR [rip+0x0],0x0        # eb &lt;coord_update&gt;
-0000000000eb &lt;coord_update&gt;:
+c6 05 00 00 00 00 00    mov    BYTE PTR [rip+0x0],0x0        # 115 &lt;coord_update&gt;
+00000115 &lt;coord_update&gt;:
+0f 11 43 70             movups XMMWORD PTR [rbx+0x70],xmm0
+45 0f 57 ed             xorps  xmm13,xmm13
+45 0f 57 e4             xorps  xmm12,xmm12
 45 0f 57 f6             xorps  xmm14,xmm14
 45 0f 57 ff             xorps  xmm15,xmm15
+48 83 c4 40             add    rsp,0x40
+5b                      pop    rbx
+59                      pop    rcx
 5a                      pop    rdx
 41 58                   pop    r8
-0000000000f6 &lt;skip&gt;:
+41 59                   pop    r9
+00000134 &lt;skip&gt;:
 58                      pop    rax
-0f 11 43 70             movups XMMWORD PTR [rbx+0x70],xmm0
 c7 43 7c 00 00 80 3f    mov    DWORD PTR [rbx+0x7c],0x3f800000
-e9 00 00 00 00          jmp    107 &lt;skip+0x11&gt;</value>
+e9 00 00 00 00          jmp    141 &lt;skip+0xd&gt;</value>
   </data>
   <data name="NoClip_InAirTimer" xml:space="preserve">
     <value>50                      push   rax
@@ -2254,46 +2270,46 @@ c3                      ret</value>
 1,401EA8F1,Loyal Knight's Cookbook,1,1,68790</value>
   </data>
   <data name="CrystalTears" xml:space="preserve">
-    <value>0,11004,Cerulean Crystal Tear,1,1
-0,11005,Cerulean Crystal Tear,1,1
-0,11025,Cerulean Hidden Tear,1,1
-0,11007,Crimson Bubbletear,1,1
-0,11002,Crimson Crystal Tear,1,1
-0,11003,Crimson Crystal Tear,1,1
-0,11009,Crimsonburst Crystal Tear,1,1
-0,11000,Crimsonspill Crystal Tear,1,1
-0,11020,Crimsonwhorl Bubbletear,1,1
-0,11022,Dexterity-knot Crystal Tear,1,1
-0,11024,Faith-knot Crystal Tear,1,1
-0,11028,Flame-Shrouding Cracked Tear,1,1
-0,11010,Greenburst Crystal Tear,1,1
-0,11001,Greenspill Crystal Tear,1,1
-0,11031,Holy-Shrouding Cracked Tear,1,1
-0,11023,Intelligence-knot Crystal Tear,1,1
-0,11018,Leaden Hardtear,1,1
-0,11030,Lightning-Shrouding Cracked Tear,1,1
-0,11029,Magic-Shrouding Cracked Tear,1,1
-0,11008,Opaline Bubbletear,1,1
-0,11011,Opaline Hardtear,1,1
-0,11027,Purifying Crystal Tear,1,1
-0,11016,Ruptured Crystal Tear,1,1
-0,11017,Ruptured Crystal Tear,1,1
-0,11006,Speckled Hardtear,1,1
-0,11014,Spiked Cracked Tear,1,1
-0,11026,Stonebarb Cracked Tear,1,1
-0,11021,Strength-knot Crystal Tear,1,1
-0,11013,Thorny Cracked Tear,1,1
-0,11019,Twiggy Cracked Tear,1,1
-0,11015,Windy Crystal Tear,1,1
-0,11012,Winged Crystal Tear,1,1
-1,2011050,Bloodsucking Cracked Tear,1,1
-1,2011030,Cerulean-Sapping Cracked Tear,1,1
-1,2011010,Crimsonburst Dried Tear,1,1
-1,2011020,Crimson-Sapping Cracked Tear,1,1
-1,2011070,Deflecting Hardtear,1,1
-1,2011060,Glovewort Crystal Tear,1,1
-1,2011040,Oil-Soaked Tear,1,1
-1,2011000,Viridian Hidden Tear,1,1
+    <value>1,401eafaa,Bloodsucking Cracked Tear,1,1
+0,40002afc,Cerulean Crystal Tear,1,1
+0,40002afd,Cerulean Crystal Tear,1,1
+0,40002b11,Cerulean Hidden Tear,1,1
+1,401eaf96,Cerulean-Sapping Cracked Tear,1,1
+0,40002aff,Crimson Bubbletear,1,1
+0,40002afa,Crimson Crystal Tear,1,1
+0,40002afb,Crimson Crystal Tear,1,1
+1,401eaf8c,Crimson-Sapping Cracked Tear,1,1
+0,40002b01,Crimsonburst Crystal Tear,1,1
+1,401eaf82,Crimsonburst Dried Tear,1,1
+0,40002af8,Crimsonspill Crystal Tear,1,1
+0,40002b0c,Crimsonwhorl Bubbletear,1,1
+1,401eafbe,Deflecting Hardtear,1,1
+0,40002b0e,Dexterity-knot Crystal Tear,1,1
+0,40002b10,Faith-knot Crystal Tear,1,1
+0,40002b14,Flame-Shrouding Cracked Tear,1,1
+1,401eafb4,Glovewort Crystal Tear,1,1
+0,40002b02,Greenburst Crystal Tear,1,1
+0,40002af9,Greenspill Crystal Tear,1,1
+0,40002b17,Holy-Shrouding Cracked Tear,1,1
+0,40002b0f,Intelligence-knot Crystal Tear,1,1
+0,40002b0a,Leaden Hardtear,1,1
+0,40002b16,Lightning-Shrouding Cracked Tear,1,1
+0,40002b15,Magic-Shrouding Cracked Tear,1,1
+1,401eafa0,Oil-Soaked Tear,1,1
+0,40002b00,Opaline Bubbletear,1,1
+0,40002b03,Opaline Hardtear,1,1
+0,40002b13,Purifying Crystal Tear,1,1
+0,40002b09,Ruptured Crystal Tear,1,1
+0,40002b08,Ruptured Crystal Tear,1,1
+0,40002afe,Speckled Hardtear,1,1
+0,40002b06,Spiked Cracked Tear,1,1
+0,40002b12,Stonebarb Cracked Tear,1,1
+0,40002b0d,Strength-knot Crystal Tear,1,1
+0,40002b05,Thorny Cracked Tear,1,1
+0,40002b0b,Twiggy Cracked Tear,1,1
+1,401eaf78,Viridian Hidden Tear,1,1
+0,40002b07,Windy Crystal Tear,1,1
+0,40002b04,Winged Crystal Tear,1,1
 </value>
   </data>
   <data name="GetEvent" xml:space="preserve">
@@ -2335,114 +2351,114 @@ e8 00 00 00 00          call   4b &lt;skip_quantity_adjust+0x1a&gt;
 c3                      ret</value>
   </data>
   <data name="CraftingMaterials" xml:space="preserve">
-    <value>0,40003a98,Sliver of Meat,999,999
-0,40003aa2,Beast Liver,999,999
-0,40003aac,Lump of Flesh,999,999
-0,40003ab6,Beast Blood,999,999
-0,40003ac0,Old Fang,999,999
-0,40003aca,Budding Horn,999,999
-0,40003ad4,Flight Pinion,999,999
-0,40003ae8,Four-Toed Fowl Foot,999,999
-0,40003af2,Turtle Neck Meat,999,999
-0,40003afc,Human Bone Shard,999,999
-0,40003b06,Great Dragonfly Head,999,999
-0,40003b10,Slumbering Egg,999,999
-0,40003b1a,Crab Eggs,999,999
-0,40003b24,Land Octopus Ovary,999,999
-0,40003b38,Strip of White Flesh,999,999
-0,40003bec,Thin Beast Bones,999,999
-0,40003bed,Hefty Beast Bone,999,999
-0,40003c32,Living Jar Shard,999,999
+    <value>0,40005141,Aeonian Butterfly,999,999
 0,40003c3c,Albinauric Bloodclot,999,999
-0,40003c46,Stormhawk Feather,999,999
-0,40005140,Nascent Butterfly,999,999
-0,40005141,Aeonian Butterfly,999,999
-0,40005142,Smoldering Butterfly,999,999
-0,4000514a,Silver Firefly,999,999
-0,4000514b,Gold Firefly,999,999
-0,4000514c,Glintstone Firefly,999,999
-0,40005154,Golden Centipede,999,999
-0,40005159,Silver Tear Husk,999,999
-0,4000515e,Gold-Tinged Excrement,999,999
-0,4000515f,Blood-Tainted Excrement,999,999
-0,4000516d,Yellow Ember,999,999
-0,40003b2e,Miranda Powder,999,999
-0,400050aa,Poisonbloom,999,999
-0,400050ab,Trina's Lily,999,999
-0,400050ac,Fulgurbloom,999,999
-0,400050ad,Miquella's Lily,999,999
-0,400050ae,Grave Violet,999,999
-0,400050b4,Faded Erdleaf Flower,999,999
-0,400050c8,Erdleaf Flower,999,999
 0,400050c9,Altus Bloom,999,999
-0,400050ca,Fire Blossom,999,999
-0,400050cb,Golden Sunflower,999,999
-0,400050cd,Tarnished Golden Sunflower,999,999
-0,400050d2,Herba,999,999
 0,400050d3,Arteria Leaf,999,999
-0,400050e6,Dewkissed Herba,999,999
-0,400050f0,Rowa Fruit,999,999
-0,400050f1,Golden Rowa,999,999
-0,400050f2,Rimed Rowa,999,999
-0,400050f3,Bloodrose,999,999
-0,40005104,Eye of Yelough,999,999
-0,4000510e,Crystal Bud,999,999
-0,4000510f,Rimed Crystal Bud,999,999
-0,40005111,Sacramental Bud,999,999
-0,40005118,Mushroom,999,999
-0,40005119,Melted Mushroom,999,999
-0,40005122,Toxic Mushroom,999,999
-0,40005127,Root Resin,999,999
-0,40005168,Cave Moss,999,999
-0,40005169,Budding Cave Moss,999,999
-0,4000516a,Crystal Cave Moss,999,999
-0,40006e0,Ruin Fragment,999,999
-0,40003c28,String,999,999
-0,4000512c,Cracked Crystal,999,999
-0,4000513b,Sanctuary Stone,999,999
-0,40005172,Volcanic Stone,999,999
-0,40005174,Formic Rock,999,999
-0,40005177,Gravel Stone,999,999
+0,40003ab6,Beast Blood,999,999
 1,401ebf18,Beast Horn,999,999
-1,401ebf22,Spirit Calculus,999,999
-1,401ebf2c,Pearlescent Scale,999,999
-1,401ebf36,Scorpion Liver,999,999
-1,401ebf40,Fly Mold,999,999
-1,401ed2a1,Rada Fruit,999,999
-1,401ed2a2,Redflesh Mushroom,999,999
-1,401ed2a3,Whiteflesh Mushroom,999,999
-1,401ed2a4,Knot Resin,999,999
-1,401ed2a5,Dewgem,999,999
+0,40003aa2,Beast Liver,999,999
 1,401ed2a6,Black Pyrefly,999,999
-1,401ed2a7,Glintslab Firefly,999,999
-1,401ed2a8,Yellow Fulgurbloom,999,999
-1,401ed2a9,Shadow Sunflower,999,999
-1,401ed2aa,Toxic Mossling,999,999
-1,401ed2ab,Scarlet Bud,999,999
-1,401ed2ac,Sanguine Amaryllis,999,999
-1,401ed2ad,Frozen Maggot,999,999
+1,401ed2bf,Blessed Bone Shard,999,999
+0,4000515f,Blood-Tainted Excrement,999,999
+0,400050f3,Bloodrose,999,999
+0,40005169,Budding Cave Moss,999,999
+0,40003aca,Budding Horn,999,999
+0,40005168,Cave Moss,999,999
+1,401ed2ba,Congealed Putrescence,999,999
+0,40003b1a,Crab Eggs,999,999
+0,4000512c,Cracked Crystal,999,999
+0,4000510e,Crystal Bud,999,999
+0,4000516a,Crystal Cave Moss,999,999
 1,401ed2ae,Deep-Purple Lily,999,999
-1,401ed2af,Nectarblood Burgeon,999,999
-1,401ed2b0,Winter-Lantern Fly,999,999
-1,401ed2b1,Swollen Grape,999,999
-1,401ed2b2,Grave Keeper's Brainpan,999,999
-1,401ed2b3,Horn-Strewn Excrement,999,999
+1,401ed2a5,Dewgem,999,999
+0,400050e6,Dewkissed Herba,999,999
+1,401ed2b7,Dragon's Calorbloom,999,999
+1,401ed2be,Ember of Messmer,999,999
+1,401ed2b9,Empyrean-Blood Burgeon,999,999
+0,400050c8,Erdleaf Flower,999,999
+0,40005104,Eye of Yelough,999,999
+0,400050b4,Faded Erdleaf Flower,999,999
+1,401ed2b8,Finger Mimic,999,999
+0,400050ca,Fire Blossom,999,999
+0,40003ad4,Flight Pinion,999,999
+1,401ebf40,Fly Mold,999,999
+0,40005174,Formic Rock,999,999
+0,40003ae8,Four-Toed Fowl Foot,999,999
+1,401ed2ad,Frozen Maggot,999,999
+0,400050ac,Fulgurbloom,999,999
+1,401ed2c3,Furnace Visage,999,999
 1,401ed2b4,Gas Stone,999,999
 1,401ed2b5,Ghostflame Bloom,999,999
+1,401ed2a7,Glintslab Firefly,999,999
+0,4000514c,Glintstone Firefly,999,999
+0,4000514b,Gold Firefly,999,999
+0,4000515e,Gold-Tinged Excrement,999,999
+0,40005154,Golden Centipede,999,999
+0,400050f1,Golden Rowa,999,999
+0,400050cb,Golden Sunflower,999,999
 1,401ed2b6,Grave Cricket,999,999
-1,401ed2b7,Dragon's Calorbloom,999,999
-1,401ed2b8,Finger Mimic,999,999
-1,401ed2b9,Empyrean-Blood Burgeon,999,999
-1,401ed2ba,Congealed Putrescence,999,999
-1,401ed2bb,Roundrock,999,999
-1,401ed2bc,Spiritgrave Stone,999,999
-1,401ed2bd,Rauh Burrow,999,999
-1,401ed2be,Ember of Messmer,999,999
-1,401ed2bf,Blessed Bone Shard,999,999
-1,401ed2c0,Red Fulgurbloom,999,999
+1,401ed2b2,Grave Keeper's Brainpan,999,999
+0,400050ae,Grave Violet,999,999
+0,40005177,Gravel Stone,999,999
+0,40003b06,Great Dragonfly Head,999,999
+0,40003bed,Hefty Beast Bone,999,999
+0,400050d2,Herba,999,999
+1,401ed2b3,Horn-Strewn Excrement,999,999
+0,40003afc,Human Bone Shard,999,999
+1,401ed2a4,Knot Resin,999,999
+0,40003b24,Land Octopus Ovary,999,999
+0,40003c32,Living Jar Shard,999,999
+0,40003aac,Lump of Flesh,999,999
+0,40005119,Melted Mushroom,999,999
+0,400050ad,Miquella's Lily,999,999
+0,40003b2e,Miranda Powder,999,999
+0,40005118,Mushroom,999,999
 1,401ed2c1,Nailstone,999,999
+0,40005140,Nascent Butterfly,999,999
+1,401ed2af,Nectarblood Burgeon,999,999
+0,40003ac0,Old Fang,999,999
+1,401ebf2c,Pearlescent Scale,999,999
+0,400050aa,Poisonbloom,999,999
+1,401ed2a1,Rada Fruit,999,999
+1,401ed2bd,Rauh Burrow,999,999
+1,401ed2c0,Red Fulgurbloom,999,999
+1,401ed2a2,Redflesh Mushroom,999,999
+0,4000510f,Rimed Crystal Bud,999,999
+0,400050f2,Rimed Rowa,999,999
+0,40005127,Root Resin,999,999
+1,401ed2bb,Roundrock,999,999
+0,400050f0,Rowa Fruit,999,999
+0,40006e0,Ruin Fragment,999,999
+0,40005111,Sacramental Bud,999,999
+0,4000513b,Sanctuary Stone,999,999
+1,401ed2ac,Sanguine Amaryllis,999,999
+1,401ed2ab,Scarlet Bud,999,999
+1,401ebf36,Scorpion Liver,999,999
+1,401ed2a9,Shadow Sunflower,999,999
 1,401ed2c2,Sharp Gravel Stone,999,999
-1,401ed2c3,Furnace Visage,999,999
+0,4000514a,Silver Firefly,999,999
+0,40005159,Silver Tear Husk,999,999
+0,40003a98,Sliver of Meat,999,999
+0,40003b10,Slumbering Egg,999,999
+0,40005142,Smoldering Butterfly,999,999
+1,401ebf22,Spirit Calculus,999,999
+1,401ed2bc,Spiritgrave Stone,999,999
+0,40003c46,Stormhawk Feather,999,999
+0,40003c28,String,999,999
+0,40003b38,Strip of White Flesh,999,999
+1,401ed2b1,Swollen Grape,999,999
+0,400050cd,Tarnished Golden Sunflower,999,999
+0,40003bec,Thin Beast Bones,999,999
+1,401ed2aa,Toxic Mossling,999,999
+0,40005122,Toxic Mushroom,999,999
+0,400050ab,Trina's Lily,999,999
+0,40003af2,Turtle Neck Meat,999,999
+0,40005172,Volcanic Stone,999,999
+1,401ed2a3,Whiteflesh Mushroom,999,999
+1,401ed2b0,Winter-Lantern Fly,999,999
+0,4000516d,Yellow Ember,999,999
+1,401ed2a8,Yellow Fulgurbloom,999,999
 </value>
   </data>
   <data name="Consumables" xml:space="preserve">
@@ -2570,5 +2586,1136 @@ c3                      ret</value>
 0,400006A4,Throwing Dagger,40,600
 0,40000CEE,Warming Stone,10,600
 0,401E8912,Well-Pickled Turtle Neck,10,999</value>
+  </data>
+  <data name="UpgradeMaterials" xml:space="preserve">
+    <value>0,40002774,Smithing Stone [1],999,999
+0,40002775,Smithing Stone [2],999,999
+0,40002776,Smithing Stone [3],999,999
+0,40002777,Smithing Stone [4],999,999
+0,40002778,Smithing Stone [5],999,999
+0,40002779,Smithing Stone [6],999,999
+0,4000277A,Smithing Stone [7],999,999
+0,4000277B,Smithing Stone [8],999,999
+0,4000279C,Ancient Dragon Smithing Stone,999,999
+0,400027B0,Somber Smithing Stone [1],999,999
+0,400027B1,Somber Smithing Stone [2],999,999
+0,400027B2,Somber Smithing Stone [3],999,999
+0,400027B3,Somber Smithing Stone [4],999,999
+0,400027B4,Somber Smithing Stone [5],999,999
+0,400027B5,Somber Smithing Stone [6],999,999
+0,400027B6,Somber Smithing Stone [7],999,999
+0,400027B7,Somber Smithing Stone [8],999,999
+0,400027D8,Somber Smithing Stone [9],999,999
+0,400027B8,Somber Ancient Dragon Smithing Stone,999,999
+0,40002A94,Grave Glovewort [1],999,999
+0,40002A95,Grave Glovewort [2],999,999
+0,40002A96,Grave Glovewort [3],999,999
+0,40002A97,Grave Glovewort [4],999,999
+0,40002A98,Grave Glovewort [5],999,999
+0,40002A99,Grave Glovewort [6],999,999
+0,40002A9A,Grave Glovewort [7],999,999
+0,40002A9B,Grave Glovewort [8],999,999
+0,40002A9C,Grave Glovewort [9],999,999
+0,40002A9D,Great Grave Glovewort,999,999
+0,40002A9E,Ghost Glovewort [1],999,999
+0,40002A9F,Ghost Glovewort [2],999,999
+0,40002AA0,Ghost Glovewort [3],999,999
+0,40002AA1,Ghost Glovewort [4],999,999
+0,40002AA2,Ghost Glovewort [5],999,999
+0,40002AA3,Ghost Glovewort [6],999,999
+0,40002AA4,Ghost Glovewort [7],999,999
+0,40002AA5,Ghost Glovewort [8],999,999
+0,40002AA6,Ghost Glovewort [9],999,999
+0,40002AA7,Great Ghost Glovewort,999,999</value>
+  </data>
+  <data name="Armor" xml:space="preserve">
+    <value>0,1001D588,Alberich's Bracers,1,1
+0,1001D4C0,Alberich's Pointed Hat,1,1
+0,1001D8A8,Alberich's Pointed Hat (Altered),1,1
+0,1001D524,Alberich's Robe,1,1
+0,1001D90C,Alberich's Robe (Altered),1,1
+0,1001D5EC,Alberich's Trousers,1,1
+0,10102CA0,Albinauric Mask,1,1
+0,10090114,All-Knowing Armor,1,1
+0,100904FC,All-Knowing Armor (Altered),1,1
+0,10090178,All-Knowing Gauntlets,1,1
+0,100901DC,All-Knowing Greaves,1,1
+0,100900B0,All-Knowing Helm,1,1
+0,104DF954,Ansbach's Attire,1,1
+0,104DFD3C,Ansbach's Attire (Altered),1,1
+0,104DFA1C,Ansbach's Boots,1,1
+0,104DF9B8,Ansbach's Manchettes,1,1
+0,1005A67C,Aristocrat Boots,1,1
+0,1005CCC4,Aristocrat Coat,1,1
+0,1005A5B4,Aristocrat Garb,1,1
+0,1005A99C,Aristocrat Garb (Altered),1,1
+0,1005CC60,Aristocrat Hat,1,1
+0,1005A550,Aristocrat Headband,1,1
+0,104DAB34,Armor of Night,1,1
+0,104E4774,Armor of Solitude,1,1
+0,104E4B5C,Armor of Solitude (Altered),1,1
+0,104F80BC,Ascetic's Ankle Guards,1,1
+0,104F7FF4,Ascetic's Loincloth,1,1
+0,104F8058,Ascetic's Wrist Guards,1,1
+0,101CFDE0,Ash-of-War Scarab,1,1
+0,10099DB8,Astrologer Gloves,1,1
+0,10099CF0,Astrologer Hood,1,1
+0,10099D54,Astrologer Robe,1,1
+0,1009A13C,Astrologer Robe (Altered),1,1
+0,10099E1C,Astrologer Trousers,1,1
+0,1008DD88,Azur's Glintstone Crown,1,1
+0,1008DDEC,Azur's Glintstone Robe,1,1
+0,1008DE50,Azur's Manchettes,1,1
+0,100E31FC,Bandit Boots,1,1
+0,100E351C,Bandit Garb,1,1
+0,100E3198,Bandit Manchettes,1,1
+0,101560A8,Bandit Mask,1,1
+0,10030DA4,Banished Knight Armor,1,1
+0,1003118C,Banished Knight Armor (Altered),1,1
+0,10030E08,Banished Knight Gauntlets,1,1
+0,10030E6C,Banished Knight Greaves,1,1
+0,10030D40,Banished Knight Helm,1,1
+0,10031128,Banished Knight Helm (Altered),1,1
+0,100F436C,Battlemage Legwraps,1,1
+0,100F4308,Battlemage Manchettes,1,1
+0,100F42A4,Battlemage Robe,1,1
+0,100AFCE4,Beast Champion Armor,1,1
+0,100B00CC,Beast Champion Armor (Altered),1,1
+0,100AFD48,Beast Champion Gauntlets,1,1
+0,100AFDAC,Beast Champion Greaves,1,1
+0,100AFC80,Beast Champion Helm,1,1
+0,101ED2A0,Black Dumpling,1,1
+0,10155CC0,Black Hood,1,1
+0,1002BF84,Black Knife Armor,1,1
+0,1002C36C,Black Knife Armor (Altered),1,1
+0,1002BFE8,Black Knife Gauntlets,1,1
+0,1002C04C,Black Knife Greaves,1,1
+0,1002BF20,Black Knife Hood,1,1
+0,104E9594,Black Knight Armor,1,1
+0,104E95F8,Black Knight Gauntlets,1,1
+0,104E965C,Black Knight Greaves,1,1
+0,104E9530,Black Knight Helm,1,1
+0,10029810,Black Wolf Mask,1,1
+0,10055B7C,Blackflame Monk Armor,1,1
+0,10055BE0,Blackflame Monk Gauntlets,1,1
+0,10055C44,Blackflame Monk Greaves,1,1
+0,10055B18,Blackflame Monk Hood,1,1
+0,100D9878,Blackguard's Iron Mask,1,1
+0,10029874,Blaidd's Armor,1,1
+0,10029C5C,Blaidd's Armor (Altered),1,1
+0,100298D8,Blaidd's Gauntlets,1,1
+0,1002993C,Blaidd's Greaves,1,1
+0,100C0E54,Bloodhound Knight Armor,1,1
+0,100C123C,Bloodhound Knight Armor (Altered),1,1
+0,100C0EB8,Bloodhound Knight Gauntlets,1,1
+0,100C0F1C,Bloodhound Knight Greaves,1,1
+0,100C0DF0,Bloodhound Knight Helm,1,1
+0,100EB280,Bloodsoaked Manchettes,1,1
+0,100EB5A0,Bloodsoaked Mask,1,1
+0,101C8914,Bloodsoaked Tabard,1,1
+0,100A3930,Blue Cloth Cowl,1,1
+0,100A3994,Blue Cloth Vest,1,1
+0,100C3D34,Blue Festive Garb,1,1
+0,100C3CD0,Blue Festive Hood,1,1
+0,1003AA48,Blue Silver Bracelets,1,1
+0,1003A9E4,Blue Silver Mail Armor,1,1
+0,1003ADCC,Blue Silver Mail Armor (Altered),1,1
+0,1003A980,Blue Silver Mail Hood,1,1
+0,1003AAAC,Blue Silver Mail Skirt,1,1
+0,104D5D78,Braided Arm Wraps,1,1
+0,104D5D14,Braided Cord Robe,1,1
+0,100334B4,Briar Armor,1,1
+0,1003389C,Briar Armor (Altered),1,1
+0,10033518,Briar Gauntlets,1,1
+0,1003357C,Briar Greaves,1,1
+0,10033450,Briar Helm,1,1
+0,10022344,Bull-Goat Armor,1,1
+0,100223A8,Bull-Goat Gauntlets,1,1
+0,1002240C,Bull-Goat Greaves,1,1
+0,100222E0,Bull-Goat Helm,1,1
+0,100EF484,Carian Knight Armor,1,1
+0,100EF86C,Carian Knight Armor (Altered),1,1
+0,100EF4E8,Carian Knight Gauntlets,1,1
+0,100EF54C,Carian Knight Greaves,1,1
+0,100EF420,Carian Knight Helm,1,1
+0,104D5CB0,Caterpillar Mask,1,1
+0,101D4C00,Cerulean Tear Scarab,1,1
+0,1010C944,Chain Armor,1,1
+0,1010C8E0,Chain Coif,1,1
+0,1010C9A8,Chain Gauntlets,1,1
+0,1010CA0C,Chain Leggings,1,1
+0,101BECD4,Chain-Draped Tabard,1,1
+0,100B2458,Champion Bracers,1,1
+0,100B24BC,Champion Gaiters,1,1
+0,100B2390,Champion Headband,1,1
+0,100B23F4,Champion Pauldron,1,1
+0,105071C0,Circlet of Light,1,1
+0,10053084,Cleanrot Armor,1,1
+0,1005346C,Cleanrot Armor (Altered),1,1
+0,100530E8,Cleanrot Gauntlets,1,1
+0,1005314C,Cleanrot Greaves,1,1
+0,10053020,Cleanrot Helm,1,1
+0,10053408,Cleanrot Helm (Altered),1,1
+0,10027164,Cloth Garb,1,1
+0,1002722C,Cloth Trousers,1,1
+0,104FF524,Common Soldier Cloth Armor,1,1
+0,104FF588,Common Soldier Gauntlets,1,1
+0,104FF5EC,Common Soldier Greaves,1,1
+0,104FF4C0,Common Soldier Helm,1,1
+0,100C5C74,Commoner's Garb,1,1
+0,100C605C,Commoner's Garb (Altered),1,1
+0,100C5C10,Commoner's Headband,1,1
+0,100C5FF8,Commoner's Headband (Altered),1,1
+0,100C5D3C,Commoner's Shoes,1,1
+0,100C63E0,Commoner's Simple Garb,1,1
+0,100C6444,Commoner's Simple Garb (Altered),1,1
+0,100D6DE4,Confessor Armor,1,1
+0,100D71CC,Confessor Armor (Altered),1,1
+0,100D6EAC,Confessor Boots,1,1
+0,100D6E48,Confessor Gloves,1,1
+0,100D6D80,Confessor Hood,1,1
+0,100D7168,Confessor Hood (Altered),1,1
+0,100EA600,Consort's Mask,1,1
+0,100EA664,Consort's Robe,1,1
+0,100EA72C,Consort's Trousers,1,1
+0,10097644,Corhyn's Robe,1,1
+0,100B4AA0,Crimson Hood,1,1
+0,101D24F0,Crimson Tear Scarab,1,1
+0,1008B2F4,Crucible Axe Armor,1,1
+0,1008BAC4,Crucible Axe Armor (Altered),1,1
+0,1008B290,Crucible Axe Helm,1,1
+0,1008B358,Crucible Gauntlets,1,1
+0,1008B3BC,Crucible Greaves,1,1
+0,10510630,Crucible Hammer-Helm,1,1
+0,1008B6DC,Crucible Tree Armor,1,1
+0,1008BEAC,Crucible Tree Armor (Altered),1,1
+0,1008B678,Crucible Tree Helm,1,1
+0,101B2984,Cuckoo Knight Armor,1,1
+0,101B2D6C,Cuckoo Knight Armor (Altered),1,1
+0,101B29E8,Cuckoo Knight Gauntlets,1,1
+0,101B2A4C,Cuckoo Knight Greaves,1,1
+0,101B2920,Cuckoo Knight Helm,1,1
+0,101A1814,Cuckoo Surcoat,1,1
+0,104F7F90,Curseblade Mask,1,1
+0,104D8488,Dancer's Bracer,1,1
+0,104D8424,Dancer's Dress,1,1
+0,104D880C,Dancer's Dress (Altered),1,1
+0,104D83C0,Dancer's Hood,1,1
+0,104D84EC,Dancer's Trousers,1,1
+0,102DC6C0,Dane's Hat,1,1
+0,104F58E4,Death Knight Armor,1,1
+0,104F5948,Death Knight Gauntlets,1,1
+0,104F59AC,Death Knight Greaves,1,1
+0,104F5880,Death Knight Helm,1,1
+0,104F1230,Death Mask Helm,1,1
+0,101D7374,Deathbed Dress,1,1
+0,10083E28,Depraved Perfumer Gloves,1,1
+0,10083D60,Depraved Perfumer Headscarf,1,1
+0,10083DC4,Depraved Perfumer Robe,1,1
+0,100841AC,Depraved Perfumer Robe (Altered),1,1
+0,10083E8C,Depraved Perfumer Trousers,1,1
+0,1009EEF8,Diallos's Mask,1,1
+0,10102D04,Dirty Chainmail,1,1
+0,1050B810,Divine Beast Head,1,1
+0,105023A0,Divine Beast Helm,1,1
+0,10502404,Divine Beast Warrior Armor,1,1
+0,10502788,Divine Bird Helm,1,1
+0,105027EC,Divine Bird Warrior Armor,1,1
+0,10502850,Divine Bird Warrior Gauntlets,1,1
+0,105028B4,Divine Bird Warrior Greaves,1,1
+0,1000EAC4,Drake Knight Armor,1,1
+0,1000EEAC,Drake Knight Armor (Altered),1,1
+0,1000EB28,Drake Knight Gauntlets,1,1
+0,1000EB8C,Drake Knight Greaves,1,1
+0,1000EA60,Drake Knight Helm,1,1
+0,1000EE48,Drake Knight Helm (Altered),1,1
+0,102DC788,Dryleaf Arm Wraps,1,1
+0,102DC7EC,Dryleaf Cuissardes,1,1
+0,102DC724,Dryleaf Robe,1,1
+0,102DCB0C,Dryleaf Robe (Altered),1,1
+0,1004BC1C,Duelist Greaves,1,1
+0,1004BAF0,Duelist Helm,1,1
+0,100E5844,Eccentric's Armor,1,1
+0,100E590C,Eccentric's Breeches,1,1
+0,100E57E0,Eccentric's Hood,1,1
+0,100E5BC8,Eccentric's Hood (Altered),1,1
+0,100E58A8,Eccentric's Manchettes,1,1
+0,10070544,Elden Lord Armor,1,1
+0,1007092C,Elden Lord Armor (Altered),1,1
+0,100705A8,Elden Lord Bracers,1,1
+0,100704E0,Elden Lord Crown,1,1
+0,1007060C,Elden Lord Greaves,1,1
+0,100C8320,Envoy Crown,1,1
+0,101A3F24,Erdtree Surcoat,1,1
+0,100F1C5C,Errant Sorcerer Boots,1,1
+0,100F1BF8,Errant Sorcerer Manchettes,1,1
+0,100F1B94,Errant Sorcerer Robe,1,1
+0,100F1F7C,Errant Sorcerer Robe (Altered),1,1
+0,1002E694,Exile Armor,1,1
+0,1002E6F8,Exile Gauntlets,1,1
+0,1002E75C,Exile Greaves,1,1
+0,1002E630,Exile Hood,1,1
+0,1010CD2C,Eye Surcoat,1,1
+0,104C9D48,Fang Helm,1,1
+0,101005F4,Fell Omen Cloak,1,1
+0,100C3564,Festive Garb,1,1
+0,100C394C,Festive Garb (Altered),1,1
+0,100C3500,Festive Hood,1,1
+0,100C38E8,Festive Hood (Altered),1,1
+0,101D9A20,Fia's Hood,1,1
+0,101D9A84,Fia's Robe,1,1
+0,101D9E6C,Fia's Robe (Altered),1,1
+0,100DC370,Finger Maiden Fillet,1,1
+0,100DC3D4,Finger Maiden Robe,1,1
+0,100DC7BC,Finger Maiden Robe (Altered),1,1
+0,100DC49C,Finger Maiden Shoes,1,1
+0,104D3DD4,Finger Robe,1,1
+0,100E7F54,Fingerprint Armor,1,1
+0,100E833C,Fingerprint Armor (Altered),1,1
+0,100E7FB8,Fingerprint Gauntlets,1,1
+0,100E801C,Fingerprint Greaves,1,1
+0,100E7EF0,Fingerprint Helm,1,1
+0,104F0AC4,Fire Knight Armor,1,1
+0,104F0EAC,Fire Knight Armor (Altered),1,1
+0,104F0B28,Fire Knight Gauntlets,1,1
+0,104F0B8C,Fire Knight Greaves,1,1
+0,104F0A60,Fire Knight Helm,1,1
+0,10055794,Fire Monk Armor,1,1
+0,100557F8,Fire Monk Gauntlets,1,1
+0,1005585C,Fire Monk Greaves,1,1
+0,10055730,Fire Monk Hood,1,1
+0,10057EA4,Fire Prelate Armor,1,1
+0,1005828C,Fire Prelate Armor (Altered),1,1
+0,10057F08,Fire Prelate Gauntlets,1,1
+0,10057F6C,Fire Prelate Greaves,1,1
+0,10057E40,Fire Prelate Helm,1,1
+0,101BEC70,Foot Soldier Cap,1,1
+0,101BED38,Foot Soldier Gauntlets,1,1
+0,101BED9C,Foot Soldier Greaves,1,1
+0,101C61A0,Foot Soldier Helm,1,1
+0,101C1380,Foot Soldier Helmet,1,1
+0,101C13E4,Foot Soldier Tabard,1,1
+0,104E2064,Freyja's Armor,1,1
+0,104E244C,Freyja's Armor (Altered),1,1
+0,104E20C8,Freyja's Gauntlets,1,1
+0,104E212C,Freyja's Greaves,1,1
+0,104E2000,Freyja's Helm,1,1
+0,1004950C,Fur Leggings,1,1
+0,10049444,Fur Raiment,1,1
+0,102DEE34,Gaius's Armor,1,1
+0,102DEE98,Gaius's Gauntlets,1,1
+0,102DEEFC,Gaius's Greaves,1,1
+0,102DEDD0,Gaius's Helm,1,1
+0,104DAB98,Gauntlets of Night,1,1
+0,104E47D8,Gauntlets of Solitude,1,1
+0,101ADB64,Gelmir Knight Armor,1,1
+0,101ADF4C,Gelmir Knight Armor (Altered),1,1
+0,101ADBC8,Gelmir Knight Gauntlets,1,1
+0,101ADC2C,Gelmir Knight Greaves,1,1
+0,101ADB00,Gelmir Knight Helm,1,1
+0,101C3A90,Gilded Foot Soldier Cap,1,1
+0,101D05B0,Glintstone Scarab,1,1
+0,104F31D4,Gloried Attire,1,1
+0,101B0274,Godrick Knight Armor,1,1
+0,101B065C,Godrick Knight Armor (Altered),1,1
+0,101B02D8,Godrick Knight Gauntlets,1,1
+0,101B033C,Godrick Knight Greaves,1,1
+0,101B0210,Godrick Knight Helm,1,1
+0,1019F168,Godrick Soldier Gauntlets,1,1
+0,1019F1CC,Godrick Soldier Greaves,1,1
+0,1019F0A0,Godrick Soldier Helm,1,1
+0,1007F008,Godskin Apostle Bracelets,1,1
+0,1007EF40,Godskin Apostle Hood,1,1
+0,1007EFA4,Godskin Apostle Robe,1,1
+0,1007F06C,Godskin Apostle Trousers,1,1
+0,10081718,Godskin Noble Bracelets,1,1
+0,10081650,Godskin Noble Hood,1,1
+0,100816B4,Godskin Noble Robe,1,1
+0,1008177C,Godskin Noble Trousers,1,1
+0,100FDF48,Gold Bracelets,1,1
+0,100FDFAC,Gold Waistwrap,1,1
+0,100FDEE4,Goldmask's Rags,1,1
+0,104FCEDC,Gravebird Anklets,1,1
+0,104FD1FC,Gravebird Armor,1,1
+0,104FCE78,Gravebird Bracelets,1,1
+0,104FCDB0,Gravebird Helm,1,1
+0,104FCE14,Gravebird's Blackquill Armor,1,1
+0,1004BB54,Gravekeeper Cloak,1,1
+0,1004BF3C,Gravekeeper Cloak (Altered),1,1
+0,100493E0,Great Horned Headband,1,1
+0,1010CCC8,Greathelm,1,1
+0,10186A00,Greathood,1,1
+0,10512D40,Greatjar,1,1
+0,104DABFC,Greaves of Night,1,1
+0,104E483C,Greaves of Solitude,1,1
+0,100509D8,Guardian Bracers,1,1
+0,10050D5C,Guardian Garb,1,1
+0,10050974,Guardian Garb (Full Bloom),1,1
+0,10050A3C,Guardian Greaves,1,1
+0,10050910,Guardian Mask,1,1
+0,10027100,Guilty Hood,1,1
+0,100F4240,Haima Glintstone Crown,1,1
+0,101AB454,Haligtree Crest Surcoat,1,1
+0,101AB4B8,Haligtree Gauntlets,1,1
+0,101AB51C,Haligtree Greaves,1,1
+0,101AB3F0,Haligtree Helm,1,1
+0,101BC5C4,Haligtree Knight Armor,1,1
+0,101BC9AC,Haligtree Knight Armor (Altered),1,1
+0,101BC628,Haligtree Knight Gauntlets,1,1
+0,101BC68C,Haligtree Knight Greaves,1,1
+0,101BC560,Haligtree Knight Helm,1,1
+0,104DAAD0,Helm of Night,1,1
+0,104E4710,Helm of Solitude,1,1
+0,100F1B30,Hierodas Glintstone Crown,1,1
+0,101E5DD4,High Page Clothes,1,1
+0,101E61BC,High Page Clothes (Altered),1,1
+0,101E5D70,High Page Hood,1,1
+0,104D3668,High Priest Gloves,1,1
+0,104D35A0,High Priest Hat,1,1
+0,104D3604,High Priest Robe,1,1
+0,104D36CC,High Priest Undergarments,1,1
+0,104F35BC,Highland Attire,1,1
+0,101E36C4,Highwayman Cloth Armor,1,1
+0,101E3728,Highwayman Gauntlets,1,1
+0,101E3660,Highwayman Hood,1,1
+0,10501C34,Horned Warrior Armor,1,1
+0,10501C98,Horned Warrior Gauntlets,1,1
+0,10501CFC,Horned Warrior Greaves,1,1
+0,10501BD0,Horned Warrior Helm,1,1
+0,1009EB74,Hoslow's Armor,1,1
+0,1009F344,Hoslow's Armor (Altered),1,1
+0,1009EBD8,Hoslow's Gauntlets,1,1
+0,1009EC3C,Hoslow's Greaves,1,1
+0,1009EB10,Hoslow's Helm,1,1
+0,104DD244,Igon's Armor,1,1
+0,104DD62C,Igon's Armor (Altered),1,1
+0,104DD2A8,Igon's Gauntlets,1,1
+0,104DD1E0,Igon's Helm,1,1
+0,104DD5C8,Igon's Helm (Altered),1,1
+0,104DD30C,Igon's Loincloth,1,1
+0,1013DA08,Iji's Mirrorhelm,1,1
+0,10107AC0,Imp Head (Cat),1,1
+0,10108678,Imp Head (Corpse),1,1
+0,10108E48,Imp Head (Elder),1,1
+0,10107EA8,Imp Head (Fanged),1,1
+0,10515450,Imp Head (Lion),1,1
+0,10108290,Imp Head (Long-Tongued),1,1
+0,10108A60,Imp Head (Wolf),1,1
+0,101D01C8,Incantation Scarab,1,1
+0,10009D08,Iron Gauntlets,1,1
+0,10009C40,Iron Helmet,1,1
+0,100249F0,Iron Kasa,1,1
+0,104C99C4,Iron Rivet Armor,1,1
+0,104C9A28,Iron Rivet Gauntlets,1,1
+0,104C9A8C,Iron Rivet Greaves,1,1
+0,101CB024,Ivory-Draped Tabard,1,1
+0,10111700,Jar,1,1
+0,100FB770,Juvenile Scholar Cap,1,1
+0,100FB7D4,Juvenile Scholar Robe,1,1
+0,1000C3B4,Kaiden Armor,1,1
+0,1000C418,Kaiden Gauntlets,1,1
+0,1000C350,Kaiden Helm,1,1
+0,1000C47C,Kaiden Trousers,1,1
+0,100CB5E8,Karolos Glintstone Crown,1,1
+0,1016E3C4,Knight Armor,1,1
+0,1016E428,Knight Gauntlets,1,1
+0,1016E48C,Knight Greaves,1,1
+0,1016E360,Knight Helm,1,1
+0,100D46D4,Land of Reeds Armor,1,1
+0,100D4ABC,Land of Reeds Armor (Altered),1,1
+0,100D4738,Land of Reeds Gauntlets,1,1
+0,100D479C,Land of Reeds Greaves,1,1
+0,100D4670,Land of Reeds Helm,1,1
+0,100CB200,Lazuli Glintstone Crown,1,1
+0,101EF9B0,Lazuli Robe,1,1
+0,104F3238,Leather Arm Wraps,1,1
+0,10155D24,Leather Armor,1,1
+0,10155DEC,Leather Boots,1,1
+0,104F3558,Leather Crown,1,1
+0,10155D88,Leather Gloves,1,1
+0,104F3170,Leather Headband,1,1
+0,104F329C,Leather Leg Wraps,1,1
+0,10009D6C,Leather Trousers,1,1
+0,101C3AF4,Leather-Draped Tabard,1,1
+0,104C4BA4,Leda's Armor,1,1
+0,101B5094,Leyndell Knight Armor,1,1
+0,101B547C,Leyndell Knight Armor (Altered),1,1
+0,101B50F8,Leyndell Knight Gauntlets,1,1
+0,101B515C,Leyndell Knight Greaves,1,1
+0,101B5030,Leyndell Knight Helm,1,1
+0,101A3F88,Leyndell Soldier Gauntlets,1,1
+0,101A3FEC,Leyndell Soldier Greaves,1,1
+0,101A3EC0,Leyndell Soldier Helm,1,1
+0,1009C464,Lionel's Armor,1,1
+0,1009C84C,Lionel's Armor (Altered),1,1
+0,1009C4C8,Lionel's Gauntlets,1,1
+0,1009C52C,Lionel's Greaves,1,1
+0,1009C400,Lionel's Helm,1,1
+0,10075364,Lord of Blood's Robe,1,1
+0,1007574C,Lord of Blood's Robe (Altered),1,1
+0,1008D9A0,Lusat's Glintstone Crown,1,1
+0,1008DA68,Lusat's Manchettes,1,1
+0,1008DA04,Lusat's Robe,1,1
+0,100BC034,Malenia's Armor,1,1
+0,100BC41C,Malenia's Armor (Altered),1,1
+0,100BC098,Malenia's Gauntlet,1,1
+0,100BC0FC,Malenia's Greaves,1,1
+0,100BBFD0,Malenia's Winged Helm,1,1
+0,1003F804,Malformed Dragon Armor,1,1
+0,1003F868,Malformed Dragon Gauntlets,1,1
+0,1003F8CC,Malformed Dragon Greaves,1,1
+0,1003F7A0,Malformed Dragon Helm,1,1
+0,100B9924,Maliketh's Armor,1,1
+0,100B9D0C,Maliketh's Armor (Altered),1,1
+0,100B9988,Maliketh's Gauntlets,1,1
+0,100B99EC,Maliketh's Greaves,1,1
+0,100B98C0,Maliketh's Helm,1,1
+0,100EB1B8,Marais Mask,1,1
+0,100EB21C,Marais Robe,1,1
+0,100CD1A4,Marionette Soldier Armor,1,1
+0,100CF850,Marionette Soldier Birdhelm,1,1
+0,100CD140,Marionette Soldier Helm,1,1
+0,100DE698,Mask of Confidence,1,1
+0,101A8DA8,Mausoleum Gauntlets,1,1
+0,101A8E0C,Mausoleum Greaves,1,1
+0,101B9EB4,Mausoleum Knight Armor,1,1
+0,101BA29C,Mausoleum Knight Armor (Altered),1,1
+0,101B9F18,Mausoleum Knight Gauntlets,1,1
+0,101B9F7C,Mausoleum Knight Greaves,1,1
+0,101A8D44,Mausoleum Surcoat,1,1
+0,104E6E84,Messmer Soldier Armor,1,1
+0,104E726C,Messmer Soldier Armor (Altered),1,1
+0,104E6EE8,Messmer Soldier Gauntlets,1,1
+0,104E6F4C,Messmer Soldier Greaves,1,1
+0,104E6E20,Messmer Soldier Helm,1,1
+0,104FA704,Messmer's Armor,1,1
+0,104FA768,Messmer's Gauntlets,1,1
+0,104FA7CC,Messmer's Greaves,1,1
+0,104FA6A0,Messmer's Helm,1,1
+0,104FAA88,Messmer's Helm (Altered),1,1
+0,10113ED8,Mushroom Arms,1,1
+0,10113E74,Mushroom Body,1,1
+0,101EAB90,Mushroom Crown,1,1
+0,10113E10,Mushroom Head,1,1
+0,10113F3C,Mushroom Legs,1,1
+0,100B4E88,Navy Hood,1,1
+0,100478EC,Night Maiden Armor,1,1
+0,10047888,Night Maiden Twin Crown,1,1
+0,100382D4,Night's Cavalry Armor,1,1
+0,100386BC,Night's Cavalry Armor (Altered),1,1
+0,10038338,Night's Cavalry Gauntlets,1,1
+0,1003839C,Night's Cavalry Greaves,1,1
+0,10038270,Night's Cavalry Helm,1,1
+0,10038658,Night's Cavalry Helm (Altered),1,1
+0,100B4B68,Noble's Gloves,1,1
+0,100B4B04,Noble's Traveling Garb,1,1
+0,100B4BCC,Noble's Trousers,1,1
+0,1003D090,Nomadic Merchant's Chapeau,1,1
+0,1003D0F4,Nomadic Merchant's Finery,1,1
+0,1003D4DC,Nomadic Merchant's Finery (Altered),1,1
+0,1003D1BC,Nomadic Merchant's Trousers,1,1
+0,10046D98,Nox Bracelets,1,1
+0,10046DFC,Nox Greaves,1,1
+0,1013D620,Nox Mirrorhelm,1,1
+0,10046D34,Nox Monk Armor,1,1
+0,1004711C,Nox Monk Armor (Altered),1,1
+0,10046CD0,Nox Monk Hood,1,1
+0,100470B8,Nox Monk Hood (Altered),1,1
+0,10047504,Nox Swordstress Armor,1,1
+0,10047CD4,Nox Swordstress Armor (Altered),1,1
+0,100474A0,Nox Swordstress Crown,1,1
+0,10047C70,Nox Swordstress Crown (Altered),1,1
+0,104C5374,Oathseeker Knight Armor,1,1
+0,104C4C08,Oathseeker Knight Gauntlets,1,1
+0,104C4C6C,Oathseeker Knight Greaves,1,1
+0,104C4B40,Oathseeker Knight Helm,1,1
+0,1010EFF0,Octopus Head,1,1
+0,100EB604,Official's Attire,1,1
+0,100D4E40,Okina Mask,1,1
+0,1005F370,Old Aristocrat Cowl,1,1
+0,1005F3D4,Old Aristocrat Gown,1,1
+0,1005F49C,Old Aristocrat Shoes,1,1
+0,1008DACC,Old Sorcerer's Legwraps,1,1
+0,100CAE18,Olivinus Glintstone Crown,1,1
+0,100ECD74,Omen Armor,1,1
+0,100ECDD8,Omen Gauntlets,1,1
+0,100ECE3C,Omen Greaves,1,1
+0,100ECD10,Omen Helm,1,1
+0,101CD7FC,Omenkiller Boots,1,1
+0,101CD798,Omenkiller Long Gloves,1,1
+0,101CD734,Omenkiller Robe,1,1
+0,101CD6D0,Omensmirk Mask,1,1
+0,10035BC4,Page Garb,1,1
+0,10035FAC,Page Garb (Altered),1,1
+0,10035B60,Page Hood,1,1
+0,10035C8C,Page Trousers,1,1
+0,104C9960,Pelt of Ralva,1,1
+0,10016058,Perfumer Gloves,1,1
+0,10015F90,Perfumer Hood,1,1
+0,10015FF4,Perfumer Robe,1,1
+0,100163DC,Perfumer Robe (Altered),1,1
+0,100160BC,Perfumer Sarong,1,1
+0,10018704,Perfumer's Traveling Garb,1,1
+0,10018AEC,Perfumer's Traveling Garb (Altered),1,1
+0,100DE2B0,Preceptor's Big Hat,1,1
+0,100DE378,Preceptor's Gloves,1,1
+0,100DE314,Preceptor's Long Gown,1,1
+0,100DE6FC,Preceptor's Long Gown (Altered),1,1
+0,100DE3DC,Preceptor's Trousers,1,1
+0,100D94F4,Prisoner Clothing,1,1
+0,100D9490,Prisoner Iron Mask,1,1
+0,100D95BC,Prisoner Trousers,1,1
+0,100975E0,Prophet Blindfold,1,1
+0,10097E14,Prophet Robe,1,1
+0,10097A2C,Prophet Robe (Altered),1,1
+0,1009770C,Prophet Trousers,1,1
+0,1006B6C0,Pumpkin Helm,1,1
+0,1007C8F8,Queen's Bracelets,1,1
+0,1007C830,Queen's Crescent Crown,1,1
+0,1007C95C,Queen's Leggings,1,1
+0,1007C894,Queen's Robe,1,1
+0,101A6698,Radahn Soldier Gauntlets,1,1
+0,101A66FC,Radahn Soldier Greaves,1,1
+0,101A65D0,Radahn Soldier Helm,1,1
+0,10072CB8,Radahn's Gauntlets,1,1
+0,10072D1C,Radahn's Greaves,1,1
+0,10072C54,Radahn's Lion Armor,1,1
+0,1007303C,Radahn's Lion Armor (Altered),1,1
+0,10072BF0,Radahn's Redmane Helm,1,1
+0,100FDE80,Radiant Gold Mask,1,1
+0,100D1FC4,Raging Wolf Armor,1,1
+0,100D23AC,Raging Wolf Armor (Altered),1,1
+0,100D2028,Raging Wolf Gauntlets,1,1
+0,100D208C,Raging Wolf Greaves,1,1
+0,100D1F60,Raging Wolf Helm,1,1
+0,104EBCA4,Rakshasa Armor,1,1
+0,104EBD08,Rakshasa Gauntlets,1,1
+0,104EBD6C,Rakshasa Greaves,1,1
+0,104EBC40,Rakshasa Helm,1,1
+0,100E3134,Raptor's Black Feathers,1,1
+0,101A1878,Raya Lucarian Gauntlets,1,1
+0,101A18DC,Raya Lucarian Greaves,1,1
+0,101A17B0,Raya Lucarian Helm,1,1
+0,100CAA94,Raya Lucarian Robe,1,1
+0,101B77A4,Redmane Knight Armor,1,1
+0,101B7B8C,Redmane Knight Armor (Altered),1,1
+0,101B7808,Redmane Knight Gauntlets,1,1
+0,101B786C,Redmane Knight Greaves,1,1
+0,101B7740,Redmane Knight Helm,1,1
+0,101A6634,Redmane Surcoat,1,1
+0,10504344,Rellana's Armor,1,1
+0,105043A8,Rellana's Gloves,1,1
+0,1050440C,Rellana's Greaves,1,1
+0,105042E0,Rellana's Helm,1,1
+0,10024A54,Ronin's Armor,1,1
+0,10024E3C,Ronin's Armor (Altered),1,1
+0,10024AB8,Ronin's Gauntlets,1,1
+0,10024B1C,Ronin's Greaves,1,1
+0,101E85AC,Rotten Duelist Greaves,1,1
+0,101E8480,Rotten Duelist Helm,1,1
+0,101E84E4,Rotten Gravekeeper Cloak,1,1
+0,101E88CC,Rotten Gravekeeper Cloak (Altered),1,1
+0,10044624,Royal Knight Armor,1,1
+0,10044A0C,Royal Knight Armor (Altered),1,1
+0,10044688,Royal Knight Gauntlets,1,1
+0,100446EC,Royal Knight Greaves,1,1
+0,100445C0,Royal Knight Helm,1,1
+0,100A87B4,Royal Remains Armor,1,1
+0,100A8818,Royal Remains Gauntlets,1,1
+0,100A887C,Royal Remains Greaves,1,1
+0,100A8750,Royal Remains Helm,1,1
+0,100EA9E8,Ruler's Mask,1,1
+0,100EAA4C,Ruler's Robe,1,1
+0,101CAFC0,Sacred Crown Helm,1,1
+0,10068FB0,Sage Hood,1,1
+0,10069014,Sage Robe,1,1
+0,100690DC,Sage Trousers,1,1
+0,104F1A00,Salza's Hood,1,1
+0,1004E200,Sanguine Noble Hood,1,1
+0,1004E264,Sanguine Noble Robe,1,1
+0,1004E32C,Sanguine Noble Waistcloth,1,1
+0,10009CA4,Scale Armor,1,1
+0,100138E4,Scaled Armor,1,1
+0,10013CCC,Scaled Armor (Altered),1,1
+0,10013948,Scaled Gauntlets,1,1
+0,100139AC,Scaled Greaves,1,1
+0,10013880,Scaled Helm,1,1
+0,101C6204,Scarlet Tabard,1,1
+0,10509164,Shadow Militiaman Armor,1,1
+0,105091C8,Shadow Militiaman Gauntlets,1,1
+0,1050922C,Shadow Militiaman Greaves,1,1
+0,10509100,Shadow Militiaman Helm,1,1
+0,1004982C,Shaman Furs,1,1
+0,100498F4,Shaman Leggings,1,1
+0,100497C8,Shining Horned Headband,1,1
+0,1010A1D0,Silver Tear Mask,1,1
+0,100E30D0,Skeletal Mask,1,1
+0,100F6950,Snow Witch Hat,1,1
+0,100F69B4,Snow Witch Robe,1,1
+0,100F6D9C,Snow Witch Robe (Altered),1,1
+0,100F6A7C,Snow Witch Skirt,1,1
+0,104D5DDC,Soiled Loincloth,1,1
+0,100CAB5C,Sorcerer Leggings,1,1
+0,100CAAF8,Sorcerer Manchettes,1,1
+0,1001FC98,Spellblade's Gloves,1,1
+0,1001FBD0,Spellblade's Pointed Hat,1,1
+0,1001FC34,Spellblade's Traveling Attire,1,1
+0,1002001C,Spellblade's Traveling Attire (Altered),1,1
+0,1001FCFC,Spellblade's Trousers,1,1
+0,1050DF20,St. Trina's Blossom,1,1
+0,104CC0D4,Thiollier's Garb,1,1
+0,104CC4BC,Thiollier's Garb (Altered),1,1
+0,104CC138,Thiollier's Gloves,1,1
+0,104CC070,Thiollier's Mask,1,1
+0,104CC19C,Thiollier's Trousers,1,1
+0,100F918C,Traveler's Boots,1,1
+0,100F90C4,Traveler's Clothes,1,1
+0,10018768,Traveler's Gloves,1,1
+0,100186A0,Traveler's Hat,1,1
+0,100F9128,Traveler's Manchettes,1,1
+0,100187CC,Traveler's Slops,1,1
+0,100DBCCC,Traveling Maiden Boots,1,1
+0,100DBC68,Traveling Maiden Gloves,1,1
+0,100DBBA0,Traveling Maiden Hood,1,1
+0,100DBC04,Traveling Maiden Robe,1,1
+0,100DBFEC,Traveling Maiden Robe (Altered),1,1
+0,10041F14,Tree Sentinel Armor,1,1
+0,100422FC,Tree Sentinel Armor (Altered),1,1
+0,10041F78,Tree Sentinel Gauntlets,1,1
+0,10041FDC,Tree Sentinel Greaves,1,1
+0,10041EB0,Tree Sentinel Helm,1,1
+0,1010D114,Tree Surcoat,1,1
+0,1019F104,Tree-and-Beast Surcoat,1,1
+0,10092824,Twinned Armor,1,1
+0,10092C0C,Twinned Armor (Altered),1,1
+0,10092888,Twinned Gauntlets,1,1
+0,100928EC,Twinned Greaves,1,1
+0,100927C0,Twinned Helm,1,1
+0,100CAA30,Twinsage Glintstone Crown,1,1
+0,100EAE34,Upper-Class Robe,1,1
+0,100A1284,Vagabond Knight Armor,1,1
+0,100A166C,Vagabond Knight Armor (Altered),1,1
+0,100A12E8,Vagabond Knight Gauntlets,1,1
+0,100A134C,Vagabond Knight Greaves,1,1
+0,100A1220,Vagabond Knight Helm,1,1
+0,104C72B4,Verdigris Armor,1,1
+0,104C7318,Verdigris Gauntlets,1,1
+0,104C737C,Verdigris Greaves,1,1
+0,104C7250,Verdigris Helm,1,1
+0,100BE744,Veteran's Armor,1,1
+0,100BEB2C,Veteran's Armor (Altered),1,1
+0,100BE7A8,Veteran's Gauntlets,1,1
+0,100BE80C,Veteran's Greaves,1,1
+0,100BE6E0,Veteran's Helm,1,1
+0,10066904,Vulgar Militia Armor,1,1
+0,10066968,Vulgar Militia Gauntlets,1,1
+0,100669CC,Vulgar Militia Greaves,1,1
+0,100668A0,Vulgar Militia Helm,1,1
+0,100A6108,War Surgeon Gloves,1,1
+0,100A60A4,War Surgeon Gown,1,1
+0,100A648C,War Surgeon Gown (Altered),1,1
+0,100A616C,War Surgeon Trousers,1,1
+0,100A39F8,Warrior Gauntlets,1,1
+0,100A3A5C,Warrior Greaves,1,1
+0,100A6040,White Mask,1,1
+0,100D4EA4,White Reed Armor,1,1
+0,100D4F08,White Reed Gauntlets,1,1
+0,100D4F6C,White Reed Greaves,1,1
+0,104F1618,Winged Serpent Helm,1,1
+0,104DF8F0,Wise Man's Mask,1,1
+0,100CB9D0,Witch's Glintstone Crown,1,1
+0,10506A54,Young Lion's Armor,1,1
+0,10506E3C,Young Lion's Armor (Altered),1,1
+0,10506AB8,Young Lion's Gauntlets,1,1
+0,10506B1C,Young Lion's Greaves,1,1
+0,105069F0,Young Lion's Helm,1,1
+0,10105414,Zamor Armor,1,1
+0,10105478,Zamor Bracelets,1,1
+0,101054DC,Zamor Legwraps,1,1
+0,101053B0,Zamor Mask,1,1
+,1,1</value>
+  </data>
+  <data name="BellBearings" xml:space="preserve">
+    <value>0,400022E9,Abandoned Merchant's Bell Bearing,1,1
+0,400022D4,Bernahl's Bell Bearing,1,1
+0,400022EE,Blackguard's Bell Bearing,1,1
+0,400022F1,Bone Peddler's Bell Bearing,1,1
+0,400022EF,Corhyn's Bell Bearing,1,1
+0,400022D3,D's Bell Bearing,1,1
+0,40002303,Ghost-Glovewort Picker's Bell Bearing [1],1,1
+0,40002304,Ghost-Glovewort Picker's Bell Bearing [2],1,1
+0,40002305,Ghost-Glovewort Picker's Bell Bearing [3],1,1
+0,40002300,Glovewort Picker's Bell Bearing [1],1,1
+0,40002301,Glovewort Picker's Bell Bearing [2],1,1
+0,40002302,Glovewort Picker's Bell Bearing [3],1,1
+0,400022D6,Gostoc's Bell Bearing,1,1
+0,400022F0,Gowry's Bell Bearing,1,1
+0,400022F4,Gravity Stone Peddler's Bell Bearing,1,1
+1,401EA749,Greasemonger's Bell Bearing,1,1
+1,401EA746,Herbalist's Bell Bearing,1,1
+0,400022E1,Hermit Merchant's Bell Bearing [1],1,1
+0,400022E8,Hermit Merchant's Bell Bearing [2],1,1
+0,400022EA,Hermit Merchant's Bell Bearing [3],1,1
+1,401EA74B,Igon's Bell Bearing,1,1
+0,400022EC,Iji's Bell Bearing,1,1
+0,400022EB,Imprisoned Merchant's Bell Bearing,1,1
+0,400022DE,Isolated Merchant's Bell Bearing [1],1,1
+0,400022DF,Isolated Merchant's Bell Bearing [2],1,1
+0,400022E7,Isolated Merchant's Bell Bearing [3],1,1
+0,400022D8,Kalé's Bell Bearing,1,1
+0,400022F2,Meat Peddler's Bell Bearing,1,1
+0,400022F3,Medicine Peddler's Bell Bearing,1,1
+0,400022D5,Miriel's Bell Bearing,1,1
+1,401EA74A,Moldmonger's Bell Bearing,1,1
+1,401EA744,Moore's Bell Bearing,1,1
+1,401EA747,Mushroom-Seller's Bell Bearing [1],1,1
+1,401EA748,Mushroom-Seller's Bell Bearing [2],1,1
+0,400022E5,Nomadic Merchant's Bell Bearing [10],1,1
+0,400022D9,Nomadic Merchant's Bell Bearing [1],1,1
+0,400022DA,Nomadic Merchant's Bell Bearing [2],1,1
+0,400022DB,Nomadic Merchant's Bell Bearing [3],1,1
+0,400022DC,Nomadic Merchant's Bell Bearing [4],1,1
+0,400022DD,Nomadic Merchant's Bell Bearing [5],1,1
+0,400022E0,Nomadic Merchant's Bell Bearing [6],1,1
+0,400022E2,Nomadic Merchant's Bell Bearing [7],1,1
+0,400022E3,Nomadic Merchant's Bell Bearing [8],1,1
+0,400022E4,Nomadic Merchant's Bell Bearing [9],1,1
+0,400022D0,Patches' Bell Bearing,1,1
+0,400022CE,Pidia's Bell Bearing,1,1
+0,400022ED,Rogier's Bell Bearing,1,1
+0,400022D1,Sellen's Bell Bearing,1,1
+0,400022CF,Seluvis's Bell Bearing,1,1
+0,400022F7,Smithing-Stone Miner's Bell Bearing [1],1,1
+0,400022F8,Smithing-Stone Miner's Bell Bearing [2],1,1
+0,400022F9,Smithing-Stone Miner's Bell Bearing [3],1,1
+0,400022FA,Smithing-Stone Miner's Bell Bearing [4],1,1
+0,400022FB,Somberstone Miner's Bell Bearing [1],1,1
+0,400022FC,Somberstone Miner's Bell Bearing [2],1,1
+0,400022FD,Somberstone Miner's Bell Bearing [3],1,1
+0,400022FE,Somberstone Miner's Bell Bearing [4],1,1
+0,400022FF,Somberstone Miner's Bell Bearing [5],1,1
+1,401EA74C,Spellmachinist's Bell Bearing,1,1
+1,401EA74D,String-Seller's Bell Bearing,1,1
+0,400022D7,Thops's Bell Bearing,1,1
+1,401EA745,Ymir's Bell Bearing,1,1
+</value>
+  </data>
+  <data name="SpiritAshes" xml:space="preserve">
+    <value>0,40033838,Albinauric Ashes,1,600
+0,40033068,Ancestral Follower Ashes,1,600
+1,4021CC58,Ancient Dragon Florissax,1,600
+0,4003E800,Ancient Dragon Knight Kristoff,1,600
+0,4003CCA8,Archer Ashes,1,600
+0,400372D0,Avionette Soldier Ashes,1,600
+0,40038270,Azula Beastman Ashes,1,600
+0,40031510,Banished Knight Engvall,1,600
+0,40031128,Banished Knight Oleg,1,600
+0,40035F48,Battlemage Hugues,1,600
+1,4021B8D0,Bigmouth Imp Ashes,1,600
+0,40030D40,Black Knife Tiche,1,600
+1,4021B4E8,Black Knight Captain Huw,1,600
+1,4021B100,Black Knight Commander Andreas,1,600
+0,40037AA0,Blackflame Monk Amon,1,600
+1,402195A8,Bloodfiend Hexer's Ashes,1,600
+0,4003A598,Bloodhound Knight Floh,1,600
+0,40036330,Clayman Ashes,1,600
+0,40036718,Cleanrot Knight Finlay,1,600
+0,40032C80,Crystalian Ashes,1,600
+1,402191C0,Curseblade Meera,1,600
+0,40039210,Demi-Human Ashes,1,600
+1,4021A930,Demi-Human Swordsman Yosh,1,600
+0,40034BC0,Depraved Perfumer Carmaan,1,600
+1,4021C488,Divine Bird Warrior Ornis,1,600
+0,4003FF70,Dolores the Sleeping Arrow Puppet,1,600
+0,4003F7A0,Dung Eater Puppet,1,600
+0,400318F8,Fanged Imp Ashes,1,600
+0,4003FB88,Finger Maiden Therolina Puppet,1,600
+1,4021D428,Fingercreeper Ashes,1,600
+1,40219D78,Fire Knight Hilde,1,600
+1,4021D810,Fire Knight Queelign,1,600
+0,400376B8,Fire Monk Ashes,1,600
+0,40038E28,Giant Rat Ashes,1,600
+0,40035390,Glintstone Sorcerer Ashes,1,600
+0,4003D090,Godrick Soldier Ashes,1,600
+1,40219990,Gravebird Ashes,1,600
+0,4003C8C0,Greatshield Soldier Ashes,1,600
+0,4003E418,Haligtree Soldier Ashes,1,600
+1,4021C870,Horned Warrior Ashes,1,600
+1,4021A548,Inquisitor Ashes,1,600
+0,40040358,Jarwight Puppet,1,600
+1,4021DFE0,Jolán and Anna,1,600
+0,40038658,Kaiden Sellsword Ashes,1,600
+0,40036B00,Kindred of Rot Ashes,1,600
+0,4003B920,Land Squirt Ashes,1,600
+0,40031CE0,Latenna the Albinauric,1,600
+0,4003D860,Leyndell Soldier Ashes,1,600
+0,4003EFD0,Lhutel the Headless,1,600
+0,40038A40,Lone Wolf Ashes,1,600
+0,4003B538,Mad Pumpkin Head Ashes,1,600
+1,4021BCB8,Man-Fly Ashes,1,600
+0,40037E88,Man-Serpent Ashes,1,600
+0,40036EE8,Marionette Soldier Ashes,1,600
+0,4003E030,Mausoleum Soldier Ashes,1,600
+1,4021AD18,Messmer Soldier Ashes,1,600
+0,40032898,Mimic Tear Ashes,1,600
+0,4003BD08,Miranda Sprout Ashes,1,600
+0,4003F3B8,Nepheli Loux Puppet,1,600
+0,400324B0,Nightmaiden &amp; Swordstress Puppets,1,600
+0,4003AD68,Noble Sorcerer Ashes,1,600
+0,400320C8,Nomad Ashes,1,600
+0,4003C4D8,Omenkiller Rollo,1,600
+0,400343F0,Oracle Envoy Ashes,1,600
+0,40035B60,Page Ashes,1,600
+0,40034FA8,Perfumer Tricia,1,600
+0,400347D8,Putrid Corpse Ashes,1,600
+0,4003DC48,Radahn Soldier Ashes,1,600
+0,4003D478,Raya Lucaria Soldier Ashes,1,600
+0,4003EBE8,Redmane Knight Ogha,1,600
+0,400395F8,Rotten Stray Ashes,1,600
+0,40034008,Skeletal Bandit Ashes,1,600
+0,40033C20,Skeletal Militiaman Ashes,1,600
+0,4003C0F0,Soldjars of Fortune Ashes,1,600
+1,4021A160,Spider Scorpion Ashes,1,600
+0,400399E0,Spirit Jellyfish Ashes,1,600
+0,4003A1B0,Stormhawk Deenh,1,600
+1,4021DBF8,Swordhand of Night Jolán,1,600
+1,4021C0A0,Taylew the Golem Smith,1,600
+0,40035778,Twinsage Sorcerer Ashes,1,600
+0,4003B150,Vulgar Militia Ashes,1,600
+0,4003A980,Wandering Noble Ashes,1,600
+0,40039DC8,Warhawk Ashes,1,600
+0,40033450,Winged Misbegotten Ashes,1,600
+</value>
+  </data>
+  <data name="Sorceries" xml:space="preserve">
+    <value>0,4000114F,Adula's Moonblade,99,600
+0,400011F8,Ambush Shard,99,600
+0,40001389,Ancient Death Rancor,99,600
+1,401E96DC,Blades of Stone,99,600
+0,4000132E,Briars of Punishment,99,600
+0,40001324,Briars of Sin,99,600
+0,40000FF0,Cannon of Haima,99,600
+0,4000114E,Carian Greatsword,99,600
+0,400010CD,Carian Phalanx,99,600
+0,40001162,Carian Piercer,99,600
+0,40001220,Carian Retaliation,99,600
+0,40001158,Carian Slicer,99,600
+1,401EA17C,Cherishing Fingers,99,600
+0,40001271,Collapsing Stars,99,600
+0,40000FB5,Comet,99,600
+0,40001068,Comet Azur,99,600
+0,40000FDC,Crystal Barrage,99,600
+0,40000FFA,Crystal Burst,99,600
+0,4000119E,Crystal Release,99,600
+0,400011A8,Crystal Torrent,99,600
+0,400013B0,Death Lightning,99,600
+0,4000122A,Eternal Darkness,99,600
+0,40001392,Explosive Ghostflame,99,600
+0,4000139C,Fia's Mist,99,600
+1,401EA172,Fleeting Microcosm,99,600
+0,40001072,Founding Rain of Stars,99,600
+0,40001144,Freezing Mist,99,600
+0,4000118A,Frozen Armament,99,600
+0,40001018,Gavel of Haima,99,600
+0,400012CA,Gelmir's Fury,99,600
+0,400010CC,Glintblade Phalanx,99,600
+1,401E9556,Glintblade Trio,99,600
+0,40000FE6,Glintstone Arc,99,600
+0,40000FB4,Glintstone Cometshard,99,600
+0,40001130,Glintstone Icecrag,99,600
+1,401E9614,Glintstone Nail,99,600
+1,401E961E,Glintstone Nails,99,600
+0,40000FA0,Glintstone Pebble,99,600
+0,40000FC8,Glintstone Stars,99,600
+1,401E96E6,Gravitational Missile,99,600
+0,40001270,Gravity Well,99,600
+0,40000FA1,Great Glintstone Shard,99,600
+0,400013F6,Great Oracular Bubble,99,600
+0,400010CE,Greatblade Phalanx,99,600
+1,401E97AE,Impenetrable Thorns,99,600
+0,4000111C,Loretta's Greatbow,99,600
+0,4000111D,Loretta's Mastery,99,600
+0,40001180,Lucidity,99,600
+0,40001112,Magic Downpour,99,600
+0,40001126,Magic Glintblade,99,600
+0,400012C0,Magma Shot,99,600
+1,401E97A4,Mantle of Thorns,99,600
+1,401E9CC2,Mass of Putrescence,99,600
+0,4000125C,Meteorite,99,600
+0,4000125D,Meteorite of Astel,99,600
+1,401E954C,Miriam's Vanishing,99,600
+0,4000120C,Night Comet,99,600
+0,40001964,Night Maiden's Mist,99,600
+0,40001202,Night Shard,99,600
+0,400013EC,Oracle Bubbles,99,600
+0,40001388,Rancorcall,99,600
+0,40001109,Ranni's Dark Moon,99,600
+1,401E9560,Rellana's Twin Moons,99,600
+0,40001108,Rennala's Full Moon,99,600
+1,401E9808,Rings of Spectral Light,99,600
+0,4000100E,Rock Blaster,99,600
+0,40001266,Rock Sling,99,600
+0,400012D4,Roiling Magma,99,600
+0,400012DE,Rykard's Rancor,99,600
+0,4000116C,Scholar's Armament,99,600
+0,40001176,Scholar's Shield,99,600
+0,40000FBE,Shard Spiral,99,600
+0,40001004,Shatter Earth,99,600
+0,40001194,Shattering Crystal,99,600
+0,40000FD2,Star Shower,99,600
+0,4000102C,Starlight,99,600
+0,4000107C,Stars of Ruin,99,600
+0,40000FAA,Swift Glintstone Shard,99,600
+0,40001022,Terra Magica,99,600
+0,40001216,Thops's Barrier,99,600
+0,400013A6,Tibia's Summons,99,600
+0,40001234,Unseen Blade,99,600
+0,4000123E,Unseen Form,99,600
+1,401E9CB8,Vortex of Putrescence,99,600
+0,4000113A,Zamor Ice Storm,99,600
+</value>
+  </data>
+  <data name="Incantations" xml:space="preserve">
+    <value>0,40001B59,Agheel's Flame,99,600
+0,40001B1C,Ancient Dragons' Lightning Spear,99,600
+0,40001AFE,Ancient Dragons' Lightning Strike,99,600
+1,401E9E84,Aspects of the Crucible: Bloom,99,600
+0,40001D60,Aspects of the Crucible: Breath,99,600
+0,40001D56,Aspects of the Crucible: Horns,99,600
+0,40001D4C,Aspects of the Crucible: Tail,99,600
+1,401E9E7A,Aspects of the Crucible: Thorns,99,600
+0,4000196E,Assassin's Approach,99,600
+0,400018BA,Barrier of Gold,99,600
+1,401E9FE2,Bayle's Flame Lightning,99,600
+1,401E9FD8,Bayle's Tyranny,99,600
+0,40001AA4,Beast Claw,99,600
+0,40001AC2,Bestial Constitution,99,600
+0,40001A90,Bestial Sling,99,600
+0,40001AB8,Bestial Vitality,99,600
+0,40001D6A,Black Blade,99,600
+0,40001842,Black Flame,99,600
+0,4000186A,Black Flame Blade,99,600
+0,40001860,Black Flame Ritual,99,600
+0,40001874,Black Flame's Protection,99,600
+0,4000191F,Blessing of the Erdtree,99,600
+0,4000191E,Blessing's Boon,99,600
+0,400018A6,Bloodboon,99,600
+0,400018B0,Bloodflame Blade,99,600
+0,4000189C,Bloodflame Talons,99,600
+0,40001B6D,Borealis's Mist,99,600
+0,400017E8,"Burn, O Flame!",99,600
+0,40001770,Catch Flame,99,600
+0,40001928,Cure Poison,99,600
+0,40001982,Darkness,99,600
+0,40001A2C,Discus of Light,99,600
+1,401EA2B2,Divine Beast Tornado,99,600
+1,401EA2BC,Divine Bird Feathers,99,600
+0,40001950,Divine Fortification,99,600
+0,40001B3B,Dragonbolt Blessing,99,600
+1,401E9F7E,Dragonbolt of Florissax,99,600
+0,40001B94,Dragonclaw,99,600
+0,40001B58,Dragonfire,99,600
+0,40001B6C,Dragonice,99,600
+0,40001BA8,Dragonmaw,99,600
+0,40001B77,Ekzykes's Decay,99,600
+0,40001A40,Elden Stars,99,600
+0,40001B30,Electrify Armament,99,600
+1,401E9F88,Electrocharge,99,600
+0,40001918,Erdtree Heal,99,600
+1,401EA2F8,Fire Serpent,99,600
+0,40001EDC,Fire's Deadly Sin,99,600
+0,40001932,Flame Fortification,99,600
+0,4000177A,Flame Sling,99,600
+0,400017DE,Flame of the Fell God,99,600
+0,40001798,"Flame, Cleanse Me",99,600
+0,40001784,"Flame, Fall Upon Them",99,600
+0,400017A2,"Flame, Grant Me Strength",99,600
+0,400017AC,"Flame, Protect Me",99,600
+0,40001B1D,Fortissax's Lightning Spear,99,600
+0,40001C98,Frenzied Burst,99,600
+0,40001B09,Frozen Lightning Spear,99,600
+1,401E9D1C,Furious Blade of Ansbach,99,600
+1,401E9FEC,Ghostflame Breath,99,600
+1,401EA29E,Giant Golden Arc,99,600
+0,400017D4,Giantsflame Take Thee,99,600
+0,40001B80,Glintstone Breath,99,600
+1,401EA294,Golden Arcs,99,600
+0,40001EDF,Golden Lightning Fortification,99,600
+0,400019C8,Golden Vow,99,600
+0,40001916,Great Heal,99,600
+0,40001BB2,Greyoll's Roar,99,600
+0,40001AAE,Gurranq's Beast Claw,99,600
+0,40001915,Heal,99,600
+1,401E9D80,Heal from Afar,99,600
+0,40001B12,Honed Bolt,99,600
+0,40001CA2,Howl of Shabriri,99,600
+0,40001A54,Immutable Shield,99,600
+0,40001C84,Inescapable Frenzy,99,600
+1,401E9F74,Knight's Lightning Spear,99,600
+1,401E9E98,Land of Shadow,99,600
+0,40001B26,Lansseax's Glaive,99,600
+0,40001A68,Law of Causality,99,600
+0,40001A4A,Law of Regression,99,600
+1,401E9EAC,Light of Miquella,99,600
+0,40001946,Lightning Fortification,99,600
+0,40001AF4,Lightning Spear,99,600
+0,40001B08,Lightning Strike,99,600
+0,40001A5E,Litany of Proper Death,99,600
+0,40001929,Lord's Aid,99,600
+0,4000195A,Lord's Divine Fortification,99,600
+0,40001917,Lord's Heal,99,600
+0,4000193C,Magic Fortification,99,600
+0,40001B62,Magma Breath,99,600
+1,401EA30C,Messmer's Orb,99,600
+1,401EA104,Midra's Flame of Frenzy,99,600
+1,401E9E8E,Minor Erdtree,99,600
+1,401E9EB6,Multilayered Ring of Light,99,600
+0,4000187E,Noble Presence,99,600
+0,40001771,"O, Flame!",99,600
+0,40001A7C,Order Healing,99,600
+0,40001A72,Order's Blade,99,600
+0,40001C20,Pest Threads,99,600
+1,401EA0AA,Pest-Thread Spears,99,600
+0,40001B8A,Placidusax's Ruin,99,600
+0,40001C3E,Poison Armament,99,600
+0,40001C34,Poison Mist,99,600
+0,400018C4,Protection of the Erdtree,99,600
+0,40001A36,Radagon's Rings of Light,99,600
+1,401EA302,Rain of Fire,99,600
+0,40001900,Rejection,99,600
+1,401E9F10,Roar of Rugalea,99,600
+0,40001B76,Rotten Breath,99,600
+1,401EA0A0,Rotten Butterflies,99,600
+0,40001C48,Scarlet Aeonia,99,600
+0,40001856,Scouring Black Flame,99,600
+0,40001978,Shadow Bait,99,600
+0,40001B81,Smarag's Glintstone Breath,99,600
+1,401EA2A8,Spira,99,600
+0,40001A9A,Stone of Gurranq,99,600
+0,4000184C,"Surge, O Flame!",99,600
+0,40001C2A,Swarm of Flies,99,600
+0,40001C8E,The Flame of Frenzy,99,600
+0,40001B63,Theodorix's Magma,99,600
+0,40001A2D,Triple Rings of Light,99,600
+0,40001C8F,Unendurable Frenzy,99,600
+0,40001914,Urgent Heal,99,600
+0,40001B3A,Vyke's Dragonbolt,99,600
+1,401EA230,Watchful Spirit,99,600
+0,4000178E,"Whirl, O Flame!",99,600
+1,401E9EA2,Wrath from Afar,99,600
+0,4000190A,Wrath of Gold,99,600
+</value>
+  </data>
+  <data name="PrattlingPate" xml:space="preserve">
+    <value>0,4000089A,Prattling Pate "Apologies",1,600
+0,40000898,Prattling Pate "Hello",1,600
+1,401E8CE6,Prattling Pate "Lamentation",1,600
+0,4000089E,Prattling Pate "Let's get to it",1,600
+0,4000089D,Prattling Pate "My beloved",1,600
+0,4000089C,Prattling Pate "Please help",1,600
+0,40000899,Prattling Pate "Thank you",1,600
+0,4000089B,Prattling Pate "Wonderful",1,600
+0,4000089F,Prattling Pate "You're beautiful",1,600
+</value>
   </data>
 </root>

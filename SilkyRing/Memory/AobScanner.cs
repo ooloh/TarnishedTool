@@ -40,6 +40,7 @@ namespace SilkyRing.Memory
             GameDataMan.Base = FindAddressByPattern(Pattern.GameDataMan);
             CsDlcImp.Base = FindAddressByPattern(Pattern.CsDlcImp);
             MapItemManImpl.Base = FindAddressByPattern(Pattern.MapItemManImpl);
+            InputManager.Base = FindAddressByPattern(Pattern.InputManager);
 
 
             TryPatternWithFallback("DungeonWarp", Pattern.DungeonWarp, addr => Patches.DungeonWarp = addr, saved);
@@ -125,6 +126,7 @@ namespace SilkyRing.Memory
             Console.WriteLine($"GameDataMan.Base: 0x{GameDataMan.Base.ToInt64():X}");
             Console.WriteLine($"CsDlcImp.Base: 0x{CsDlcImp.Base.ToInt64():X}");
             Console.WriteLine($"MapItemManImpl.Base: 0x{MapItemManImpl.Base.ToInt64():X}");
+            Console.WriteLine($"InputManager.Base: 0x{InputManager.Base.ToInt64():X}");
 
             Console.WriteLine($"Patches.NoLogo: 0x{Patches.DungeonWarp.ToInt64():X}");
             Console.WriteLine($"NoRunesFromEnemies.NoLogo: 0x{Patches.NoRunesFromEnemies.ToInt64():X}");

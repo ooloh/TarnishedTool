@@ -81,6 +81,28 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 0,1001D588,Alberich&apos;s Bracers,1,1
+        ///0,1001D4C0,Alberich&apos;s Pointed Hat,1,1
+        ///0,1001D8A8,Alberich&apos;s Pointed Hat (Altered),1,1
+        ///0,1001D524,Alberich&apos;s Robe,1,1
+        ///0,1001D90C,Alberich&apos;s Robe (Altered),1,1
+        ///0,1001D5EC,Alberich&apos;s Trousers,1,1
+        ///0,10102CA0,Albinauric Mask,1,1
+        ///0,10090114,All-Knowing Armor,1,1
+        ///0,100904FC,All-Knowing Armor (Altered),1,1
+        ///0,10090178,All-Knowing Gauntlets,1,1
+        ///0,100901DC,All-Knowing Greaves,1,1
+        ///0,100900B0,All-Knowing Helm,1,1
+        ///0,104DF954,Ansbach&apos;s Attire,1,1
+        ///0,104DFD3C,Ansbach&apos;s Attire ( [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Armor {
+            get {
+                return ResourceManager.GetString("Armor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,02faf080,Arrow,99,600
         ///0,02fb1790,Fire Arrow,99,600
         ///0,02fb3ea0,Serpent Arrow,99,600
@@ -99,6 +121,25 @@ namespace SilkyRing.Properties {
         internal static string Arrows {
             get {
                 return ResourceManager.GetString("Arrows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0,400022E9,Abandoned Merchant&apos;s Bell Bearing,1,1
+        ///0,400022D4,Bernahl&apos;s Bell Bearing,1,1
+        ///0,400022EE,Blackguard&apos;s Bell Bearing,1,1
+        ///0,400022F1,Bone Peddler&apos;s Bell Bearing,1,1
+        ///0,400022EF,Corhyn&apos;s Bell Bearing,1,1
+        ///0,400022D3,D&apos;s Bell Bearing,1,1
+        ///0,40002303,Ghost-Glovewort Picker&apos;s Bell Bearing [1],1,1
+        ///0,40002304,Ghost-Glovewort Picker&apos;s Bell Bearing [2],1,1
+        ///0,40002305,Ghost-Glovewort Picker&apos;s Bell Bearing [3],1,1
+        ///0,40002300,Glovewort Picker&apos;s Bell Bearing [1],1,1
+        ///0,40002301,Glovewort Picker&apos;s Bell Beari [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string BellBearings {
+            get {
+                return ResourceManager.GetString("BellBearings", resourceCulture);
             }
         }
         
@@ -161,21 +202,21 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 0,40003a98,Sliver of Meat,999,999
-        ///0,40003aa2,Beast Liver,999,999
-        ///0,40003aac,Lump of Flesh,999,999
+        ///   Looks up a localized string similar to 0,40005141,Aeonian Butterfly,999,999
+        ///0,40003c3c,Albinauric Bloodclot,999,999
+        ///0,400050c9,Altus Bloom,999,999
+        ///0,400050d3,Arteria Leaf,999,999
         ///0,40003ab6,Beast Blood,999,999
-        ///0,40003ac0,Old Fang,999,999
+        ///1,401ebf18,Beast Horn,999,999
+        ///0,40003aa2,Beast Liver,999,999
+        ///1,401ed2a6,Black Pyrefly,999,999
+        ///1,401ed2bf,Blessed Bone Shard,999,999
+        ///0,4000515f,Blood-Tainted Excrement,999,999
+        ///0,400050f3,Bloodrose,999,999
+        ///0,40005169,Budding Cave Moss,999,999
         ///0,40003aca,Budding Horn,999,999
-        ///0,40003ad4,Flight Pinion,999,999
-        ///0,40003ae8,Four-Toed Fowl Foot,999,999
-        ///0,40003af2,Turtle Neck Meat,999,999
-        ///0,40003afc,Human Bone Shard,999,999
-        ///0,40003b06,Great Dragonfly Head,999,999
-        ///0,40003b10,Slumbering Egg,999,999
-        ///0,40003b1a,Crab Eggs,999,999
-        ///0,40003b24,Land Octopus Ovary,999,999
-        ///0,40003b38,Strip of Whit [rest of string was truncated]&quot;;.
+        ///0,40005168,Cave Moss,999,999
+        ///1,401ed2ba,Congealed Putr [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CraftingMaterials {
             get {
@@ -184,20 +225,19 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 0,11004,Cerulean Crystal Tear,1,1
-        ///0,11005,Cerulean Crystal Tear,1,1
-        ///0,11025,Cerulean Hidden Tear,1,1
-        ///0,11007,Crimson Bubbletear,1,1
-        ///0,11002,Crimson Crystal Tear,1,1
-        ///0,11003,Crimson Crystal Tear,1,1
-        ///0,11009,Crimsonburst Crystal Tear,1,1
-        ///0,11000,Crimsonspill Crystal Tear,1,1
-        ///0,11020,Crimsonwhorl Bubbletear,1,1
-        ///0,11022,Dexterity-knot Crystal Tear,1,1
-        ///0,11024,Faith-knot Crystal Tear,1,1
-        ///0,11028,Flame-Shrouding Cracked Tear,1,1
-        ///0,11010,Greenburst Crystal Tear,1,1
-        ///0,11001,Greenspill Crystal Tear,1,1        /// [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to 1,401eafaa,Bloodsucking Cracked Tear,1,1
+        ///0,40002afc,Cerulean Crystal Tear,1,1
+        ///0,40002afd,Cerulean Crystal Tear,1,1
+        ///0,40002b11,Cerulean Hidden Tear,1,1
+        ///1,401eaf96,Cerulean-Sapping Cracked Tear,1,1
+        ///0,40002aff,Crimson Bubbletear,1,1
+        ///0,40002afa,Crimson Crystal Tear,1,1
+        ///0,40002afb,Crimson Crystal Tear,1,1
+        ///1,401eaf8c,Crimson-Sapping Cracked Tear,1,1
+        ///0,40002b01,Crimsonburst Crystal Tear,1,1
+        ///1,401eaf82,Crimsonburst Dried Tear,1,1
+        ///0,40002af8,Crimsonspill Crystal Tear,1,1
+        ///0,40002b0c,Crimsonwhorl Bubbletea [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CrystalTears {
             get {
@@ -365,6 +405,26 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 0,40001B59,Agheel&apos;s Flame,99,600
+        ///0,40001B1C,Ancient Dragons&apos; Lightning Spear,99,600
+        ///0,40001AFE,Ancient Dragons&apos; Lightning Strike,99,600
+        ///1,401E9E84,Aspects of the Crucible: Bloom,99,600
+        ///0,40001D60,Aspects of the Crucible: Breath,99,600
+        ///0,40001D56,Aspects of the Crucible: Horns,99,600
+        ///0,40001D4C,Aspects of the Crucible: Tail,99,600
+        ///1,401E9E7A,Aspects of the Crucible: Thorns,99,600
+        ///0,4000196E,Assassin&apos;s Approach,99,600
+        ///0,400018BA,Barrier of Gold,99,600
+        ///1,401E9FE2,Bayle&apos;s Flame Lightning,99,600
+        ///1,401 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Incantations {
+            get {
+                return ResourceManager.GetString("Incantations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
         ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
         ///00 00 00
@@ -495,22 +555,38 @@ namespace SilkyRing.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
-        ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
-        ///00 00 00
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
         ///48 8b 80 08 e5 01 00    mov    rax,QWORD PTR [rax+0x1e508]
         ///48 8b 80 90 01 00 00    mov    rax,QWORD PTR [rax+0x190]
         ///48 3b 58 68             cmp    rbx,QWORD PTR [rax+0x68]
-        ///0f 85 d3 00 00 00       jne    f6 &lt;skip&gt;
+        ///0f 85 14 01 00 00       jne    134 &lt;skip&gt;
         ///0f 10 43 70             movups xmm0,XMMWORD PTR [rbx+0x70]
+        ///41 51                   push   r9
         ///41 50                   push   r8
         ///52                      push   rdx
-        ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
-        ///00 00 00
-        ///48 8b 80 08 e5 01 00   [rest of string was truncated]&quot;;.
+        ///51            [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NoClip_UpdateCoords {
             get {
                 return ResourceManager.GetString("NoClip_UpdateCoords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0,4000089A,Prattling Pate &quot;Apologies&quot;,1,600
+        ///0,40000898,Prattling Pate &quot;Hello&quot;,1,600
+        ///1,401E8CE6,Prattling Pate &quot;Lamentation&quot;,1,600
+        ///0,4000089E,Prattling Pate &quot;Let&apos;s get to it&quot;,1,600
+        ///0,4000089D,Prattling Pate &quot;My beloved&quot;,1,600
+        ///0,4000089C,Prattling Pate &quot;Please help&quot;,1,600
+        ///0,40000899,Prattling Pate &quot;Thank you&quot;,1,600
+        ///0,4000089B,Prattling Pate &quot;Wonderful&quot;,1,600
+        ///0,4000089F,Prattling Pate &quot;You&apos;re beautiful&quot;,1,600
+        ///.
+        /// </summary>
+        internal static string PrattlingPate {
+            get {
+                return ResourceManager.GetString("PrattlingPate", resourceCulture);
             }
         }
         
@@ -606,6 +682,50 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 0,4000114F,Adula&apos;s Moonblade,99,600
+        ///0,400011F8,Ambush Shard,99,600
+        ///0,40001389,Ancient Death Rancor,99,600
+        ///1,401E96DC,Blades of Stone,99,600
+        ///0,4000132E,Briars of Punishment,99,600
+        ///0,40001324,Briars of Sin,99,600
+        ///0,40000FF0,Cannon of Haima,99,600
+        ///0,4000114E,Carian Greatsword,99,600
+        ///0,400010CD,Carian Phalanx,99,600
+        ///0,40001162,Carian Piercer,99,600
+        ///0,40001220,Carian Retaliation,99,600
+        ///0,40001158,Carian Slicer,99,600
+        ///1,401EA17C,Cherishing Fingers,99,600
+        ///0,40001271,Collapsing Stars,99,600
+        ///0,40000FB5 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Sorceries {
+            get {
+                return ResourceManager.GetString("Sorceries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0,40033838,Albinauric Ashes,1,600
+        ///0,40033068,Ancestral Follower Ashes,1,600
+        ///1,4021CC58,Ancient Dragon Florissax,1,600
+        ///0,4003E800,Ancient Dragon Knight Kristoff,1,600
+        ///0,4003CCA8,Archer Ashes,1,600
+        ///0,400372D0,Avionette Soldier Ashes,1,600
+        ///0,40038270,Azula Beastman Ashes,1,600
+        ///0,40031510,Banished Knight Engvall,1,600
+        ///0,40031128,Banished Knight Oleg,1,600
+        ///0,40035F48,Battlemage Hugues,1,600
+        ///1,4021B8D0,Bigmouth Imp Ashes,1,600
+        ///0,40030D40,Black Knife Tiche,1,600
+        ///1,4021B4E8,Black Knight Captain Huw,1,60 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SpiritAshes {
+            get {
+                return ResourceManager.GetString("SpiritAshes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,200003e8,Crimson Amber Medallion,1,1
         ///0,200003e9,Crimson Amber Medallion +1,1,1
         ///0,200003ea,Crimson Amber Medallion +2,1,1
@@ -640,6 +760,27 @@ namespace SilkyRing.Properties {
         internal static string TargetNoStagger {
             get {
                 return ResourceManager.GetString("TargetNoStagger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0,40002774,Smithing Stone [1],999,999
+        ///0,40002775,Smithing Stone [2],999,999
+        ///0,40002776,Smithing Stone [3],999,999
+        ///0,40002777,Smithing Stone [4],999,999
+        ///0,40002778,Smithing Stone [5],999,999
+        ///0,40002779,Smithing Stone [6],999,999
+        ///0,4000277A,Smithing Stone [7],999,999
+        ///0,4000277B,Smithing Stone [8],999,999
+        ///0,4000279C,Ancient Dragon Smithing Stone,999,999
+        ///0,400027B0,Somber Smithing Stone [1],999,999
+        ///0,400027B1,Somber Smithing Stone [2],999,999
+        ///0,400027B2,Somber Smithing Stone [3],999,999
+        ///0,400027B3,S [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string UpgradeMaterials {
+            get {
+                return ResourceManager.GetString("UpgradeMaterials", resourceCulture);
             }
         }
         
