@@ -87,7 +87,7 @@ namespace SilkyRing.ViewModels
             get => _areOptionsEnabled;
             set => SetProperty(ref _areOptionsEnabled, value);
         }
-
+        
         private int _currentHp;
 
         public int CurrentHp
@@ -102,6 +102,14 @@ namespace SilkyRing.ViewModels
         {
             get => _currentMaxHp;
             set => SetProperty(ref _currentMaxHp, value);
+        }
+
+        private bool _isSetRfbsOnLoadEnabled;
+        
+        public bool IsSetRfbsOnLoadEnabled
+        {
+            get => _isSetRfbsOnLoadEnabled;
+            set => SetProperty(ref _isSetRfbsOnLoadEnabled, value);
         }
 
         private bool _isPos1Saved;
@@ -467,6 +475,7 @@ namespace SilkyRing.ViewModels
         private void OnGameLoaded()
         {
             AreOptionsEnabled = true;
+            if (IsSetRfbsOnLoadEnabled) SetRfbs();
             LoadStats();
             _playerTick.Start();
             _pauseUpdates = false;

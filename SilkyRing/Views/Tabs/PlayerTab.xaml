@@ -51,6 +51,11 @@
                         IsEnabled="{Binding AreOptionsEnabled}"
                         Margin="10,0,0,0"
                         Width="60" />
+                    <CheckBox
+                        IsChecked="{Binding IsSetRfbsOnLoadEnabled}"
+                        Content="Set RFBS on load in"
+                        Margin="10,0,0,0"
+                         />
                 </StackPanel>
             </Grid>
 
