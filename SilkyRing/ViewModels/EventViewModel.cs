@@ -1,9 +1,12 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Input;
 using System.Windows.Media;
 using SilkyRing.Core;
 using SilkyRing.Enums;
 using SilkyRing.GameIds;
 using SilkyRing.Interfaces;
+using SilkyRing.Models;
 using SilkyRing.Utilities;
 
 namespace SilkyRing.ViewModels
@@ -13,6 +16,8 @@ namespace SilkyRing.ViewModels
         private readonly IEventService _eventService;
         private readonly IItemService _itemService;
         public const int WhetstoneBladeId = 0x4000218E;
+        
+        private List<BossRevive> _bossReviveList;
 
         public EventViewModel(IEventService eventService, IStateService stateService, IItemService itemService)
         {
@@ -26,15 +31,18 @@ namespace SilkyRing.ViewModels
             SetEventCommand = new DelegateCommand(SetEvent);
             GetEventCommand = new DelegateCommand(GetEvent);
             UnlockWhetbladesCommand = new DelegateCommand(UnlockWhetblades);
+            TestCommand = new DelegateCommand(TestRevive);
 
-            DataLoader.GetBossRevives();
+            _bossReviveList = DataLoader.GetBossRevives();
         }
+
         
         #region Commands
         
         public ICommand SetEventCommand { get; set; }
         public ICommand GetEventCommand { get; set; }
         public ICommand UnlockWhetbladesCommand { get; set; }
+        public ICommand TestCommand { get; set; }
 
         #endregion
 
@@ -144,6 +152,16 @@ namespace SilkyRing.ViewModels
             foreach (var whetBlade in Event.WhetBlades)
             {
                 _eventService.SetEvent(whetBlade, true);
+            }
+        }
+        
+        private void TestRevive()
+        {
+            var boss = _bossReviveList[1];
+
+            foreach (var bossFlag in boss.BossFlags)
+            {
+                _eventService.SetEvent(bossFlag.EventId, bossFlag.SetValue);
             }
         }
 

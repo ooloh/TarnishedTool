@@ -287,6 +287,7 @@ public class ItemViewModel : BaseViewModel
         _itemsByCategory["UpgradeMaterials"] = DataLoader.GetItems("UpgradeMaterials");
         _itemsByCategory["Cookbooks"] = DataLoader.GetEventItems("Cookbooks").Cast<Item>().ToList();
         _itemsByCategory["KeyItems"] = DataLoader.GetEventItems("KeyItems").Cast<Item>().ToList();
+        _itemsByCategory["AshOfWarSpawn"] = DataLoader.GetItems("AshOfWarSpawn");
      
         
         

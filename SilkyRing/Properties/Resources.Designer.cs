@@ -169,10 +169,8 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 0,Grafted Scion,1,10010800,0,510030,0
-        ///0,Tree Sentinel,0,1042360800,0,530100,0
-        ///0,Margit the Fell Omen,1,10000851,0,10000850,0,60510,0,71001,0
-        ///0,Godrick the Grafted,0,10000801,0,10000800,0,10002802,0,10000720,0,3269,0,3265,0,71000,0.
+        ///   Looks up a localized string similar to 0,Grafted Scion,1,0,10010800,0,9103,0,510030,0
+        ///0,Margit the Fell Omen,1,10000851,0,10000850,0,9100,0,60510,0,71001,0 .
         /// </summary>
         internal static string BossRevives {
             get {

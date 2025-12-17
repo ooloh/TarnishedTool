@@ -270,6 +270,9 @@
                         <Button Content="Unlock All Whetblades"
                                   Command="{Binding UnlockWhetbladesCommand}"
                                   Margin="0,2" />
+                        <Button Content="Test"
+                                Command="{Binding TestCommand}"
+                                Margin="0,2" />
                     </StackPanel>
 
                     <!-- <UniformGrid Grid.Column="1" -->
