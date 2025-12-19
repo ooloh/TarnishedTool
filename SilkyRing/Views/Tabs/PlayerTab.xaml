@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SilkyRing.Views.PlayerTab"
+﻿<UserControl x:Class="SilkyRing.Views.Tabs.PlayerTab"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -372,6 +372,40 @@
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
                         <TextBlock Text="Arcane" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
+                    </Grid>
+                    
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <xctk:IntegerUpDown x:Name="ScaduUpDown"
+                                            Value="{Binding Scadu}"
+                                            TextAlignment="Center"
+                                            Width="80"
+                                            Minimum="0"
+                                            Maximum="20"
+                                            IsEnabled="{Binding AreOptionsEnabled}"
+                                            Grid.Column="0"
+                                            BorderBrush="#3F3F46" />
+                        <TextBlock Text="Scadutree" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
+                    </Grid>
+                    
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <xctk:IntegerUpDown x:Name="SpiritAshUpDown"
+                                            Value="{Binding SpiritAsh}"
+                                            TextAlignment="Center"
+                                            Width="80"
+                                            Minimum="0"
+                                            Maximum="10"
+                                            Grid.Column="0"
+                                            IsEnabled="{Binding AreOptionsEnabled}"
+                                            BorderBrush="#3F3F46" />
+                        <TextBlock Text="Spirit Ash" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
                     </Grid>
 
                 </StackPanel>

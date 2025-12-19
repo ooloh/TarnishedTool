@@ -403,7 +403,31 @@ public class ItemViewModel : BaseViewModel
     
     private void MassSpawn()
     {
-        //TODO implement mass spawn logic
+        if (string.IsNullOrEmpty(SelectedMassSpawnCategory) || 
+            !_itemsByCategory.ContainsKey(SelectedMassSpawnCategory))
+            return;
+
+        var items = _itemsByCategory[SelectedMassSpawnCategory];
+    
+        if (!_hasDlc)
+            items = items.Where(i => !i.IsDlc).ToList();
+
+        foreach (var item in items)
+        {
+            int itemId = item.Id;
+            int quantity = item.StackSize;
+            int aowId = -1;
+            int maxQuantity = item.MaxStorage + item.StackSize;
+            bool shouldQuantityAdjust = item.StackSize > 1;
+
+      
+            if (item is EventItem eventItem && eventItem.NeedsEvent)
+            {
+                _eventService.SetEvent(eventItem.EventId, true);
+            }
+        
+            _itemService.SpawnItem(itemId, quantity, aowId, shouldQuantityAdjust, maxQuantity);
+        }
     }
 
 

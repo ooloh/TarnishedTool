@@ -14,6 +14,9 @@ namespace SilkyRing.ViewModels
     {
         private const float DefaultNoclipMultiplier = 1f;
         private const uint BaseSpeed = 0x3e4ccccd;
+        
+        private const float DefaultGameSpeed = 1f;
+        private const float Epsilon = 0.0001f;
 
         private bool _isDrawHitboxEnabled;
         private bool _isDrawLowHitEnabled;
@@ -125,6 +128,10 @@ namespace SilkyRing.ViewModels
                 _utilityService.ToggleDungeonWarp(_isDungeonWarpEnabled);
             }
         }
+        
+        
+        
+        
 
         #endregion
 
@@ -166,6 +173,8 @@ namespace SilkyRing.ViewModels
         }
 
         #endregion
+        
+
 
         // public bool IsDrawHitboxEnabled
         // {

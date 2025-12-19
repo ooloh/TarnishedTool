@@ -1,18 +1,13 @@
-﻿using System.Windows.Controls;
-using SilkyRing.ViewModels;
+﻿using SilkyRing.ViewModels;
 
 namespace SilkyRing.Views.Tabs
 {
-    public partial class UtilityTab : UserControl
+    public partial class UtilityTab
     {
-        private readonly UtilityViewModel _utilityViewModel;
         public UtilityTab(UtilityViewModel utilityViewModel)
         {
             InitializeComponent();
-            _utilityViewModel = utilityViewModel;
             DataContext = utilityViewModel;
         }
-        
-        
     }
 }

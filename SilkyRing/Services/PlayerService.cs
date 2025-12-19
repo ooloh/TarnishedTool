@@ -327,6 +327,18 @@ namespace SilkyRing.Services
             memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
         }
 
+        public void SetScadu(int value) =>
+            memoryService.WriteUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.Scadutree, value);
+        
+        public int GetScadu() =>
+            memoryService.ReadUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.Scadutree);
+
+        public void SetSpiritAsh(int value)  =>
+            memoryService.WriteUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.SpiritAsh, value);
+        
+        public int GetSpiritAsh() =>
+            memoryService.ReadUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.SpiritAsh);
+
         private int CalculateLevelUpCost(int nextLevel)
         {
             float baseLevel = nextLevel + BaseLevelOffset;

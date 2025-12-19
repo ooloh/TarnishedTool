@@ -39,4 +39,8 @@ public interface IPlayerService
     long GetHandle();
     void EnableGravity();
     void ToggleTorrentNoDeath(bool isEnabled);
+    void SetScadu(int value);
+    int GetScadu();
+    void SetSpiritAsh(int value);
+    int GetSpiritAsh();
 }

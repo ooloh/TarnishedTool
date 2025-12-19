@@ -428,6 +428,22 @@ namespace SilkyRing.ViewModels
             get => _arcane;
             set => SetProperty(ref _arcane, value);
         }
+        
+        private int _scadu;
+
+        public int Scadu
+        {
+            get => _scadu;
+            set => SetProperty(ref _scadu, value);
+        }
+        
+        private int _spiritAsh;
+
+        public int SpiritAsh
+        {
+            get => _spiritAsh;
+            set => SetProperty(ref _spiritAsh, value);
+        }
 
         private int _runes = 10000;
 
@@ -480,9 +496,11 @@ namespace SilkyRing.ViewModels
                 _playerService.SetStat((int)offset, value);
             }
         }
-        
-        public void SetSpeed(float value) => PlayerSpeed = value;
 
+        public void SetScadu(int value) => _playerService.SetScadu(value);
+        public void SetSpiritAsh(int value) => _playerService.SetSpiritAsh(value);
+        public void SetSpeed(float value) => PlayerSpeed = value;
+        
         #endregion
         
         #region Private Methods
@@ -543,7 +561,8 @@ namespace SilkyRing.ViewModels
             CurrentMaxHp = _playerService.GetMaxHp();
             PlayerSpeed = _playerService.GetSpeed();
             int newRuneLevel = _playerService.GetRuneLevel();
-            // SoulMemory = _playerService.GetSoulMemory();
+            Scadu = _playerService.GetScadu();
+            SpiritAsh = _playerService.GetSpiritAsh();
             _coords = _playerService.GetPlayerPos();
             PosX = _coords.X;
             PosY = _coords.Y;
@@ -634,6 +653,7 @@ namespace SilkyRing.ViewModels
         }
 
         #endregion
+
         
     }
 }

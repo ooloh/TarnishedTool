@@ -1,14 +1,7 @@
-﻿using System.Reflection;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-using SilkyRing.Memory;
-using SilkyRing.Utilities;
+﻿using SilkyRing.Utilities;
 using SilkyRing.ViewModels;
-using Xceed.Wpf.Toolkit;
 
-namespace SilkyRing.Views
+namespace SilkyRing.Views.Tabs
 {
     public partial class PlayerTab
     {
@@ -31,6 +24,22 @@ namespace SilkyRing.Views
                 _playerViewModel.PauseUpdates,
                 _playerViewModel.ResumeUpdates
             );
+            
+            _ = new UpDownHelper<int>(
+                ScaduUpDown,
+                _playerViewModel.SetScadu,
+                _playerViewModel.PauseUpdates,
+                _playerViewModel.ResumeUpdates
+            );
+            
+            _ = new UpDownHelper<int>(
+                SpiritAshUpDown,
+                _playerViewModel.SetSpiritAsh,
+                _playerViewModel.PauseUpdates,
+                _playerViewModel.ResumeUpdates
+            );
+            
+            
             
             var statControls = new[] 
             { 
