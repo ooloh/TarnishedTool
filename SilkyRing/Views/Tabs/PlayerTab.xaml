@@ -473,7 +473,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Width="180">
+                    <StackPanel Grid.Column="0" Width="200">
                         <Grid Margin="0,2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -496,7 +496,8 @@
                         <Grid Margin="0,2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <xctk:IntegerUpDown x:Name="NewGameUpDown"
                                                 Value="{Binding NewGame}"
@@ -508,6 +509,22 @@
                                                 IsEnabled="{Binding AreOptionsEnabled}"
                                                 BorderBrush="#3F3F46" />
                             <TextBlock Text="New Game" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
+                            <Border Grid.Column="2"
+                                Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="15,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Will require a reload for fia's champions to update&#x0A;if you are already in the area"
+                                ToolTipService.InitialShowDelay='100'>
+                                <TextBlock Text="i"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           FontSize="10" />
+                            </Border>
                         </Grid>
                     </StackPanel>
 

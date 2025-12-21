@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using SilkyRing.Core;
 using SilkyRing.Enums;
 using SilkyRing.Interfaces;
@@ -11,6 +12,7 @@ namespace SilkyRing.ViewModels
     {
         private readonly ITravelService _travelService;
         private readonly IEventService _eventService;
+        private readonly IDlcService _dlcService;
 
         public SearchableGroupedCollection<string, Grace> Graces { get; }
         public SearchableGroupedCollection<string, BossWarp> Bosses { get; }
@@ -20,6 +22,7 @@ namespace SilkyRing.ViewModels
         {
             _travelService = travelService;
             _eventService = eventService;
+            _dlcService = dlcService;
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -57,6 +60,14 @@ namespace SilkyRing.ViewModels
             get => _areOptionsEnabled;
             set => SetProperty(ref _areOptionsEnabled, value);
         }
+        
+        private bool _isDlcAvailable;
+        
+        public bool IsDlcAvailable
+        {
+            get => _isDlcAvailable;
+            set => SetProperty(ref _isDlcAvailable, value);
+        }
 
         #endregion
 
@@ -65,6 +76,7 @@ namespace SilkyRing.ViewModels
         private void OnGameLoaded()
         {
             AreOptionsEnabled = true;
+            IsDlcAvailable = _dlcService.IsDlcAvailable;
         }
 
         private void OnGameNotLoaded()
@@ -72,8 +84,17 @@ namespace SilkyRing.ViewModels
             AreOptionsEnabled = false;
         }
 
-        private void GraceWarp() => _travelService.Warp(Graces.SelectedItem);
-        private void BossWarp() => _travelService.WarpToBlockId(Bosses.SelectedItem.Position);
+        private void GraceWarp()
+        {
+            if (Graces.SelectedItem.IsDlc && !IsDlcAvailable) return;
+            _travelService.Warp(Graces.SelectedItem);
+        }
+
+        private void BossWarp()
+        {
+            if (Bosses.SelectedItem.IsDlc && !IsDlcAvailable) return;
+            _ = Task.Run(() => _travelService.WarpToBlockId(Bosses.SelectedItem.Position));
+        }
 
         private void UnlockMainGameGraces()
         {

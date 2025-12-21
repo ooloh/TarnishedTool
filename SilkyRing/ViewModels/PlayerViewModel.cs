@@ -57,6 +57,7 @@ namespace SilkyRing.ViewModels
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
+            stateService.Subscribe(State.GameStart, OnGameStart);
 
             SetRfbsCommand = new DelegateCommand(SetRfbs);
             SetMaxHpCommand = new DelegateCommand(SetMaxHp);
@@ -80,8 +81,8 @@ namespace SilkyRing.ViewModels
             };
             _playerTick.Tick += PlayerTick;
         }
-
         
+
         #region Commands
 
         public ICommand SetRfbsCommand { get; set; }
@@ -511,16 +512,12 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _newGame, value))
                 {
-                    _playerService.SetNewGame(value);
-                    var activeIndex = Math.Min(_newGame, NewGameEventIds.Length - 1);
-                    for (var i = 0; i < NewGameEventIds.Length; i++)
-                    {
-                        _eventService.SetEvent(NewGameEventIds[i], i == activeIndex);
-                    }
+                    SetNewGame(value);
+                    
                 }
             }
         }
-
+        
         private float _playerSpeed;
 
         public float PlayerSpeed
@@ -598,6 +595,14 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
+        
+        private bool _isAutoSetNewGameSevenEnabled;
+    
+        public bool IsAutoSetNewGameSevenEnabled
+        {
+            get => _isAutoSetNewGameSevenEnabled;
+            set => SetProperty(ref _isAutoSetNewGameSevenEnabled, value);
+        }
 
         #endregion
 
@@ -655,6 +660,13 @@ namespace SilkyRing.ViewModels
         {
             AreOptionsEnabled = false;
             _playerTick.Stop();
+        }
+        
+        private void OnGameStart()
+        {
+            if (!IsAutoSetNewGameSevenEnabled) return;
+            SetNewGame(7);
+            NewGame = _playerService.GetNewGame();
         }
 
         private void RegisterHotkeys()
@@ -844,6 +856,16 @@ namespace SilkyRing.ViewModels
             _isRememberSpeedEnabled = SettingsManager.Default.RememberPlayerSpeed;
             OnPropertyChanged(nameof(IsRememberSpeedEnabled));
             if (_isRememberSpeedEnabled) _playerDesiredSpeed = SettingsManager.Default.PlayerSpeed;
+        }
+        
+        private void SetNewGame(int value)
+        {
+            _playerService.SetNewGame(value);
+            var activeIndex = Math.Min(_newGame, NewGameEventIds.Length - 1);
+            for (var i = 0; i < NewGameEventIds.Length; i++)
+            {
+                _eventService.SetEvent(NewGameEventIds[i], i == activeIndex);
+            }
         }
         
         #endregion

@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:SilkyRing.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="720" d:DesignWidth="600">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:StringToVisibilityConverter x:Key="NullToVisibilityConverter" />
+        <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
     </UserControl.Resources>
 
     <TabControl>
@@ -236,8 +237,14 @@
                                     Margin="0,2" />
                             <Button Grid.Column="1" Content="Unlock All DLC Graces"
                                     Command="{Binding UnlockDlcGracesCommand}"
-                                    IsEnabled="{Binding AreOptionsEnabled}"
-                                    Margin="0,2" />
+                                    Margin="20,0, 0,2">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsDlcAvailable" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>

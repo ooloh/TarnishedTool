@@ -13,6 +13,7 @@ using SilkyRing.Utilities;
 using SilkyRing.ViewModels;
 using SilkyRing.Views;
 using SilkyRing.Views.Tabs;
+using static SilkyRing.Memory.Offsets;
 using UtilityTab = SilkyRing.Views.Tabs.UtilityTab;
 
 namespace SilkyRing
@@ -28,7 +29,7 @@ namespace SilkyRing
         private readonly AoBScanner _aobScanner;
 
         private readonly DispatcherTimer _gameLoadedTimer;
-        
+
         public MainWindow()
         {
             _memoryService = new MemoryService();
@@ -67,12 +68,15 @@ namespace SilkyRing
             _dlcService = new DlcService(_memoryService);
 
 
-            PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService, hotkeyManager, eventService, spEffectService, emevdService);
-            TravelViewModel travelViewModel = new TravelViewModel(travelService, eventService, _stateService, _dlcService);
+            PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService, hotkeyManager,
+                eventService, spEffectService, emevdService);
+            TravelViewModel travelViewModel =
+                new TravelViewModel(travelService, eventService, _stateService, _dlcService);
             EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService, hotkeyManager);
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService,
                 attackInfoService, hotkeyManager);
-            EventViewModel eventViewModel = new EventViewModel(eventService, _stateService, itemService, _dlcService, ezStateService);
+            EventViewModel eventViewModel =
+                new EventViewModel(eventService, _stateService, itemService, _dlcService, ezStateService);
             UtilityViewModel utilityViewModel = new UtilityViewModel(utilityService, _stateService, ezStateService,
                 playerService, hotkeyManager);
             ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService, eventService);
@@ -117,7 +121,6 @@ namespace SilkyRing
         private bool _hasScanned;
         private bool _hasAllocatedMemory;
         private bool _appliedOneTimeFeatures;
-        private bool _hasCheckedDlc;
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -133,14 +136,18 @@ namespace SilkyRing
                     _aobScanner.Scan();
                     _hasScanned = true;
                     _stateService.Publish(State.Attached);
+#if DEBUG
                     Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
+#endif
                 }
 
 
                 if (!_hasAllocatedMemory)
                 {
                     _memoryService.AllocCodeCave();
+#if DEBUG
                     Console.WriteLine($@"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
+#endif
                     _hasAllocatedMemory = true;
                 }
 
@@ -150,7 +157,7 @@ namespace SilkyRing
                     _loaded = true;
                     _dlcService.CheckDlc();
                     _stateService.Publish(State.Loaded);
-                    // _settingsViewModel.ApplyLoadedOptions();
+                    CheckIfGameStart();
                     if (_appliedOneTimeFeatures) return;
                     _stateService.Publish(State.FirstLoaded);
                     _appliedOneTimeFeatures = true;
@@ -167,7 +174,6 @@ namespace SilkyRing
                 _hasScanned = false;
                 _loaded = false;
                 _hasAllocatedMemory = false;
-                _hasCheckedDlc = false;
                 _appliedOneTimeFeatures = false;
                 IsAttachedText.Text = "Not attached";
                 IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["NotAttachedBrush"];
@@ -175,23 +181,11 @@ namespace SilkyRing
             }
         }
 
-        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void CheckIfGameStart()
         {
-            if (e.ClickCount == 2)
-            {
-                if (WindowState == WindowState.Maximized)
-                    WindowState = WindowState.Normal;
-                else
-                    WindowState = WindowState.Maximized;
-            }
-            else
-            {
-                DragMove();
-            }
+            var igt = _memoryService.ReadUInt32((IntPtr)_memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.Igt);
+            if (igt < 5000) _stateService.Publish(State.GameStart);
         }
-
-        private void MinimizeButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-        private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
