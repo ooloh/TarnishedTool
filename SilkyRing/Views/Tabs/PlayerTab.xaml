@@ -52,7 +52,7 @@
                         IsEnabled="{Binding AreOptionsEnabled}"
                         Margin="10,0,0,0"
                         Width="60" />
-                    <xctk:IntegerUpDown Width="80" 
+                    <xctk:IntegerUpDown Width="80"
                                         Margin="20,0,0,0"
                                         Value="{Binding CustomHp}"
                                         Minimum="0" />
@@ -512,38 +512,63 @@
                     </StackPanel>
 
                     <Grid Grid.Column="1"
-                          Margin="5,5,0,0">
+                          Margin="5,0,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Column="0">
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox Content="Auto set NG+7"
-                                              IsChecked="{Binding IsAutoSetNewGameSevenEnabled}"
-                                              Margin="0,2" />
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+                                <CheckBox Content="Remember Speed"
+                                          IsChecked="{Binding IsRememberSpeedEnabled}"
+                                          Margin="0,2" />
 
-                                    <Border
-                                        Background="#3498db"
-                                        CornerRadius="10"
-                                        Width="12"
-                                        Height="12"
-                                        Margin="5,0,0,0"
-                                        VerticalAlignment="Center"
-                                        ToolTip="Automatically sets the game to New Game+7 when starting a new game"
-                                        ToolTipService.InitialShowDelay='100'>
-                                        <TextBlock Text="i"
-                                                   Foreground="White"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Bold"
-                                                   FontSize="10" />
-                                    </Border>
-                                </StackPanel>
+                                <Border
+                                    Background="#3498db"
+                                    CornerRadius="10"
+                                    Width="12"
+                                    Height="12"
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Remember toggled speed across app restarts"
+                                    ToolTipService.InitialShowDelay='100'>
+                                    <TextBlock Text="i"
+                                               Foreground="White"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               FontSize="10" />
+                                </Border>
                             </StackPanel>
-                            <StackPanel Grid.Column="1" />
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+                                <CheckBox Content="Auto set NG+7"
+                                          IsChecked="{Binding IsAutoSetNewGameSevenEnabled}"
+                                          Margin="0,2" />
+
+                                <Border
+                                    Background="#3498db"
+                                    CornerRadius="10"
+                                    Width="12"
+                                    Height="12"
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Automatically sets the game to New Game+7 when starting a new game"
+                                    ToolTipService.InitialShowDelay='100'>
+                                    <TextBlock Text="i"
+                                               Foreground="White"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               FontSize="10" />
+                                </Border>
+                            </StackPanel>
+
                         </Grid>
                     </Grid>
                 </Grid>
@@ -597,16 +622,16 @@
                                     Padding="10,3"
                                     Margin="10,0,0,0"
                                     Command="{Binding ApplySpEffectCommand}" />
-                        
+
                         </StackPanel>
-                        
+
                         <CheckBox Grid.Row="0" Grid.Column="1"
                                   HorizontalAlignment="Right"
-                            IsChecked="{Binding IsSpEffectWindowOpen}"
-                            Content="Show active special effects"
-                            Margin="0,0,10,0" />
-                        
-                        <StackPanel Grid.Row="1" Grid.Column="0"  Orientation="Horizontal" Margin="10,5,0,0">
+                                  IsChecked="{Binding IsSpEffectWindowOpen}"
+                                  Content="Show active special effects"
+                                  Margin="0,0,10,0" />
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="10,5,0,0">
                             <TextBlock Text="ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
                             <TextBox Width="100" Text="{Binding RemoveSpEffectId}" Margin="0,0,10,0" />
 

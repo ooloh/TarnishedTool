@@ -21,6 +21,8 @@ public class SettingsManager
     public double ResistancesWindowTop { get; set; }
     public string HotkeyActionIds { get; set; } = "";
     public bool EnableHotkeys { get; set; }
+    public bool RememberPlayerSpeed { get; set; }
+    public float PlayerSpeed { get; set; }
 
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -46,6 +48,8 @@ public class SettingsManager
                 $"ResistancesWindowTop={ResistancesWindowTop}",
                 $"HotkeyActionIds={HotkeyActionIds}",
                 $"EnableHotkeys={EnableHotkeys}",
+                $"RememberPlayerSpeed={RememberPlayerSpeed}",
+                $"PlayerSpeed={PlayerSpeed}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -114,6 +118,14 @@ public class SettingsManager
                             case "EnableHotkeys":
                                 bool.TryParse(value, out bool eh);
                                 settings.EnableHotkeys = eh;
+                                break;
+                            case "RememberPlayerSpeed":
+                                bool.TryParse(value, out bool rps);
+                                settings.RememberPlayerSpeed = rps;
+                                break;
+                            case "PlayerSpeed":
+                                float.TryParse(value, out float ps);
+                                settings.PlayerSpeed = ps;
                                 break;
                         }
                     }

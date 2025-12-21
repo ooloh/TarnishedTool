@@ -72,6 +72,8 @@ namespace SilkyRing.ViewModels
             ApplySpEffectCommand = new DelegateCommand(ApplySpEffect);
             RemoveSpEffectCommand = new DelegateCommand(RemoveSpEffect);
 
+            ApplyPrefs();
+
             _playerTick = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(64)
@@ -79,6 +81,7 @@ namespace SilkyRing.ViewModels
             _playerTick.Tick += PlayerTick;
         }
 
+        
         #region Commands
 
         public ICommand SetRfbsCommand { get; set; }
@@ -528,6 +531,10 @@ namespace SilkyRing.ViewModels
                 if (SetProperty(ref _playerSpeed, value))
                 {
                     _playerService.SetSpeed(value);
+                    if (IsRememberSpeedEnabled && Math.Abs(value - DefaultSpeed) > Epsilon)
+                    {
+                        SettingsManager.Default.PlayerSpeed = value;
+                    }
                 }
             }
         }
@@ -560,6 +567,33 @@ namespace SilkyRing.ViewModels
                     if (_isSpEffectWindowOpen)
                     {
                         OpenSpEffectsWindow();
+                    }
+                }
+            }
+        }
+
+        private bool _isRememberSpeedEnabled;
+        
+        public bool IsRememberSpeedEnabled
+        {
+            get => _isRememberSpeedEnabled;
+            set
+            {
+                if (SetProperty(ref _isRememberSpeedEnabled, value))
+                {
+                    if (_isRememberSpeedEnabled)
+                    {
+                        SettingsManager.Default.RememberPlayerSpeed = _isRememberSpeedEnabled;
+
+                        if (Math.Abs(PlayerSpeed - DefaultSpeed) > Epsilon)
+                        {
+                            SettingsManager.Default.PlayerSpeed = PlayerSpeed;
+                        }
+                    }
+                    else
+                    {
+                        SettingsManager.Default.PlayerSpeed = DefaultSpeed;
+                        SettingsManager.Default.RememberPlayerSpeed = _isRememberSpeedEnabled;
                     }
                 }
             }
@@ -804,7 +838,14 @@ namespace SilkyRing.ViewModels
             };
             _spEffectsWindow.Show();
         }
-
+        
+        private void ApplyPrefs()
+        {
+            _isRememberSpeedEnabled = SettingsManager.Default.RememberPlayerSpeed;
+            OnPropertyChanged(nameof(IsRememberSpeedEnabled));
+            if (_isRememberSpeedEnabled) _playerDesiredSpeed = SettingsManager.Default.PlayerSpeed;
+        }
+        
         #endregion
     }
 }
