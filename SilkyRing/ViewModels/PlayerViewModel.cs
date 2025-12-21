@@ -37,6 +37,7 @@ namespace SilkyRing.ViewModels
         private readonly IEventService _eventService;
         private readonly ISpEffectService _spEffectService;
         private readonly IEmevdService _emevdService;
+        private readonly IDlcService _dlcService;
 
         private readonly SpEffectViewModel _spEffectViewModel = new();
         private SpEffectsWindow _spEffectsWindow;
@@ -44,13 +45,15 @@ namespace SilkyRing.ViewModels
         public static readonly long[] NewGameEventIds = [50, 51, 52, 53, 54, 55, 56, 57];
 
         public PlayerViewModel(IPlayerService playerService, IStateService stateService, HotkeyManager hotkeyManager,
-            IEventService eventService, ISpEffectService spEffectService, IEmevdService emevdService)
+            IEventService eventService, ISpEffectService spEffectService, IEmevdService emevdService,
+            IDlcService dlcService)
         {
             _playerService = playerService;
             _hotkeyManager = hotkeyManager;
             _eventService = eventService;
             _spEffectService = spEffectService;
             _emevdService = emevdService;
+            _dlcService = dlcService;
 
             RegisterHotkeys();
 
@@ -109,6 +112,14 @@ namespace SilkyRing.ViewModels
         {
             get => _areOptionsEnabled;
             set => SetProperty(ref _areOptionsEnabled, value);
+        }
+        
+        private bool _isDlcAvailable;
+        
+        public bool IsDlcAvailable
+        {
+            get => _isDlcAvailable;
+            set => SetProperty(ref _isDlcAvailable, value);
         }
 
         private int _currentHp;
@@ -636,6 +647,7 @@ namespace SilkyRing.ViewModels
             LoadStats();
             _playerTick.Start();
             _pauseUpdates = false;
+            IsDlcAvailable = _dlcService.IsDlcAvailable;
         }
 
         private void OnGameFirstLoaded()

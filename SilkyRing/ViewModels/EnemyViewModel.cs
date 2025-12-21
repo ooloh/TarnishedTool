@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using SilkyRing.Core;
 using SilkyRing.Enums;
@@ -17,6 +18,8 @@ public class EnemyViewModel : BaseViewModel
 
     private const int EbNpcThinkParamId = 22000000;
     private const int EldenStarsActIdx = 22;
+    private DateTime _ebLastExecuted = DateTime.MinValue;
+    private static readonly TimeSpan EbCooldownDuration = TimeSpan.FromSeconds(2);
     
     public EnemyViewModel(IEnemyService enemyService, IStateService stateService, HotkeyManager hotkeyManager)
     {
@@ -123,6 +126,18 @@ public class EnemyViewModel : BaseViewModel
         }
     }
     
+    private bool _isRykardNoMegaEnabled;
+
+    public bool IsRykardNoMegaEnabled
+    {
+        get => _isRykardNoMegaEnabled;
+        set
+        {
+            SetProperty(ref _isRykardNoMegaEnabled, value);
+            _enemyService.ToggleRykardMega(_isRykardNoMegaEnabled);
+        }
+    }
+    
     private ObservableCollection<Act> _acts;
     
     public ObservableCollection<Act> Acts
@@ -161,6 +176,7 @@ public class EnemyViewModel : BaseViewModel
         if (IsNoAttackEnabled) _enemyService.ToggleNoAttack(true);
         if (IsNoMoveEnabled) _enemyService.ToggleNoMove(true);
         if (IsDisableAiEnabled) _enemyService.ToggleDisableAi(true);
+        if (IsRykardNoMegaEnabled) _enemyService.ToggleRykardMega(true);
     }
     
     private void RegisterHotkeys()
@@ -171,10 +187,20 @@ public class EnemyViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.AllNoAttack, () => { IsNoAttackEnabled = !IsNoAttackEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.AllNoMove, () => { IsNoMoveEnabled = !IsNoMoveEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.AllDisableAi, () => { IsDisableAiEnabled = !IsDisableAiEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.ForceEbActSequence, () => SafeExecute(ForceEbActSequence));
+    }
+
+    private void SafeExecute(Action action)
+    {
+        if (!AreOptionsEnabled) return;
+        action();
     }
 
     private void ForceEbActSequence()
     {
+        var now = DateTime.UtcNow;
+        if (now - _ebLastExecuted < EbCooldownDuration) return;
+        _ebLastExecuted = now;
         int[] acts = [EldenStarsActIdx, SelectedAct.ActIdx];
         _enemyService.ForceActSequence(acts, EbNpcThinkParamId);
     }

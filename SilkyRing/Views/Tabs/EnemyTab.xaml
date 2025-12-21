@@ -72,7 +72,7 @@
                               IsChecked="{Binding IsDisableAiEnabled}"
                               Grid.Column="1" Grid.Row="1"
                               Margin="0,2" />
-                    
+
                     <CheckBox Content="Targeting View"
                               IsChecked="{Binding IsTargetingViewEnabled}"
                               Grid.Column="1" Grid.Row="2"
@@ -95,31 +95,13 @@
                     <ComboBox ItemsSource="{Binding Acts}"
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding SelectedAct}"
-                              Width="150"
-                              />
-                    
+                              Width="150" />
+
                     <Button Content="Force Act Sequence"
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Command="{Binding EbForceActSequenceCommand}"
                             Height="24"
-                            Margin="15,0,0,0"
-                            />
-                    <Border
-                        Background="#3498db"
-                        CornerRadius="10"
-                        Width="12"
-                        Height="12"
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        ToolTip="Will work after the first 5 trees spawn"
-                        ToolTipService.InitialShowDelay='100'>
-                        <TextBlock Text="i"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   FontSize="10" />
-                    </Border>
+                            Margin="15,0,0,0" />
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -129,12 +111,30 @@
                 BorderBrush="#333"
                 CornerRadius="3">
             <StackPanel Margin="10">
-                <TextBlock Text="Butterfly"
+                <TextBlock Text="Rykard"
                            Margin="0,0,0,10" />
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Content="Rykard no Mega Attack"
+                              IsChecked="{Binding IsRykardNoMegaEnabled}"
+                              Margin="0,2" />
 
-                <CheckBox Content="Butterfly No Summons"
-                          IsChecked="{Binding IsNoButterflySummonsEnabled}"
-                          Margin="0,2" />
+                    <Border
+                        Background="#3498db"
+                        CornerRadius="10"
+                        Width="12"
+                        Height="12"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        ToolTip="Lock his hp if you don't want snake attacks in p2 when he gets past 50%"
+                        ToolTipService.InitialShowDelay='100'>
+                        <TextBlock Text="i"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="10" />
+                    </Border>
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>
