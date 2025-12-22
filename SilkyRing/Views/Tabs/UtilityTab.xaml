@@ -19,6 +19,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0"
@@ -52,7 +53,7 @@
                                 Padding="5,3"
                                 Command="{Binding SaveCommand}"
                                 Margin="0,0,20,0" />
-                        
+
                         <Button Content="Trigger next NG cycle"
                                 IsEnabled="{Binding AreOptionsEnabled}"
                                 Padding="5,3"
@@ -62,14 +63,14 @@
 
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0">
                         <xctk:DoubleUpDown
-                                           Value="{Binding GameSpeed}"
-                                           TextAlignment="Center"
-                                           Width="80"
-                                           Minimum="0"
-                                           Maximum="5"
-                                           Increment="0.50"
-                                           FormatString="F2"
-                                           BorderBrush="#3F3F46" />
+                            Value="{Binding GameSpeed}"
+                            TextAlignment="Center"
+                            Width="80"
+                            Minimum="0"
+                            Maximum="5"
+                            Increment="0.50"
+                            FormatString="F2"
+                            BorderBrush="#3F3F46" />
                         <TextBlock Text="Game Speed" VerticalAlignment="Center" Margin="10,0,30,0" />
                         <CheckBox Content="Remember Speed"
                                   IsChecked="{Binding IsRememberSpeedEnabled}"
@@ -167,24 +168,21 @@
                             <TextBlock Text="Set Time" FontWeight="SemiBold" Margin="0,0,0,5" />
 
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <Button 
+                                <Button
                                     Content="Morning"
                                     Margin="10,0,0,0"
                                     IsEnabled="{Binding AreOptionsEnabled}"
-                                    Command="{Binding SetMorningCommand}"
-                                    />
-                                <Button 
+                                    Command="{Binding SetMorningCommand}" />
+                                <Button
                                     Content="Noon"
                                     Margin="10,0,0,0"
                                     IsEnabled="{Binding AreOptionsEnabled}"
-                                    Command="{Binding SetNoonCommand}"
-                                />
-                                <Button 
+                                    Command="{Binding SetNoonCommand}" />
+                                <Button
                                     Content="Night"
                                     Margin="10,0,0,0"
                                     IsEnabled="{Binding AreOptionsEnabled}"
-                                    Command="{Binding SetNightCommand}"
-                                />
+                                    Command="{Binding SetNightCommand}" />
                             </StackPanel>
                         </StackPanel>
                     </Border>
@@ -218,7 +216,7 @@
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                             <CheckBox Content="Free Cam"
                                       IsChecked="{Binding IsFreeCamEnabled}"
-                                      IsEnabled="{Binding AreButtonsEnabled}"
+                                      IsEnabled="{Binding AreOptionsEnabled}"
                                       Margin="0,0,0,0"
                                       VerticalAlignment="Center" />
 
@@ -333,7 +331,7 @@
                               IsChecked="{Binding IsDrawHitboxEnabled}"
                               Grid.Column="0" Grid.Row="0"
                               Margin="0,2" />
-                    
+
                     <CheckBox Content="Player Sound"
                               IsChecked="{Binding IsDrawSoundEnabled}"
                               Grid.Column="0" Grid.Row="1"
@@ -342,12 +340,12 @@
                               IsChecked="{Binding IsDrawRagdollsEnabled}"
                               Grid.Column="0" Grid.Row="2"
                               Margin="0,2" />
-            
+
                     <CheckBox Content="Draw Low Hit"
                               IsChecked="{Binding IsDrawLowHitEnabled}"
                               Grid.Column="1" Grid.Row="0"
                               Margin="0,2" />
-                    
+
                     <CheckBox Content="Draw High Hit"
                               IsChecked="{Binding IsDrawHighHitEnabled}"
                               Grid.Column="1" Grid.Row="1"
@@ -361,7 +359,7 @@
                                             Maximum="5"
                                             VerticalAlignment="Center" />
                     </StackPanel>
-                    
+
                     <CheckBox Content="Hide Map"
                               IsChecked="{Binding IsHideMapEnabled}"
                               Grid.Column="2" Grid.Row="0"
@@ -371,10 +369,86 @@
                               IsChecked="{Binding IsHideCharactersEnabled}"
                               Grid.Column="2" Grid.Row="1"
                               Margin="0,2" />
-                    
-                  
+
                 </Grid>
             </StackPanel>
+        </Border>
+        <Border Grid.Row="4"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3"
+                Margin="0,0,0,5">
+            <TabControl Padding="10">
+                <TabItem Header="Menus">
+                    <WrapPanel>
+                        <Button
+                            Content="Level Up"
+                            Command="{Binding OpenLevelUpCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,0,10,0">
+                        </Button>
+                        <Button
+                            Content="Allot Flasks"
+                            Command="{Binding OpenAllotCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,0,10,0">
+                        </Button>
+                        <Button
+                            Content="Memorize Spells"
+                            Command="{Binding AttunementCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,0,10,0">
+                        </Button>
+                        <Button
+                            Content="Mix Physick"
+                            Command="{Binding OpenPhysickCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,0,10,0">
+                        </Button>
+                        <Button
+                            Content="Open Chest"
+                            Command="{Binding OpenChestCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,0,10,0">
+                        </Button>
+                        <Button
+                            Content="Great Runes"
+                            Command="{Binding OpenGreatRunesCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,0,0,0">
+                        </Button>
+                        <Button
+                            Content="Ashes of War"
+                            Command="{Binding OpenAowCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,10,10,0">
+                        </Button>
+                        <Button
+                            Content="Alter Garments"
+                            Command="{Binding OpenAlterGarmentsCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,10,10,0">
+                        </Button>
+                        <Button
+                            Content="Upgrade"
+                            Command="{Binding OpenUpgradeCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,10,10,0">
+                        </Button>
+                        <Button
+                            Content="Sell"
+                            Command="{Binding OpenSellCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,10,10,0">
+                        </Button>
+                    </WrapPanel>
+                </TabItem>
+
+                <TabItem Header="Shops">
+
+                </TabItem>
+
+            </TabControl>
         </Border>
     </Grid>
 

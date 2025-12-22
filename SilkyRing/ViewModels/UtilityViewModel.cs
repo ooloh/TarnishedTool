@@ -10,12 +10,11 @@ namespace SilkyRing.ViewModels
     public class UtilityViewModel : BaseViewModel
     {
         private const float DefaultNoclipMultiplier = 1f;
-        
+
         private float _desiredGameSpeed = -1f;
         private const float DefaultGameSpeed = 1f;
         private const float Epsilon = 0.0001f;
 
-   
         private bool _isDrawLowHitEnabled;
         private bool _isDrawHighHitEnabled;
         private int _colDrawMode = 1;
@@ -45,26 +44,37 @@ namespace SilkyRing.ViewModels
             SetMorningCommand = new DelegateCommand(SetMorning);
             SetNoonCommand = new DelegateCommand(SetNoon);
             SetNightCommand = new DelegateCommand(SetNight);
-
+            OpenLevelUpCommand = new DelegateCommand(OpenLevelUp);
+            OpenAllotCommand = new DelegateCommand(OpenAllot);
+            AttunementCommand = new DelegateCommand(OpenAttunement);
+            OpenPhysickCommand = new DelegateCommand(OpenPhysick);
+            OpenChestCommand = new DelegateCommand(OpenChest);
+            OpenGreatRunesCommand = new DelegateCommand(OpenGreatRunes);
+            OpenAowCommand = new DelegateCommand(OpenAow);
+            OpenAlterGarmentsCommand = new DelegateCommand(OpenAlterGarments);
+            OpenUpgradeCommand = new DelegateCommand(OpenUpgrade);
+            OpenSellCommand = new DelegateCommand(OpenSell);
 
             RegisterHotkeys();
             ApplyPrefs();
         }
 
-        
-        private void ApplyPrefs()
-        {
-            _isRememberSpeedEnabled = SettingsManager.Default.RememberGameSpeed;
-            OnPropertyChanged(nameof(IsRememberSpeedEnabled));
-            if (_isRememberSpeedEnabled) _desiredGameSpeed = SettingsManager.Default.GameSpeed;
-        }
-
         #region Commands
-        
+
         public ICommand SaveCommand { get; set; }
         public ICommand SetMorningCommand { get; set; }
         public ICommand SetNoonCommand { get; set; }
         public ICommand SetNightCommand { get; set; }
+        public ICommand OpenLevelUpCommand { get; set; }
+        public ICommand OpenAllotCommand { get; set; }
+        public ICommand AttunementCommand { get; set; }
+        public ICommand OpenPhysickCommand { get; set; }
+        public ICommand OpenChestCommand { get; set; }
+        public ICommand OpenGreatRunesCommand { get; set; }
+        public ICommand OpenAowCommand { get; set; }
+        public ICommand OpenAlterGarmentsCommand { get; set; }
+        public ICommand OpenUpgradeCommand { get; set; }
+        public ICommand OpenSellCommand { get; set; }
 
         #endregion
 
@@ -105,7 +115,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private bool _isCombatMapEnabled;
 
         public bool IsCombatMapEnabled
@@ -129,7 +139,7 @@ namespace SilkyRing.ViewModels
                 _utilityService.ToggleDungeonWarp(_isDungeonWarpEnabled);
             }
         }
-        
+
         private float _gameSpeed;
 
         public float GameSpeed
@@ -147,9 +157,9 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private bool _isRememberSpeedEnabled;
-        
+
         public bool IsRememberSpeedEnabled
         {
             get => _isRememberSpeedEnabled;
@@ -174,9 +184,9 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private bool _isFreeCamEnabled;
-        
+
         public bool IsFreeCamEnabled
         {
             get => _isFreeCamEnabled;
@@ -186,14 +196,14 @@ namespace SilkyRing.ViewModels
                 if (_isFreeCamEnabled)
                 {
                     IsNoClipEnabled = false;
-        
                 }
+
                 _utilityService.ToggleFreeCam(_isFreeCamEnabled);
             }
         }
-        
+
         private bool _isFreezeWorldEnabled;
-        
+
         public bool IsFreezeWorldEnabled
         {
             get => _isFreeCamEnabled;
@@ -203,9 +213,9 @@ namespace SilkyRing.ViewModels
                 _utilityService.ToggleFreezeWorld(_isFreezeWorldEnabled);
             }
         }
-        
+
         private bool _isDrawHitboxEnabled;
-        
+
         public bool IsDrawHitboxEnabled
         {
             get => _isDrawHitboxEnabled;
@@ -216,13 +226,12 @@ namespace SilkyRing.ViewModels
             }
         }
 
-
         #endregion
-        
+
         #region Public Methods
-        
+
         public void SetSpeed(float value) => GameSpeed = value;
-        
+
         #endregion
 
         #region Private Methods
@@ -252,20 +261,29 @@ namespace SilkyRing.ViewModels
             {
                 if (IsNoClipEnabled) NoClipSpeed = Math.Min(5, NoClipSpeed + 0.50f);
             });
-            
+
             _hotkeyManager.RegisterAction(HotkeyActions.DecreaseNoClipSpeed, () =>
             {
                 if (IsNoClipEnabled) NoClipSpeed = Math.Max(0.5f, NoClipSpeed - 0.50f);
             });
-            
+
             _hotkeyManager.RegisterAction(HotkeyActions.ForceSave, () => _utilityService.ForceSave());
             _hotkeyManager.RegisterAction(HotkeyActions.ToggleGameSpeed, ToggleSpeed);
-            _hotkeyManager.RegisterAction(HotkeyActions.IncreaseGameSpeed, () => SetSpeed(Math.Min(10, GameSpeed + 0.50f)));
-            _hotkeyManager.RegisterAction(HotkeyActions.DecreaseGameSpeed, () => SetSpeed(Math.Max(0.5f, GameSpeed - 0.50f)));
+            _hotkeyManager.RegisterAction(HotkeyActions.IncreaseGameSpeed,
+                () => SetSpeed(Math.Min(10, GameSpeed + 0.50f)));
+            _hotkeyManager.RegisterAction(HotkeyActions.DecreaseGameSpeed,
+                () => SetSpeed(Math.Max(0.5f, GameSpeed - 0.50f)));
         }
-        
+
+        private void ApplyPrefs()
+        {
+            _isRememberSpeedEnabled = SettingsManager.Default.RememberGameSpeed;
+            OnPropertyChanged(nameof(IsRememberSpeedEnabled));
+            if (_isRememberSpeedEnabled) _desiredGameSpeed = SettingsManager.Default.GameSpeed;
+        }
+
         private void Save() => _utilityService.ForceSave();
-        
+
         private void ToggleSpeed()
         {
             if (!AreOptionsEnabled) return;
@@ -280,22 +298,42 @@ namespace SilkyRing.ViewModels
                 SetSpeed(_desiredGameSpeed);
             }
         }
-        
+
         private bool IsApproximately(float a, float b)
         {
             return Math.Abs(a - b) < Epsilon;
         }
 
-        
         private void SetMorning() => _emevdService.ExecuteEmevdCommand(GameIds.Emevd.EmevdCommands.SetMorning);
         private void SetNoon() => _emevdService.ExecuteEmevdCommand(GameIds.Emevd.EmevdCommands.SetNoon);
         private void SetNight() => _emevdService.ExecuteEmevdCommand(GameIds.Emevd.EmevdCommands.SetNight);
+        
+        private void OpenLevelUp() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.LevelUp);
+        private void OpenAllot() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenAllot);
+        private void OpenAttunement() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenAttunement);
+        private void OpenPhysick() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenPhysick);
+        private void OpenChest() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenChest);
+        private void OpenGreatRunes() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenGreatRunes);
+        private void OpenAow() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenAow);
+        private void OpenAlterGarments() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenAlterGarments);
+
+        private void OpenUpgrade()
+        {
+            foreach (var upgradeMenuFlag in GameIds.EzState.TalkCommands.UpgradeMenuFlags)
+            {
+                _ezStateService.ExecuteTalkCommand(upgradeMenuFlag);
+            }
+            _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenUpgrade);
+        } 
+
+        private void OpenSell()
+        {
+            var playerHandle = _playerService.GetHandle();
+            _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenSell, playerHandle);
+        } 
 
         #endregion
-        
-        
 
-      
         //
         // public bool IsDrawLowHitEnabled
         // {
@@ -330,7 +368,6 @@ namespace SilkyRing.ViewModels
         // }
         //
 
-        
         // public bool IsDrawEventGeneralEnabled
         // {
         //     get => _isDrawEventGeneralEnabled;
@@ -341,7 +378,7 @@ namespace SilkyRing.ViewModels
         //     }
         // }
         //
-      
+
         // public bool IsDrawSoundEnabled
         // {
         //     get => _isDrawSoundEnabled;
@@ -366,7 +403,7 @@ namespace SilkyRing.ViewModels
         //     }
         // }
         //
-      
+
         // public bool IsDrawCollisionEnabled
         // {
         //     get => _isDrawCollisionEnabled;
