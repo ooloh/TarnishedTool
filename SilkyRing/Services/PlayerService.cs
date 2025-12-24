@@ -57,8 +57,8 @@ namespace SilkyRing.Services
             {
                 var currentCoords =
                     memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalCoords);
-                var currentAbsolute = GetAbsoluteCoords(currentCoords, currentBlockId);
-                var savedAbsolute = GetAbsoluteCoords(savedPos.Coords, savedPos.BlockId);
+                var currentAbsolute = CoordUtils.ToAbsolute(currentCoords, currentBlockId);
+                var savedAbsolute = CoordUtils.ToAbsolute(savedPos.Coords, savedPos.BlockId);
                 var delta = savedAbsolute - currentAbsolute;
 
                 var chrRideModule = GetChrRidePtr();
@@ -103,26 +103,7 @@ namespace SilkyRing.Services
             var torrentChrIns = ChrInsLookup(handle);
             return memoryService.FollowPointers(torrentChrIns, [..ChrIns.ChrPhysicsModule], true, false);
         }
-
-        Vector3 GetAbsoluteCoords(Vector3 globalCoords, uint blockId)
-        {
-            byte area = (byte)((blockId >> 24) & 0xFF);
-
-            if (area == 0x3C)
-            {
-                byte gridX = (byte)((blockId >> 16) & 0xFF);
-                byte gridZ = (byte)((blockId >> 8) & 0xFF);
-
-                return new Vector3(
-                    globalCoords.X + 256 * gridX,
-                    globalCoords.Y,
-                    globalCoords.Z + 256 * gridZ
-                );
-            }
-
-            return globalCoords;
-        }
-
+        
         public PosWithHurtbox GetPosWithHurtbox()
         {
             var physPtr = GetChrPhysicsPtr();

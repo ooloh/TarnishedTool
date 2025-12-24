@@ -69,6 +69,7 @@ namespace SilkyRing.ViewModels
             OpenRebirthCommand = new DelegateCommand(OpenRebirth);
             OpenShopSelectorCommand = new DelegateCommand(OpenShopSelector);
             OpenShopCommand = new DelegateCommand<ShopCommand>(OpenShop);
+            MoveCamToPlayerCommand = new DelegateCommand(MoveCamToPlayer);
 
             _allShops = DataLoader.GetShops();
             FilteredShops = new ObservableCollection<ShopCommand>();
@@ -76,7 +77,7 @@ namespace SilkyRing.ViewModels
             RegisterHotkeys();
             ApplyPrefs();
         }
-
+        
         #region Commands
 
         public ICommand SaveCommand { get; set; }
@@ -97,6 +98,7 @@ namespace SilkyRing.ViewModels
         public ICommand OpenRebirthCommand { get; set; }
         public ICommand OpenShopSelectorCommand { get; set; }
         public ICommand OpenShopCommand { get; }
+        public ICommand MoveCamToPlayerCommand { get; }
 
         #endregion
 
@@ -238,6 +240,8 @@ namespace SilkyRing.ViewModels
                     IsNoClipEnabled = false;
                 }
 
+                if (!_isFreeCamEnabled) IsFreezeWorldEnabled = false;
+
                 _utilityService.ToggleFreeCam(_isFreeCamEnabled);
             }
         }
@@ -246,7 +250,7 @@ namespace SilkyRing.ViewModels
 
         public bool IsFreezeWorldEnabled
         {
-            get => _isFreeCamEnabled;
+            get => _isFreezeWorldEnabled;
             set
             {
                 if (!SetProperty(ref _isFreezeWorldEnabled, value)) return;
@@ -517,10 +521,12 @@ namespace SilkyRing.ViewModels
 
         private void OpenShop(ShopCommand shop) => _ezStateService.ExecuteTalkCommand(shop.Command);
 
-
+        private void MoveCamToPlayer() => _utilityService.MoveCamToPlayer();
+        
+        
         #endregion
 
-     
+
 
         // public bool IsDrawSoundEnabled
         // {

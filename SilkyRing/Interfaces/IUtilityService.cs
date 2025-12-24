@@ -18,4 +18,5 @@ public interface IUtilityService
     void ToggleWorldHitDraw(int offset, bool isEnabled);
     void ToggleFullShopLineup(bool isEnabled);
     void SetColDrawMode(int val);
+    void MoveCamToPlayer();
 }

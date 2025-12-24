@@ -73,6 +73,8 @@ namespace SilkyRing.Memory
   
             TryPatternWithFallback("UpdateCoords", Pattern.UpdateCoords,
                 addr => Hooks.UpdateCoords = addr.ToInt64(), saved);
+            TryPatternWithFallback("InAirTimer", Pattern.InAirTimer,
+                addr => Hooks.InAirTimer = addr.ToInt64(), saved);
             TryPatternWithFallback("NoClipKb", Pattern.NoClipKb,
                 addr => Hooks.NoClipKb = addr.ToInt64(), saved);
             TryPatternWithFallback("NoClipTriggers", Pattern.NoClipTriggers,
@@ -161,6 +163,7 @@ namespace SilkyRing.Memory
             Console.WriteLine($@"Patches.NoLogo: 0x{Patches.NoLogo.ToInt64():X}");
 
             Console.WriteLine($@"Hooks.UpdateCoords: 0x{Hooks.UpdateCoords:X}");
+            Console.WriteLine($@"Hooks.InAirTimer: 0x{Hooks.InAirTimer:X}");
             Console.WriteLine($@"Hooks.NoClipKb: 0x{Hooks.NoClipKb:X}");
             Console.WriteLine($@"Hooks.NoClipTriggers: 0x{Hooks.NoClipTriggers:X}");
             Console.WriteLine($@"Hooks.HasSpEffect: 0x{Hooks.HasSpEffect:X}");

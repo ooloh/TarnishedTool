@@ -178,6 +178,9 @@ namespace SilkyRing.Memory
 
             public const int GameRend = 0x20;
             public const int CamMode = 0xC8; // 1 for free cam
+            public const int CSDebugCam = 0xD0;
+            public const int CamCoords = 0x40;
+            
         }
 
         public static class FD4PadManager
@@ -210,6 +213,16 @@ namespace SilkyRing.Memory
         public static class GroupMask
         {
             public static IntPtr Base;
+
+
+            public const int MasterFlag = 0x0;
+            public const int ShouldShowGeom = 0x1;   // Geom + map2 best for low hit / high hit
+            public const int ShouldShowMap = 0x9;
+            
+            public const int HideSomeAssets = 0xA;
+            public const int ShouldShowMap2 = 0xB;
+            public const int ShouldShowChrs = 0xD;
+            public const int ShouldShowGrass = 0x11;
         }
 
         public static class DamageManager
@@ -357,6 +370,7 @@ namespace SilkyRing.Memory
         public static class Hooks
         {
             public static long UpdateCoords;
+            public static long InAirTimer;
             public static long NoClipKb;
             public static long NoClipTriggers;
             public static long HasSpEffect;

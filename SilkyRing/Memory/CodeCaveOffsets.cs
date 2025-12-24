@@ -61,5 +61,7 @@ namespace SilkyRing.Memory
 
         public const int EmevdArgs = 0x1600;
         public const int Rykard = 0x1700;
+
+        public const int InAirTimer = 0x1800;
     }
 }

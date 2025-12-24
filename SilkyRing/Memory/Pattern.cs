@@ -205,6 +205,13 @@
         );
 
         //Hooks
+        public static readonly Pattern InAirTimer = new Pattern(
+            [0xF3, 0x0F, 0x11, 0x43, 0x18, 0xC6],
+            "xxxxxx",
+            0,
+            AddressingMode.Absolute
+        );
+        
         public static readonly Pattern UpdateCoords = new Pattern(
             [0x0F, 0x11, 0x43, 0x70, 0xC7, 0x43],
             "xxxxxx",
