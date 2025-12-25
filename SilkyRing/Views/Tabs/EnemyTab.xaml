@@ -10,6 +10,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0"
@@ -78,7 +79,7 @@
                               IsChecked="{Binding IsTargetingViewEnabled}"
                               Grid.Column="1" Grid.Row="2"
                               Margin="0,2" />
-                    
+
                     <CheckBox Content="Reduced Targeting View"
                               IsChecked="{Binding IsDrawReducedTargetViewEnabled}"
                               IsEnabled="{Binding IsTargetingViewEnabled}"
@@ -146,7 +147,7 @@
                                    FontSize="10" />
                     </Border>
                 </StackPanel>
-             
+
                 <StackPanel Orientation="Horizontal">
 
                     <ComboBox ItemsSource="{Binding Acts}"
@@ -191,6 +192,61 @@
                                    FontWeight="Bold"
                                    FontSize="10" />
                     </Border>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="3"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3">
+            <StackPanel Margin="10">
+                <TextBlock Text="Lion"
+                           Margin="0,0,0,10" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Force Phase"></TextBlock>
+                    <Button Content="Lightning"
+                            Command="{Binding SetLightningPhaseCommand}"
+                            Margin="10,0,0,0">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                <Binding Path="AreOptionsEnabled" />
+                                <Binding Path="IsDlcAvailable" />
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+                    <Button Content="Frost"
+                            Command="{Binding SetFrostPhaseCommand}"
+                            Margin="10,0,0,0">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                <Binding Path="AreOptionsEnabled" />
+                                <Binding Path="IsDlcAvailable" />
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+
+                    <Button Content="Wind"
+                            Command="{Binding SetWindPhaseCommand}"
+                            Margin="10,0,0,0">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                <Binding Path="AreOptionsEnabled" />
+                                <Binding Path="IsDlcAvailable" />
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+
+                    <TextBlock Text="Lock Phase"
+                               Margin="30,0,0,0"     
+                               ></TextBlock>
+                    <CheckBox
+                        IsChecked="{Binding IsLionPhaseLockEnabled}"
+                        IsEnabled="{Binding IsDlcAvailable}"
+                        Margin="15,0,0,0"
+                        ></CheckBox>
+                    
+                    
                 </StackPanel>
             </StackPanel>
         </Border>

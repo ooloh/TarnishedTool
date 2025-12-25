@@ -10,6 +10,22 @@ public class EnemyService(MemoryService memoryService, HookManager hookManager) 
 {
     private const int MaxNumOfActs = 10;
 
+    public nint GetChrInsByEntityId(uint entityId)
+    {
+        var lookedUpChrIns = CodeCaveOffsets.Base + CodeCaveOffsets.LookedUpChrIns;
+        var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
+        var bytes = AsmLoader.GetAsmBytes("GetChrIns");
+        AsmHelper.WriteAbsoluteAddresses(bytes, new[]
+        {
+            (worldChrMan, 0x0 + 2),
+            (Functions.GetChrInsByEntityId, 0x19 + 2),
+            (lookedUpChrIns.ToInt64(), 0x25 + 2)
+        });
+        Array.Copy(BitConverter.GetBytes(entityId), 0, bytes, 0x13 + 2, 4);
+        memoryService.AllocateAndExecute(bytes);
+        return (IntPtr)memoryService.ReadInt64(lookedUpChrIns);
+    }
+
     public void ToggleNoDeath(bool isEnabled) =>
         memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoDeath, isEnabled ? 1 : 0);
 
@@ -30,7 +46,7 @@ public class EnemyService(MemoryService memoryService, HookManager hookManager) 
 
     public void ToggleTargetingView(bool isTargetingViewEnabled) =>
         memoryService.WriteUInt8(TargetView.Base, isTargetingViewEnabled ? 1 : 0);
-    
+
     public void ToggleReducedTargetingView(bool isTargetingViewEnabled)
     {
         var code = CodeCaveOffsets.Base + (int)CodeCaveOffsets.TargetView.BlueTargetView;
@@ -95,7 +111,7 @@ public class EnemyService(MemoryService memoryService, HookManager hookManager) 
         {
             memoryService.WriteInt32(actsArr + 0x4 * i, actSequence[i]);
         }
-        
+
         for (int i = actSequence.Length; i < MaxNumOfActs + 1; i++)
         {
             memoryService.WriteInt32(actsArr + 0x4 * i, 0);
@@ -128,5 +144,23 @@ public class EnemyService(MemoryService memoryService, HookManager hookManager) 
     {
         var codeLoc = CodeCaveOffsets.Base + CodeCaveOffsets.ForceActSequence;
         hookManager.UninstallHook(codeLoc.ToInt64());
+    }
+
+    public void ToggleLionCooldownHook(bool isEnabled)
+    {
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.LionCooldownHook;
+        if (isEnabled)
+        {
+            var hook = Hooks.LionCooldownHook;
+            var codeBytes = AsmLoader.GetAsmBytes("LionCooldownHook");
+            var bytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 5, code + 0x36);
+            Array.Copy(bytes, 0, codeBytes, 0x31 + 1, 4);
+            memoryService.WriteBytes(code, codeBytes);
+            hookManager.InstallHook(code.ToInt64(), hook, [0xF3, 0x0F, 0x59, 0x71, 0x08]);
+        }
+        else
+        {
+            hookManager.UninstallHook(code.ToInt64());
+        }
     }
 }

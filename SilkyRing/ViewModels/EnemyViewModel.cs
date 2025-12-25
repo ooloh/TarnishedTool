@@ -15,30 +15,38 @@ public class EnemyViewModel : BaseViewModel
     private readonly IEnemyService _enemyService;
     private readonly HotkeyManager _hotkeyManager;
     private readonly IEmevdService _emevdService;
+    private readonly IDlcService _dlcService;
+    private readonly ISpEffectService _spEffectService;
 
     public const uint LionEntityId = 20000800;
     public const int LightningAnimationId = 20002;
     public const int FrostAnimationId = 20004;
     public const int WindAnimationId = 20006;
-    
+    public const int PhaseTransitionCooldownSpEffectId = 20011216;
 
     private const int EbNpcThinkParamId = 22000000;
     private const int EldenStarsActIdx = 22;
     private DateTime _ebLastExecuted = DateTime.MinValue;
     private static readonly TimeSpan EbCooldownDuration = TimeSpan.FromSeconds(2);
-    
+
     public EnemyViewModel(IEnemyService enemyService, IStateService stateService, HotkeyManager hotkeyManager,
-        IEmevdService emevdService)
+        IEmevdService emevdService, IDlcService dlcService, ISpEffectService spEffectService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
         _emevdService = emevdService;
+        _dlcService = dlcService;
+        _spEffectService = spEffectService;
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
         stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
 
         EbForceActSequenceCommand = new DelegateCommand(ForceEbActSequence);
+        SetLightningPhaseCommand = new DelegateCommand(ForceLightningPhase);
+        SetFrostPhaseCommand = new DelegateCommand(ForceFrostPhase);
+        SetWindPhaseCommand = new DelegateCommand(ForceWindPhase);
+
 
         _acts = new ObservableCollection<Act>(DataLoader.GetEbActs());
         SelectedAct = Acts.FirstOrDefault();
@@ -49,6 +57,9 @@ public class EnemyViewModel : BaseViewModel
     #region Commands
 
     public ICommand EbForceActSequenceCommand { get; set; }
+    public ICommand SetLightningPhaseCommand { get; set; }
+    public ICommand SetFrostPhaseCommand { get; set; }
+    public ICommand SetWindPhaseCommand { get; set; }
 
     #endregion
 
@@ -62,6 +73,14 @@ public class EnemyViewModel : BaseViewModel
         set => SetProperty(ref _areOptionsEnabled, value);
     }
     
+    private bool _isDlcAvailable;
+        
+    public bool IsDlcAvailable
+    {
+        get => _isDlcAvailable;
+        set => SetProperty(ref _isDlcAvailable, value);
+    }
+
     private bool _isNoDeathEnabled;
 
     public bool IsNoDeathEnabled
@@ -175,7 +194,7 @@ public class EnemyViewModel : BaseViewModel
             _enemyService.SetTargetViewMaxDist(_reducedTargetViewDistance);
         }
     }
-    
+
     private bool _isRykardNoMegaEnabled;
 
     public bool IsRykardNoMegaEnabled
@@ -188,14 +207,40 @@ public class EnemyViewModel : BaseViewModel
         }
     }
     
-    private ObservableCollection<Act> _acts;
+    private bool _isLionPhaseLockEnabled;
+
+    public bool IsLionPhaseLockEnabled
+    {
+        get => _isLionPhaseLockEnabled;
+        set
+        {
+            SetProperty(ref _isLionPhaseLockEnabled, value);
+            _enemyService.ToggleLionCooldownHook(_isLionPhaseLockEnabled);
+            if (_isLionPhaseLockEnabled && AreOptionsEnabled)
+            {
+                var chrIns = _enemyService.GetChrInsByEntityId(LionEntityId);
+                _spEffectService.ApplySpEffect(chrIns, PhaseTransitionCooldownSpEffectId);
+                _spEffectService.ApplySpEffect(chrIns, 20011237); //Some 15sec duration speffect, needed for no triple phase attack in lightning phase
+            }
+            else
+            {
+                var chrIns = _enemyService.GetChrInsByEntityId(LionEntityId);
+                _spEffectService.RemoveSpEffect(chrIns, PhaseTransitionCooldownSpEffectId);
+                _spEffectService.RemoveSpEffect(chrIns, 20011237);
+            }
+        }
+    }
     
+    
+
+    private ObservableCollection<Act> _acts;
+
     public ObservableCollection<Act> Acts
     {
         get => _acts;
         set => SetProperty(ref _acts, value);
     }
-    
+
     private Act _selectedAct;
 
     public Act SelectedAct
@@ -211,13 +256,14 @@ public class EnemyViewModel : BaseViewModel
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
+        IsDlcAvailable = _dlcService.IsDlcAvailable;
     }
 
     private void OnGameNotLoaded()
     {
         AreOptionsEnabled = false;
     }
-    
+
     private void OnGameFirstLoaded()
     {
         if (IsNoDeathEnabled) _enemyService.ToggleNoDeath(true);
@@ -232,8 +278,9 @@ public class EnemyViewModel : BaseViewModel
             _enemyService.ToggleReducedTargetingView(true);
         if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled)
             _enemyService.SetTargetViewMaxDist(ReducedTargetViewDistance);
+        if (IsLionPhaseLockEnabled) _enemyService.ToggleLionCooldownHook(true); 
     }
-    
+
     private void RegisterHotkeys()
     {
         _hotkeyManager.RegisterAction(HotkeyActions.AllNoDeath, () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
@@ -259,6 +306,19 @@ public class EnemyViewModel : BaseViewModel
         int[] acts = [EldenStarsActIdx, SelectedAct.ActIdx];
         _enemyService.ForceActSequence(acts, EbNpcThinkParamId);
     }
+
+    private void ForceLightningPhase() =>
+        _emevdService.ExecuteEmevdCommand(
+            GameIds.Emevd.EmevdCommands.ForcePlaybackAnimation(LionEntityId, LightningAnimationId));
+    
+    
+    private void ForceFrostPhase() =>
+        _emevdService.ExecuteEmevdCommand(
+            GameIds.Emevd.EmevdCommands.ForcePlaybackAnimation(LionEntityId, FrostAnimationId));
+
+    private void ForceWindPhase() =>
+        _emevdService.ExecuteEmevdCommand(
+            GameIds.Emevd.EmevdCommands.ForcePlaybackAnimation(LionEntityId, WindAnimationId));
 
     #endregion
 }

@@ -63,5 +63,8 @@ namespace SilkyRing.Memory
         public const int Rykard = 0x1700;
 
         public const int InAirTimer = 0x1800;
+
+        public const int LookedUpChrIns = 0x1900;
+        public const int LionCooldownHook = 0x1A00;
     }
 }

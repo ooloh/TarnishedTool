@@ -399,6 +399,7 @@ namespace SilkyRing.Memory
             public static long WarpCoordWrite;
             public static long WarpAngleWrite;
             public static IntPtr HookedDeathFunction;
+            public static long LionCooldownHook;
         }
 
         public static class Functions
@@ -420,6 +421,7 @@ namespace SilkyRing.Memory
             public static long EmevdSwitch;
             public static long EmkEventInsCtor;
             public static long GetMovement;
+            public static long GetChrInsByEntityId;
         }
 
         public static class Patches

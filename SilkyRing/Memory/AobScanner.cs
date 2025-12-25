@@ -102,6 +102,8 @@ namespace SilkyRing.Memory
                 addr => Hooks.WarpCoordWrite = addr.ToInt64(), saved);
             TryPatternWithFallback("WarpAngleWrite", Pattern.WarpAngleWrite,
                 addr => Hooks.WarpAngleWrite = addr.ToInt64(), saved);
+            TryPatternWithFallback("LionCooldownHook", Pattern.LionCooldownHook,
+                addr => Hooks.LionCooldownHook = addr.ToInt64(), saved);
 
             using (var writer = new StreamWriter(savePath))
             {
@@ -128,6 +130,7 @@ namespace SilkyRing.Memory
             Functions.EmevdSwitch = FindAddressByPattern(Pattern.EmevdSwitch).ToInt64();
             Functions.EmkEventInsCtor = FindAddressByPattern(Pattern.EmkEventInsCtor).ToInt64();
             Functions.GetMovement = FindAddressByPattern(Pattern.GetMovement).ToInt64();
+            Functions.GetChrInsByEntityId = FindAddressByPattern(Pattern.GetChrInsByEntityId).ToInt64();
 
 
 #if DEBUG
@@ -182,6 +185,7 @@ namespace SilkyRing.Memory
             Console.WriteLine($@"Hooks.WarpCoordWrite: 0x{Hooks.WarpCoordWrite:X}");
             Console.WriteLine($@"Hooks.WarpAngleWrite: 0x{Hooks.WarpAngleWrite:X}");
             Console.WriteLine($@"Hooks.HookedDeathFunction: 0x{Hooks.HookedDeathFunction.ToInt64():X}");
+            Console.WriteLine($@"Hooks.LionCooldownHook: 0x{Hooks.LionCooldownHook:X}");
 
             Console.WriteLine($@"Funcs.GraceWarp: 0x{Functions.GraceWarp:X}");
             Console.WriteLine($@"Funcs.SetEvent: 0x{Functions.SetEvent:X}");
@@ -198,6 +202,7 @@ namespace SilkyRing.Memory
             Console.WriteLine($@"Funcs.EmevdSwitch: 0x{Functions.EmevdSwitch:X}");
             Console.WriteLine($@"Funcs.EmkEventInsCtor: 0x{Functions.EmkEventInsCtor:X}");
             Console.WriteLine($@"Funcs.GetMovement: 0x{Functions.GetMovement:X}");
+            Console.WriteLine($@"Funcs.GetChrInsByEntityId: 0x{Functions.GetChrInsByEntityId:X}");
 #endif
         }
 

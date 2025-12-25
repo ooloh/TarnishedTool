@@ -613,6 +613,27 @@ namespace SilkyRing.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 48 b9 00 00 00 00 00    movabs rcx,0x0
         ///00 00 00
+        ///48 83 ec 28             sub    rsp,0x28
+        ///48 8d 54 24 24          lea    rdx,[rsp+0x24]
+        ///c7 02 fe fe fe fe       mov    DWORD PTR [rdx],0xfefefefe
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
+        ///48 89 01                mov    QWORD PTR [rcx],rax
+        ///48 83 c4 28             add    rsp,0x28
+        ///c3                      ret.
+        /// </summary>
+        internal static string GetChrIns {
+            get {
+                return ResourceManager.GetString("GetChrIns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
         ///48 ba 00 00 00 00 00    movabs rdx,0x0
         ///00 00 00
         ///48 83 ec 20             sub    rsp,0x20
@@ -784,6 +805,27 @@ namespace SilkyRing.Properties {
         internal static string KillAll {
             get {
                 return ResourceManager.GetString("KillAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 41 81 7e 60 f8 fb 1a    cmp    DWORD PTR [r14+0x60],0x31afbf8
+        ///03
+        ///75 22                   jne    2c &lt;exit&gt;
+        ///49 81 fa d0 58 31 01    cmp    r10,0x13158d0
+        ///75 09                   jne    1c &lt;check_other&gt;
+        ///c7 41 08 00 00 80 bf    mov    DWORD PTR [rcx+0x8],0xbf800000
+        ///eb 10                   jmp    2c &lt;exit&gt;
+        ///00000000001c &lt;check_other&gt;:
+        ///49 81 fa e5 58 31 01    cmp    r10,0x13158e5
+        ///75 07                   jne    2c &lt;exit&gt;
+        ///c7 41 08 00 00 80 bf    mov    DWORD PTR [rcx+0x8],0xbf800000
+        ///00000000002c &lt;exit&gt;:
+        ///f [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LionCooldownHook {
+            get {
+                return ResourceManager.GetString("LionCooldownHook", resourceCulture);
             }
         }
         

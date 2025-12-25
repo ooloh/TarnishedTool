@@ -303,7 +303,23 @@
             AddressingMode.Absolute
         );
 
+        public static readonly Pattern LionCooldownHook = new Pattern(
+            [0xF3, 0x0F, 0x59, 0x71, 0x08],
+            "xxxxx",
+            0,
+            AddressingMode.Absolute
+        );
+
         //Funcs
+
+        public static readonly Pattern GetChrInsByEntityId = new Pattern(
+            [0x48, 0x8D, 0x93, 0x34, 0x02],
+            "xxxxx",
+            0x7,
+            AddressingMode.Relative,
+            1,
+            5
+        );
 
         public static readonly Pattern GraceWarp = new(
             [0xC7, 0x44, 0x24, 0x30, 0x10, 0x27, 0x00, 0x00, 0x48, 0x8B, 0xCF],

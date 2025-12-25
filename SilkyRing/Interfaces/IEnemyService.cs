@@ -4,6 +4,7 @@ namespace SilkyRing.Interfaces;
 
 public interface IEnemyService
 {
+    nint GetChrInsByEntityId(uint entityId);
     void ToggleNoDeath(bool isEnabled);
     void ToggleNoDamage(bool isEnabled);
     void ToggleNoHit(bool isEnabled);
@@ -16,4 +17,5 @@ public interface IEnemyService
     void ToggleRykardMega(bool isRykardNoMegaEnabled);
     void ForceActSequence(int[] actSequence, int npcThinkParamId);
     void UnhookForceAct();
+    void ToggleLionCooldownHook(bool isEnabled);
 }
