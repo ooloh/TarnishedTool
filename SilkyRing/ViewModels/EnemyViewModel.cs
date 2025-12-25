@@ -14,16 +14,25 @@ public class EnemyViewModel : BaseViewModel
 {
     private readonly IEnemyService _enemyService;
     private readonly HotkeyManager _hotkeyManager;
+    private readonly IEmevdService _emevdService;
+
+    public const uint LionEntityId = 20000800;
+    public const int LightningAnimationId = 20002;
+    public const int FrostAnimationId = 20004;
+    public const int WindAnimationId = 20006;
+    
 
     private const int EbNpcThinkParamId = 22000000;
     private const int EldenStarsActIdx = 22;
     private DateTime _ebLastExecuted = DateTime.MinValue;
     private static readonly TimeSpan EbCooldownDuration = TimeSpan.FromSeconds(2);
     
-    public EnemyViewModel(IEnemyService enemyService, IStateService stateService, HotkeyManager hotkeyManager)
+    public EnemyViewModel(IEnemyService enemyService, IStateService stateService, HotkeyManager hotkeyManager,
+        IEmevdService emevdService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
+        _emevdService = emevdService;
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);

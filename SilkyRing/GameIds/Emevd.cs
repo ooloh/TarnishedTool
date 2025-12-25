@@ -65,5 +65,15 @@ public class Emevd
             4,
             (byte)20, (byte)0, (byte)0, (byte)0, (byte)0, (byte)1, (float)0.75, (float)2.0, (float)0
         );
+        
+        public static EmevdCommand ForcePlaybackAnimation(uint entityId, int animationId) => new(
+            2003,
+            18,
+            entityId,
+            animationId,
+            (byte)0,  // shouldLoop
+            (byte)0,  // shouldWaitForCompletion
+            (byte)0   // ignoreWaitForTransition
+        );
     }
 }
