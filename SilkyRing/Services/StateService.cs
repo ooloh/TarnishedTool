@@ -8,16 +8,14 @@ namespace SilkyRing.Services;
 
 public class StateService(MemoryService memoryService) : IStateService
 {
-    
     private readonly Dictionary<State, List<Action>> _eventHandlers = new();
-    
+
     public bool IsLoaded()
     {
-        var menuMan = memoryService.ReadInt64(Offsets.MenuMan.Base);
-        return memoryService.ReadUInt8((IntPtr)menuMan + Offsets.MenuMan.IsLoaded) == 1;
+        var worldChrman = memoryService.ReadInt64(Offsets.WorldChrMan.Base);
+        return memoryService.ReadInt64((IntPtr)worldChrman + Offsets.WorldChrMan.PlayerIns) != 0;
     }
-    
-    
+
     public void Publish(State eventType)
     {
         if (_eventHandlers.ContainsKey(eventType))
@@ -31,7 +29,7 @@ public class StateService(MemoryService memoryService) : IStateService
     {
         if (!_eventHandlers.ContainsKey(eventType))
             _eventHandlers[eventType] = new List<Action>();
-   
+
         _eventHandlers[eventType].Add(handler);
     }
 

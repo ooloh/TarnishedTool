@@ -642,14 +642,9 @@ namespace SilkyRing.ViewModels
         {
             AreOptionsEnabled = true;
 
-            _ = Task.Run(() =>
-            {
-                Task.Delay(500).Wait();
-                if (IsSetRfbsOnLoadEnabled) SetRfbs();
-                if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
-                if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
-            });
-
+            if (IsSetRfbsOnLoadEnabled) SetRfbs();
+            if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
+            if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
 
             LoadStats();
             _playerTick.Start();

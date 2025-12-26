@@ -34,7 +34,7 @@ namespace SilkyRing.Services
             }
         }
 
-        public ulong GetTargetAddr() =>
+        public ulong GetTargetChrIns() =>
             memoryService.ReadUInt64(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr);
 
         public void SetHp(int health) =>

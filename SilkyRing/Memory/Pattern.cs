@@ -483,11 +483,11 @@
             1,
             5
         );
-
-        public static readonly Pattern DungeonWarp = new(
-            [0x74, 0x3A, 0x8B, 0x81, 0xA0],
-            "xxxxx",
-            0,
+        
+        public static readonly Pattern CanFastTravel = new Pattern(
+            [0x74, 0x14, 0xBA, 0x16],
+            "xxxx",
+            0xC,
             AddressingMode.Absolute
         );
 

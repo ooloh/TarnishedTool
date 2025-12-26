@@ -1070,7 +1070,8 @@ e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;</value>
 0,Liurnia of the Lakes,Erdtree Burial Watchdog,503709696,18.78|194.62|5.14|1,-0.11
 0,Liurnia of the Lakes,Glintstone Dragon Adula,1008937472,-108.71|404.60|5.55|1,0.75
 0,Liurnia of the Lakes,Glintstone Dragon Smarag,1008872704,-28.25|237.66|8.94|1,2.63
-0,Liurnia of the Lakes,Grafted Scion,167837696,-33.27|21.37|-87.86|1,2.92
+0,Liurnia of the Lakes,Grafted Scion (First Encounter),167837696,-33.27|21.37|-87.86|1,2.92
+0,Liurnia of the Lakes,Grafted Scion (Second Encounter),167837696,-18.43|21.44|-35.56|1,1.39
 0,Liurnia of the Lakes,Magma Wyrm Makar,655622144,-42.37|351.53|-1345.61|1,1.97
 0,Liurnia of the Lakes,Night's Cavalry (North),1009004544,-80.01|321.18|-92.93|1,-2.33
 0,Liurnia of the Lakes,Night's Cavalry (South),1009134336,104.96|255.77|9.40|1,-1.19
@@ -1078,7 +1079,7 @@ e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;</value>
 0,Liurnia of the Lakes,Onyx Lord,1009005056,94.93|378.24|17.17|1,-1.35
 0,Liurnia of the Lakes,Red Wolf,234881024,116.19|110.49|-224.92|1,-1.51
 0,Liurnia of the Lakes,Rennala,234881024,92.89|154.06|-44.76|1,1.89
-0,Liurnia of the Lakes,Loretta,1008939520,2.35|431.01|87.62|1,2.02
+0,Liurnia of the Lakes,Loretta,1008939520,7.97|429.77|83.86|1,2.13
 0,Liurnia of the Lakes,Royal Revenant,1008873472,53.78|252.21|93.66|1,0.41
 0,Liurnia of the Lakes,Spirit-Caller Snail,503513088,80.45|193.84|-5.37|1,3.14
 0,Liurnia of the Lakes,Tibia Mariner,1009199872,-61.59|305.18|116.16|1,-3.14
@@ -1095,6 +1096,7 @@ e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;</value>
 0,Altus Plateau,Necromancer Garris,521338880,114.31|628.38|-69.34|1,3.08
 0,Altus Plateau,Night's Cavalry,1009201920,-7.42|751.93|-52.74|1,0.00
 0,Altus Plateau,Omenkiller / Miranda,521273344,-64.37|790.75|190.36|1,1.49
+0,Altus Plateau,Onyx Lord,571211776,-51.89|711.72|-162.71|1,-0.03
 0,Altus Plateau,Perfumer Tricia / Misbegotten Warrior,504102912,5.51|618.64|218.61|1,-2.95
 0,Altus Plateau,Sanguine Noble,1009267968,-79.14|802.27|58.34|1,2.24
 0,Altus Plateau,Stonedigger Troll,537133056,-284.36|678.15|-98.27|1,0.76
@@ -1111,7 +1113,6 @@ e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;</value>
 0,Leyndell,Grave Warden Duelist,504168448,27.96|954.72|65.84|1,2.07
 0,Leyndell,Morgott,184549376,3.53|64.98|-372.41|1,-0.60
 0,Leyndell,Mohg the Omen,587202560,38.09|-298.70|-101.40|1,-2.08
-0,Leyndell,Onyx Lord,571211776,-136.20|802.77|-12.45|1,1.13
 0,Mt.Gelmir,Abductor Virgins (Duo),268435456,232.15|-132.95|-230.29|1,-0.09
 0,Mt.Gelmir,Demi-Human Queen Margot,520683520,-91.80|1013.21|-74.38|1,-1.67
 0,Mt.Gelmir,Demi-Human Queen Maggie,1009071104,50.11|906.26|117.37|1,2.15

@@ -24,7 +24,8 @@ namespace SilkyRing.Services
         }
 
         public void ToggleDungeonWarp(bool isEnabled) =>
-            memoryService.WriteUInt8(Patches.DungeonWarp, isEnabled ? 0xEB : 0x74);
+            memoryService.WriteBytes(Patches.CanFastTravel,
+                isEnabled ? [0xB0, 0x01, 0x90, 0x90, 0x90] : [0x84, 0xC0, 0x0F, 0x94, 0xC0]);
 
         public void ToggleNoClip(bool isNoClipEnabled)
         {
@@ -180,6 +181,8 @@ namespace SilkyRing.Services
         }
 
         public void PatchDebugFont() => memoryService.WriteUInt8(Patches.DebugFont, 0xC3);
-        public void TogglePlayerSound(bool isEnabled) => memoryService.WriteUInt8(Patches.PlayerSound, isEnabled ? 0x75 : 0x74);
+
+        public void TogglePlayerSound(bool isEnabled) =>
+            memoryService.WriteUInt8(Patches.PlayerSound, isEnabled ? 0x75 : 0x74);
     }
 }

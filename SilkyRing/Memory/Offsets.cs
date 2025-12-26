@@ -432,7 +432,7 @@ namespace SilkyRing.Memory
 
         public static class Patches
         {
-            public static IntPtr DungeonWarp;
+            public static IntPtr CanFastTravel;
             public static IntPtr NoRunesFromEnemies;
             public static IntPtr NoRuneArcLoss;
             public static IntPtr NoRuneLossOnDeath;

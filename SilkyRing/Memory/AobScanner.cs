@@ -4,7 +4,6 @@ using System.IO;
 using SilkyRing.Services;
 using static SilkyRing.Memory.Offsets;
 
-
 namespace SilkyRing.Memory
 {
     public class AoBScanner(MemoryService memoryService)
@@ -50,7 +49,7 @@ namespace SilkyRing.Memory
             CSTrophy.Base = FindAddressByPattern(Pattern.CSTrophy);
 
 
-            TryPatternWithFallback("DungeonWarp", Pattern.DungeonWarp, addr => Patches.DungeonWarp = addr, saved);
+            TryPatternWithFallback("CanFastTravel", Pattern.CanFastTravel, addr => Patches.CanFastTravel = addr, saved);
             TryPatternWithFallback("NoRunesFromEnemies", Pattern.NoRunesFromEnemies,
                 addr => Patches.NoRunesFromEnemies = addr, saved);
             TryPatternWithFallback("NoRuneArcLoss", Pattern.NoRuneArcLoss, addr => Patches.NoRuneArcLoss = addr, saved);
@@ -64,7 +63,7 @@ namespace SilkyRing.Memory
                 addr => Patches.NoLogo = addr, saved);
             TryPatternWithFallback("PlayerSound", Pattern.PlayerSound,
                 addr => Patches.PlayerSound = addr, saved);
-            
+
             Patches.EnableFreeCam = FindAddressByPattern(Pattern.EnableFreeCam);
             Patches.GetShopEvent = FindAddressByPattern(Pattern.GetShopEvent);
             Patches.DebugFont = FindAddressByPattern(Pattern.DebugFont);
@@ -73,7 +72,7 @@ namespace SilkyRing.Memory
                 { addr => Patches.CanDrawEvents1 = (IntPtr)addr, 0x4 },
                 { addr => Patches.CanDrawEvents2 = (IntPtr)addr, 0xD },
             });
-  
+
             TryPatternWithFallback("UpdateCoords", Pattern.UpdateCoords,
                 addr => Hooks.UpdateCoords = addr.ToInt64(), saved);
             TryPatternWithFallback("InAirTimer", Pattern.InAirTimer,
@@ -156,11 +155,11 @@ namespace SilkyRing.Memory
             Console.WriteLine($@"UserInputManager.Base: 0x{UserInputManager.Base.ToInt64():X}");
             Console.WriteLine($@"CSTrophy.Base: 0x{CSTrophy.Base.ToInt64():X}");
 
-            Console.WriteLine($@"Patches.NoLogo: 0x{Patches.DungeonWarp.ToInt64():X}");
+            Console.WriteLine($@"Patches.NoLogo: 0x{Patches.NoLogo.ToInt64():X}");
             Console.WriteLine($@"Patches.NoRunesFromEnemies: 0x{Patches.NoRunesFromEnemies.ToInt64():X}");
             Console.WriteLine($@"Patches.NoRuneArcLoss: 0x{Patches.NoRuneArcLoss.ToInt64():X}");
             Console.WriteLine($@"Patches.NoRuneLossOnDeath: 0x{Patches.NoRuneLossOnDeath.ToInt64():X}");
-            Console.WriteLine($@"Patches.DungeonWarp: 0x{Patches.DungeonWarp.ToInt64():X}");
+            Console.WriteLine($@"Patches.CanFastTravel: 0x{Patches.CanFastTravel.ToInt64():X}");
             Console.WriteLine($@"Patches.OpenMap: 0x{Patches.OpenMap.ToInt64():X}");
             Console.WriteLine($@"Patches.CloseMap: 0x{Patches.CloseMap.ToInt64():X}");
             Console.WriteLine($@"Patches.EnableFreeCam: 0x{Patches.EnableFreeCam.ToInt64():X}");
@@ -218,7 +217,6 @@ namespace SilkyRing.Memory
 
             setter(addr);
         }
-
 
         public IntPtr FindAddressByPattern(Pattern pattern)
         {
@@ -295,18 +293,18 @@ namespace SilkyRing.Memory
 
             return addresses;
         }
-        
+
         private void FindMultipleCallsInFunction(Pattern basePattern, Dictionary<Action<long>, int> callMappings)
         {
             var baseInstructionAddr = FindAddressByPattern(basePattern);
-    
+
             foreach (var mapping in callMappings)
             {
                 var callInstructionAddr = IntPtr.Add(baseInstructionAddr, mapping.Value);
-        
+
                 int callOffset = memoryService.ReadInt32(IntPtr.Add(callInstructionAddr, 1));
                 var callTarget = IntPtr.Add(callInstructionAddr, callOffset + 5);
-        
+
                 mapping.Key(callTarget.ToInt64());
             }
         }

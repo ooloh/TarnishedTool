@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:SilkyRing.Views.Windows"
         xmlns:viewmodels="clr-namespace:SilkyRing.Models"
         xmlns:controls="clr-namespace:SilkyRing.Controls"
         mc:Ignorable="d"
@@ -205,13 +204,13 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Right"
                         Margin="0,8,0,0">
-                <Button Content="Export CSV"
-                        Command="{Binding ExportCommand}"
-                        Padding="12,4"
-                        Margin="0,0,8,0" />
-                <!-- <Button Content="Clear" -->
-                <!--         Command="{Binding ClearCommand}" -->
-                <!--         Padding="12,4" /> -->
+                <!-- <Button Content="Export CSV" -->
+                <!--         Command="{Binding ExportCommand}" -->
+                <!--         Padding="12,4" -->
+                <!--         Margin="0,0,8,0" /> -->
+                <Button Content="Clear"
+                        Command="{Binding ClearCommand}"
+                        Padding="12,4" />
             </StackPanel>
         </Grid>
     </Grid>

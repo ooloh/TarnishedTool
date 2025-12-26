@@ -17,7 +17,7 @@ namespace SilkyRing.ViewModels
 
         private bool _customHpHasBeenSet;
 
-        private ulong _currentTargetId;
+        private ulong _currentTargetChrIns;
         
         private float _targetDesiredSpeed = -1f;
         private const float DefaultSpeed = 1f;
@@ -705,6 +705,7 @@ namespace SilkyRing.ViewModels
             LastAct = 0;
             ForceAct = 0;
             AreOptionsEnabled = false;
+            IsDisableAllExceptTargetEnabled = false;
             _enemyService.UnhookForceAct();
         }
 
@@ -829,8 +830,8 @@ namespace SilkyRing.ViewModels
             }
 
             IsValidTarget = true;
-            ulong targetId = _targetService.GetTargetAddr();
-            if (targetId != _currentTargetId)
+            ulong chrins = _targetService.GetTargetChrIns();
+            if (chrins != _currentTargetChrIns)
             {
                 IsFreezeAiEnabled = _targetService.IsAiDisabled();
                 IsTargetingViewEnabled = _targetService.IsTargetViewEnabled();
@@ -850,7 +851,7 @@ namespace SilkyRing.ViewModels
                 }
 
                 IsFreezeHealthEnabled = _targetService.IsNoDamageEnabled();
-                _currentTargetId = targetId;
+                _currentTargetChrIns = chrins;
                 MaxPoise = _targetService.GetMaxPoise();
 
                 UpdateImmunities();
@@ -915,7 +916,7 @@ namespace SilkyRing.ViewModels
 
         private bool IsTargetValid()
         {
-            ulong targetId = _targetService.GetTargetAddr();
+            ulong targetId = _targetService.GetTargetChrIns();
             if (targetId == 0)
                 return false;
 

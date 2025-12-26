@@ -206,7 +206,10 @@ public class ItemViewModel : BaseViewModel
             int maxQuantity = item.MaxStorage + item.StackSize;
             bool shouldQuantityAdjust = item.StackSize > 1;
 
-            Task.Delay(100).Wait();
+            if (SelectedMassSpawnCategory == "Cookbooks" || SelectedMassSpawnCategory == "Crystal Tears")
+            {
+                Task.Delay(50).Wait();
+            }
             if (item is EventItem eventItem && eventItem.NeedsEvent)
             {
                 _eventService.SetEvent(eventItem.EventId, true);
@@ -289,7 +292,7 @@ public class ItemViewModel : BaseViewModel
                 _eventService.SetEvent(eventItem.EventId, true);
             }
 
-            Task.Delay(100).Wait();
+            Task.Delay(50).Wait();
             _itemService.SpawnItem(itemId, quantity, aowId, shouldQuantityAdjust, maxQuantity);
         }
     }
