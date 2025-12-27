@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Numerics;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
 using SilkyRing.Core;

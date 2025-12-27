@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using SilkyRing.Core;
 using SilkyRing.Enums;
+using SilkyRing.GameIds;
 using SilkyRing.Interfaces;
 using SilkyRing.Models;
 using SilkyRing.Utilities;
@@ -13,16 +14,19 @@ namespace SilkyRing.ViewModels
         private readonly ITravelService _travelService;
         private readonly IEventService _eventService;
         private readonly IDlcService _dlcService;
+        private readonly IEmevdService _emevdService;
 
         public SearchableGroupedCollection<string, Grace> Graces { get; }
         public SearchableGroupedCollection<string, BossWarp> Bosses { get; }
 
         public TravelViewModel(ITravelService travelService, IEventService eventService, IStateService stateService,
-            IDlcService dlcService)
+            IDlcService dlcService, IEmevdService emevdService)
         {
             _travelService = travelService;
             _eventService = eventService;
             _dlcService = dlcService;
+            _emevdService = emevdService;
+
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -41,7 +45,7 @@ namespace SilkyRing.ViewModels
             UnlockDlcGracesCommand = new DelegateCommand(UnlockDlcGraces);
             BossWarpCommand = new DelegateCommand(BossWarp);
         }
-        
+
         #region Commands
 
         public ICommand GraceWarpCommand { get; set; }
@@ -60,15 +64,23 @@ namespace SilkyRing.ViewModels
             get => _areOptionsEnabled;
             set => SetProperty(ref _areOptionsEnabled, value);
         }
-        
+
         private bool _isDlcAvailable;
-        
+
         public bool IsDlcAvailable
         {
             get => _isDlcAvailable;
             set => SetProperty(ref _isDlcAvailable, value);
         }
 
+        private bool _isRestOnWarpEnabled;
+
+        public bool IsRestOnWarpEnabled
+        {
+            get => _isRestOnWarpEnabled;
+            set => SetProperty(ref _isRestOnWarpEnabled, value);
+        }
+        
         #endregion
 
         #region Private Methods
@@ -93,7 +105,11 @@ namespace SilkyRing.ViewModels
         private void BossWarp()
         {
             if (Bosses.SelectedItem.IsDlc && !IsDlcAvailable) return;
-            _ = Task.Run(() => _travelService.WarpToBlockId(Bosses.SelectedItem.Position));
+            _ = Task.Run(() =>
+            {
+                _travelService.WarpToBlockId(Bosses.SelectedItem.Position);
+                if (IsRestOnWarpEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+            });
         }
 
         private void UnlockMainGameGraces()

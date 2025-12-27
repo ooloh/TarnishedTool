@@ -69,7 +69,7 @@ namespace SilkyRing
             PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService, hotkeyManager,
                 eventService, spEffectService, emevdService, _dlcService);
             TravelViewModel travelViewModel =
-                new TravelViewModel(travelService, eventService, _stateService, _dlcService);
+                new TravelViewModel(travelService, eventService, _stateService, _dlcService, emevdService);
             EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService, hotkeyManager, emevdService, _dlcService, spEffectService);
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService,
                 attackInfoService, hotkeyManager);
