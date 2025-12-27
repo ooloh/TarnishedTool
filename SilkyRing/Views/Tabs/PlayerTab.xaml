@@ -203,7 +203,7 @@
                     <CheckBox Content="Torrent No Death"
                               IsChecked="{Binding IsTorrentNoDeathEnabled}"
                               Margin="0,2" />
-                    <CheckBox Content="Torrent no Stagger"
+                    <CheckBox Content="No Stagger off Torrent"
                               IsChecked="{Binding IsTorrentNoStaggerEnabled}"
                               Margin="0, 2" />
                 </StackPanel>

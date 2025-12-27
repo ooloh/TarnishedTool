@@ -427,7 +427,7 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isTorrentNoStaggerEnabled, value))
                 {
-                   
+                   _playerService.ToggleTorrentNoStagger(_isTorrentNoStaggerEnabled);
                 }
             }
         }
@@ -657,12 +657,7 @@ namespace SilkyRing.ViewModels
             AreOptionsEnabled = true;
 
             if (IsSetRfbsOnLoadEnabled) SetRfbs();
-            _ = Task.Run(() =>
-            {
-                Task.Delay(100).Wait();
-                if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
-            });
-            
+            if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
             if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
 
             LoadStats();

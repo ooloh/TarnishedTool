@@ -300,6 +300,7 @@ namespace SilkyRing.Memory
                 RuneMemory = 0x70,
                 Scadutree = 0xFC,
                 SpiritAsh = 0xFD,
+                TorrentHandle = 0x950,
             }
 
             public const int Igt = 0xA0; //Uint
@@ -401,6 +402,7 @@ namespace SilkyRing.Memory
             public static long ShouldUpdateAi;
             public static long GetForceActIdx;
             public static long TargetNoStagger;
+            public static long TorrentNoStagger;
             public static long AttackInfo;
             public static long WarpCoordWrite;
             public static long WarpAngleWrite;

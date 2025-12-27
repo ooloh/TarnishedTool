@@ -105,6 +105,8 @@ namespace SilkyRing.Memory
                 addr => Hooks.LionCooldownHook = addr.ToInt64(), saved);
             TryPatternWithFallback("SetActionRequested", Pattern.SetActionRequested,
                 addr => Hooks.SetActionRequested = addr.ToInt64(), saved);
+            TryPatternWithFallback("TorrentNoStagger", Pattern.TorrentNoStagger,
+                addr => Hooks.TorrentNoStagger = addr.ToInt64(), saved);
 
             using (var writer = new StreamWriter(savePath))
             {
@@ -182,6 +184,7 @@ namespace SilkyRing.Memory
             Console.WriteLine($@"Hooks.ShouldUpdateAi: 0x{Hooks.ShouldUpdateAi:X}");
             Console.WriteLine($@"Hooks.GetForceActIdx: 0x{Hooks.GetForceActIdx:X}");
             Console.WriteLine($@"Hooks.NoStagger: 0x{Hooks.TargetNoStagger:X}");
+            Console.WriteLine($@"Hooks.TorrentNoStagger: 0x{Hooks.TorrentNoStagger:X}");
             Console.WriteLine($@"Hooks.AttackInfo: 0x{Hooks.AttackInfo:X}");
             Console.WriteLine($@"Hooks.WarpCoordWrite: 0x{Hooks.WarpCoordWrite:X}");
             Console.WriteLine($@"Hooks.WarpAngleWrite: 0x{Hooks.WarpAngleWrite:X}");

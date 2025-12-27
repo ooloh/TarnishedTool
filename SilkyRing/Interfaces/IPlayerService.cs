@@ -43,4 +43,5 @@ public interface IPlayerService
     int GetScadu();
     void SetSpiritAsh(int value);
     int GetSpiritAsh();
+    void ToggleTorrentNoStagger(bool isEnabled);
 }

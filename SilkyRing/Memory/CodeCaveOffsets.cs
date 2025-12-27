@@ -68,6 +68,8 @@ namespace SilkyRing.Memory
         public const int LionCooldownHook = 0x1A00;
 
         public const int NoClipJmpHook = 0x1B00;
-        
+
+        public const int TorrentNoStagger = 0x1b30;
+
     }
 }

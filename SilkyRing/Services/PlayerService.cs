@@ -63,7 +63,7 @@ namespace SilkyRing.Services
 
                 var chrRideModule = GetChrRidePtr();
                 var isRiding = IsRiding(chrRideModule);
-                var physicsPtr = isRiding ? GetTorrentPhysicsPtr(chrRideModule) : GetChrPhysicsPtr();
+                var physicsPtr = isRiding ? GetTorrentPhysicsPtr() : GetChrPhysicsPtr();
                 var coordsPtr = physicsPtr + (int)ChrIns.ChrPhysicsOffsets.Coords;
                 var isLongDistance = delta.Length() > LongDistanceRestore;
 
@@ -96,10 +96,11 @@ namespace SilkyRing.Services
             return memoryService.ReadInt32((IntPtr)rideNode + (int)ChrIns.RideNodeOffsets.IsRiding) != 0;
         }
 
-        private IntPtr GetTorrentPhysicsPtr(IntPtr chrRideModule)
+        private IntPtr GetTorrentPhysicsPtr()
         {
-            var rideNode = memoryService.ReadInt64(chrRideModule + (int)ChrIns.ChrRideOffsets.RideNode);
-            var handle = memoryService.ReadInt32((IntPtr)rideNode + (int)ChrIns.RideNodeOffsets.HorseHandle);
+            var playerGameData =
+                memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.PlayerGameData);
+            var handle = memoryService.ReadInt32((IntPtr)playerGameData + (int)GameDataMan.PlayerGameDataOffsets.TorrentHandle);
             var torrentChrIns = ChrInsLookup(handle);
             return memoryService.FollowPointers(torrentChrIns, [..ChrIns.ChrPhysicsModule], true, false);
         }
@@ -304,17 +305,16 @@ namespace SilkyRing.Services
 
         public void EnableGravity()
         {
-            var chrRideModule = GetChrRidePtr();
-            var torrentPhysicsPtr = GetTorrentPhysicsPtr(chrRideModule);
+            var torrentPhysicsPtr = GetTorrentPhysicsPtr();
             memoryService.WriteUInt8(torrentPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 0);
             memoryService.WriteUInt8(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 0);
         }
 
         public void ToggleTorrentNoDeath(bool isEnabled)
         {
-            var chrRideModule = GetChrRidePtr();
-            var rideNode = memoryService.ReadInt64(chrRideModule + (int)ChrIns.ChrRideOffsets.RideNode);
-            var handle = memoryService.ReadInt32((IntPtr)rideNode + (int)ChrIns.RideNodeOffsets.HorseHandle);
+            var playerGameData =
+                memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.PlayerGameData);
+            var handle = memoryService.ReadInt32((IntPtr)playerGameData + (int)GameDataMan.PlayerGameDataOffsets.TorrentHandle);
             var torrentChrIns = ChrInsLookup(handle);
             var bitFlags = memoryService.FollowPointers(torrentChrIns,
                 [..ChrIns.ChrDataModule, (int)ChrIns.ChrDataOffsets.Flags],
@@ -333,6 +333,29 @@ namespace SilkyRing.Services
 
         public int GetSpiritAsh() =>
             memoryService.ReadUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.SpiritAsh);
+
+        public void ToggleTorrentNoStagger(bool isEnabled)
+        {
+            var code = CodeCaveOffsets.Base + CodeCaveOffsets.TorrentNoStagger;
+            if (isEnabled)
+            {
+                var bytes = AsmLoader.GetAsmBytes("TorrentNoStagger");
+                var hook = Hooks.TorrentNoStagger;
+                var skipOffset = hook + 0x14;
+                AsmHelper.WriteRelativeOffsets(bytes, new []
+                {
+                    (code.ToInt64() + 0x1, WorldChrMan.Base.ToInt64(), 7, 0x1 + 3),
+                    (code.ToInt64() + 0x17, skipOffset, 5, 0x17 + 1),
+                    (code.ToInt64() + 0x23, hook + 7, 5, 0x23 + 1)
+                });
+                memoryService.WriteBytes(code, bytes);
+                hookManager.InstallHook(code.ToInt64(), hook, [0x48, 0x8B, 0x88, 0x90, 0x01, 0x00, 0x00]);
+            }
+            else
+            {
+                hookManager.UninstallHook(code.ToInt64());
+            }
+        }
 
         private int CalculateLevelUpCost(int nextLevel)
         {
@@ -369,6 +392,11 @@ namespace SilkyRing.Services
             var chrSet = (IntPtr)memoryService.ReadInt64(worldChrMan + WorldChrMan.ChrSetPool + poolIndex * 8);
             var entriesBase = (IntPtr)memoryService.ReadInt64(chrSet + (int)WorldChrMan.ChrSetOffsets.ChrSetEntries);
             var chrIns = (IntPtr)memoryService.ReadInt64(entriesBase + slotIndex * 16);
+            
+#if DEBUG
+            
+            Console.WriteLine($@"ChrIns looked up by handle: 0x{chrIns.ToInt64():X}");
+#endif
 
             return chrIns;
         }

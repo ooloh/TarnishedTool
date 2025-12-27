@@ -832,8 +832,7 @@ namespace SilkyRing.ViewModels
             if (chrIns != _currentTargetChrIns)
             {
 #if DEBUG
-            
-                Console.WriteLine($@"{chrIns:X}");
+                Console.WriteLine($@"Locked on target chrIns: 0x{chrIns:X}");
 #endif
                 IsFreezeAiEnabled = _targetService.IsAiDisabled();
                 IsTargetingViewEnabled = _targetService.IsTargetViewEnabled();

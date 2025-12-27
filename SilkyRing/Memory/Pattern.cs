@@ -284,9 +284,16 @@
         );
 
         public static readonly Pattern NoStagger = new Pattern(
-            new byte[] { 0x48, 0x8B, 0x41, 0x08, 0x83, 0x48, 0x2C, 0x08, 0x0F },
+            [0x48, 0x8B, 0x41, 0x08, 0x83, 0x48, 0x2C, 0x08, 0x0F],
             "xxxxxxxxx",
             0,
+            AddressingMode.Absolute
+        );
+
+        public static readonly Pattern TorrentNoStagger = new Pattern(
+            [0xF3, 0x0F, 0x2C, 0xF8, 0xE9, 0x9A],
+            "xxxxxx",
+            -0x10,
             AddressingMode.Absolute
         );
 
