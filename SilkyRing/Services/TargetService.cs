@@ -34,8 +34,8 @@ namespace SilkyRing.Services
             }
         }
 
-        public ulong GetTargetChrIns() =>
-            memoryService.ReadUInt64(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr);
+        public long GetTargetChrIns() =>
+            memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr);
 
         public void SetHp(int health) =>
             memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, health);
@@ -156,12 +156,12 @@ namespace SilkyRing.Services
                 var bytes = AsmLoader.GetAsmBytes("TargetNoStagger");
                 AsmHelper.WriteRelativeOffsets(bytes, new[]
                 {
-                    (code.ToInt64() + 0x1, lockedTarget.ToInt64(), 7, 0x1 + 3),
-                    (code.ToInt64() + 0x19, hookLoc + 5, 5, 0x19 + 1)
+                    (code.ToInt64() + 0x5, lockedTarget.ToInt64(), 7, 0x5 + 3),
+                    (code.ToInt64() + 0x17, hookLoc + 8, 5, 0x17 + 1)
                 });
                 memoryService.WriteBytes(code, bytes);
                 hookManager.InstallHook(code.ToInt64(), hookLoc,
-                    [0xF3, 0x0F, 0x11, 0x47, 0x10]);
+                    [0x48, 0x8B, 0x41, 0x08, 0x48, 0x2C, 0x08, 0x59]);
             }
             else
             {

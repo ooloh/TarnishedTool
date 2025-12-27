@@ -416,6 +416,20 @@ namespace SilkyRing.ViewModels
                     _playerService.ToggleNoTimePassOnDeath(_isNoTimePassOnDeathEnabled);
                 }
             }
+        }       
+        
+        private bool _isTorrentNoStaggerEnabled;
+
+        public bool IsTorrentNoStaggerEnabled
+        {
+            get => _isTorrentNoStaggerEnabled;
+            set
+            {
+                if (SetProperty(ref _isTorrentNoStaggerEnabled, value))
+                {
+                   
+                }
+            }
         }
 
         private int _runeLevel;
@@ -643,7 +657,12 @@ namespace SilkyRing.ViewModels
             AreOptionsEnabled = true;
 
             if (IsSetRfbsOnLoadEnabled) SetRfbs();
-            if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
+            _ = Task.Run(() =>
+            {
+                Task.Delay(100).Wait();
+                if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
+            });
+            
             if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
 
             LoadStats();

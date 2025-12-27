@@ -205,7 +205,7 @@
         );
 
         //Hooks
-        
+
         public static readonly Pattern SetActionRequested = new Pattern(
             [0x74, 0x05, 0x49, 0x09, 0x41, 0x10],
             "xxxxxx",
@@ -213,8 +213,6 @@
             AddressingMode.Absolute
         );
 
-        
-        
         public static readonly Pattern InAirTimer = new(
             [0xF3, 0x0F, 0x11, 0x43, 0x18, 0xC6],
             "xxxxxx",
@@ -285,9 +283,9 @@
             AddressingMode.Absolute
         );
 
-        public static readonly Pattern TargetNoStagger = new(
-            [0x32, 0xDB, 0x0F, 0x57],
-            "xxxx",
+        public static readonly Pattern NoStagger = new Pattern(
+            new byte[] { 0x48, 0x8B, 0x41, 0x08, 0x83, 0x48, 0x2C, 0x08, 0x0F },
+            "xxxxxxxxx",
             0,
             AddressingMode.Absolute
         );
@@ -493,7 +491,7 @@
             1,
             5
         );
-        
+
         public static readonly Pattern CanFastTravel = new Pattern(
             [0x74, 0x14, 0xBA, 0x16],
             "xxxx",

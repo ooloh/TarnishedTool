@@ -17,8 +17,8 @@ namespace SilkyRing.ViewModels
 
         private bool _customHpHasBeenSet;
 
-        private ulong _currentTargetChrIns;
-        
+        private long _currentTargetChrIns;
+
         private float _targetDesiredSpeed = -1f;
         private const float DefaultSpeed = 1f;
         private const float Epsilon = 0.0001f;
@@ -118,6 +118,7 @@ namespace SilkyRing.ViewModels
                     IsResistancesWindowOpen = false;
                     IsFreezeHealthEnabled = false;
                     IsDisableAllExceptTargetEnabled = false;
+                    IsNoStaggerEnabled = false;
                     _targetService.ToggleTargetHook(false);
                     ShowPoise = false;
                     ShowSleep = false;
@@ -521,7 +522,6 @@ namespace SilkyRing.ViewModels
             set => SetProperty(ref _currentAnimation, value);
         }
 
-        
         private int _customHp;
 
         public int CustomHp
@@ -621,7 +621,7 @@ namespace SilkyRing.ViewModels
             get => _actSequence;
             set => SetProperty(ref _actSequence, value);
         }
-        
+
         private bool _isShowDefensesEnabled;
 
         public bool IsShowDefensesEnabled
@@ -632,10 +632,8 @@ namespace SilkyRing.ViewModels
                 if (!SetProperty(ref _isShowDefensesEnabled, value)) return;
                 if (_isShowDefensesEnabled) OpenDefenseWindow();
                 else CloseDefensesWindow();
-
             }
         }
-        
 
         private bool _isShowAttackInfoEnabled;
 
@@ -648,7 +646,7 @@ namespace SilkyRing.ViewModels
                 {
                     if (_isShowAttackInfoEnabled) OpenAttackInfoWindow();
                     else CloseAttackInfoWindow();
-                    
+
                     _attackInfoService.ToggleAttackInfoHook(_isShowAttackInfoEnabled);
                 }
             }
@@ -676,7 +674,7 @@ namespace SilkyRing.ViewModels
                     CloseResistancesWindow();
             }
         }
-        
+
         public bool ShowSleepAndNotImmune => ShowSleep && !IsSleepImmune;
         public bool ShowPoisonAndNotImmune => ShowPoison && !IsPoisonImmune;
         public bool ShowRotAndNotImmune => ShowRot && !IsRotImmune;
@@ -713,11 +711,11 @@ namespace SilkyRing.ViewModels
         {
             _hotkeyManager.RegisterAction(HotkeyActions.EnableTargetOptions,
                 () => { IsTargetOptionsEnabled = !IsTargetOptionsEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.KillTarget, () => 
+            _hotkeyManager.RegisterAction(HotkeyActions.KillTarget, () =>
                 ExecuteTargetAction(() => SetHp(0)));
-            _hotkeyManager.RegisterAction(HotkeyActions.SetTargetMaxHp, () => 
+            _hotkeyManager.RegisterAction(HotkeyActions.SetTargetMaxHp, () =>
                 ExecuteTargetAction(() => SetHpPercentage(100)));
-            _hotkeyManager.RegisterAction(HotkeyActions.SetTargetCustomHp, () => 
+            _hotkeyManager.RegisterAction(HotkeyActions.SetTargetCustomHp, () =>
                 ExecuteTargetAction(() => SetHpPercentage(CustomHp)));
             _hotkeyManager.RegisterAction(HotkeyActions.ShowAllResistances, () =>
             {
@@ -743,8 +741,8 @@ namespace SilkyRing.ViewModels
                     if (ForceAct - 1 < 0) ForceAct = 99;
                     else ForceAct -= 1;
                 }));
-            
-            _hotkeyManager.RegisterAction(HotkeyActions.SetForceActToZero, () => 
+
+            _hotkeyManager.RegisterAction(HotkeyActions.SetForceActToZero, () =>
                 ExecuteTargetAction(() => ForceAct = 0));
             _hotkeyManager.RegisterAction(HotkeyActions.DisableTargetAi,
                 () => ExecuteTargetAction(() => IsFreezeAiEnabled = !IsFreezeAiEnabled));
@@ -761,13 +759,13 @@ namespace SilkyRing.ViewModels
             // _hotkeyManager.RegisterAction(HotkeyActions.ShowDefenses,
             //     () => ExecuteTargetAction(() =>  = !IsTargetingViewEnabled));
             _hotkeyManager.RegisterAction(HotkeyActions.TargetNoMove,
-                () => ExecuteTargetAction(() =>  IsNoMoveEnabled = !IsTargetingViewEnabled));
+                () => ExecuteTargetAction(() => IsNoMoveEnabled = !IsTargetingViewEnabled));
             _hotkeyManager.RegisterAction(HotkeyActions.ForceActSequence,
                 () => ExecuteTargetAction(ForceActSequence));
             _hotkeyManager.RegisterAction(HotkeyActions.KillAllExceptTarget,
                 () => ExecuteTargetAction(KillAllBesidesTarget));
         }
-        
+
         private void ExecuteTargetAction(Action action)
         {
             if (!IsTargetOptionsEnabled)
@@ -786,7 +784,7 @@ namespace SilkyRing.ViewModels
         }
 
         private bool EnsureValidTarget() => IsValidTarget || IsTargetValid();
-        
+
         private void ToggleTargetSpeed()
         {
             if (!AreOptionsEnabled) return;
@@ -801,7 +799,7 @@ namespace SilkyRing.ViewModels
                 SetSpeed(_targetDesiredSpeed);
             }
         }
-        
+
         private bool IsApproximately(float a, float b) => Math.Abs(a - b) < Epsilon;
 
         private void SetHp(object parameter) =>
@@ -830,9 +828,13 @@ namespace SilkyRing.ViewModels
             }
 
             IsValidTarget = true;
-            ulong chrins = _targetService.GetTargetChrIns();
-            if (chrins != _currentTargetChrIns)
+            long chrIns = _targetService.GetTargetChrIns();
+            if (chrIns != _currentTargetChrIns)
             {
+#if DEBUG
+            
+                Console.WriteLine($@"{chrIns:X}");
+#endif
                 IsFreezeAiEnabled = _targetService.IsAiDisabled();
                 IsTargetingViewEnabled = _targetService.IsTargetViewEnabled();
                 IsNoMoveEnabled = _targetService.IsNoMoveEnabled();
@@ -851,7 +853,7 @@ namespace SilkyRing.ViewModels
                 }
 
                 IsFreezeHealthEnabled = _targetService.IsNoDamageEnabled();
-                _currentTargetChrIns = chrins;
+                _currentTargetChrIns = chrIns;
                 MaxPoise = _targetService.GetMaxPoise();
 
                 UpdateImmunities();
@@ -916,8 +918,8 @@ namespace SilkyRing.ViewModels
 
         private bool IsTargetValid()
         {
-            ulong targetId = _targetService.GetTargetChrIns();
-            if (targetId == 0)
+            long chrIns = _targetService.GetTargetChrIns();
+            if (chrIns == 0)
                 return false;
 
             float health = _targetService.GetCurrentHp();
@@ -945,7 +947,7 @@ namespace SilkyRing.ViewModels
             var now = DateTime.UtcNow;
             if (now - _forceActSequenceLastExecuted < ForceActSequenceCooldown) return;
             _forceActSequenceLastExecuted = now;
-            
+
             if (string.IsNullOrWhiteSpace(ActSequence))
             {
                 MsgBox.Show("Sequence of acts is empty");
@@ -985,7 +987,7 @@ namespace SilkyRing.ViewModels
             };
             _defensesWindow.Show();
         }
-        
+
         private void CloseDefensesWindow()
         {
             if (_defensesWindow == null || !_defensesWindow.IsVisible) return;
@@ -1007,14 +1009,14 @@ namespace SilkyRing.ViewModels
             };
             _attackInfoWindow.Show();
         }
-        
+
         private void CloseAttackInfoWindow()
         {
             if (_attackInfoWindow == null || !_attackInfoWindow.IsVisible) return;
             _attackInfoWindow.Close();
             _attackInfoWindow = null;
         }
-        
+
         private void UpdateResistancesDisplay()
         {
             if (!IsTargetOptionsEnabled) return;
@@ -1072,7 +1074,5 @@ namespace SilkyRing.ViewModels
         public void SetSpeed(double value) => TargetSpeed = (float)value;
 
         #endregion
-        
-        
     }
 }

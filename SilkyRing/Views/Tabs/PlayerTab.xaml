@@ -203,11 +203,14 @@
                     <CheckBox Content="Torrent No Death"
                               IsChecked="{Binding IsTorrentNoDeathEnabled}"
                               Margin="0,2" />
-                    <CheckBox Content="Set RFBS on load in"
-                              IsChecked="{Binding IsSetRfbsOnLoadEnabled}"
+                    <CheckBox Content="Torrent no Stagger"
+                              IsChecked="{Binding IsTorrentNoStaggerEnabled}"
                               Margin="0, 2" />
                 </StackPanel>
                 <StackPanel Grid.Column="2" Margin="10, 0, 0, 0">
+                    <CheckBox Content="Set RFBS on load in"
+                              IsChecked="{Binding IsSetRfbsOnLoadEnabled}"
+                              Margin="0, 2" />
                     <CheckBox Content="No Runes from Enemies"
                               IsChecked="{Binding IsNoRuneGainEnabled}"
                               Margin="0,2" />

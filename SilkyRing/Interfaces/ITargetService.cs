@@ -5,7 +5,7 @@ namespace SilkyRing.Interfaces;
 public interface ITargetService
 {
     void ToggleTargetHook(bool isEnabled);
-    ulong GetTargetChrIns();
+    long GetTargetChrIns();
     void SetHp(int hp);
     int GetCurrentHp();
     int GetMaxHp();

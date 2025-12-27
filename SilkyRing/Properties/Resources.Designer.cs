@@ -1190,15 +1190,15 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 50                      push   rax
-        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
-        ///48 3b 47 08             cmp    rax,QWORD PTR [rdi+0x8]
-        ///75 05                   jne    13 &lt;normal&gt;
-        ///f3 0f 10 47 14          movss  xmm0,DWORD PTR [rdi+0x14]
-        ///000000000013 &lt;normal&gt;:
-        ///f3 0f 11 47 10          movss  DWORD PTR [rdi+0x10],xmm0
-        ///58                      pop    rax
-        ///e9 00 00 00 00          jmp    1e &lt;normal+0xb&gt;.
+        ///   Looks up a localized string similar to 48 8b 41 08             mov    rax,QWORD PTR [rcx+0x8]
+        ///51                      push   rcx
+        ///48 8b 0d 00 00 00 00    mov    rcx,QWORD PTR [rip+0x0]        # c &lt;_main+0xc&gt;
+        ///48 3b 48 08             cmp    rcx,QWORD PTR [rax+0x8]
+        ///74 04                   je     16 &lt;skip&gt;
+        ///83 48 2c 08             or     DWORD PTR [rax+0x2c],0x8
+        ///000000000016 &lt;skip&gt;:
+        ///59                      pop    rcx
+        ///e9 00 00 00 00          jmp    1c &lt;skip+0x6&gt;.
         /// </summary>
         internal static string TargetNoStagger {
             get {
