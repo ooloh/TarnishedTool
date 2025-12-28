@@ -22,6 +22,8 @@ namespace SilkyRing.ViewModels
         
         private readonly List<long> _baseGameMaps;
         private readonly List<long> _dlcMaps;
+        private readonly List<long> _baseArGraces;
+        private readonly List<long> _dlcArGraces;
 
         public TravelViewModel(ITravelService travelService, IEventService eventService, IStateService stateService,
             IDlcService dlcService, IEmevdService emevdService)
@@ -50,11 +52,16 @@ namespace SilkyRing.ViewModels
             BossWarpCommand = new DelegateCommand(BossWarp);
             UnlockBaseGameMapsCommand = new DelegateCommand(UnlockBaseGameMaps);
             UnlockDlcMapsCommand = new DelegateCommand(UnlockDlcMaps);
+            UnlockBaseArGracesCommand = new DelegateCommand(UnlockBaseArGraces);
+            UnlockDlcArGracesCommand = new DelegateCommand(UnlockDlcArGraces);
             
             _baseGameMaps = DataLoader.GetSimpleList("BaseGameMaps", long.Parse);
             _dlcMaps = DataLoader.GetSimpleList("DLCMaps", long.Parse);
+            _baseArGraces = DataLoader.GetSimpleList("ArBaseGraces", long.Parse);
+            _dlcArGraces = DataLoader.GetSimpleList("ArDlcGraces", long.Parse);
         }
 
+        
         #region Commands
 
         public ICommand GraceWarpCommand { get; set; }
@@ -63,6 +70,8 @@ namespace SilkyRing.ViewModels
         public ICommand UnlockDlcGracesCommand { get; set; }
         public ICommand UnlockBaseGameMapsCommand { get; set; }
         public ICommand UnlockDlcMapsCommand { get; set; }
+        public ICommand UnlockBaseArGracesCommand { get; set; }
+        public ICommand UnlockDlcArGracesCommand { get; set; }
 
         #endregion
 
@@ -154,6 +163,22 @@ namespace SilkyRing.ViewModels
             foreach (var dlcMap in _dlcMaps)
             {
                 _eventService.SetEvent(dlcMap, true);
+            }
+        }
+        
+        private void UnlockBaseArGraces()
+        {
+            foreach (var baseArGrace in _baseArGraces)
+            {
+                _eventService.SetEvent(baseArGrace, true);
+            }
+        }
+
+        private void UnlockDlcArGraces()
+        {
+            foreach (var dlcArGrace in _dlcArGraces)
+            {
+                _eventService.SetEvent(dlcArGrace, true);
             }
         }
 
