@@ -21,6 +21,9 @@ namespace TarnishedTool.ViewModels
         
         private List<BossRevive> _bossReviveList;
 
+        private List<int> _baseGameGestureIds; 
+        private List<int> _dlcGestureIds; 
+
         
 
         public EventViewModel(IEventService eventService, IStateService stateService, IItemService itemService,
@@ -40,10 +43,15 @@ namespace TarnishedTool.ViewModels
             GetEventCommand = new DelegateCommand(GetEvent);
             UnlockWhetbladesCommand = new DelegateCommand(UnlockWhetblades);
             ClearDlcCommand = new DelegateCommand(ClearDlc);
+            UnlockMetyrCommand = new DelegateCommand(UnlockMetyr);
+            FightFortissaxCommand = new DelegateCommand(FightFortissax);
+            UnlockGesturesCommand = new DelegateCommand(UnlockGestures);
             
             _bossReviveList = DataLoader.GetBossRevives();
-            
+            _baseGameGestureIds = DataLoader.GetSimpleList("BaseGestures", int.Parse);
+            _dlcGestureIds = DataLoader.GetSimpleList("DlcGestures", int.Parse);
         }
+
         
         #region Commands
         
@@ -51,6 +59,9 @@ namespace TarnishedTool.ViewModels
         public ICommand GetEventCommand { get; set; }
         public ICommand UnlockWhetbladesCommand { get; set; }
         public ICommand ClearDlcCommand { get; set; }
+        public ICommand UnlockMetyrCommand { get; set; }
+        public ICommand FightFortissaxCommand { get; set; }
+        public ICommand UnlockGesturesCommand { get; set; }
 
         #endregion
 
@@ -201,6 +212,31 @@ namespace TarnishedTool.ViewModels
         }
 
         private void ClearDlc() => _eventService.SetEvent(Event.ClearDlc, true);
+        
+        private void UnlockMetyr()
+        {
+            foreach (var eventId in Event.UnlockMetyr)
+            {
+                _eventService.SetEvent(eventId, true);
+            }
+        }
+        
+        private void FightFortissax() => _eventService.SetEvent(Event.FightFortissax, true);
+        
+        private void UnlockGestures()
+        {
+            foreach (var baseGameGestureId in _baseGameGestureIds)
+            {
+                _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(baseGameGestureId));
+            }
+
+            if (!IsDlcAvailable) return;
+            
+            foreach (var dlcGestureId in _dlcGestureIds)
+            {
+                _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(dlcGestureId));
+            }
+        }
 
         #endregion
     }

@@ -10,4 +10,8 @@ public static class Event
     public static readonly long ClearDlc = 70;
     public static readonly long SeeUndergroundGraces = 82001;
     public static readonly long SeeDlcGraces = 82002;
+
+    public static readonly long[] UnlockMetyr = [2051450180, 9440]; //Invader + quest
+
+    public static readonly long FightFortissax = 12032859;
 }

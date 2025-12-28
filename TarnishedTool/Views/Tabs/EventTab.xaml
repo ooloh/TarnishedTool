@@ -118,16 +118,22 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Button Grid.Row="0" Grid.Column="0" Content="Unlock All Affinities"
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Command="{Binding UnlockWhetbladesCommand}"
                             Margin="0,2" />
+                    <Button Grid.Row="0" Grid.Column="1" Content="Unlock All Gestures"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Command="{Binding UnlockGesturesCommand}"
+                            Margin="10, 0, 0,2" />
 
                     <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
 
                         <Button Content="DLC Clear Flag"
+                                Width="120"
                                 Command="{Binding ClearDlcCommand}"
                                 Margin="0,2">
                             <Button.IsEnabled>
@@ -137,25 +143,82 @@
                                 </MultiBinding>
                             </Button.IsEnabled>
                         </Button>
-                        
-                     <Border Background="#3498db"
-                             CornerRadius="10"
-                             Width="12"
-                             Height="12"
-                             Margin="10,0,0,0"
-                             VerticalAlignment="Center"
-                             ToolTip="This is a newly introduced stat modifier that increases the HP of bosses and enemies in the DLC.&#x0a;This modifier activates after defeating Promised Consort Radahn and going to the next game cycle.&#x0a;This modifier does not go away once it's activated and is a flat value meaning if you go to the next cycle the HP boost % remains the same.&#x0a;This modifier also does NOT affect base game bosses and enemies."
-                             ToolTipService.InitialShowDelay="100">
-                         <TextBlock Text="i"
-                                    Foreground="White"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontWeight="Bold"
-                                    FontSize="10" />
-                     </Border>
+
+                        <Border Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="This is a newly introduced stat modifier that increases the HP of bosses and enemies in the DLC.&#x0a;This modifier activates after defeating Promised Consort Radahn and going to the next game cycle.&#x0a;This modifier does not go away once it's activated and is a flat value meaning if you go to the next cycle the HP boost % remains the same.&#x0a;This modifier also does NOT affect base game bosses and enemies."
+                                ToolTipService.InitialShowDelay="100">
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
 
                     </StackPanel>
 
+                    <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+
+                        <Button Content="Unlock Metyr"
+                                Command="{Binding UnlockMetyrCommand}"
+                                Width="120"
+                                Margin="0,2">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsDlcAvailable" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
+
+                        <Border Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="This will finish the quest as well as skip the invader before Metyr"
+                                ToolTipService.InitialShowDelay="100">
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
+                        <Button Content="Fight Fortissax"
+                                Width="120"
+                                Command="{Binding FightFortissaxCommand}"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Margin="0,2">
+
+                        </Button>
+
+                        <Border Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Need to be somewhere in Deeproot Depths"
+                                ToolTipService.InitialShowDelay="100">
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
         </Border>

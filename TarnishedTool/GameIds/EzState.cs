@@ -21,7 +21,9 @@ public static class EzState
         public static readonly TalkCommand OpenAllot = new(105, []); 
         public static readonly TalkCommand Rebirth = new(113, []); 
         public static readonly TalkCommand OpenPhysick = new(130, []);
-        public static readonly TalkCommand AcquireGesture = new(131, [108]); // TODO call with all gesture ids
+        
+        public static TalkCommand AcquireGesture(int gestureId) =>  new(131, [gestureId]);
+        
         public static readonly TalkCommand OpenGreatRunes = new(137, []);
         public static readonly TalkCommand OpenAlterGarments = new(142, [111000, 111399]);
         

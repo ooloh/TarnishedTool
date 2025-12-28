@@ -8,6 +8,9 @@
 //------------------------------------------------------------------------------
 
 namespace TarnishedTool.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -300,6 +303,62 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 0
+        ///1
+        ///2
+        ///3
+        ///4
+        ///5
+        ///6
+        ///7
+        ///8
+        ///9
+        ///10
+        ///20
+        ///21
+        ///22
+        ///23
+        ///24
+        ///25
+        ///30
+        ///40
+        ///41
+        ///50
+        ///51
+        ///52
+        ///53
+        ///54
+        ///60
+        ///70
+        ///71
+        ///72
+        ///73
+        ///80
+        ///90
+        ///91
+        ///92
+        ///93
+        ///94
+        ///95
+        ///97
+        ///98
+        ///100
+        ///101
+        ///102
+        ///103
+        ///104
+        ///105
+        ///106
+        ///108
+        ///109.
+        /// </summary>
+        internal static string BaseGestures {
+            get {
+                return ResourceManager.GetString("BaseGestures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,400022E9,Abandoned Merchant&apos;s Bell Bearing,1,1
         ///0,400022D4,Bernahl&apos;s Bell Bearing,1,1
         ///0,400022EE,Blackguard&apos;s Bell Bearing,1,1
@@ -449,6 +508,20 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 111
+        ///112
+        ///113
+        ///114
+        ///115
+        ///116.
+        /// </summary>
+        internal static string DlcGestures {
+            get {
+                return ResourceManager.GetString("DlcGestures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 62080
         ///62081
         ///62082
@@ -541,69 +614,6 @@ namespace TarnishedTool.Properties {
         internal static string ForceActSequence {
             get {
                 return ResourceManager.GetString("ForceActSequence", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 0,0
-        ///0,1
-        ///0,2
-        ///0,3
-        ///0,4
-        ///0,5
-        ///0,6
-        ///0,7
-        ///0,8
-        ///0,9
-        ///0,10
-        ///0,20
-        ///0,21
-        ///0,22
-        ///0,23
-        ///0,24
-        ///0,25
-        ///0,30
-        ///0,40
-        ///0,41
-        ///0,50
-        ///0,51
-        ///0,52
-        ///0,53
-        ///0,54
-        ///0,60
-        ///0,70
-        ///0,71
-        ///0,72
-        ///0,73
-        ///0,80
-        ///0,90
-        ///0,91
-        ///0,92
-        ///0,93
-        ///0,94
-        ///0,95
-        ///0,97
-        ///0,98
-        ///0,100
-        ///0,101
-        ///0,102
-        ///0,103
-        ///0,104
-        ///0,105
-        ///0,106
-        ///0,108
-        ///0,109
-        ///1,111
-        ///1,112
-        ///1,113
-        ///1,114
-        ///1,115
-        ///1,116
-        ///.
-        /// </summary>
-        internal static string Gestures {
-            get {
-                return ResourceManager.GetString("Gestures", resourceCulture);
             }
         }
         
