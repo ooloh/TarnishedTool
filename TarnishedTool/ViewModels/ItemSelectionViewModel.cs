@@ -111,7 +111,9 @@ public class ItemSelectionViewModel : BaseViewModel
         {
             if (!SetProperty(ref _selectedItem, value) || value == null) return;
 
-            MaxQuantity = value.MaxStorage;
+            MaxQuantity = value.MaxStorage > 0 
+                ? value.MaxStorage + value.StackSize 
+                : value.StackSize;
             SelectedQuantity = value.StackSize;
             QuantityEnabled = value.StackSize > 1;
 
@@ -216,9 +218,18 @@ public class ItemSelectionViewModel : BaseViewModel
         {
             if (!SetProperty(ref _selectedAshOfWar, value) || value == null) return;
 
-            _selectedAffinity = 0;
-            AvailableAffinities = new ObservableCollection<Affinity>(value.GetAvailableAffinities());
-            SelectedAffinity = AvailableAffinities.FirstOrDefault();
+            if (value == AshOfWar.None)
+            {
+                AvailableAffinities = new ObservableCollection<Affinity>();
+                _selectedAffinity = 0;
+            }
+            else
+            {
+                var affinities = value.GetAvailableAffinities().ToList();
+                AvailableAffinities = new ObservableCollection<Affinity>(affinities);
+                _selectedAffinity = affinities.FirstOrDefault();
+                OnPropertyChanged(nameof(SelectedAffinity));
+            }
         }
     }
 
@@ -282,8 +293,8 @@ public class ItemSelectionViewModel : BaseViewModel
 
             var aows = _allAshesOfWar.Where(aow => aow.SupportsWeaponType(weapon.WeaponType));
 
-            AvailableAshesOfWar = new ObservableCollection<AshOfWar>(aows);
-            SelectedAshOfWar = AvailableAshesOfWar.FirstOrDefault();
+            AvailableAshesOfWar = new ObservableCollection<AshOfWar>(aows.Prepend(AshOfWar.None));
+            SelectedAshOfWar = AvailableAshesOfWar[1];
         }
         else
         {

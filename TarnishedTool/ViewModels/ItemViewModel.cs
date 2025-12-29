@@ -23,9 +23,9 @@ public class ItemViewModel : BaseViewModel
 
     private readonly Dictionary<string, List<Item>> _itemsByCategory;
     private readonly List<AshOfWar> _allAshesOfWar;
-    
+
     private readonly List<Item> _allItems;
-    
+
     private Dictionary<string, LoadoutTemplate> _customLoadoutTemplates;
 
     public ItemSelectionViewModel ItemSelection { get; }
@@ -43,11 +43,11 @@ public class ItemViewModel : BaseViewModel
 
         _itemsByCategory = LoadItemData();
         _allAshesOfWar = DataLoader.GetAshOfWars();
-        
+
         _customLoadoutTemplates = DataLoader.LoadCustomLoadouts();
         _loadouts = new ObservableCollection<string>(_customLoadoutTemplates.Keys);
         SelectedLoadoutName = _loadouts.FirstOrDefault();
-        
+
         _allItems = _itemsByCategory.Values.SelectMany(x => x).ToList();
 
         ItemSelection = new ItemSelectionViewModel(_itemsByCategory, _allAshesOfWar);
@@ -67,7 +67,6 @@ public class ItemViewModel : BaseViewModel
         OpenCreateLoadoutCommand = new DelegateCommand(OpenCreateLoadoutWindow);
         SpawnLoadoutCommand = new DelegateCommand(SpawnLoadout);
     }
-    
 
     #region Commands
 
@@ -95,8 +94,9 @@ public class ItemViewModel : BaseViewModel
         get => _selectedMassSpawnCategory;
         set => SetProperty(ref _selectedMassSpawnCategory, value);
     }
-    
+
     private ObservableCollection<string> _loadouts;
+
     public ObservableCollection<string> Loadouts
     {
         get => _loadouts;
@@ -104,6 +104,7 @@ public class ItemViewModel : BaseViewModel
     }
 
     private string _selectedLoadoutName;
+
     public string SelectedLoadoutName
     {
         get => _selectedLoadoutName;
@@ -170,7 +171,8 @@ public class ItemViewModel : BaseViewModel
         {
             if (ItemSelection.CanUpgrade) itemId += ItemSelection.SelectedUpgrade;
 
-            if (weapon.CanApplyAow && ItemSelection.SelectedAshOfWar != null)
+            if (weapon.CanApplyAow && ItemSelection.SelectedAshOfWar != null 
+                                   && ItemSelection.SelectedAshOfWar != AshOfWar.None)
             {
                 itemId += ItemSelection.SelectedAffinity.GetIdOffset();
                 aowId = ItemSelection.SelectedAshOfWar.Id;
@@ -185,7 +187,7 @@ public class ItemViewModel : BaseViewModel
         _itemService.SpawnItem(itemId, quantity, aowId, shouldQuantityAdjust, maxQuantity);
     }
 
-    private void MassSpawn()
+    private async void MassSpawn()
     {
         if (string.IsNullOrEmpty(SelectedMassSpawnCategory) ||
             !_itemsByCategory.ContainsKey(SelectedMassSpawnCategory))
@@ -194,30 +196,32 @@ public class ItemViewModel : BaseViewModel
         var items = _itemsByCategory[SelectedMassSpawnCategory];
         var hasDlc = _dlcService.IsDlcAvailable;
 
-        if (!hasDlc)
-            items = items.Where(i => !i.IsDlc).ToList();
+        if (!hasDlc) items = items.Where(i => !i.IsDlc).ToList();
 
-        foreach (var item in items)
+        bool needsDelay = SelectedMassSpawnCategory is "Cookbooks" or "Crystal Tears";
+
+        await Task.Run(async () =>
         {
-            int itemId = item.Id;
-            int quantity = item.StackSize;
-            int aowId = -1;
-            int maxQuantity = item.MaxStorage + item.StackSize;
-            bool shouldQuantityAdjust = item.StackSize > 1;
-
-            if (SelectedMassSpawnCategory == "Cookbooks" || SelectedMassSpawnCategory == "Crystal Tears")
+            foreach (var item in items)
             {
-                Task.Delay(50).Wait();
-            }
-            if (item is EventItem eventItem && eventItem.NeedsEvent)
-            {
-                _eventService.SetEvent(eventItem.EventId, true);
-            }
+                if (needsDelay) await Task.Delay(50);
+                
+                if (item is EventItem eventItem && eventItem.NeedsEvent)
+                {
+                    _eventService.SetEvent(eventItem.EventId, true);
+                }
+                
+                int itemId = item.Id;
+                int quantity = item.StackSize;
+                int aowId = -1;
+                int maxQuantity = item.MaxStorage + item.StackSize;
+                bool shouldQuantityAdjust = item.StackSize > 1;
 
-            _itemService.SpawnItem(itemId, quantity, aowId, shouldQuantityAdjust, maxQuantity);
-        }
+                _itemService.SpawnItem(itemId, quantity, aowId, shouldQuantityAdjust, maxQuantity);
+            }
+        });
     }
-    
+
     private void OpenCreateLoadoutWindow()
     {
         var window = new CreateLoadoutWindow(
@@ -226,10 +230,10 @@ public class ItemViewModel : BaseViewModel
             _customLoadoutTemplates,
             _dlcService.IsDlcAvailable);
 
-        if (window.ShowDialog() == true) 
+        if (window.ShowDialog() == true)
             RefreshLoadouts();
     }
-    
+
     private void RefreshLoadouts()
     {
         _loadouts.Clear();
@@ -245,7 +249,7 @@ public class ItemViewModel : BaseViewModel
 
         DataLoader.SaveCustomLoadouts(_customLoadoutTemplates);
     }
-    
+
     public void SpawnLoadout()
     {
         if (string.IsNullOrEmpty(SelectedLoadoutName) || !_customLoadoutTemplates.ContainsKey(SelectedLoadoutName))
@@ -269,15 +273,16 @@ public class ItemViewModel : BaseViewModel
                 {
                     itemId += template.Upgrade;
                 }
-                
-                if (weapon.CanApplyAow && !string.IsNullOrEmpty(template.AshOfWarName))
+
+                if (weapon.CanApplyAow && !string.IsNullOrEmpty(template.AshOfWarName) 
+                                       && template.AshOfWarName != "None")
                 {
                     var aow = _allAshesOfWar.FirstOrDefault(a => a.Name == template.AshOfWarName);
                     if (aow != null)
                     {
                         aowId = aow.Id;
 
-                        if (!string.IsNullOrEmpty(template.AffinityName) && 
+                        if (!string.IsNullOrEmpty(template.AffinityName) &&
                             Enum.TryParse<Affinity>(template.AffinityName, out var affinity))
                         {
                             itemId += affinity.GetIdOffset();
@@ -290,7 +295,7 @@ public class ItemViewModel : BaseViewModel
             {
                 _eventService.SetEvent(eventItem.EventId, true);
             }
-            
+
             _itemService.SpawnItem(itemId, quantity, aowId, shouldQuantityAdjust, maxQuantity);
         }
     }

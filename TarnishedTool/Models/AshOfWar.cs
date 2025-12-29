@@ -13,6 +13,7 @@ public class AshOfWar
     public string Name { get; set; }
     public Affinity AvailableAffinities { get; set; }
     public byte[] WeaponTypeFlags { get; set; }
+    public static AshOfWar None { get; } = new() { Id = -1, Name = "None" };
     
     private static readonly Dictionary<ushort, int> WeaponTypeToBit = new()
     {
