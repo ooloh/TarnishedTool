@@ -28,4 +28,10 @@ public class SettingsService(MemoryService memoryService, HookManager hookManage
 
     public void ToggleNoLogo(bool isEnabled) =>
         memoryService.WriteBytes(Patches.NoLogo, isEnabled ? [0x90, 0x90] : [0x74, 0x53]);
+
+    public void ToggleMuteMusic(bool isMuteMusicEnabled)
+    {
+        var optionsPtr = memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.Options);
+        memoryService.WriteUInt8((IntPtr) optionsPtr + (int)GameDataMan.OptionsOffsets.Music, 0);
+    }
 }

@@ -315,6 +315,13 @@ namespace TarnishedTool.Memory
                 TorrentHandle = 0x950,
             }
 
+            public const int Options = 0x58;
+
+            public enum OptionsOffsets
+            {
+                Music = 0x4
+            }
+
             public const int Igt = 0xA0; //Uint
             public const int NewGame = 0x120;
         }
@@ -443,6 +450,8 @@ namespace TarnishedTool.Memory
             public static long EmkEventInsCtor;
             public static long GetMovement;
             public static long GetChrInsByEntityId;
+            public static long NpcEzStateTalkCtor;
+            public static long EzStateEnvQueryImplCtor;
         }
 
         public static class Patches

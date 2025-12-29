@@ -20,6 +20,7 @@ public class SettingsManager
     public bool StutterFix { get; set; }
     public bool DisableAchievements { get; set; }
     public bool NoLogo { get; set; }
+    public bool MuteMusic { get; set; }
     public double ResistancesWindowScaleX { get; set; } = 1.0;
     public double ResistancesWindowScaleY { get; set; } = 1.0;
     public double ResistancesWindowOpacity { get; set; }
@@ -56,6 +57,7 @@ public class SettingsManager
                 $"StutterFix={StutterFix}",
                 $"DisableAchievements={DisableAchievements}",
                 $"NoLogo={NoLogo}",
+                $"MuteMusic={MuteMusic}",
                 $"ResistancesWindowScaleX={ResistancesWindowScaleX}",
                 $"ResistancesWindowScaleY={ResistancesWindowScaleY}",
                 $"ResistancesWindowOpacity={ResistancesWindowOpacity}",
@@ -135,6 +137,10 @@ public class SettingsManager
                             case "NoLogo":
                                 bool.TryParse(value, out bool nl);
                                 settings.NoLogo = nl;
+                                break;
+                            case "MuteMusic":
+                                bool.TryParse(value, out bool mm);
+                                settings.MuteMusic = mm;
                                 break;
                             case "ResistancesWindowScaleX":
                                 double.TryParse(value, out double rwx);

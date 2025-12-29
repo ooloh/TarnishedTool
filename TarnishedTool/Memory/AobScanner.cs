@@ -134,6 +134,8 @@ namespace TarnishedTool.Memory
             Functions.EmkEventInsCtor = FindAddressByPattern(Pattern.EmkEventInsCtor).ToInt64();
             Functions.GetMovement = FindAddressByPattern(Pattern.GetMovement).ToInt64();
             Functions.GetChrInsByEntityId = FindAddressByPattern(Pattern.GetChrInsByEntityId).ToInt64();
+            Functions.NpcEzStateTalkCtor = FindAddressByPattern(Pattern.NpcEzStateTalkCtor).ToInt64();
+            Functions.EzStateEnvQueryImplCtor = FindAddressByPattern(Pattern.EzStateEnvQueryImplCtor).ToInt64();
 
 
 #if DEBUG

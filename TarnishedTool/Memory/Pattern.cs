@@ -488,6 +488,20 @@
             AddressingMode.Absolute
         );
 
+        public static readonly Pattern NpcEzStateTalkCtor = new Pattern(
+            [0x44, 0x89, 0x41, 0x20, 0x48, 0x89, 0x79],
+            "xxxxxxx",
+            -0x2D,
+            AddressingMode.Absolute
+        );
+
+        public static readonly Pattern EzStateEnvQueryImplCtor = new Pattern(
+            [0xC7, 0x44, 0x24, 0x50, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8D, 0x4D],
+            "xxxxxxxxxxx",
+            -0x3A,
+            AddressingMode.Absolute
+        );
+
         //Patches
 
         public static readonly Pattern DebugFont = new(

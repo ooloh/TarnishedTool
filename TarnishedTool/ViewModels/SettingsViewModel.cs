@@ -224,6 +224,20 @@ public class SettingsViewModel : BaseViewModel
             if (AreOptionsEnabled) _settingsService.ToggleDisableAchievements(_isDisableAchievementsEnabled);
         }
     }
+    
+    private bool _isMuteMusicEnabled;
+
+    public bool IsMuteMusicEnabled
+    {
+        get => _isMuteMusicEnabled;
+        set
+        {
+            if (!SetProperty(ref _isMuteMusicEnabled, value)) return;
+            SettingsManager.Default.MuteMusic = value;
+            SettingsManager.Default.Save();
+            if (AreOptionsEnabled) _settingsService.ToggleMuteMusic(_isMuteMusicEnabled);
+        }
+    }
 
     #endregion
 
@@ -299,6 +313,8 @@ public class SettingsViewModel : BaseViewModel
         
         _isNoLogoEnabled = SettingsManager.Default.NoLogo;
         OnPropertyChanged(nameof(IsNoLogoEnabled));
+        _isMuteMusicEnabled = SettingsManager.Default.MuteMusic;
+        OnPropertyChanged(nameof(IsMuteMusicEnabled));
     }
 
     private void OnGameLoaded()
@@ -306,6 +322,7 @@ public class SettingsViewModel : BaseViewModel
         AreOptionsEnabled = true;
         if (IsStutterFixEnabled) _settingsService.ToggleStutterFix(true);
         if (IsDisableAchievementsEnabled) _settingsService.ToggleDisableAchievements(true);
+        if (IsMuteMusicEnabled) _settingsService.ToggleMuteMusic(true);
     }
 
     private void OnGameNotLoaded()
