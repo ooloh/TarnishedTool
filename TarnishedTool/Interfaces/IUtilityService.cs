@@ -24,6 +24,9 @@ public interface IUtilityService
     void SetColDrawMode(int val);
     void PatchDebugFont();
     void TogglePlayerSound(bool isEnabled);
+    void ToggleDrawMapTiles1(bool isEnabled);
+    void ToggleDrawMapTiles2(bool isEnabled);
+    void ToggleDrawMiniMap(bool isEnabled);
     void ToggleHideChr(bool isEnabled);
     void ToggleHideMap(bool isEnabled);
 }

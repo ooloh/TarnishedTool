@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
-        Title="SpEffectsWindow" Height="450" Width="400"
+        Title="SpEffectsWindow" Height="700" Width="400"
         Style="{StaticResource DefaultWindowStyle}">
     <Grid>
         <Grid.RowDefinitions>
@@ -16,7 +16,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <controls:TitleBar Title="Active Special Effects" />
+        <controls:TitleBar Title="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
 
         <Grid Grid.Row="1" Margin="10,10,10,5">
             <Grid.ColumnDefinitions>

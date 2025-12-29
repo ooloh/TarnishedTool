@@ -221,6 +221,25 @@ namespace TarnishedTool.Services
         public void TogglePlayerSound(bool isEnabled) =>
             memoryService.WriteUInt8(Patches.PlayerSound, isEnabled ? 0x75 : 0x74);
 
+        public void ToggleDrawMapTiles1(bool isEnabled)
+        {
+            var ptr = memoryService.ReadInt64(FieldArea.Base) + FieldArea.DrawTiles1;
+            memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
+        }
+
+        public void ToggleDrawMapTiles2(bool isEnabled)
+        {
+            var ptr = memoryService.ReadInt64(FieldArea.Base) + FieldArea.DrawTiles2;
+            memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
+        }
+
+        public void ToggleDrawMiniMap(bool isEnabled)
+        {
+            var ptr = memoryService.FollowPointers(FieldArea.Base,
+                [FieldArea.WorldInfoOwner, FieldArea.ShouldDrawMiniMap], false);
+            memoryService.WriteUInt8(ptr, isEnabled ? 1 : 0);
+        }
+
         public void ToggleHideChr(bool isEnabled) =>
             memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowChrs, isEnabled ? 0 : 1);
 

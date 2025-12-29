@@ -881,7 +881,8 @@ namespace TarnishedTool.ViewModels
         {
             _spEffectsWindow = new SpEffectsWindow
             {
-                DataContext = _spEffectViewModel
+                DataContext = _spEffectViewModel,
+                Title = "Player Active Special Effects"
             };
             _spEffectsWindow.Closed += (s, e) =>
             {

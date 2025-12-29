@@ -29,18 +29,22 @@ namespace TarnishedTool.ViewModels
         private ResistancesWindow _resistancesWindowWindow;
 
         private DefensesWindow _defensesWindow;
+        
+        private readonly SpEffectViewModel _spEffectViewModel = new();
+        private SpEffectsWindow _spEffectsWindow;
 
         private readonly ITargetService _targetService;
         private readonly IEnemyService _enemyService;
         private readonly IAttackInfoService _attackInfoService;
 
         private readonly HotkeyManager _hotkeyManager;
-        
+        private readonly ISpEffectService _spEffectService;
+
         private DateTime _forceActSequenceLastExecuted = DateTime.MinValue;
         private static readonly TimeSpan ForceActSequenceCooldown = TimeSpan.FromSeconds(2);
 
         public TargetViewModel(ITargetService targetService, IStateService stateService, IEnemyService enemyService,
-            IAttackInfoService attackInfoService, HotkeyManager hotkeyManager)
+            IAttackInfoService attackInfoService, HotkeyManager hotkeyManager, ISpEffectService spEffectService)
         {
             _targetService = targetService;
             _enemyService = enemyService;
@@ -49,6 +53,7 @@ namespace TarnishedTool.ViewModels
             _attackInfoViewModel = new AttackInfoViewModel();
 
             _hotkeyManager = hotkeyManager;
+            _spEffectService = spEffectService;
             RegisterHotkeys();
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -651,6 +656,24 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
+        
+        private bool _isShowSpEffectEnabled;
+
+        public bool IsShowSpEffectEnabled
+        {
+            get => _isShowSpEffectEnabled;
+            set
+            {
+                if (SetProperty(ref _isShowSpEffectEnabled, value))
+                {
+                    if (_isShowSpEffectEnabled)
+                    {
+                        OpenSpEffectsWindow();
+                    }
+                }
+            }
+        }
+        
 
         private float _dist;
 
@@ -890,6 +913,12 @@ namespace TarnishedTool.ViewModels
                     _attackInfoViewModel.AddAttacks(attackInfo);
                 }
             }
+            
+            if (IsShowSpEffectEnabled)
+            {
+                var spEffects = _spEffectService.GetActiveSpEffectList(_targetService.GetTargetChrIns());
+                _spEffectViewModel.RefreshEffects(spEffects);
+            }
         }
 
         private void UpdateImmunities()
@@ -1064,6 +1093,21 @@ namespace TarnishedTool.ViewModels
             if (!IsResistancesWindowOpen || _resistancesWindowWindow == null) return;
             _resistancesWindowWindow.DataContext = null;
             _resistancesWindowWindow.DataContext = this;
+        }
+        
+        private void OpenSpEffectsWindow()
+        {
+            _spEffectsWindow = new SpEffectsWindow
+            {
+                DataContext = _spEffectViewModel,
+                Title = "Target Active Special Effects"
+            };
+            _spEffectsWindow.Closed += (s, e) =>
+            {
+                _spEffectsWindow = null;
+                IsShowSpEffectEnabled = false;
+            };
+            _spEffectsWindow.Show();
         }
 
         #endregion

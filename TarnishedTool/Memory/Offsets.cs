@@ -192,7 +192,13 @@ namespace TarnishedTool.Memory
             public const int CamMode = 0xC8; // 1 for free cam
             public const int CSDebugCam = 0xD0;
             public const int CamCoords = 0x40;
+
             
+            public const int DrawTiles1 = 0x61C;
+            public const int DrawTiles2 = 0x61E;
+
+            public const int WorldInfoOwner = 0x10;
+            public const int ShouldDrawMiniMap = 0xB3368;
         }
 
         public static class FD4PadManager

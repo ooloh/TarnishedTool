@@ -5,8 +5,8 @@ using System.Linq;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
+using TarnishedTool.GameIds;
 using TarnishedTool.Interfaces;
-using TarnishedTool.Memory;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
 using TarnishedTool.Views.Windows;
@@ -355,6 +355,46 @@ namespace TarnishedTool.ViewModels
             }
         }
 
+        private bool _isDrawMapTiles1Enabled;
+
+        public bool IsDrawMapTiles1Enabled
+        {
+            get => _isDrawMapTiles1Enabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawMapTiles1Enabled, value)) return;
+                _utilityService.ToggleDrawMapTiles1(_isDrawMapTiles1Enabled);
+            }
+        }
+        
+        private bool _isDrawMapTiles2Enabled;
+
+        public bool IsDrawMapTiles2Enabled
+        {
+            get => _isDrawMapTiles2Enabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawMapTiles2Enabled, value)) return;
+                _utilityService.PatchDebugFont();
+                _utilityService.ToggleDrawMapTiles2(_isDrawMapTiles2Enabled);
+            }
+        }
+        
+        private bool _isDrawMiniMapEnabled;
+
+        public bool IsDrawMiniMapEnabled
+        {
+            get => _isDrawMiniMapEnabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawMiniMapEnabled, value)) return;
+                _utilityService.PatchDebugFont();
+                _utilityService.ToggleDrawMiniMap(_isDrawMiniMapEnabled);
+            }
+        }
+
+        
+
         private bool _isHideCharactersEnabled;
         
         public bool IsHideCharactersEnabled
@@ -459,6 +499,18 @@ namespace TarnishedTool.ViewModels
             if (IsDrawRagdollsEnabled) _utilityService.ToggleDrawRagdolls(true);
             if (IsDrawLowHitEnabled) _utilityService.ToggleDrawLowHit(true);
             if (IsDrawHighHitEnabled) _utilityService.ToggleDrawHighHit(true);
+            if (IsDrawMapTiles1Enabled) _utilityService.ToggleDrawMapTiles1(true);
+            if (IsDrawMapTiles2Enabled)
+            {
+                _utilityService.PatchDebugFont();
+                _utilityService.ToggleDrawMapTiles2(true);
+            }
+
+            if (IsDrawMiniMapEnabled)
+            {
+                _utilityService.PatchDebugFont();
+                _utilityService.ToggleDrawMiniMap(true);
+            }
             if (IsHideCharactersEnabled) _utilityService.ToggleHideChr(true);
             if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
             IsDlcAvailable = _dlcService.IsDlcAvailable;
@@ -532,43 +584,43 @@ namespace TarnishedTool.ViewModels
             return Math.Abs(a - b) < Epsilon;
         }
 
-        private void SetMorning() => _emevdService.ExecuteEmevdCommand(GameIds.Emevd.EmevdCommands.SetMorning);
-        private void SetNoon() => _emevdService.ExecuteEmevdCommand(GameIds.Emevd.EmevdCommands.SetNoon);
-        private void SetNight() => _emevdService.ExecuteEmevdCommand(GameIds.Emevd.EmevdCommands.SetNight);
+        private void SetMorning() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetMorning);
+        private void SetNoon() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNoon);
+        private void SetNight() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
 
-        private void OpenLevelUp() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.LevelUp);
-        private void OpenAllot() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenAllot);
+        private void OpenLevelUp() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.LevelUp);
+        private void OpenAllot() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenAllot);
 
         private void OpenAttunement() =>
-            _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenAttunement);
+            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenAttunement);
 
-        private void OpenPhysick() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenPhysick);
-        private void OpenChest() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenChest);
+        private void OpenPhysick() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenPhysick);
+        private void OpenChest() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenChest);
 
         private void OpenGreatRunes() =>
-            _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenGreatRunes);
+            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenGreatRunes);
 
-        private void OpenAow() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenAow);
+        private void OpenAow() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenAow);
 
         private void OpenAlterGarments() =>
-            _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenAlterGarments);
+            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenAlterGarments);
 
-        private void OpenRebirth() => _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.Rebirth);
+        private void OpenRebirth() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.Rebirth);
 
         private void OpenUpgrade()
         {
-            foreach (var upgradeMenuFlag in GameIds.EzState.TalkCommands.UpgradeMenuFlags)
+            foreach (var upgradeMenuFlag in EzState.TalkCommands.UpgradeMenuFlags)
             {
                 _ezStateService.ExecuteTalkCommand(upgradeMenuFlag);
             }
 
-            _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenUpgrade);
+            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenUpgrade);
         }
 
         private void OpenSell()
         {
             var playerHandle = _playerService.GetHandle();
-            _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenSell, playerHandle);
+            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenSell, playerHandle);
         }
         
         private void OpenShopSelector()
