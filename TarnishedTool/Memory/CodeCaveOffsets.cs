@@ -71,5 +71,9 @@ namespace TarnishedTool.Memory
 
         public const int TorrentNoStagger = 0x1b30;
 
+        public const int SavedNpcTalk = 0x1C00;
+        public const int EnvParams = 0x1C70;
+        public const int EnvQueryResult = 0x1CF0;
+
     }
 }

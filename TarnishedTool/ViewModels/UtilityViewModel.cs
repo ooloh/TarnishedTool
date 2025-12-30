@@ -76,6 +76,7 @@ namespace TarnishedTool.ViewModels
             OpenShopCommand = new DelegateCommand<ShopCommand>(OpenShop);
             MoveCamToPlayerCommand = new DelegateCommand(MoveCamToPlayer);
             MovePlayerToCamCommand = new DelegateCommand(MovePlayerToCam);
+            EstusCommand = new DelegateCommand(Estus);
 
             _allShops = DataLoader.GetShops();
             FilteredShops = new ObservableCollection<ShopCommand>();
@@ -83,9 +84,7 @@ namespace TarnishedTool.ViewModels
             RegisterHotkeys();
             ApplyPrefs();
         }
-
         
-
         #region Commands
 
         public ICommand SaveCommand { get; set; }
@@ -108,6 +107,7 @@ namespace TarnishedTool.ViewModels
         public ICommand OpenShopCommand { get; }
         public ICommand MoveCamToPlayerCommand { get; }
         public ICommand MovePlayerToCamCommand { get; }
+        public ICommand EstusCommand { get; }
 
         #endregion
 
@@ -669,9 +669,12 @@ namespace TarnishedTool.ViewModels
 
         private void MoveCamToPlayer() => _utilityService.MoveCamToPlayer();
         private void MovePlayerToCam() => _utilityService.MovePlayerToCam();
-
+        private void Estus()
+        {
+            Console.WriteLine(_ezStateService.GetEstusAllocation(1));
+        }
 
         #endregion
-        
+
     }
 }

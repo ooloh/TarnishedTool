@@ -479,6 +479,12 @@
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Margin="0,10,10,0">
                         </Button>
+                        <Button
+                            Content="Estus test"
+                            Command="{Binding EstusCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,10,10,0">
+                        </Button>
                     </WrapPanel>
                 </TabItem>
 

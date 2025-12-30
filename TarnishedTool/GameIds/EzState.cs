@@ -4,10 +4,44 @@ namespace TarnishedTool.GameIds;
 
 public static class EzState
 {
+    public const int TypeFloat = 1;
+    public const int TypeInt = 2;
+    public const int TypeObject = 3;
+    
     public class TalkCommand(int commandId, int[] @params)
     {
         public int CommandId { get; } = commandId;
         public int[] Params { get; } = @params;
+    }
+    
+    public class EnvQueryParam
+    {
+        public object Value { get; }
+        public int TypeTag { get; }
+
+        private EnvQueryParam(object value, int typeTag)
+        {
+            Value = value;
+            TypeTag = typeTag;
+        }
+
+        public static EnvQueryParam Int(int value) => new(value, TypeInt);
+        public static EnvQueryParam Float(float value) => new(value, TypeFloat);
+
+        public static implicit operator EnvQueryParam(int value) => Int(value);
+        public static implicit operator EnvQueryParam(float value) => Float(value);
+    }
+    
+    public class EnvQueryResult
+    {
+        public int TypeTag { get; set; }
+        public int IntValue { get; set; }
+        public float FloatValue { get; set; }
+        public long PtrValue { get; set; }
+
+        public bool IsInt => TypeTag == TypeInt;
+        public bool IsFloat => TypeTag == TypeFloat;
+        public bool IsObject => TypeTag == TypeObject;
     }
 
     public static class TalkCommands
@@ -33,5 +67,10 @@ public static class EzState
             new(49, [6001, 234]),
             new(49, [6001, 235]),
         ];
+    }
+    
+    public static class EnvQueries
+    {
+        public const int QueryGetEstusAllocation = 109;
     }
 }

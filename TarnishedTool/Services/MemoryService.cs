@@ -123,30 +123,13 @@ namespace TarnishedTool.Services
             WriteBytes(addr, bytes);
         }
 
-        public void WriteUInt16(IntPtr addr, short val)
-        {
-            WriteBytes(addr, BitConverter.GetBytes(val));
-        }
+        public void WriteUInt16(IntPtr addr, short val) => WriteBytes(addr, BitConverter.GetBytes(val));
+        public void WriteInt32(IntPtr addr, int val) => WriteBytes(addr, BitConverter.GetBytes(val));
+        public void WriteUInt32(IntPtr addr, uint val) => WriteBytes(addr, BitConverter.GetBytes(val));
+        public void WriteInt64(nint addr, long val) => WriteBytes(addr, BitConverter.GetBytes(val));
+        public void WriteFloat(IntPtr addr, float val) => WriteBytes(addr, BitConverter.GetBytes(val));
+        public void WriteDouble(IntPtr addr, double val) => WriteBytes(addr, BitConverter.GetBytes(val));
 
-        public void WriteInt32(IntPtr addr, int val)
-        {
-            WriteBytes(addr, BitConverter.GetBytes(val));
-        }
-        
-        public void WriteUInt32(IntPtr addr, uint val)
-        {
-            WriteBytes(addr, BitConverter.GetBytes(val));
-        }
-
-        public void WriteFloat(IntPtr addr, float val)
-        {
-            WriteBytes(addr, BitConverter.GetBytes(val));
-        }
-
-        public void WriteDouble(IntPtr addr, double val)
-        {
-            WriteBytes(addr, BitConverter.GetBytes(val));
-        }
 
         public void WriteString(IntPtr addr, string value, int maxLength = 32)
         {
@@ -247,7 +230,7 @@ namespace TarnishedTool.Services
         {
             IntPtr searchRangeStart = BaseAddress - 0x40000000;
             IntPtr searchRangeEnd = BaseAddress - 0x30000;
-            uint codeCaveSize = 0x2000;
+            uint codeCaveSize = 0x3000;
             IntPtr allocatedMemory;
 
             for (IntPtr addr = searchRangeEnd; addr.ToInt64() > searchRangeStart.ToInt64(); addr -= 0x10000)

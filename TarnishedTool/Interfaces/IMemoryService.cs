@@ -30,6 +30,7 @@ public interface IMemoryService
     void WriteUInt16(nint addr, short val);
     void WriteInt32(nint addr, int val);
     void WriteUInt32(IntPtr addr, uint val);
+    void WriteInt64(nint addr, long val);
     void WriteFloat(nint addr, float val);
     void WriteDouble(nint addr, double val);
     void WriteString(nint addr, string value, int maxLength = 32);
