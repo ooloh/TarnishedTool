@@ -132,7 +132,7 @@
                         Height="25" />
             </StackPanel>
 
-            <StackPanel Grid.Row="5" Margin="0,15,0,0" IsEnabled="False">
+            <StackPanel Grid.Row="5" Margin="0,15,0,0">
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />

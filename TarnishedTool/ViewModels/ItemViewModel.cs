@@ -40,6 +40,7 @@ public class ItemViewModel : BaseViewModel
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
         stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
+        stateService.Subscribe(State.GameStart, OnGameStart);
 
         _itemsByCategory = LoadItemData();
         _allAshesOfWar = DataLoader.GetAshOfWars();
@@ -60,13 +61,15 @@ public class ItemViewModel : BaseViewModel
             }
         };
         SelectedMassSpawnCategory = ItemSelection.SelectedCategory;
-
+        _weaponList = _itemsByCategory["Weapons"];
+        SelectedAutoSpawnWeapon = _weaponList.FirstOrDefault();
 
         SpawnItemCommand = new DelegateCommand(SpawnItem);
         MassSpawnCommand = new DelegateCommand(MassSpawn);
         OpenCreateLoadoutCommand = new DelegateCommand(OpenCreateLoadoutWindow);
         SpawnLoadoutCommand = new DelegateCommand(SpawnLoadout);
     }
+    
 
     #region Commands
 
@@ -111,6 +114,30 @@ public class ItemViewModel : BaseViewModel
         set => SetProperty(ref _selectedLoadoutName, value);
     }
 
+    private bool _autoSpawnEnabled;
+    
+    public bool AutoSpawnEnabled
+    {
+        get => _autoSpawnEnabled;
+        set => SetProperty(ref _autoSpawnEnabled, value);
+    }
+    
+    private Item _selectedAutoSpawnWeapon;
+    
+    public Item SelectedAutoSpawnWeapon
+    {
+        get => _selectedAutoSpawnWeapon;
+        set => SetProperty(ref _selectedAutoSpawnWeapon, value);
+    }
+    
+    private List<Item> _weaponList;
+
+    public List<Item> WeaponList
+    {
+        get => _weaponList;
+        private set => SetProperty(ref _weaponList, value);
+    }
+
     #endregion
 
     #region Private Methods
@@ -129,6 +156,12 @@ public class ItemViewModel : BaseViewModel
     {
         var hasDlc = _dlcService.IsDlcAvailable;
         ItemSelection.SetDlcAvailable(hasDlc);
+    }
+    
+    private void OnGameStart()
+    {
+        if (!AutoSpawnEnabled || SelectedAutoSpawnWeapon == null) return;
+        _itemService.SpawnItem(SelectedAutoSpawnWeapon.Id, 1, -1, false, 1);
     }
 
     private Dictionary<string, List<Item>> LoadItemData()
