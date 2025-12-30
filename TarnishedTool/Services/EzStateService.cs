@@ -65,11 +65,6 @@ public class EzStateService(MemoryService memoryService) : IEzStateService
     
     public void RequestNewNpcTalk() => _npcTalkCreated = false;
     
-    public int GetEstusAllocation(int flaskType)
-    {
-        return EnvQuery(EnvQueries.QueryGetEstusAllocation, flaskType).IntValue;
-    }
-
     private void EnsureNpcTalkCreated()
     {
         if (_npcTalkCreated) return;

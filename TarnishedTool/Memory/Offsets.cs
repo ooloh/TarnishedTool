@@ -280,10 +280,16 @@ namespace TarnishedTool.Memory
         {
             public static IntPtr Base;
 
+            public const int PopupMenu = 0x80;
             public const int FlagArray = 0x90;
             public const int IsLoaded = 0x94;
             public const int IsFading = 0x96;
             public const int IsPaused = 0xD1;
+
+            public enum PopupMenuOffsets
+            {
+                DialogResult = 0x1A0,
+            }
 
             public enum FadeBitFlags
             {

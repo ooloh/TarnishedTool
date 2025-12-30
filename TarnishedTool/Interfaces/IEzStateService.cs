@@ -10,5 +10,4 @@ public interface IEzStateService
     void ExecuteTalkCommand(TalkCommand command, long chrHandle);
     EnvQueryResult EnvQuery(int commandId, params EnvQueryParam[] args);
     void RequestNewNpcTalk();
-    int GetEstusAllocation(int flaskType);
 }

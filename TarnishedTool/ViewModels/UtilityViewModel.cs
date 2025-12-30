@@ -33,6 +33,7 @@ namespace TarnishedTool.ViewModels
         private readonly PlayerViewModel _playerViewModel;
         private readonly IDlcService _dlcService;
         private readonly ISpEffectService _spEffectService;
+        private readonly IFlaskService _flaskService;
 
         private static readonly uint[] DisableGraceWarpIds = [4270, 4271, 4272, 4282, 4286, 4288];
         
@@ -41,7 +42,7 @@ namespace TarnishedTool.ViewModels
         public UtilityViewModel(IUtilityService utilityService, IStateService stateService,
             IEzStateService ezStateService, IPlayerService playerService, HotkeyManager hotkeyManager,
             IEmevdService emevdService, PlayerViewModel playerViewModel, IDlcService dlcService,
-            ISpEffectService spEffectService)
+            ISpEffectService spEffectService, IFlaskService flaskService)
         {
             _utilityService = utilityService;
             _ezStateService = ezStateService;
@@ -51,6 +52,7 @@ namespace TarnishedTool.ViewModels
             _playerViewModel = playerViewModel;
             _dlcService = dlcService;
             _spEffectService = spEffectService;
+            _flaskService = flaskService;
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -76,7 +78,7 @@ namespace TarnishedTool.ViewModels
             OpenShopCommand = new DelegateCommand<ShopCommand>(OpenShop);
             MoveCamToPlayerCommand = new DelegateCommand(MoveCamToPlayer);
             MovePlayerToCamCommand = new DelegateCommand(MovePlayerToCam);
-            EstusCommand = new DelegateCommand(Estus);
+            UpgradeFlaskCommand = new DelegateCommand(UpgradeFlask);
 
             _allShops = DataLoader.GetShops();
             FilteredShops = new ObservableCollection<ShopCommand>();
@@ -107,7 +109,7 @@ namespace TarnishedTool.ViewModels
         public ICommand OpenShopCommand { get; }
         public ICommand MoveCamToPlayerCommand { get; }
         public ICommand MovePlayerToCamCommand { get; }
-        public ICommand EstusCommand { get; }
+        public ICommand UpgradeFlaskCommand { get; }
 
         #endregion
 
@@ -455,6 +457,14 @@ namespace TarnishedTool.ViewModels
                 _utilityService.ToggleFullShopLineup(_isShowFullShopLineupEnabled);
             }
         }
+        
+        private bool _isUpgradingFlask;
+
+        public bool IsUpgradingFlask
+        {
+            get => _isUpgradingFlask;
+            set => SetProperty(ref _isUpgradingFlask, value);
+        }
 
         #endregion
 
@@ -483,6 +493,7 @@ namespace TarnishedTool.ViewModels
         private void OnGameNotLoaded()
         {
             AreOptionsEnabled = false;
+            _ezStateService.RequestNewNpcTalk();
         }
 
         private void OnGameFirstLoaded()
@@ -669,9 +680,17 @@ namespace TarnishedTool.ViewModels
 
         private void MoveCamToPlayer() => _utilityService.MoveCamToPlayer();
         private void MovePlayerToCam() => _utilityService.MovePlayerToCam();
-        private void Estus()
+        private async void UpgradeFlask()
         {
-            Console.WriteLine(_ezStateService.GetEstusAllocation(1));
+            IsUpgradingFlask = true; 
+            try
+            {
+                await _flaskService.TryUpgradeFlask();
+            }
+            finally
+            {
+                IsUpgradingFlask = false;
+            }
         }
 
         #endregion
