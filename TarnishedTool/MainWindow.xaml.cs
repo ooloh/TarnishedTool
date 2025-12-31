@@ -42,7 +42,7 @@ namespace TarnishedTool
                 Top = SettingsManager.Default.WindowTop;
             }
             else WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            
+
             _aobScanner = new AoBScanner(_memoryService);
             _stateService = new StateService(_memoryService);
 
@@ -70,13 +70,15 @@ namespace TarnishedTool
                 eventService, spEffectService, emevdService, _dlcService);
             TravelViewModel travelViewModel =
                 new TravelViewModel(travelService, eventService, _stateService, _dlcService, emevdService);
-            EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService, hotkeyManager, emevdService, _dlcService, spEffectService);
+            EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService, hotkeyManager, emevdService,
+                _dlcService, spEffectService);
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService,
                 attackInfoService, hotkeyManager, spEffectService);
             EventViewModel eventViewModel =
                 new EventViewModel(eventService, _stateService, itemService, _dlcService, ezStateService, emevdService);
             UtilityViewModel utilityViewModel = new UtilityViewModel(utilityService, _stateService, ezStateService,
-                playerService, hotkeyManager, emevdService, playerViewModel, _dlcService, spEffectService, flaskService);
+                playerService, hotkeyManager, emevdService, playerViewModel, _dlcService, spEffectService,
+                flaskService);
             ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService, eventService);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService);
 
@@ -98,7 +100,7 @@ namespace TarnishedTool
             MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
             MainTabControl.Items.Add(new TabItem { Header = "Items", Content = itemTab });
             MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
-            
+
             _stateService.Publish(State.AppStart);
 
             Closing += MainWindow_Closing;
@@ -110,7 +112,6 @@ namespace TarnishedTool
             _gameLoadedTimer.Tick += Timer_Tick;
             _gameLoadedTimer.Start();
         }
-        
 
         // VersionChecker.UpdateVersionText(AppVersion);
         //
@@ -122,6 +123,8 @@ namespace TarnishedTool
         private bool _hasScanned;
         private bool _hasAllocatedMemory;
         private bool _appliedOneTimeFeatures;
+        private bool _hasPublishedLoaded;
+        private bool _hasPublishedFadedIn;
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -154,10 +157,17 @@ namespace TarnishedTool
 
                 if (_stateService.IsLoaded())
                 {
+                    if (!_hasPublishedFadedIn && _hasPublishedLoaded && IsFadedIn())
+                    {
+                        _stateService.Publish(State.FadedIn);
+                        _hasPublishedFadedIn = true;
+                    }
+
                     if (_loaded) return;
                     _loaded = true;
                     _dlcService.CheckDlc();
                     _stateService.Publish(State.Loaded);
+                    _hasPublishedLoaded = true;
                     CheckIfGameStart();
                     if (_appliedOneTimeFeatures) return;
                     _stateService.Publish(State.FirstLoaded);
@@ -167,6 +177,8 @@ namespace TarnishedTool
                 {
                     _stateService.Publish(State.NotLoaded);
                     _loaded = false;
+                    _hasPublishedLoaded = false;
+                    _hasPublishedFadedIn = false;
                 }
             }
             else
@@ -176,11 +188,16 @@ namespace TarnishedTool
                 _loaded = false;
                 _hasAllocatedMemory = false;
                 _appliedOneTimeFeatures = false;
+                _hasPublishedLoaded = false;
+                _hasPublishedFadedIn = false;
                 IsAttachedText.Text = "Not attached";
                 IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["NotAttachedBrush"];
                 LaunchGameButton.IsEnabled = true;
             }
         }
+
+        private bool IsFadedIn() =>
+            _memoryService.ReadUInt8((IntPtr)_memoryService.ReadInt64(MenuMan.Base) + MenuMan.IsFading) == 0;
 
         private void CheckIfGameStart()
         {

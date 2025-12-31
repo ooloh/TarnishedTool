@@ -8,6 +8,7 @@ public enum State
     Attached,
     Detached,
     Loaded,
+    FadedIn,
     NotLoaded,
     FirstLoaded,
     GameStart,

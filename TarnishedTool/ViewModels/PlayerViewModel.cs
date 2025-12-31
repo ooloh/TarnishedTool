@@ -61,6 +61,7 @@ namespace TarnishedTool.ViewModels
             stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
             stateService.Subscribe(State.GameStart, OnGameStart);
+            stateService.Subscribe(State.FadedIn, OnFadedIn);
 
             SetRfbsCommand = new DelegateCommand(SetRfbs);
             SetMaxHpCommand = new DelegateCommand(SetMaxHp);
@@ -84,6 +85,7 @@ namespace TarnishedTool.ViewModels
             };
             _playerTick.Tick += PlayerTick;
         }
+        
 
         #region Commands
 
@@ -662,8 +664,7 @@ namespace TarnishedTool.ViewModels
         private void OnGameLoaded()
         {
             AreOptionsEnabled = true;
-
-            if (IsSetRfbsOnLoadEnabled) SetRfbs();
+            
             if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
             if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
 
@@ -671,6 +672,11 @@ namespace TarnishedTool.ViewModels
             _playerTick.Start();
             _pauseUpdates = false;
             IsDlcAvailable = _dlcService.IsDlcAvailable;
+        }
+        
+        private void OnFadedIn()
+        {
+            if (IsSetRfbsOnLoadEnabled) SetRfbs();
         }
 
         private void OnGameFirstLoaded()
