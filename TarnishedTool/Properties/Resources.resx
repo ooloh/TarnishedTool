@@ -4540,4 +4540,15 @@ e8 00 00 00 00          call   25 &lt;_main+0x25&gt;
 59                      pop    rcx
 e9 00 00 00 00          jmp    35 &lt;_main+0x35&gt;</value>
   </data>
+  <data name="NoGrab" xml:space="preserve">
+    <value>50                      push   rax
+48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
+48 8b 80 08 e5 01 00    mov    rax,QWORD PTR [rax+0x1e508]
+48 3b 45 08             cmp    rax,QWORD PTR [rbp+0x8]
+58                      pop    rax
+0f 84 00 00 00 00       je     1a &lt;_main+0x1a&gt;
+41 8b 56 44             mov    edx,DWORD PTR [r14+0x44]
+48 8d 4c 24 40          lea    rcx,[rsp+0x40]
+e9 00 00 00 00          jmp    28 &lt;_main+0x28&gt;</value>
+  </data>
 </root>

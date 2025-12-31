@@ -1006,6 +1006,23 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 50                      push   rax
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
+        ///48 8b 80 08 e5 01 00    mov    rax,QWORD PTR [rax+0x1e508]
+        ///48 3b 45 08             cmp    rax,QWORD PTR [rbp+0x8]
+        ///58                      pop    rax
+        ///0f 84 00 00 00 00       je     1a &lt;_main+0x1a&gt;
+        ///41 8b 56 44             mov    edx,DWORD PTR [r14+0x44]
+        ///48 8d 4c 24 40          lea    rcx,[rsp+0x40]
+        ///e9 00 00 00 00          jmp    28 &lt;_main+0x28&gt;.
+        /// </summary>
+        internal static string NoGrab {
+            get {
+                return ResourceManager.GetString("NoGrab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 44 89 6c 24 2c          mov    DWORD PTR [rsp+0x2c],r13d
         ///50                      push   rax
         ///51                      push   rcx

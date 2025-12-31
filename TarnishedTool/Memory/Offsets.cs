@@ -443,6 +443,7 @@ namespace TarnishedTool.Memory
             public static long LionCooldownHook;
             public static long SetActionRequested;
             public static long NoMapAcquiredPopup;
+            public static long NoGrab;
         }
 
         public static class Functions

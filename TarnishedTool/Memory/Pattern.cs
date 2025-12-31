@@ -341,6 +341,13 @@
             AddressingMode.Absolute
         );
 
+        public static readonly Pattern NoGrab = new Pattern(
+            new byte[] { 0x41, 0x8B, 0x56, 0x44, 0x48, 0x8D, 0x4C },
+            "xxxxxxx",
+            0,
+            AddressingMode.Absolute
+        );
+
         //Funcs
 
         public static readonly Pattern GetChrInsByEntityId = new Pattern(

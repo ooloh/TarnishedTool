@@ -110,7 +110,9 @@ namespace TarnishedTool.Memory
                 addr => Hooks.TorrentNoStagger = addr.ToInt64(), saved);
             TryPatternWithFallback("NoMapAcquiredPopup", Pattern.NoMapAcquiredPopup,
                 addr => Hooks.NoMapAcquiredPopup = addr.ToInt64(), saved);
-
+            TryPatternWithFallback("NoGrab", Pattern.NoGrab,
+                addr => Hooks.NoGrab = addr.ToInt64(), saved);
+            
             using (var writer = new StreamWriter(savePath))
             {
                 foreach (var pair in saved)
@@ -197,6 +199,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Hooks.HookedDeathFunction: 0x{Hooks.HookedDeathFunction.ToInt64():X}");
             Console.WriteLine($@"Hooks.LionCooldownHook: 0x{Hooks.LionCooldownHook:X}");
             Console.WriteLine($@"Hooks.SetActionRequested: 0x{Hooks.SetActionRequested:X}");
+            Console.WriteLine($@"Hooks.NoGrab: 0x{Hooks.NoGrab:X}");
 
             Console.WriteLine($@"Funcs.GraceWarp: 0x{Functions.GraceWarp:X}");
             Console.WriteLine($@"Funcs.SetEvent: 0x{Functions.SetEvent:X}");
