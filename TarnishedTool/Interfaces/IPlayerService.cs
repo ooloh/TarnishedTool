@@ -13,6 +13,7 @@ public interface IPlayerService
     void RestorePos(int index);
     PosWithHurtbox GetPosWithHurtbox();
     long GetPlayerIns();
+    uint GetBlockId();
     void SetHp(int hp);
     int GetCurrentHp();
     int GetMaxHp();

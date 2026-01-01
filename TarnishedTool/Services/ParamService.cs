@@ -52,4 +52,16 @@ public class ParamService(MemoryService memoryService) : IParamService
     
         return IntPtr.Zero;
     }
+    
+    public void WriteInt32(IntPtr row, int offset, int value) => memoryService.WriteInt32(row + offset, value);
+    
+    public void WriteFloat(IntPtr row, int offset, float value) => memoryService.WriteFloat(row + offset, value);
+    
+    public void WriteInt16(IntPtr row, int offset, short value) => 
+        memoryService.WriteBytes(row + offset, BitConverter.GetBytes(value));
+    
+    public void WriteUInt8(IntPtr row, int offset, byte value) => memoryService.WriteUInt8(row + offset, value);
+    
+    public void SetBit(IntPtr row, int offset, int mask, bool setValue) => 
+        memoryService.SetBitValue(row + offset, mask, setValue);
 }

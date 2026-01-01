@@ -6,6 +6,7 @@ using TarnishedTool.Core;
 using TarnishedTool.Enums;
 using TarnishedTool.GameIds;
 using TarnishedTool.Interfaces;
+using TarnishedTool.Memory;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
 
@@ -19,6 +20,8 @@ public class EnemyViewModel : BaseViewModel
     private readonly IDlcService _dlcService;
     private readonly ISpEffectService _spEffectService;
     private readonly IParamService _paramService;
+    private readonly IPlayerService _playerService;
+    private readonly IEventService _eventService;
 
     public const uint LionMainBossEntityId = 20000800;
     public const int LionMainBossNpcParamId = 52100088;
@@ -33,6 +36,7 @@ public class EnemyViewModel : BaseViewModel
 
     public const int NpcParamTableIndex = 6;
     public const int NpcParamSlotIndex = 0;
+    public static readonly BitFlag InitializeDead = new(0x14D, 1 << 3);
 
     public const int PhaseTransitionCooldownSpEffectId = 20011216;
 
@@ -45,7 +49,7 @@ public class EnemyViewModel : BaseViewModel
 
     public EnemyViewModel(IEnemyService enemyService, IStateService stateService, HotkeyManager hotkeyManager,
         IEmevdService emevdService, IDlcService dlcService, ISpEffectService spEffectService,
-        IParamService paramService)
+        IParamService paramService, IPlayerService playerService, IEventService eventService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
@@ -53,6 +57,8 @@ public class EnemyViewModel : BaseViewModel
         _dlcService = dlcService;
         _spEffectService = spEffectService;
         _paramService = paramService;
+        _playerService = playerService;
+        _eventService = eventService;
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -66,6 +72,11 @@ public class EnemyViewModel : BaseViewModel
         SetLionMiniBossFrostPhaseCommand = new DelegateCommand(ForceLionMiniBossFrostPhase);
         SetLionMiniBossWindPhaseCommand = new DelegateCommand(ForceLionMiniBossWindPhase);
 
+        ReviveBossCommand = new DelegateCommand(ReviveBoss);
+        ReviveBossFirstEncounterCommand = new DelegateCommand(ReviveBossFirstEncounter);
+        ReviveAllBossesCommand = new DelegateCommand(ReviveAllBosses);
+        ReviveAllBossesAsFirstEncounterCommand = new DelegateCommand(ReviveAllBossesAsFirstEncounter);
+
         BossRevives = new SearchableGroupedCollection<string, BossRevive>(
             DataLoader.GetBossRevives(),
             (bossRevive, search) => bossRevive.BossName.ToLower().Contains(search) ||
@@ -77,6 +88,7 @@ public class EnemyViewModel : BaseViewModel
         RegisterHotkeys();
     }
 
+    
     #region Commands
 
     public ICommand EbForceActSequenceCommand { get; set; }
@@ -86,6 +98,11 @@ public class EnemyViewModel : BaseViewModel
     public ICommand SetLionMiniBossDeathblightPhaseCommand { get; set; }
     public ICommand SetLionMiniBossFrostPhaseCommand { get; set; }
     public ICommand SetLionMiniBossWindPhaseCommand { get; set; }
+    
+    public ICommand ReviveBossCommand { get; set; }
+    public ICommand ReviveBossFirstEncounterCommand { get; set; }
+    public ICommand ReviveAllBossesCommand { get; set; }
+    public ICommand ReviveAllBossesAsFirstEncounterCommand { get; set; }
 
     #endregion
 
@@ -288,7 +305,7 @@ public class EnemyViewModel : BaseViewModel
         AreOptionsEnabled = true;
         IsDlcAvailable = _dlcService.IsDlcAvailable;
     }
-
+    
     private void OnGameNotLoaded()
     {
         AreOptionsEnabled = false;
@@ -376,6 +393,59 @@ public class EnemyViewModel : BaseViewModel
 
     private void ForceLionMiniBossWindPhase() => _emevdService.ExecuteEmevdCommand(
         Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, WindAnimationId));
+    
+    private void ReviveBoss()
+    {
+        var bossRevive = BossRevives.SelectedItem;
+        SetBossFlags(bossRevive, isFirstEncounter: false);
+        if (_playerService.GetBlockId() == bossRevive.BlockId)
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+    }
+
+    private void ReviveBossFirstEncounter()
+    {
+        var bossRevive = BossRevives.SelectedItem;
+        SetBossFlags(bossRevive, isFirstEncounter: true);
+        if (_playerService.GetBlockId() == bossRevive.BlockId) //TODO check distance needed / area etc
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+    }
+
+    private void ReviveAllBosses()
+    {
+        foreach (var bossRevive in BossRevives.AllItems)
+            SetBossFlags(bossRevive, isFirstEncounter: false);
+    
+        _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+    }
+
+    private void ReviveAllBossesAsFirstEncounter()
+    {
+        foreach (var bossRevive in BossRevives.AllItems)
+            SetBossFlags(bossRevive, isFirstEncounter: true);
+    
+        _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+    }
+
+    private void SetBossFlags(BossRevive bossRevive, bool isFirstEncounter)
+    {
+        if (bossRevive.IsDlc && !IsDlcAvailable) return;
+        if (!bossRevive.IsInitializeDeadSet) SetInitializeDead(bossRevive.NpcParamId);
+    
+        if (isFirstEncounter)
+        {
+            foreach (var flag in bossRevive.FirstEncounterFlags)
+                _eventService.SetEvent(flag.EventId, flag.SetValue);
+        }
+    
+        foreach (var flag in bossRevive.BossFlags)
+            _eventService.SetEvent(flag.EventId, flag.SetValue);
+    }
+
+    private void SetInitializeDead(uint npcParamId)
+    {
+        var paramRow = _paramService.GetParamRow(NpcParamTableIndex, NpcParamSlotIndex, npcParamId);
+        _paramService.SetBit(paramRow, InitializeDead.Offset, InitializeDead.Bit, true);
+    }
 
     #endregion
 }

@@ -120,6 +120,14 @@ namespace TarnishedTool.Services
         public long GetPlayerIns() =>
             memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(WorldChrMan.Base) + WorldChrMan.PlayerIns);
 
+        public uint GetBlockId()
+        {
+            var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
+            var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
+
+            return memoryService.ReadUInt32(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+        }
+
         public void SetHp(int hp) =>
             memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, hp);
 

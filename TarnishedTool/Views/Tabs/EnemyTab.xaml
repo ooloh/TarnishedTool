@@ -536,16 +536,31 @@
 
                         <Grid Margin="10,0,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-
-                            <CheckBox Grid.Column="0" Content="Rest on Boss Warp"
-                                      IsChecked="{Binding IsRestOnWarpEnabled}"
-                                      Margin="0,2" />
-
-
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            
+                            <Button Grid.Row="0"  Grid.Column="0" Content="Revive Boss"
+                                    Command="{Binding ReviveBossCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Margin="0,5, 20, 5" />
+                            <Button Grid.Row="0"  Grid.Column="1" Content="Revive Boss as First Encounter"
+                                    Command="{Binding ReviveBossFirstEncounterCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Margin="0,2" />
+                            <Button Grid.Row="1"  Grid.Column="0" Content="Revive All Bosses"
+                                    Command="{Binding ReviveAllBossesCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Margin="0,0, 20, 5"
+                                    />
+                            <Button Grid.Row="1"  Grid.Column="1" Content="Revive All Bosses as First Encounter"
+                                    Command="{Binding ReviveAllBossesAsFirstEncounterCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Margin="0,2" />
                         </Grid>
                     </StackPanel>
                 </Border>
