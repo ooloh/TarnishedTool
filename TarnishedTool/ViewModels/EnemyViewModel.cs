@@ -18,6 +18,7 @@ public class EnemyViewModel : BaseViewModel
     private readonly IEmevdService _emevdService;
     private readonly IDlcService _dlcService;
     private readonly ISpEffectService _spEffectService;
+    private readonly IParamService _paramService;
 
     public const uint LionMainBossEntityId = 20000800;
     public const int LionMainBossNpcParamId = 52100088;
@@ -30,21 +31,28 @@ public class EnemyViewModel : BaseViewModel
     public const int FrostAnimationId = 20004;
     public const int WindAnimationId = 20006;
 
+    public const int NpcParamTableIndex = 6;
+    public const int NpcParamSlotIndex = 0;
+
     public const int PhaseTransitionCooldownSpEffectId = 20011216;
 
     private const int EbNpcThinkParamId = 22000000;
     private const int EldenStarsActIdx = 22;
     private DateTime _ebLastExecuted = DateTime.MinValue;
     private static readonly TimeSpan EbCooldownDuration = TimeSpan.FromSeconds(2);
+    
+    public SearchableGroupedCollection<string, BossRevive> BossRevives { get; }
 
     public EnemyViewModel(IEnemyService enemyService, IStateService stateService, HotkeyManager hotkeyManager,
-        IEmevdService emevdService, IDlcService dlcService, ISpEffectService spEffectService)
+        IEmevdService emevdService, IDlcService dlcService, ISpEffectService spEffectService,
+        IParamService paramService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
         _emevdService = emevdService;
         _dlcService = dlcService;
         _spEffectService = spEffectService;
+        _paramService = paramService;
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -58,6 +66,10 @@ public class EnemyViewModel : BaseViewModel
         SetLionMiniBossFrostPhaseCommand = new DelegateCommand(ForceLionMiniBossFrostPhase);
         SetLionMiniBossWindPhaseCommand = new DelegateCommand(ForceLionMiniBossWindPhase);
 
+        BossRevives = new SearchableGroupedCollection<string, BossRevive>(
+            DataLoader.GetBossRevives(),
+            (bossRevive, search) => bossRevive.BossName.ToLower().Contains(search) ||
+                                    bossRevive.Area.ToLower().Contains(search));
 
         _acts = new ObservableCollection<Act>(DataLoader.GetEbActs());
         SelectedAct = Acts.FirstOrDefault();

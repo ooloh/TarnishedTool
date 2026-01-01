@@ -62,16 +62,17 @@ namespace TarnishedTool
             ISpEffectService spEffectService = new SpEffectService(_memoryService);
             IEmevdService emevdService = new EmevdService(_memoryService);
             IFlaskService flaskService = new FlaskService(ezStateService, _memoryService);
+            IParamService paramService = new ParamService(_memoryService);
 
             _dlcService = new DlcService(_memoryService);
 
 
             PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService, hotkeyManager,
-                eventService, spEffectService, emevdService, _dlcService);
+                eventService, spEffectService, emevdService, _dlcService, ezStateService);
             TravelViewModel travelViewModel =
                 new TravelViewModel(travelService, eventService, _stateService, _dlcService, emevdService);
             EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService, hotkeyManager, emevdService,
-                _dlcService, spEffectService);
+                _dlcService, spEffectService, paramService);
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService,
                 attackInfoService, hotkeyManager, spEffectService);
             EventViewModel eventViewModel =

@@ -80,6 +80,23 @@ public static class EzState
             new(49, [6001, 234]),
             new(49, [6001, 235]),
         ];
+        
+        public static TalkCommand FadeOutAndPassTime(bool resetWorld) =>
+            new(117, [
+                resetWorld ? 1 : 0,  // resetWorld
+                1,                    // resetMainCharacter
+                1,                    // resetMagicCharges
+                1,                    // restoreEstus
+                0,                    // addHours
+                0,                    // addMinutes
+                0,                    // addSeconds
+                0,                    // blackScreenTime
+                0,                    // clockStartupDelayS
+                0,                    // clockMoveTimeS
+                0,                    // clockFinishDelayS
+                0,                    // fadeOutTime
+                0                     // fadeInTime
+            ]);
     }
 
     public static class EnvQueries

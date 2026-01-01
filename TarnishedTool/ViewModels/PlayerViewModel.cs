@@ -38,6 +38,7 @@ namespace TarnishedTool.ViewModels
         private readonly ISpEffectService _spEffectService;
         private readonly IEmevdService _emevdService;
         private readonly IDlcService _dlcService;
+        private readonly IEzStateService _ezStateService;
 
         private readonly SpEffectViewModel _spEffectViewModel = new();
         private SpEffectsWindow _spEffectsWindow;
@@ -46,7 +47,7 @@ namespace TarnishedTool.ViewModels
 
         public PlayerViewModel(IPlayerService playerService, IStateService stateService, HotkeyManager hotkeyManager,
             IEventService eventService, ISpEffectService spEffectService, IEmevdService emevdService,
-            IDlcService dlcService)
+            IDlcService dlcService, IEzStateService ezStateService)
         {
             _playerService = playerService;
             _hotkeyManager = hotkeyManager;
@@ -54,6 +55,7 @@ namespace TarnishedTool.ViewModels
             _spEffectService = spEffectService;
             _emevdService = emevdService;
             _dlcService = dlcService;
+            _ezStateService = ezStateService;
 
             RegisterHotkeys();
 
@@ -86,7 +88,7 @@ namespace TarnishedTool.ViewModels
             };
             _playerTick.Tick += PlayerTick;
         }
-        
+
         #region Commands
 
         public ICommand SetRfbsCommand { get; set; }
@@ -418,9 +420,8 @@ namespace TarnishedTool.ViewModels
                     _playerService.ToggleNoTimePassOnDeath(_isNoTimePassOnDeathEnabled);
                 }
             }
-        }       
-        
-        
+        }
+
         private bool _isTorrentNoStaggerEnabled;
 
         public bool IsTorrentNoStaggerEnabled
@@ -430,7 +431,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (SetProperty(ref _isTorrentNoStaggerEnabled, value))
                 {
-                   _playerService.ToggleTorrentNoStagger(_isTorrentNoStaggerEnabled);
+                    _playerService.ToggleTorrentNoStagger(_isTorrentNoStaggerEnabled);
                 }
             }
         }
@@ -544,6 +545,7 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
+
         private int _currentAnimation;
 
         public int CurrentAnimation
@@ -551,7 +553,6 @@ namespace TarnishedTool.ViewModels
             get => _currentAnimation;
             set => SetProperty(ref _currentAnimation, value);
         }
-        
 
         private float _playerSpeed;
 
@@ -639,6 +640,14 @@ namespace TarnishedTool.ViewModels
             set => SetProperty(ref _isAutoSetNewGameSevenEnabled, value);
         }
 
+        private bool _isResetWorldIncluded;
+
+        public bool IsResetWorldIncluded
+        {
+            get => _isResetWorldIncluded;
+            set => SetProperty(ref _isResetWorldIncluded, value);
+        }
+
         #endregion
 
         #region Public Methods
@@ -666,16 +675,16 @@ namespace TarnishedTool.ViewModels
         private void OnGameLoaded()
         {
             AreOptionsEnabled = true;
-            
+
             if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
             if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
-            
+
             LoadStats();
             _playerTick.Start();
             _pauseUpdates = false;
             IsDlcAvailable = _dlcService.IsDlcAvailable;
         }
-        
+
         private void OnFadedIn()
         {
             if (IsSetRfbsOnLoadEnabled) SetRfbs();
@@ -798,7 +807,7 @@ namespace TarnishedTool.ViewModels
         private void SetRfbs() => _playerService.SetRfbs();
         private void SetMaxHp() => _playerService.SetFullHp();
         private void Die() => _playerService.SetHp(0);
-        
+
         private void SetCustomHp()
         {
             if (!_customHpHasBeenSet) return;
@@ -870,7 +879,11 @@ namespace TarnishedTool.ViewModels
             return Math.Abs(a - b) < Epsilon;
         }
 
-        private void Rest() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+        private void Rest()
+        {
+            if (IsResetWorldIncluded) _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.FadeOutAndPassTime(true));
+            else _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+        }
 
         private void ApplySpEffect()
         {

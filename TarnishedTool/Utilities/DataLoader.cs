@@ -290,9 +290,9 @@ namespace TarnishedTool.Utilities
             return parts.ToArray();
         }
 
-        public static List<BossRevive> GetBossRevives()
+        public static Dictionary<string, List<BossRevive>> GetBossRevives()
         {
-            List<BossRevive> bossRevives = new List<BossRevive>();
+            Dictionary<string, List<BossRevive>> bossRevives = new Dictionary<string, List<BossRevive>>();
             string csvData = Resources.BossRevives;
             if (string.IsNullOrWhiteSpace(csvData)) return bossRevives;
 
@@ -301,30 +301,53 @@ namespace TarnishedTool.Utilities
             while ((line = reader.ReadLine()) != null)
             {
                 string[] parts = line.Split(',');
-                if (parts.Length < 3) continue;
 
+                string area = parts[1];
+                
                 BossRevive boss = new BossRevive
                 {
-                    IsDlc = parts[0] == "1",
-                    BossName = parts[1],
-                    IsInitializeDeadSet = parts[2] == "1"
+                    IsDlc = bool.Parse(parts[0]), 
+                    Area = area,
+                    BossName = parts[2],
+                    IsInitializeDeadSet = bool.Parse(parts[3]),
+                    NpcParamId = uint.Parse(parts[4]),
+                    BlockId = uint.Parse(parts[5]),
+                    FirstEncounterFlags = ParseFlags(parts[6]),
+                    BossFlags = ParseFlags(parts[7])
                 };
 
-                List<BossFlag> flags = new List<BossFlag>();
-                for (int i = 3; i < parts.Length - 1; i += 2)
+                if (!bossRevives.ContainsKey(area))
                 {
-                    if (int.TryParse(parts[i], out int eventId))
-                    {
-                        bool setValue = parts[i + 1] == "1";
-                        flags.Add(new BossFlag { EventId = eventId, SetValue = setValue });
-                    }
+                    bossRevives[area] = new List<BossRevive>();
                 }
-
-                boss.BossFlags = flags;
-                bossRevives.Add(boss);
+                
+                bossRevives[area].Add(boss);
             }
 
             return bossRevives;
+        }
+        
+        private static List<BossFlag> ParseFlags(string flagData)
+        {
+            var flags = new List<BossFlag>();
+            if (string.IsNullOrWhiteSpace(flagData)) return flags;
+            
+            string[] flagEntries = flagData.Split('|');
+    
+            foreach (string entry in flagEntries)
+            {
+                string[] pair = entry.Split(':');
+                if (pair.Length == 2 && int.TryParse(pair[0], out int eventId))
+                {
+                    flags.Add(new BossFlag
+                    {
+                        EventId = eventId,
+                        SetValue = bool.Parse(pair[1])
+                    });
+                }
+            }
+
+            return flags;
         }
 
         public static List<ShopCommand> GetShops()

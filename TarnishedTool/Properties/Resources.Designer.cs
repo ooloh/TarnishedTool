@@ -378,8 +378,7 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 0,Grafted Scion,1,0,10010800,0,9103,0,510030,0
-        ///0,Margit the Fell Omen,1,10000851,0,10000850,0,9100,0,60510,0,71001,0 .
+        ///   Looks up a localized string similar to FALSE,Limgrave,Godrick the Grafted,FALSE,47500014,167772160,10000801:FALSE,10000800:FALSE|10000720:FALSE|10002802:FALSE|9101:FALSE|9391:FALSE|9304:FALSE|71000:FALSE|3269:FALSE|3265:FALSE|61101:FALSE|510010:FALSE.
         /// </summary>
         internal static string BossRevives {
             get {

@@ -19,10 +19,8 @@ namespace TarnishedTool.ViewModels
         private readonly IEmevdService _emevdService;
         public const int WhetstoneBladeId = 0x4000218E;
         
-        private List<BossRevive> _bossReviveList;
-
-        private List<int> _baseGameGestureIds; 
-        private List<int> _dlcGestureIds; 
+        private readonly List<int> _baseGameGestureIds; 
+        private readonly List<int> _dlcGestureIds; 
 
         
 
@@ -47,7 +45,6 @@ namespace TarnishedTool.ViewModels
             FightFortissaxCommand = new DelegateCommand(FightFortissax);
             UnlockGesturesCommand = new DelegateCommand(UnlockGestures);
             
-            _bossReviveList = DataLoader.GetBossRevives();
             _baseGameGestureIds = DataLoader.GetSimpleList("BaseGestures", int.Parse);
             _dlcGestureIds = DataLoader.GetSimpleList("DlcGestures", int.Parse);
         }

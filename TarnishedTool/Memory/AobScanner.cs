@@ -60,6 +60,7 @@ namespace TarnishedTool.Memory
                 () => CSEmkSystem.Base = FindAddressByPattern(Pattern.CSEmkSystem),
                 () => WorldAreaTimeImpl.Base = FindAddressByPattern(Pattern.WorldAreaTimeImpl),
                 () => GroupMask.Base = FindAddressByPattern(Pattern.GroupMask),
+                () => SoloParamRepositoryImp.Base = FindAddressByPattern(Pattern.SoloParamRepositoryImp),
                 () => CSFlipperImp.Base = FindAddressByPattern(Pattern.CSFlipperImp),
                 () => CSDbgEvent.Base = FindAddressByPattern(Pattern.CSDbgEvent),
                 () => UserInputManager.Base = FindAddressByPattern(Pattern.UserInputManager),

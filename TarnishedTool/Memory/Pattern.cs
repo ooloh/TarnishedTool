@@ -213,6 +213,15 @@
             7
         );
 
+        public static readonly Pattern SoloParamRepositoryImp = new Pattern(
+            new byte[] { 0x45, 0x33, 0xC0, 0xBA, 0x8F },
+            "xxxxx",
+            -0x10,
+            AddressingMode.Relative,
+            3,
+            7
+        );
+
         //Hooks
 
         public static readonly Pattern NoMapAcquiredPopup = new Pattern(
@@ -527,7 +536,6 @@
 
         //Patches
 
-        
         public static readonly Pattern DebugFont = new(
             [0xF3, 0x0F, 0x11, 0x55, 0xE3, 0x66],
             "xxxxxx",

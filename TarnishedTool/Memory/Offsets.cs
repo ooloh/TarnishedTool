@@ -359,6 +359,11 @@ namespace TarnishedTool.Memory
         {
             public static IntPtr Base;
         }
+        
+        public static class SoloParamRepositoryImp
+        {
+            public static IntPtr Base;
+        }
 
         public static class UserInputManager
         {
