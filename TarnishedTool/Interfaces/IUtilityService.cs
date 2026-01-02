@@ -13,6 +13,7 @@ public interface IUtilityService
     float GetSpeed();
     void SetSpeed(float speed);
     void ToggleFreeCam(bool isEnabled);
+    void TogglePlayerMovementForFreeCam(bool isEnabled);
     void MoveCamToPlayer();
     void MovePlayerToCam();
     void ToggleFreezeWorld(bool isEnabled);

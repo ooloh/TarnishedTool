@@ -186,6 +186,12 @@ namespace TarnishedTool.Services
 
         }
 
+        public void TogglePlayerMovementForFreeCam(bool isEnabled)
+        {
+            var camMode = memoryService.FollowPointers(FieldArea.Base, [FieldArea.GameRend, FieldArea.CamMode], false);
+            memoryService.WriteUInt8(camMode, isEnabled ? 3 : 1);
+        }
+
         public void MoveCamToPlayer()
         {
             var playerLoc = playerService.GetPlayerPos();

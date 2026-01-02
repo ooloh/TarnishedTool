@@ -93,6 +93,11 @@
                                        FontWeight="Bold"
                                        FontSize="10" />
                         </Border>
+                        <CheckBox Content="Freeze World"
+                                  IsChecked="{Binding IsFreezeWorldEnabled}"
+                                  Margin="20,0,0,0"
+                                  VerticalAlignment="Center"
+                                  IsEnabled="{Binding AreOptionsEnabled}" />
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -269,11 +274,17 @@
 
                         </StackPanel>
 
-                        <CheckBox Content="Freeze World"
-                                  IsChecked="{Binding IsFreezeWorldEnabled}"
+                        <CheckBox Content="Player Movement"
+                                  IsChecked="{Binding IsPlayerMovementEnabled}"
                                   Margin="0,0,0,0"
-                                  VerticalAlignment="Center"
-                                  IsEnabled="{Binding AreOptionsEnabled}" />
+                                  VerticalAlignment="Center">
+                            <CheckBox.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsFreeCamEnabled"/>
+                                </MultiBinding>
+                            </CheckBox.IsEnabled>
+                        </CheckBox>
 
                     </StackPanel>
                     <StackPanel Grid.Column="1">

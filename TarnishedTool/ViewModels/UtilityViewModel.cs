@@ -280,8 +280,26 @@ namespace TarnishedTool.ViewModels
                 {
                     IsNoClipEnabled = false;
                 }
+                else
+                {
+                    _isPlayerMovementEnabled = false;
+                    OnPropertyChanged(nameof(IsPlayerMovementEnabled));
+                }
 
                 _utilityService.ToggleFreeCam(_isFreeCamEnabled);
+            }
+        }
+        
+        private bool _isPlayerMovementEnabled;
+
+        public bool IsPlayerMovementEnabled
+        {
+            get => _isPlayerMovementEnabled;
+            set
+            {
+                if (!SetProperty(ref _isPlayerMovementEnabled, value)) return;
+                if (!IsFreeCamEnabled) return;
+                _utilityService.TogglePlayerMovementForFreeCam(_isPlayerMovementEnabled);
             }
         }
 
@@ -537,6 +555,7 @@ namespace TarnishedTool.ViewModels
         {
             AreOptionsEnabled = false;
             _ezStateService.RequestNewNpcTalk();
+            IsFreeCamEnabled = false;
         }
 
         private void OnGameFirstLoaded()
@@ -639,6 +658,11 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.UpgradeFlask, () => SafeExecuteIfNotBusy(UpgradeFlask, IsUpgradingFlask));
             _hotkeyManager.RegisterAction(HotkeyActions.IncreaseFlaskCharges, () => SafeExecuteIfNotBusy(IncreaseCharges, IsIncreasingCharges));
             _hotkeyManager.RegisterAction(HotkeyActions.OpenShopWindow, OpenShopSelector);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleFreeCamPlayerMovement, () =>
+            {
+                if (!IsFreeCamEnabled) return;
+                IsPlayerMovementEnabled = !IsPlayerMovementEnabled;
+            });
         }
 
         private void SafeExecute(Action action)

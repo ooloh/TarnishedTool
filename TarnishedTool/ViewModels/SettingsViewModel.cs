@@ -126,6 +126,7 @@ public class SettingsViewModel : BaseViewModel
             new("Toggle Freeze World", HotkeyActions.ToggleFreezeWorld),
             new("Move Free Cam to Player", HotkeyActions.MoveCamToPlayer),
             new("Move Player to Free Cam", HotkeyActions.MovePlayerToCam),
+            new("Move Player when Free Cam", HotkeyActions.ToggleFreeCamPlayerMovement),
             new("Set Morning", HotkeyActions.SetMorning),
             new("Set Noon", HotkeyActions.SetNoon),
             new("Set Night", HotkeyActions.SetNight),

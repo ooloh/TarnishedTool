@@ -10,7 +10,7 @@
         <DataTemplate x:Key="HotkeyItemTemplate">
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <TextBlock Text="{Binding DisplayName}"
-                           Width="140"
+                           Width="150"
                            VerticalAlignment="Center"
                            
                            />

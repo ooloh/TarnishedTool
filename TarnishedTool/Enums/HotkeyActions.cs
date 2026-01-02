@@ -95,6 +95,7 @@ public enum HotkeyActions
     ToggleFreezeWorld,
     MoveCamToPlayer,
     MovePlayerToCam,
+    ToggleFreeCamPlayerMovement,
     DrawEvent,
     
     
