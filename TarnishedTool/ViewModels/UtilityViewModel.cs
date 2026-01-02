@@ -54,6 +54,7 @@ namespace TarnishedTool.ViewModels
             _spEffectService = spEffectService;
             _flaskService = flaskService;
 
+            stateService.Subscribe(State.AppStart, OnAppStart);
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
             stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
@@ -146,11 +147,11 @@ namespace TarnishedTool.ViewModels
                     _utilityService.WriteNoClipSpeed(NoClipSpeed);
                     _wasNoDeathEnabled = _playerViewModel.IsNoDeathEnabled;
                     _playerViewModel.IsNoDeathEnabled = true;
-                    _utilityService.ToggleNoClip(_isNoClipEnabled);
+                    _utilityService.ToggleNoClip(_isNoClipEnabled, IsNoClipKeyboardDisableEnabled);
                 }
                 else
                 {
-                    _utilityService.ToggleNoClip(_isNoClipEnabled);
+                    _utilityService.ToggleNoClip(_isNoClipEnabled, IsNoClipKeyboardDisableEnabled);
                     _playerViewModel.IsNoDeathEnabled = _wasNoDeathEnabled;
                 }
             }
@@ -168,6 +169,24 @@ namespace TarnishedTool.ViewModels
                     if (!IsNoClipEnabled) return;
                     _utilityService.WriteNoClipSpeed(_noClipSpeedMultiplier);
                 }
+            }
+        }
+        
+        private bool _isNoClipKeyboardDisableEnabled;
+
+        public bool IsNoClipKeyboardDisableEnabled
+        {
+            get => _isNoClipKeyboardDisableEnabled;
+            set
+            {
+                if (!SetProperty(ref _isNoClipKeyboardDisableEnabled, value)) return;
+                if (IsNoClipEnabled)
+                {
+                    _utilityService.ToggleNoclipKeyboardHook(_isNoClipKeyboardDisableEnabled);
+                }
+                
+                SettingsManager.Default.IsNoClipKeyboardDisabled = _isNoClipKeyboardDisableEnabled;
+                SettingsManager.Default.Save();
             }
         }
 
@@ -494,6 +513,11 @@ namespace TarnishedTool.ViewModels
         #endregion
 
         #region Private Methods
+        
+        private void OnAppStart()
+        {
+            IsNoClipKeyboardDisableEnabled = SettingsManager.Default.IsNoClipKeyboardDisabled;
+        }
 
         private void OnGameLoaded()
         {

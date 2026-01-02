@@ -9,10 +9,11 @@ public partial class CustomMessageBox : Window
 {
     public bool Result { get; private set; }
 
-    public CustomMessageBox(string message, bool showCancel)
+    public CustomMessageBox(string message, bool showCancel, string title = "Message")
     {
         InitializeComponent();
         MessageText.Text = message;
+        TitleText.Text = title;
             
         if (showCancel)
         {

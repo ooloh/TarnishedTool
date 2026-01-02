@@ -27,7 +27,7 @@ namespace TarnishedTool.Services
             memoryService.WriteBytes(Patches.CanFastTravel,
                 isEnabled ? [0xB0, 0x01, 0x90, 0x90, 0x90] : [0x84, 0xC0, 0x0F, 0x94, 0xC0]);
 
-        public void ToggleNoClip(bool isNoClipEnabled)
+        public void ToggleNoClip(bool isNoClipEnabled, bool isKeyboardHookDisabled)
         {
             var inAirTimerCode = CodeCaveOffsets.Base + CodeCaveOffsets.InAirTimer;
             var kbCode = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.Kb;
@@ -38,15 +38,18 @@ namespace TarnishedTool.Services
             if (isNoClipEnabled)
             {
                 WriteInAirTimer(inAirTimerCode);
-                WriteKbCode(kbCode);
+                if (!isKeyboardHookDisabled) WriteKbCode(kbCode);
                 WriteTriggerCode(triggersCode);
                 WriteUpdateCoords(updateCoordsCode);
                 WriteJumpIntercept(jumpInterceptCode);
 
                 hookManager.InstallHook(inAirTimerCode.ToInt64(), Hooks.InAirTimer, new byte[]
                     { 0xF3, 0x0F, 0x11, 0x43, 0x18 });
-                hookManager.InstallHook(kbCode.ToInt64(), Hooks.NoClipKb, new byte[]
-                    { 0xF6, 0x84, 0x08, 0xE8, 0x07, 0x00, 0x00, 0x80 });
+                if (!isKeyboardHookDisabled)
+                {
+                    hookManager.InstallHook(kbCode.ToInt64(), Hooks.NoClipKb, new byte[]
+                        { 0xF6, 0x84, 0x08, 0xE8, 0x07, 0x00, 0x00, 0x80 });
+                }
                 hookManager.InstallHook(triggersCode.ToInt64(), Hooks.NoClipTriggers, new byte[]
                     { 0x0F, 0xB6, 0x44, 0x24, 0x36 });
                 hookManager.InstallHook(updateCoordsCode.ToInt64(), Hooks.UpdateCoords, new byte[]
@@ -130,6 +133,21 @@ namespace TarnishedTool.Services
                 (updateCoordsCode.ToInt64() + 0x1AA, Hooks.UpdateCoords + 0xB, 5, 0x1AA + 1)
             });
             memoryService.WriteBytes(updateCoordsCode, codeBytes);
+        }
+        
+        public void ToggleNoclipKeyboardHook(bool isEnabled)
+        {
+            var kbCode = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.Kb;
+            if (!isEnabled)
+            {
+                WriteKbCode(kbCode);
+                hookManager.InstallHook(kbCode.ToInt64(), Hooks.NoClipKb, new byte[]
+                    { 0xF6, 0x84, 0x08, 0xE8, 0x07, 0x00, 0x00, 0x80 });
+            }
+            else
+            {
+                hookManager.UninstallHook(kbCode.ToInt64());
+            }
         }
 
         private void WriteJumpIntercept(IntPtr jumpInterceptCode)
@@ -251,6 +269,7 @@ namespace TarnishedTool.Services
 
         public void ToggleDrawTilesOnMap(bool isEnabled) => 
             memoryService.WriteUInt8(MapDebugFlags.Base + MapDebugFlags.ShowMapTiles, isEnabled ? 1 : 0);
+        
 
         private IntPtr GetDbgCamCoordsPtr() =>
             memoryService.FollowPointers(FieldArea.Base,

@@ -38,6 +38,7 @@ public class SettingsManager
     public float PlayerSpeed { get; set; }
     public bool RememberGameSpeed { get; set; }
     public float GameSpeed { get; set; }
+    public bool IsNoClipKeyboardDisabled { get; set; }
 
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -80,6 +81,7 @@ public class SettingsManager
                 $"PlayerSpeed={PlayerSpeed}",
                 $"RememberGameSpeed={RememberGameSpeed}",
                 $"GameSpeed={GameSpeed}",
+                $"IsNoClipKeyboardDisabled={IsNoClipKeyboardDisabled}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -216,6 +218,10 @@ public class SettingsManager
                             case "GameSpeed":
                                 float.TryParse(value, out float gs);
                                 settings.GameSpeed = gs;
+                                break;
+                            case "IsNoClipKeyboardDisabled":
+                                bool.TryParse(value, out bool inkd);
+                                settings.IsNoClipKeyboardDisabled = inkd;
                                 break;
                         }
                     }

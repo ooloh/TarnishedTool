@@ -35,7 +35,8 @@
                     Background="#92400E" 
                     CornerRadius="3,3,0,0"
                     MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
-                <TextBlock Text="Message" 
+                <TextBlock x:Name="TitleText"
+                           Text="Message" 
                            Foreground="White" 
                            FontWeight="SemiBold"
                            Margin="10,6"/>

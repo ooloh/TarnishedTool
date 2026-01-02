@@ -8,7 +8,7 @@ public interface IUtilityService
     void TriggerNewNgCycle();
     void ToggleCombatMap(bool isEnabled);
     void ToggleDungeonWarp(bool isEnabled);
-    void ToggleNoClip(bool isEnabled);
+    void ToggleNoClip(bool isEnabled, bool isKeyboardHookDisabled);
     void WriteNoClipSpeed(float speedMultiplier);
     float GetSpeed();
     void SetSpeed(float speed);
@@ -30,4 +30,5 @@ public interface IUtilityService
     void ToggleHideChr(bool isEnabled);
     void ToggleHideMap(bool isEnabled);
     void ToggleDrawTilesOnMap(bool isEnabled);
+    void ToggleNoclipKeyboardHook(bool isEnabled);
 }

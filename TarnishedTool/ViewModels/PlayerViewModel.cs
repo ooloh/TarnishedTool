@@ -89,7 +89,7 @@ namespace TarnishedTool.ViewModels
             };
             _playerTick.Tick += PlayerTick;
         }
-        
+
         #region Commands
 
         public ICommand SetRfbsCommand { get; set; }
@@ -367,7 +367,7 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
-        
+
         private bool _isTorrentAnywhereEnabled;
 
         public bool IsTorrentAnywhereEnabled
@@ -437,8 +437,7 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
-        
-        
+
         private int _runeLevel;
 
         public int RuneLevel
@@ -670,7 +669,6 @@ namespace TarnishedTool.ViewModels
         public void SetScadu(int value) => _playerService.SetScadu(value);
         public void SetSpiritAsh(int value) => _playerService.SetSpiritAsh(value);
         public void SetSpeed(float value) => PlayerSpeed = value;
-        
 
         #endregion
 
@@ -936,12 +934,13 @@ namespace TarnishedTool.ViewModels
                 _eventService.SetEvent(NewGameEventIds[i], i == activeIndex);
             }
         }
-        
+
         private void ShowAboutSpEffects()
         {
-            MsgBox.Show("To put it simply SpEffects are effects that get applied to every entity in the game in order to achieve a specific goal in mind, that goal can quite literally be anything the devs have in mind. For example you can lock the player in a certain area, activate the effect of a talisman after the player equips it, apply a buff to the player. You can can also force a boss to follow up a specific move after an attack or trigger an entire phase through it. spEffects also control the hp and damage scaling of enemies and many more things that it's hard to explain in a small info box. If you want to learn about this I would recommend you check out Smithbox by Vawser and slowly get a grasp on how things work as most things are annotated thanks to the community effort so it will be a little easier to navigate.");
+            MsgBox.Show(
+                "To put it simply Special Effects are effects that get applied to every entity in the game in order to achieve a specific goal in mind, that goal can quite literally be anything the devs have in mind. For example you can lock the player in a certain area, activate the effect of a talisman after the player equips it, apply a buff to the player. You can can also force a boss to follow up a specific move after an attack or trigger an entire phase through it. spEffects also control the hp and damage scaling of enemies and many more things that it's hard to explain in a small info box. If you want to learn about this I would recommend you check out Smithbox by Vawser and slowly get a grasp on how things work as most things are annotated thanks to the community effort so it will be a little easier to navigate.",
+                "About Special Effects");
         }
-
 
         #endregion
     }
