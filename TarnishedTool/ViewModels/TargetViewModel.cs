@@ -870,6 +870,7 @@ namespace TarnishedTool.ViewModels
 #if DEBUG
                 Console.WriteLine($@"Locked on target chrIns: 0x{chrIns:X}");
 #endif
+                Console.Write($@"Locked on target chrIns: {_targetService.GetNpcParamId()}");
                 IsFreezeAiEnabled = _targetService.IsAiDisabled();
                 IsTargetingViewEnabled = _targetService.IsTargetViewEnabled();
                 IsNoMoveEnabled = _targetService.IsNoMoveEnabled();

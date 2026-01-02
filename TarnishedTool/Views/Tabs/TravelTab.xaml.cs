@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
 using TarnishedTool.ViewModels;
 
 namespace TarnishedTool.Views.Tabs
@@ -9,6 +10,22 @@ namespace TarnishedTool.Views.Tabs
         {
             InitializeComponent();
             DataContext = travelViewModel;
+        }
+
+        private void GraceItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is TravelViewModel vm && vm.GraceWarpCommand.CanExecute(null))
+            {
+                vm.GraceWarpCommand.Execute(null);
+            }
+        }
+
+        private void BossItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is TravelViewModel vm && vm.BossWarpCommand.CanExecute(null))
+            {
+                vm.BossWarpCommand.Execute(null);
+            }
         }
     }
 }

@@ -249,6 +249,9 @@ namespace TarnishedTool.Services
             return distance - targetPos.capsuleRadius - playerPos.capsuleRadius;
         }
 
+        public int GetNpcParamId() =>
+            memoryService.ReadInt32((IntPtr)memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr) + 0x60);
+
         private IntPtr GetChrCtrlFlagsPtr() =>
             memoryService.FollowPointers(
                 CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using TarnishedTool.Models;
 using TarnishedTool.ViewModels;
@@ -74,5 +75,13 @@ public partial class CreateLoadoutWindow : Window
     {
         DialogResult = true;
         Close();
+    }
+
+    private void Item_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (DataContext is CreateLoadoutViewModel vm && vm.AddItemCommand.CanExecute(null))
+        {
+            vm.AddItemCommand.Execute(null);
+        }
     }
 }

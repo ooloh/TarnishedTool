@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -429,7 +430,7 @@ public class EnemyViewModel : BaseViewModel
     private void SetBossFlags(BossRevive bossRevive, bool isFirstEncounter)
     {
         if (bossRevive.IsDlc && !IsDlcAvailable) return;
-        if (!bossRevive.IsInitializeDeadSet) SetInitializeDead(bossRevive.NpcParamId);
+        if (!bossRevive.IsInitializeDeadSet) SetInitializeDead(bossRevive.NpcParamIds);
     
         if (isFirstEncounter)
         {
@@ -441,10 +442,14 @@ public class EnemyViewModel : BaseViewModel
             _eventService.SetEvent(flag.EventId, flag.SetValue);
     }
 
-    private void SetInitializeDead(uint npcParamId)
+    private void SetInitializeDead(List<uint> npcParamIds)
     {
-        var paramRow = _paramService.GetParamRow(NpcParamTableIndex, NpcParamSlotIndex, npcParamId);
-        _paramService.SetBit(paramRow, InitializeDead.Offset, InitializeDead.Bit, true);
+        foreach (var npcParamId in npcParamIds)
+        {
+            var paramRow = _paramService.GetParamRow(NpcParamTableIndex, NpcParamSlotIndex, npcParamId);
+            _paramService.SetBit(paramRow, InitializeDead.Offset, InitializeDead.Bit, true);
+        }
+        
     }
 
     #endregion

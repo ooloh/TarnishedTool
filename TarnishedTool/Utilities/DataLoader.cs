@@ -310,7 +310,7 @@ namespace TarnishedTool.Utilities
                     Area = area,
                     BossName = parts[2],
                     IsInitializeDeadSet = bool.Parse(parts[3]),
-                    NpcParamId = uint.Parse(parts[4]),
+                    NpcParamIds = ParseNpcParamIds(parts[4]),
                     BlockId = uint.Parse(parts[5]),
                     FirstEncounterFlags = ParseFlags(parts[6]),
                     BossFlags = ParseFlags(parts[7])
@@ -326,7 +326,29 @@ namespace TarnishedTool.Utilities
 
             return bossRevives;
         }
-        
+
+        private static List<uint> ParseNpcParamIds(string npcParamIds)
+        {
+            if (string.IsNullOrWhiteSpace(npcParamIds))
+            {
+                return new List<uint>();
+            }
+    
+            string[] parts = npcParamIds.Split('|');
+    
+            List<uint> idsList = new List<uint>();
+    
+            foreach (var part in parts)
+            {
+                if (!string.IsNullOrWhiteSpace(part))
+                {
+                    idsList.Add(uint.Parse(part));
+                }
+            }
+
+            return idsList;
+        }
+
         private static List<BossFlag> ParseFlags(string flagData)
         {
             var flags = new List<BossFlag>();

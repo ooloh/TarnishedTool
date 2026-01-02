@@ -160,6 +160,7 @@
                                   BorderThickness="0">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
+                                    <EventSetter Event="MouseDoubleClick" Handler="GraceItem_MouseDoubleClick" />
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                     <Setter Property="Padding" Value="8,4" />
                                     <Setter Property="Background" Value="Transparent" />
@@ -445,6 +446,7 @@
                                   BorderThickness="0">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
+                                    <EventSetter Event="MouseDoubleClick" Handler="BossItem_MouseDoubleClick" />
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                     <Setter Property="Padding" Value="8,4" />
                                     <Setter Property="Background" Value="Transparent" />

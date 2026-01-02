@@ -41,4 +41,5 @@ public interface ITargetService
     float[] GetDefenses();
     float GetDist();
 
+    int GetNpcParamId();
 }
