@@ -241,6 +241,19 @@ public class EnemyViewModel : BaseViewModel
             _enemyService.SetTargetViewMaxDist(_reducedTargetViewDistance);
         }
     }
+    
+    
+    private bool _isDrawNavigationRouteEnabled;
+
+    public bool IsDrawNavigationRouteEnabled
+    {
+        get => _isDrawNavigationRouteEnabled;
+        set
+        {
+            SetProperty(ref _isDrawNavigationRouteEnabled, value);
+            _enemyService.ToggleDrawNavigationRoute(_isDrawNavigationRouteEnabled);
+        }
+    }
 
     private bool _isRykardNoMegaEnabled;
 

@@ -127,7 +127,10 @@
                                                FontSize="10" />
                                 </Border>
                             </StackPanel>
-
+                            <CheckBox Content="Draw Navigation Route"
+                                      IsChecked="{Binding IsDrawNavigationRouteEnabled}"
+                                      Grid.Column="2" Grid.Row="0"
+                                      Margin="0,2" />
                         </Grid>
                     </StackPanel>
                 </Border>
