@@ -150,9 +150,10 @@ namespace TarnishedTool
 
                 // if (!_hasCheckedPatch)
                 // {
-                //     if (!PatchManager.Initialize())
+                //     if (!PatchManager.Initialize(_memoryService))
                 //     {
-                //         throw new Exception();
+                //         MsgBox.Show($"Unsupported game version");
+                //         return;
                 //     }
                 //     _hasCheckedPatch = true;
                 // }

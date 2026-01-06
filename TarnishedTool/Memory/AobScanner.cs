@@ -54,11 +54,7 @@ namespace TarnishedTool.Memory
                 () => CSDbgEvent.Base = FindAddressByPattern(Pattern.CSDbgEvent),
                 () => UserInputManager.Base = FindAddressByPattern(Pattern.UserInputManager),
                 () => CSTrophy.Base = FindAddressByPattern(Pattern.CSTrophy),
-                () => DrawPathing.Base = FindAddressByChain(Pattern.DrawPathing,
-                    AddressJump.Relative(0, 3, 7),
-                    AddressJump.Absolute(0xA, 2),
-                    AddressJump.Relative(0, 2, 6)
-                    ),
+                () => DrawPathing.Base = FindAddressByPattern(Pattern.DrawPathing) - 0x10,
                 () => MapDebugFlags.Base = FindAddressByPattern(Pattern.MapDebugFlags),
                 () => Functions.GraceWarp = FindAddressByPattern(Pattern.GraceWarp).ToInt64(),
                 () => Functions.SetEvent = FindAddressByPattern(Pattern.SetEvent).ToInt64(),

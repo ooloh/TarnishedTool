@@ -3,29 +3,21 @@
 using System;
 using System.Diagnostics;
 using TarnishedTool.Memory;
+using TarnishedTool.Services;
 
 namespace TarnishedTool.Utilities;
 
 public static class PatchManager
 {
-    public static bool Initialize()
+    public static bool Initialize(MemoryService memoryService)
     {
-        var exePath = ExeManager.GetExePath();
-        if (exePath is null)
-        {
-            MsgBox.Show("Could not find Elden Ring installation.");
-            return false;
-        }
+        if (memoryService.TargetProcess == null) return false;
+        var process = memoryService.TargetProcess;
+        var module = process.MainModule;
+        var fileVersion = module?.FileVersionInfo.FileVersion;
+        Console.WriteLine(fileVersion);
 
-        var versionInfo = FileVersionInfo.GetVersionInfo(exePath);
-        var fileVersion = versionInfo.FileVersion;
+        return Offsets.Initialize(fileVersion);
 
-        if (!Offsets.Initialize(fileVersion))
-        {
-            MsgBox.Show($"Unsupported game version: {fileVersion}");
-            return false;
-        }
-
-        return true;
     }
 }

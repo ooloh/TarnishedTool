@@ -13,7 +13,15 @@ namespace TarnishedTool.Memory
         
         public static bool Initialize(string fileVersion)
         {
-            return false;
+            _version = fileVersion switch
+            {
+                var v when v.StartsWith("2.4.0.") => GameVersion.Version2_4_0,
+                var v when v.StartsWith("2.6.0.") => GameVersion.Version2_6_0,
+                var v when v.StartsWith("2.6.1.") => GameVersion.Version2_6_1,
+                _ => null
+            };
+
+            return _version.HasValue;
         }
 
         public static class WorldChrMan
