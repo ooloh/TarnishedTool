@@ -239,7 +239,7 @@ namespace TarnishedTool.Services
         public void ToggleDebugFlag(int offset, bool isEnabled, bool needsReminder = false)
         {
             if (needsReminder) reminderService.TrySetReminder();
-            memoryService.WriteUInt8(WorldChrManDbg.Base + offset, isEnabled ? 1 : 0);
+            memoryService.WriteUInt8(ChrDbgFlags.Base + offset, isEnabled ? 1 : 0);
         }
 
         public void ToggleNoDamage(bool isFreezeHealthEnabled)

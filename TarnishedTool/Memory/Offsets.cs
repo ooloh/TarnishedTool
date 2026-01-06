@@ -425,23 +425,43 @@ namespace TarnishedTool.Memory
         {
             public static IntPtr Base;
 
-            public const int PlayerNoDeath = 0x8;
-            public const int AllChrsSpheres = 0x9;
-            public const int OneShot = 0xA;
-            public const int InfiniteGoods = 0xB;
-            public const int InfiniteStam = 0xC;
-            public const int InfiniteFp = 0xD;
-            public const int InfiniteArrows = 0xE;
-            public const int Hidden = 0x10;
-            public const int Silent = 0x11;
-            public const int AllNoDeath = 0x12;
-            public const int AllNoDamage = 0x13;
-            public const int AllNoHit = 0x14;
-            public const int AllNoAttack = 0x15;
-            public const int AllNoMove = 0x16;
-            public const int AllDisableAi = 0x17;
+            // public const int PlayerNoDeath = 0x8;
+            // public const int AllChrsSpheres = 0x9;
+            // public const int OneShot = 0xA;
+            // public const int InfiniteGoods = 0xB;
+            // public const int InfiniteStam = 0xC;
+            // public const int InfiniteFp = 0xD;
+            // public const int InfiniteArrows = 0xE;
+            // public const int Hidden = 0x10;
+            // public const int Silent = 0x11;
+            // public const int AllNoDeath = 0x12;
+            // public const int AllNoDamage = 0x13;
+            // public const int AllNoHit = 0x14;
+            // public const int AllNoAttack = 0x15;
+            // public const int AllNoMove = 0x16;
+            // public const int AllDisableAi = 0x17;
             public const int PoiseBarsFlag = 0x69;
         }
+        
+        public static class ChrDbgFlags
+        {
+            public static IntPtr Base;
+            public const int PlayerNoDeath = 0x0;
+            public const int OneShot = 0x2;
+            public const int InfiniteGoods = 0x3;
+            public const int InfiniteStam = 0x4;
+            public const int InfiniteFp = 0x5;
+            public const int InfiniteArrows = 0x6;
+            public const int Hidden = 0x8;
+            public const int Silent = 0x9;
+            public const int AllNoDeath = 0xA;
+            public const int AllNoDamage = 0xB;
+            public const int AllNoHit = 0xC;
+            public const int AllNoAttack = 0xD;
+            public const int AllNoMove = 0xE;
+            public const int AllDisableAi = 0xF;
+        }
+        
 
         public static class CsDlcImp
         {

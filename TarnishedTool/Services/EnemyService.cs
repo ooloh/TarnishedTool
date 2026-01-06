@@ -27,30 +27,30 @@ public class EnemyService(MemoryService memoryService, HookManager hookManager, 
     }
 
     public void ToggleNoDeath(bool isEnabled) =>
-        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoDeath, isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllNoDeath, isEnabled ? 1 : 0);
 
     public void ToggleNoDamage(bool isEnabled) =>
-        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoDamage, isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllNoDamage, isEnabled ? 1 : 0);
 
     public void ToggleNoHit(bool isEnabled) =>
-        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoHit, isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllNoHit, isEnabled ? 1 : 0);
 
     public void ToggleNoAttack(bool isEnabled)
     {
         reminderService.TrySetReminder();
-        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoAttack, isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllNoAttack, isEnabled ? 1 : 0);
     }
 
     public void ToggleNoMove(bool isEnabled)
     {
         reminderService.TrySetReminder();
-        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoMove, isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllNoMove, isEnabled ? 1 : 0);
     }
 
     public void ToggleDisableAi(bool isEnabled)
     {
         reminderService.TrySetReminder();
-        memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllDisableAi, isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllDisableAi, isEnabled ? 1 : 0);
     }
 
     public void ToggleTargetingView(bool isTargetingViewEnabled) =>

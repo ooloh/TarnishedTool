@@ -52,6 +52,7 @@ namespace TarnishedTool.Memory
                 () => MsgRepository.Base = FindAddressByPattern(Pattern.MsgRepository),
                 () => CSFlipperImp.Base = FindAddressByPattern(Pattern.CSFlipperImp),
                 () => CSDbgEvent.Base = FindAddressByPattern(Pattern.CSDbgEvent),
+                () => ChrDbgFlags.Base = FindAddressByPattern(Pattern.ChrDbgFlags),
                 () => UserInputManager.Base = FindAddressByPattern(Pattern.UserInputManager),
                 () => CSTrophy.Base = FindAddressByPattern(Pattern.CSTrophy),
                 () => DrawPathing.Base = FindAddressByPattern(Pattern.DrawPathing) - 0x10,
@@ -188,6 +189,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"SoloParamRepositoryImp.Base: 0x{SoloParamRepositoryImp.Base.ToInt64():X}");
             Console.WriteLine($@"MsgRepository.Base: 0x{MsgRepository.Base.ToInt64():X}");
             Console.WriteLine($@"DrawPathing.Base: 0x{DrawPathing.Base.ToInt64():X}");
+            Console.WriteLine($@"ChrDbgFlags.Base: 0x{ChrDbgFlags.Base.ToInt64():X}");
 
             Console.WriteLine($@"Patches.NoLogo: 0x{Patches.NoLogo.ToInt64():X}");
             Console.WriteLine($@"Patches.NoRunesFromEnemies: 0x{Patches.NoRunesFromEnemies.ToInt64():X}");

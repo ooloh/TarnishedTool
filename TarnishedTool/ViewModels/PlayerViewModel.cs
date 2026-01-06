@@ -222,7 +222,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (SetProperty(ref _isNoDeathEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.PlayerNoDeath, _isNoDeathEnabled);
+                    _playerService.ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, _isNoDeathEnabled);
                 }
             }
         }
@@ -264,7 +264,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (SetProperty(ref _isInfiniteStaminaEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteStam, _isInfiniteStaminaEnabled);
+                    _playerService.ToggleDebugFlag(ChrDbgFlags.InfiniteStam, _isInfiniteStaminaEnabled);
                 }
             }
         }
@@ -278,7 +278,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (SetProperty(ref _isInfiniteConsumablesEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteGoods, _isInfiniteConsumablesEnabled);
+                    _playerService.ToggleDebugFlag(ChrDbgFlags.InfiniteGoods, _isInfiniteConsumablesEnabled);
                 }
             }
         }
@@ -292,7 +292,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (SetProperty(ref _isInfiniteArrowsEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteArrows, _isInfiniteArrowsEnabled);
+                    _playerService.ToggleDebugFlag(ChrDbgFlags.InfiniteArrows, _isInfiniteArrowsEnabled);
                 }
             }
         }
@@ -306,7 +306,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (SetProperty(ref _isInfiniteFpEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteFp, _isInfiniteFpEnabled);
+                    _playerService.ToggleDebugFlag(ChrDbgFlags.InfiniteFp, _isInfiniteFpEnabled);
                 }
             }
         }
@@ -320,7 +320,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (SetProperty(ref _isOneShotEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.OneShot, _isOneShotEnabled);
+                    _playerService.ToggleDebugFlag(ChrDbgFlags.OneShot, _isOneShotEnabled);
                 }
             }
         }
@@ -348,7 +348,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (SetProperty(ref _isSilentEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Silent, _isSilentEnabled, true);
+                    _playerService.ToggleDebugFlag(ChrDbgFlags.Silent, _isSilentEnabled, true);
                 }
             }
         }
@@ -362,7 +362,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (SetProperty(ref _isHiddenEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Hidden, _isHiddenEnabled, true);
+                    _playerService.ToggleDebugFlag(ChrDbgFlags.Hidden, _isHiddenEnabled, true);
                 }
             }
         }
@@ -723,15 +723,15 @@ namespace TarnishedTool.ViewModels
 
         private void OnGameFirstLoaded()
         {
-            if (IsNoDeathEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.PlayerNoDeath, true);
-            if (IsInfiniteStaminaEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteStam, true);
-            if (IsInfiniteConsumablesEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteGoods, true);
-            if (IsInfiniteArrowsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteArrows, true);
-            if (IsInfiniteFpEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteFp, true);
-            if (IsOneShotEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.OneShot, true);
+            if (IsNoDeathEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, true);
+            if (IsInfiniteStaminaEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.InfiniteStam, true);
+            if (IsInfiniteConsumablesEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.InfiniteGoods, true);
+            if (IsInfiniteArrowsEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.InfiniteArrows, true);
+            if (IsInfiniteFpEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.InfiniteFp, true);
+            if (IsOneShotEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.OneShot, true);
             if (IsInfinitePoiseEnabled) _playerService.ToggleInfinitePoise(true);
-            if (IsSilentEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Silent, true);
-            if (IsHiddenEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Hidden, true);
+            if (IsSilentEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.Silent, true);
+            if (IsHiddenEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.Hidden, true);
             if (IsNoRuneGainEnabled) _playerService.ToggleNoRuneGain(true);
             if (IsNoRuneArcLossEnabled) _playerService.ToggleNoRuneArcLoss(true);
             if (IsNoRuneLossEnabled) _playerService.ToggleNoRuneLoss(true);
