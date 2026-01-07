@@ -32,42 +32,6 @@ namespace TarnishedTool.Memory
             return true;
         }
 
-        private static void InitializeBaseAddresses(IntPtr moduleBase)
-        {
-            WorldChrMan.Base = moduleBase + Version switch
-            {
-                GameVersion.Version2_0_1 => 0x0,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D65F88,
-                _ => 0
-            };
-
-
-            FieldArea.Base = moduleBase + Version switch
-            {
-                GameVersion.Version2_0_1 => 0x0,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D691D8,
-                _ => 0
-            };
-
-            LuaEventMan.Base = moduleBase + Version switch
-            {
-                GameVersion.Version2_0_1 => 0x0,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D67E48,
-            };
-            
-            VirtualMemFlag.Base = moduleBase + Version switch
-            {
-                GameVersion.Version2_0_1 => 0x0,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D68448,
-            };
-
-        }
-        
-
         public static class WorldChrMan
         {
             public static IntPtr Base;
@@ -624,6 +588,999 @@ namespace TarnishedTool.Memory
             public static IntPtr IsWhistleDisabled;
             public static IntPtr IsWorldPaused;
             public static IntPtr GetItemChance;
+        }
+
+        private static void InitializeBaseAddresses(IntPtr moduleBase)
+        {
+            WorldChrMan.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x3D65F88,
+                _ => 0
+            };
+
+            FieldArea.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x3D691D8,
+                _ => 0
+            };
+
+            LuaEventMan.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x3D67E48,
+                _ => 0
+            };
+
+            VirtualMemFlag.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x3D68448,
+                _ => 0
+            };
+
+            DamageManager.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0, // Fill from debug output
+                _ => 0
+            };
+
+            MenuMan.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            TargetView.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            GameMan.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            WorldHitMan.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            WorldChrManDbg.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            GameDataMan.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            CsDlcImp.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            MapItemManImpl.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            FD4PadManager.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            CSEmkSystem.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            WorldAreaTimeImpl.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            GroupMask.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            SoloParamRepositoryImp.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            MsgRepository.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            CSFlipperImp.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            CSDbgEvent.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            ChrDbgFlags.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            UserInputManager.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            CSTrophy.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            DrawPathing.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            MapDebugFlags.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            // Functions
+            Functions.GraceWarp = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.SetEvent = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.SetSpEffect = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.GiveRunes = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.LookupByFieldInsHandle = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.WarpToBlock = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.ExternalEventTempCtor = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.ExecuteTalkCommand = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.GetEvent = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.GetPlayerItemQuantityById = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.ItemSpawn = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.MatrixVectorProduct = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.ChrInsByHandle = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.FindAndRemoveSpEffect = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.EmevdSwitch = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.EmkEventInsCtor = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.GetMovement = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.GetChrInsByEntityId = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.NpcEzStateTalkCtor = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Functions.EzStateEnvQueryImplCtor = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            // Hooks
+            Hooks.UpdateCoords = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.InAirTimer = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.NoClipKb = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.NoClipTriggers = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.HasSpEffect = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.BlueTargetView = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.LockedTargetPtr = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.InfinitePoise = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.ShouldUpdateAi = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.GetForceActIdx = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.TargetNoStagger = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.AttackInfo = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.WarpCoordWrite = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.WarpAngleWrite = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.LionCooldownHook = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.SetActionRequested = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.NoMapAcquiredPopup = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.NoGrab = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            Hooks.LoadScreenMsgLookup = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0L,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_6_1 => 0x0L,
+                _ => 0L
+            };
+
+            // Patches
+            Patches.CanFastTravel = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.NoRunesFromEnemies = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.NoRuneArcLoss = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.NoRuneLossOnDeath = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.OpenMap = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.CloseMap = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.EnableFreeCam = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.CanDrawEvents1 = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.CanDrawEvents2 = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.GetShopEvent = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.NoLogo = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.DebugFont = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.PlayerSound = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.IsTorrentDisabledInUnderworld = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.IsWhistleDisabled = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.IsWorldPaused = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            Patches.GetItemChance = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x0,
+                _ => 0
+            };
+
+            // Don't forget the derived one
+            Hooks.HookedDeathFunction = Patches.NoRuneLossOnDeath - 7;
         }
     }
 }

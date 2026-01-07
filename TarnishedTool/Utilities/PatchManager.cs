@@ -1,5 +1,6 @@
 ﻿// 
 
+using System;
 using TarnishedTool.Memory;
 using TarnishedTool.Services;
 
@@ -13,6 +14,8 @@ public static class PatchManager
         var module = memoryService.TargetProcess.MainModule;
         var fileVersion = module?.FileVersionInfo.FileVersion;
         var moduleBase = memoryService.BaseAddress;
+        
+        Console.WriteLine(fileVersion);
 
         return Offsets.Initialize(fileVersion, moduleBase);
     }
