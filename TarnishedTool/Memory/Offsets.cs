@@ -10,8 +10,8 @@ namespace TarnishedTool.Memory
         public static GameVersion Version => _version
                                              ?? throw new InvalidOperationException(
                                                  "Offsets not initialized. Call PatchManager.Initialize() first.");
-        
-        public static bool Initialize(string fileVersion)
+
+        public static bool Initialize(string fileVersion, IntPtr moduleBase)
         {
             _version = fileVersion switch
             {
@@ -25,8 +25,48 @@ namespace TarnishedTool.Memory
                 _ => null
             };
 
-            return _version.HasValue;
+            if (!_version.HasValue)
+                return false;
+
+            InitializeBaseAddresses(moduleBase);
+            return true;
         }
+
+        private static void InitializeBaseAddresses(IntPtr moduleBase)
+        {
+            WorldChrMan.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x3D65F88,
+                _ => 0
+            };
+
+
+            FieldArea.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x3D691D8,
+                _ => 0
+            };
+
+            LuaEventMan.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x3D67E48,
+            };
+            
+            VirtualMemFlag.Base = moduleBase + Version switch
+            {
+                GameVersion.Version2_0_1 => 0x0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_6_1 => 0x3D68448,
+            };
+
+        }
+        
 
         public static class WorldChrMan
         {
@@ -217,7 +257,7 @@ namespace TarnishedTool.Memory
             public const int CamMode = 0xC8; // 1 for free cam
             public const int CSDebugCam = 0xD0;
             public const int CamCoords = 0x40;
-            
+
             public static int DrawTiles1 => Version switch
             {
                 GameVersion.Version2_0_1 => 0x60C,
@@ -229,9 +269,9 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_0_1 => 0x60E,
                 _ => 0x61E,
             };
-            
+
             public const int WorldInfoOwner = 0x10;
-            
+
             public static int ShouldDrawMiniMap => Version switch
             {
                 GameVersion.Version2_0_1 => 0xB3918,
@@ -343,7 +383,7 @@ namespace TarnishedTool.Memory
             public static IntPtr Base;
 
             public const int PlayerGameData = 0x8;
-            
+
             public static int TorrentHandle => Version switch
             {
                 GameVersion.Version2_0_1 => 0x930,
@@ -391,20 +431,18 @@ namespace TarnishedTool.Memory
             public static IntPtr Base;
 
             public const int ShouldQuitout = 0x10;
-    
+
             public static int ForceSave => Version switch
             {
                 GameVersion.Version2_0_1 => 0xB42,
                 _ => 0xb72,
             };
-            
-            
+
             public static int ShouldStartNewGame => Version switch
             {
                 GameVersion.Version2_0_1 => 0xB4D,
                 _ => 0xB7D,
             };
-      
         }
 
         public static class MapItemManImpl
@@ -445,7 +483,7 @@ namespace TarnishedTool.Memory
         public static class CSFlipperImp
         {
             public static IntPtr Base;
-            
+
             public static int GameSpeed => Version switch
             {
                 GameVersion.Version2_0_1 => 0x2D4,
@@ -458,8 +496,7 @@ namespace TarnishedTool.Memory
             public static IntPtr Base;
             public const int ShowAllMaps = 0x0;
             public const int ShowAllGraces = 0x1;
-            
-            
+
             public static int ShowMapTiles => Version switch
             {
                 GameVersion.Version2_0_1 => 0x5,
@@ -488,7 +525,7 @@ namespace TarnishedTool.Memory
             // public const int AllDisableAi = 0x17;
             public const int PoiseBarsFlag = 0x69;
         }
-        
+
         public static class ChrDbgFlags
         {
             public static IntPtr Base;
@@ -507,7 +544,6 @@ namespace TarnishedTool.Memory
             public const int AllNoMove = 0xE;
             public const int AllDisableAi = 0xF;
         }
-        
 
         public static class CsDlcImp
         {

@@ -152,10 +152,15 @@ namespace TarnishedTool
                 {
                     if (!PatchManager.Initialize(_memoryService))
                     {
-                        MsgBox.Show($"Unsupported game version");
-                        return;
+                        _aobScanner.Scan();
+                        _stateService.Publish(State.Attached);
+#if DEBUG
+                        Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
+#endif
                     }
+
                     _hasCheckedPatch = true;
+                    _stateService.Publish(State.Attached);
                 }
 
                 if (!_hasScanned)

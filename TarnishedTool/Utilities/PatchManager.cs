@@ -1,7 +1,5 @@
 ﻿// 
 
-using System;
-using System.Diagnostics;
 using TarnishedTool.Memory;
 using TarnishedTool.Services;
 
@@ -12,14 +10,10 @@ public static class PatchManager
     public static bool Initialize(MemoryService memoryService)
     {
         if (memoryService.TargetProcess == null) return false;
-        var process = memoryService.TargetProcess;
-        var module = process.MainModule;
+        var module = memoryService.TargetProcess.MainModule;
         var fileVersion = module?.FileVersionInfo.FileVersion;
-        Console.WriteLine(fileVersion);
+        var moduleBase = memoryService.BaseAddress;
 
-        return Offsets.Initialize(fileVersion);
-
-
-        
+        return Offsets.Initialize(fileVersion, moduleBase);
     }
 }
