@@ -1,5 +1,6 @@
 using System;
 using TarnishedTool.Enums;
+using static TarnishedTool.Enums.GameVersion;
 
 namespace TarnishedTool.Memory
 {
@@ -8,22 +9,26 @@ namespace TarnishedTool.Memory
         private static GameVersion? _version;
 
         public static GameVersion Version => _version
-                                             ?? GameVersion.Version2_6_1;
+                                             ?? Version2_6_1;
 
         public static bool Initialize(string fileVersion, IntPtr moduleBase)
         {
             _version = fileVersion switch
             {
-                var v when v.StartsWith("1.2.0.") => GameVersion.Version1_2_0,
-                var v when v.StartsWith("1.9.1.") => GameVersion.Version1_9_1,
-                var v when v.StartsWith("2.0.1.") => GameVersion.Version2_0_1,
-                var v when v.StartsWith("2.2.0.") => GameVersion.Version2_2_0,
-                var v when v.StartsWith("2.2.3.") => GameVersion.Version2_2_3,
-                var v when v.StartsWith("2.3.0.") => GameVersion.Version2_3_0,
-                var v when v.StartsWith("2.4.0.") => GameVersion.Version2_4_0,
-                var v when v.StartsWith("2.5.0.") => GameVersion.Version2_5_0,
-                var v when v.StartsWith("2.6.0.") => GameVersion.Version2_6_0,
-                var v when v.StartsWith("2.6.1.") => GameVersion.Version2_6_1,
+                var v when v.StartsWith("1.2.0.") => Version1_2_0,
+                var v when v.StartsWith("1.2.1.") => Version1_2_1,
+                var v when v.StartsWith("1.8.0.") => Version1_8_0,
+                var v when v.StartsWith("1.8.1.") => Version1_8_1,
+                var v when v.StartsWith("1.9.0.") => Version1_9_0,
+                var v when v.StartsWith("1.9.1.") => Version1_9_1,
+                var v when v.StartsWith("2.0.1.") => Version2_0_1,
+                var v when v.StartsWith("2.2.0.") => Version2_2_0,
+                var v when v.StartsWith("2.2.3.") => Version2_2_3,
+                var v when v.StartsWith("2.3.0.") => Version2_3_0,
+                var v when v.StartsWith("2.4.0.") => Version2_4_0,
+                var v when v.StartsWith("2.5.0.") => Version2_5_0,
+                var v when v.StartsWith("2.6.0.") => Version2_6_0,
+                var v when v.StartsWith("2.6.1.") => Version2_6_1,
                 _ => null
             };
 
@@ -226,13 +231,13 @@ namespace TarnishedTool.Memory
 
             public static int DrawTiles1 => Version switch
             {
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x60C,
+                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x60C,
                 _ => 0x61C,
             };
 
             public static int DrawTiles2 => Version switch
             {
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x60E,
+                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x60E,
                 _ => 0x61E,
             };
 
@@ -240,7 +245,7 @@ namespace TarnishedTool.Memory
 
             public static int ShouldDrawMiniMap => Version switch
             {
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0xB3918,
+                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0xB3918,
                 _ => 0xB3368,
             };
         }
@@ -352,7 +357,7 @@ namespace TarnishedTool.Memory
 
             public static int TorrentHandle => Version switch
             {
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x930,
+                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x930,
                 _ => 0x950,
             };
 
@@ -400,19 +405,19 @@ namespace TarnishedTool.Memory
 
             public static int StoredTime => Version switch
             {
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x18,
+                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x18,
                 _ => 0x20,
             };
 
             public static int ForceSave => Version switch
             {
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0xB42,
+                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0xB42,
                 _ => 0xb72,
             };
 
             public static int ShouldStartNewGame => Version switch
             {
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0xB4D,
+                Version1_8_0 or Version1_8_1 or Version1_9_1 or Version2_0_1 => 0xB4D,
                 _ => 0xB7D,
             };
         }
@@ -458,7 +463,7 @@ namespace TarnishedTool.Memory
 
             public static int GameSpeed => Version switch
             {
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x2D4,
+                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x2D4,
                 _ => 0x2CC,
             };
         }
@@ -471,7 +476,7 @@ namespace TarnishedTool.Memory
 
             public static int ShowMapTiles => Version switch
             {
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x5,
+                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x5,
                 _ => 0x6,
             };
         }
@@ -586,1130 +591,1195 @@ namespace TarnishedTool.Memory
         {
             WorldChrMan.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C50268,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDCDD8,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D65F88,
+                Version1_2_0 => 0x3C50268,
+                Version1_2_1 => 0x3C50288,
+                Version1_8_0 or Version1_8_1 => 0x3CD9998,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDCDD8,
+                Version2_2_0 => 0x3D65F88,
+                Version2_2_3 or Version2_3_0 => 0x3D65FA8,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D65F88,
                 _ => 0
             };
 
             FieldArea.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C53470,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDFFC0,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D691D8,
+                Version1_2_0 => 0x3C53470,
+                Version1_2_1 => 0x3C53490,
+                Version1_8_0 or Version1_8_1 => 0x3CDCB80,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDFFC0,
+                Version2_2_0 => 0x3D691D8,
+                Version2_2_3 or Version2_3_0 => 0x3D691F8,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D691D8,
                 _ => 0
             };
 
             LuaEventMan.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C520F8,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDEC38,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D67E48,
+                Version1_2_0 => 0x3C520F8,
+                Version1_2_1 => 0x3C52118,
+                Version1_8_0 or Version1_8_1 => 0x3CDB7F8,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDEC38,
+                Version2_2_0 => 0x3D67E48,
+                Version2_2_3 or Version2_3_0 => 0x3D67E68,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D67E48,
                 _ => 0
             };
 
             VirtualMemFlag.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C526E8,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDF238,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D68448,
+                Version1_2_0 => 0x3C526E8,
+                Version1_2_1 => 0x3C52708,
+                Version1_8_0 or Version1_8_1 => 0x3CDBDF8,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDF238,
+                Version2_2_0 => 0x3D68448,
+                Version2_2_3 or Version2_3_0 => 0x3D68468,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D68448,
                 _ => 0
             };
 
             DamageManager.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C50658,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDD1A8,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D66378,
+                Version1_2_0 => 0x3C50658,
+                Version1_2_1 => 0x3C50678,
+                Version1_8_0 or Version1_8_1 => 0x3CD9D68,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDD1A8,
+                Version2_2_0 => 0x3D66378,
+                Version2_2_3 or Version2_3_0 => 0x3D66398,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D66378,
                 _ => 0
             };
 
             MenuMan.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C55B30,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CE2580,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D6B7B0,
+                Version1_2_0 => 0x3C55B30,
+                Version1_2_1 => 0x3C55B50,
+                Version1_8_0 or Version1_8_1 => 0x3CDF140,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CE2580,
+                Version2_2_0 => 0x3D6B7B0,
+                Version2_2_3 or Version2_3_0 => 0x3D6B7D0,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D6B7B0,
                 _ => 0
             };
 
             TargetView.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C4C4EA,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CD90BA,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D6226B,
+                Version1_2_0 => 0x3C4C4EA,
+                Version1_2_1 => 0x3C4C50A,
+                Version1_8_0 or Version1_8_1 => 0x3CD5C7A,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CD90BA,
+                Version2_2_0 => 0x3D6226B,
+                Version2_2_3 or Version2_3_0 => 0x3D6228B,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D6226B,
                 _ => 0
             };
 
             GameMan.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C53B88,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CE0708,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D69918,
+                Version1_2_0 => 0x3C53B88,
+                Version1_2_1 => 0x3C53BA8,
+                Version1_8_0 or Version1_8_1 => 0x3CDD2C8,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CE0708,
+                Version2_2_0 => 0x3D69918,
+                Version2_2_3 or Version2_3_0 => 0x3D69938,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D69918,
                 _ => 0
             };
 
             WorldHitMan.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C54320,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CE0EB0,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D6A0E0,
+                Version1_2_0 => 0x3C54320,
+                Version1_2_1 => 0x3C54340,
+                Version1_8_0 or Version1_8_1 => 0x3CDDA70,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CE0EB0,
+                Version2_2_0 => 0x3D6A0E0,
+                Version2_2_3 or Version2_3_0 => 0x3D6A100,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D6A0E0,
                 _ => 0
             };
 
             WorldChrManDbg.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C50478,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDD010,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D66198,
+                Version1_2_0 => 0x3C50478,
+                Version1_2_1 => 0x3C50498,
+                Version1_8_0 or Version1_8_1 => 0x3CD9BD0,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDD010,
+                Version2_2_0 => 0x3D66198,
+                Version2_2_3 or Version2_3_0 => 0x3D661B8,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D66198,
                 _ => 0
             };
 
             GameDataMan.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C481B8,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CD4D88,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D5DF38,
+                Version1_2_0 => 0x3C481B8,
+                Version1_2_1 => 0x3C481D8,
+                Version1_8_0 or Version1_8_1 => 0x3CD1948,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CD4D88,
+                Version2_2_0 => 0x3D5DF38,
+                Version2_2_3 or Version2_3_0 => 0x3D5DF58,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D5DF38,
                 _ => 0
             };
 
             CsDlcImp.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C705D8,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CFD838,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D86BD8,
+                Version1_2_0 => 0x3C705D8,
+                Version1_2_1 => 0x3C701F8,
+                Version1_8_0 or Version1_8_1 => 0x3CFA3F8,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CFD838,
+                Version2_2_0 => 0x3D86BD8,
+                Version2_2_3 or Version2_3_0 => 0x3D86BF8,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D86BD8,
                 _ => 0
             };
 
             MapItemManImpl.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C51CF0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDE840,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D67A50,
+                Version1_2_0 => 0x3C51CF0,
+                Version1_2_1 => 0x3C51D10,
+                Version1_8_0 or Version1_8_1 => 0x3CDB400,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDE840,
+                Version2_2_0 => 0x3D67A50,
+                Version2_2_3 or Version2_3_0 => 0x3D67A70,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D67A50,
                 _ => 0
             };
 
             FD4PadManager.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x45B4D50,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x485DC20,
+                Version1_2_0 => 0x0,
+                Version1_2_1 => 0x45251F0,
+                Version1_8_0 or Version1_8_1 => 0x45B1920,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x45B4D50,
+                Version2_2_0 => 0x485DB70,
+                Version2_2_3 or Version2_3_0 => 0x485DB90,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x485DC20,
                 _ => 0
             };
 
             CSEmkSystem.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C51E78,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDE9C0,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D67BD0,
+                Version1_2_0 => 0x3C51E78,
+                Version1_2_1 => 0x3C51E98,
+                Version1_8_0 or Version1_8_1 => 0x3CDB580,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDE9C0,
+                Version2_2_0 => 0x3D67BD0,
+                Version2_2_3 or Version2_3_0 => 0x3D67BF0,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D67BD0,
                 _ => 0
             };
 
             WorldAreaTimeImpl.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C535A0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CE00F0,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D692F8,
+                Version1_2_0 => 0x3C535A0,
+                Version1_2_1 => 0x3C535C0,
+                Version1_8_0 or Version1_8_1 => 0x3CDCCB0,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CE00F0,
+                Version2_2_0 => 0x3D692F8,
+                Version2_2_3 or Version2_3_0 => 0x3D69318,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D692F8,
                 _ => 0
             };
 
             GroupMask.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3A367E0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3AC2AE8,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3B33D00,
+                Version1_2_0 => 0x3A367E0,
+                Version1_2_1 => 0x3A36800,
+                Version1_8_0 or Version1_8_1 => 0x3ABFAE8,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3AC2AE8,
+                Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0
+                    or Version2_5_0
+                    or Version2_6_0
+                    or Version2_6_1 => 0x3B33D00,
                 _ => 0
             };
 
-            SoloParamRepositoryImp.Base = moduleBase + Version switch
-            {
-                GameVersion.Version1_2_0 => 0x4473138,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CF8BC8,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D81EE8,
-                _ => 0
-            };
-
-            MsgRepository.Base = moduleBase + Version switch
-            {
-                GameVersion.Version1_2_0 => 0x3C66D48,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CF4218,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D7D4F8,
-                _ => 0
-            };
 
             CSFlipperImp.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x4473138,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x4500708,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x4589AD8,
+                Version1_2_0 => 0x4473138,
+                Version1_2_1 => 0x4472D58,
+                Version1_8_0 or Version1_8_1 => 0x44FD2C8,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x4500708,
+                Version2_2_0 => 0x4589AD8,
+                Version2_2_3 or Version2_3_0 => 0x4589AF8,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x4589AD8,
                 _ => 0
             };
 
             CSDbgEvent.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C522A0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDEDE8,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D67FF8,
+                Version1_2_0 => 0x3C522A0,
+                Version1_2_1 => 0x3C522C0,
+                Version1_8_0 or Version1_8_1 => 0x3CDB9A8,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDEDE8,
+                Version2_2_0 => 0x3D67FF8,
+                Version2_2_3 or Version2_3_0 => 0x3D68018,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D67FF8,
                 _ => 0
             };
 
-            ChrDbgFlags.Base = moduleBase + Version switch
-            {
-                GameVersion.Version1_2_0 => 0x3C50480,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDCFE8,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D661A0,
-                _ => 0
-            };
 
             UserInputManager.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x45255C8,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x45B4D48,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x485DC18,
+                Version1_2_0 => 0x45255C8,
+                Version1_2_1 => 0x45251E8,
+                Version1_8_0 or Version1_8_1 => 0x45B1918,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x45B4D48,
+                Version2_2_0 => 0x485DB68,
+                Version2_2_3 or Version2_3_0 => 0x485DB88,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x485DC18,
                 _ => 0
             };
 
             CSTrophy.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x4472AD8,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x45000A8,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x4589478,
+                Version1_2_0 => 0x4472AD8,
+                Version1_2_1 => 0x44726F8,
+                Version1_8_0 or Version1_8_1 => 0x44FCC68,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x45000A8,
+                Version2_2_0 => 0x4589478,
+                Version2_2_3 or Version2_3_0 => 0x4589498,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x4589478,
+                _ => 0
+            };
+
+
+            MapDebugFlags.Base = moduleBase + Version switch
+            {
+                Version1_2_0 => 0x3C56BE0,
+                Version1_2_1 => 0x3C56C00,
+                Version1_8_0 or Version1_8_1 => 0x3CE0940,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CE3D80,
+                Version2_2_0 => 0x3D6CFC0,
+                Version2_2_3 or Version2_3_0 => 0x3D6CFE0,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D6CFC0,
+                _ => 0
+            };
+
+            SoloParamRepositoryImp.Base = moduleBase + Version switch
+            {
+                Version1_2_0 => 0x4473138,
+                Version1_2_1 => 0x3C6B598,
+                Version1_8_0 or Version1_8_1 => 0x3CF5788,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CF8BC8,
+                Version2_2_0 => 0x3D81EE8,
+                Version2_2_3 or Version2_3_0 => 0x3D81F08,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D81EE8,
+                _ => 0
+            };
+
+            MsgRepository.Base = moduleBase + Version switch
+            {
+                Version1_2_0 => 0x3C66D48,
+                Version1_2_1 => 0x3C66D68,
+                Version1_8_0 or Version1_8_1 => 0x3CF0DD8,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CF4218,
+                Version2_2_0 => 0x3D7D4F8,
+                Version2_2_3 or Version2_3_0 => 0x3D7D518,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D7D4F8,
+                _ => 0
+            };
+
+            ChrDbgFlags.Base = moduleBase + Version switch
+            {
+                Version1_2_0 => 0x3C50480,
+                Version1_2_1 => 0x3C504A0,
+                Version1_8_0 or Version1_8_1 => 0x3CD9B97,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDCFE8,
+                Version2_2_0 => 0x3D661A0,
+                Version2_2_3 or Version2_3_0 => 0x3D661C0,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D661A0,
                 _ => 0
             };
 
             DrawPathing.Base = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C4C030,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CD8C00,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D61DB0,
+                Version1_2_0 => 0x3C4C030,
+                Version1_2_1 => 0x3C4C050,
+                Version1_8_0 or Version1_8_1 => 0x3CD57C0,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CD8C00,
+                Version2_2_0 => 0x3D61DB0,
+                Version2_2_3 or Version2_3_0 => 0x3D61DD0,
+                Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x3D61DB0,
                 _ => 0
             };
 
-            MapDebugFlags.Base = moduleBase + Version switch
-            {
-                GameVersion.Version1_2_0 => 0x3C56BE0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CE3D80,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D6CFC0,
-                _ => 0
-            };
 
             // Functions
             Functions.GraceWarp = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x5855B0,
-                GameVersion.Version1_9_1 => 0x5955C0,
-                GameVersion.Version2_0_1 => 0x595800,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x599D00,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x599CD0,
+                Version1_2_0 => 0x5855B0,
+                Version1_2_1 => 0x585620,
+                Version1_8_0 or Version1_8_1 => 0x5951E0,
+                Version1_9_0 => 0x595560,
+                Version1_9_1 => 0x5955C0,
+                Version2_0_1 => 0x595800,
+                Version2_2_0 or Version2_2_3 => 0x599B20,
+                Version2_3_0 => 0x599CA0,
+                Version2_4_0 or Version2_5_0 => 0x599D00,
+                Version2_6_0 or Version2_6_1 => 0x599CD0,
                 _ => 0L
             };
 
             Functions.SetEvent = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x5D9E40,
-                GameVersion.Version1_9_1 => 0x5EE1D0,
-                GameVersion.Version2_0_1 => 0x5EE410,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x5F9B50,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x5F9CD0,
+                Version1_2_0 => 0x5D9E40,
+                Version1_2_1 => 0x5D9EB0,
+                Version1_8_0 or Version1_8_1 => 0x5ED450,
+                Version1_9_0 => 0x5EE170,
+                Version1_9_1 => 0x5EE1D0,
+                Version2_0_1 => 0x5EE410,
+                Version2_2_0 or Version2_2_3 => 0x5F9970,
+                Version2_3_0 => 0x5F9AF0,
+                Version2_4_0 or Version2_5_0 => 0x5F9B50,
+                Version2_6_0 or Version2_6_1 => 0x5F9CD0,
                 _ => 0L
             };
 
             Functions.SetSpEffect = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3E17E0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3E6AF0,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x3E9120,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3E90F0,
+                Version1_2_0 => 0x3E17E0,
+                Version1_2_1 => 0x3E1850,
+                Version1_8_0 or Version1_8_1 => 0x3E69C0,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3E6AF0,
+                Version2_2_0 or Version2_2_3 or Version2_3_0 => 0x3E9100,
+                Version2_4_0 or Version2_5_0 => 0x3E9120,
+                Version2_6_0 or Version2_6_1 => 0x3E90F0,
                 _ => 0L
             };
 
             Functions.GiveRunes = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x258270,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x25C7A0,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x25E1B0,
+                Version1_2_0 => 0x258270,
+                Version1_2_1 => 0x2582E0,
+                Version1_8_0 or Version1_8_1 => 0x25C670,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x25C7A0,
+                Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0
+                    or Version2_5_0
+                    or Version2_6_0
+                    or Version2_6_1 => 0x25E1B0,
                 _ => 0L
             };
 
             Functions.LookupByFieldInsHandle = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x4F7580,
-                GameVersion.Version1_9_1 => 0x503F00,
-                GameVersion.Version2_0_1 => 0x504140,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x507D80,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x507D50,
+                Version1_2_0 => 0x4F7580,
+                Version1_2_1 => 0x4F75F0,
+                Version1_8_0 or Version1_8_1 => 0x503B80,
+                Version1_9_0 => 0x503EA0,
+                Version1_9_1 => 0x503F00,
+                Version2_0_1 => 0x504140,
+                Version2_2_0 or Version2_2_3 => 0x507BC0,
+                Version2_3_0 => 0x507D40,
+                Version2_4_0 or Version2_5_0 => 0x507D80,
+                Version2_6_0 or Version2_6_1 => 0x507D50,
                 _ => 0L
             };
 
             Functions.WarpToBlock = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x5D7DA0,
-                GameVersion.Version1_9_1 => 0x5EC0B0,
-                GameVersion.Version2_0_1 => 0x5EC2F0,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x5F7A30,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x5F7BB0,
+                Version1_2_0 => 0x5D7DA0,
+                Version1_2_1 => 0x5D7E10,
+                Version1_8_0 or Version1_8_1 => 0x5EB330,
+                Version1_9_0 => 0x5EC050,
+                Version1_9_1 => 0x5EC0B0,
+                Version2_0_1 => 0x5EC2F0,
+                Version2_2_0 or Version2_2_3 => 0x5F7850,
+                Version2_3_0 => 0x5F79D0,
+                Version2_4_0 or Version2_5_0 => 0x5F7A30,
+                Version2_6_0 or Version2_6_1 => 0x5F7BB0,
                 _ => 0L
             };
 
-            
+
             Functions.GetEvent = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x5D9650,
-                GameVersion.Version1_9_1 => 0x5ED9E0,
-                GameVersion.Version2_0_1 => 0x5EDC20,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x5F9360,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x5F94E0,
+                Version1_2_0 => 0x5D9650,
+                Version1_2_1 => 0x5D96C0,
+                Version1_8_0 or Version1_8_1 => 0x5ECC60,
+                Version1_9_0 => 0x5ED980,
+                Version1_9_1 => 0x5ED9E0,
+                Version2_0_1 => 0x5EDC20,
+                Version2_2_0 or Version2_2_3 => 0x5F9180,
+                Version2_3_0 => 0x5F9300,
+                Version2_4_0 or Version2_5_0 => 0x5F9360,
+                Version2_6_0 or Version2_6_1 => 0x5F94E0,
                 _ => 0L
             };
 
             Functions.GetPlayerItemQuantityById = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x75ACC0,
-                GameVersion.Version1_9_1 => 0x774600,
-                GameVersion.Version2_0_1 => 0x774890,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x784F40,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x7850C0,
+                Version1_2_0 => 0x75ACC0,
+                Version1_2_1 => 0x75AD30,
+                Version1_8_0 or Version1_8_1 => 0x773500,
+                Version1_9_0 => 0x7745A0,
+                Version1_9_1 => 0x774600,
+                Version2_0_1 => 0x774890,
+                Version2_2_0 or Version2_2_3 => 0x784CF0,
+                Version2_3_0 => 0x784EE0,
+                Version2_4_0 or Version2_5_0 => 0x784F40,
+                Version2_6_0 or Version2_6_1 => 0x7850C0,
                 _ => 0L
             };
 
             Functions.ItemSpawn = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x54E570,
-                GameVersion.Version1_9_1 => 0x55C520,
-                GameVersion.Version2_0_1 => 0x55C760,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x5606A0,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x560670,
+                Version1_2_0 => 0x54E570,
+                Version1_2_1 => 0x54E5E0,
+                Version1_8_0 or Version1_8_1 => 0x55C1A0,
+                Version1_9_0 => 0x55C4C0,
+                Version1_9_1 => 0x55C520,
+                Version2_0_1 => 0x55C760,
+                Version2_2_0 or Version2_2_3 => 0x5604E0,
+                Version2_3_0 => 0x560660,
+                Version2_4_0 or Version2_5_0 => 0x5606A0,
+                Version2_6_0 or Version2_6_1 => 0x560670,
                 _ => 0L
             };
 
             Functions.MatrixVectorProduct = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0xAB01E0,
-                GameVersion.Version1_9_1 => 0xAE32D0,
-                GameVersion.Version2_0_1 => 0xAE3560,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0xB12130,
-                GameVersion.Version2_6_0 => 0xB122B0,
-                GameVersion.Version2_6_1 => 0xB12310,
+                Version1_2_0 => 0xAB01E0,
+                Version1_2_1 => 0xAB0260,
+                Version1_8_0 or Version1_8_1 => 0xAE06E0,
+                Version1_9_0 => 0xAE3270,
+                Version1_9_1 => 0xAE32D0,
+                Version2_0_1 => 0xAE3560,
+                Version2_2_0 or Version2_2_3 => 0xB11C40,
+                Version2_3_0 => 0xB11FB0,
+                Version2_4_0 or Version2_5_0 => 0xB12130,
+                Version2_6_0 => 0xB122B0,
+                Version2_6_1 => 0xB12310,
                 _ => 0L
             };
 
             Functions.ChrInsByHandle = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x4F74A0,
-                GameVersion.Version1_9_1 => 0x503E20,
-                GameVersion.Version2_0_1 => 0x504060,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x507CA0,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x507C70,
+                Version1_2_0 => 0x4F74A0,
+                Version1_2_1 => 0x4F7510,
+                Version1_8_0 or Version1_8_1 => 0x503AA0,
+                Version1_9_0 => 0x503DC0,
+                Version1_9_1 => 0x503E20,
+                Version2_0_1 => 0x504060,
+                Version2_2_0 or Version2_2_3 => 0x507AE0,
+                Version2_3_0 => 0x507C60,
+                Version2_4_0 or Version2_5_0 => 0x507CA0,
+                Version2_6_0 or Version2_6_1 => 0x507C70,
                 _ => 0L
             };
 
             Functions.FindAndRemoveSpEffect = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x4E6970,
-                GameVersion.Version1_9_1 => 0x4F3070,
-                GameVersion.Version2_0_1 => 0x4F32B0,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x4F69B0,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x4F6980,
+                Version1_2_0 => 0x4E6970,
+                Version1_2_1 => 0x4E69E0,
+                Version1_8_0 or Version1_8_1 => 0x4F2E00,
+                Version1_9_0 => 0x4F3060,
+                Version1_9_1 => 0x4F3070,
+                Version2_0_1 => 0x4F32B0,
+                Version2_2_0 or Version2_2_3 => 0x4F67F0,
+                Version2_3_0 => 0x4F6970,
+                Version2_4_0 or Version2_5_0 => 0x4F69B0,
+                Version2_6_0 or Version2_6_1 => 0x4F6980,
                 _ => 0L
             };
 
             Functions.EmevdSwitch = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x555D00,
-                GameVersion.Version1_9_1 => 0x563CB0,
-                GameVersion.Version2_0_1 => 0x563EF0,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x567E30,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x567E00,
+                Version1_2_0 => 0x555D00,
+                Version1_2_1 => 0x555D70,
+                Version1_8_0 or Version1_8_1 => 0x563930,
+                Version1_9_0 => 0x563C50,
+                Version1_9_1 => 0x563CB0,
+                Version2_0_1 => 0x563EF0,
+                Version2_2_0 or Version2_2_3 => 0x567C70,
+                Version2_3_0 => 0x567DF0,
+                Version2_4_0 or Version2_5_0 => 0x567E30,
+                Version2_6_0 or Version2_6_1 => 0x567E00,
                 _ => 0L
             };
 
             Functions.EmkEventInsCtor = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x56ECA0,
-                GameVersion.Version1_9_1 => 0x57E140,
-                GameVersion.Version2_0_1 => 0x57E380,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x582730,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x582700,
+                Version1_2_0 => 0x56ECA0,
+                Version1_2_1 => 0x56ED10,
+                Version1_8_0 or Version1_8_1 => 0x57DDC0,
+                Version1_9_0 => 0x57E0E0,
+                Version1_9_1 => 0x57E140,
+                Version2_0_1 => 0x57E380,
+                Version2_2_0 or Version2_2_3 => 0x582570,
+                Version2_3_0 => 0x5826F0,
+                Version2_4_0 or Version2_5_0 => 0x582730,
+                Version2_6_0 or Version2_6_1 => 0x582700,
                 _ => 0L
             };
 
             Functions.GetMovement = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x25B6CD0,
-                GameVersion.Version1_9_1 => 0x261EAE0,
-                GameVersion.Version2_0_1 => 0x261EE70,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x2664240,
-                GameVersion.Version2_6_0 => 0x2664210,
-                GameVersion.Version2_6_1 => 0x2664270,
+                Version1_2_0 => 0x25B6CD0,
+                Version1_2_1 => 0x25B6D20,
+                Version1_8_0 => 0x261BD10,
+                Version1_8_1 => 0x261BCF0,
+                Version1_9_0 => 0x261E9D0,
+                Version1_9_1 => 0x261EAE0,
+                Version2_0_1 => 0x261EE70,
+                Version2_2_0 => 0x2663950,
+                Version2_2_3 => 0x2663970,
+                Version2_3_0 => 0x2664210,
+                Version2_4_0 or Version2_5_0 => 0x2664240,
+                Version2_6_0 => 0x2664210,
+                Version2_6_1 => 0x2664270,
                 _ => 0L
             };
 
             Functions.GetChrInsByEntityId = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x4F7630,
-                GameVersion.Version1_9_1 => 0x503FB0,
-                GameVersion.Version2_0_1 => 0x5041F0,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x507E30,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x507E00,
+                Version1_2_0 => 0x4F7630,
+                Version1_2_1 => 0x4F76A0,
+                Version1_8_0 or Version1_8_1 => 0x503C30,
+                Version1_9_0 => 0x503F50,
+                Version1_9_1 => 0x503FB0,
+                Version2_0_1 => 0x5041F0,
+                Version2_2_0 or Version2_2_3 => 0x507C70,
+                Version2_3_0 => 0x507DF0,
+                Version2_4_0 or Version2_5_0 => 0x507E30,
+                Version2_6_0 or Version2_6_1 => 0x507E00,
                 _ => 0L
             };
 
             Functions.NpcEzStateTalkCtor = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0xE17E70,
-                GameVersion.Version1_9_1 => 0xE5EED0,
-                GameVersion.Version2_0_1 => 0xE5F260,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0xE9ECA0,
-                GameVersion.Version2_6_0 => 0xE9EC70,
-                GameVersion.Version2_6_1 => 0xE9ECD0,
+                Version1_2_0 => 0xE17E70,
+                Version1_2_1 => 0xE17EC0,
+                Version1_8_0 => 0xE5C320,
+                Version1_8_1 => 0xE5C300,
+                Version1_9_0 => 0xE5EDC0,
+                Version1_9_1 => 0xE5EED0,
+                Version2_0_1 => 0xE5F260,
+                Version2_2_0 => 0xE9E830,
+                Version2_2_3 => 0xE9E850,
+                Version2_3_0 => 0xE9ED40,
+                Version2_4_0 or Version2_5_0 => 0xE9ECA0,
+                Version2_6_0 => 0xE9EC70,
+                Version2_6_1 => 0xE9ECD0,
                 _ => 0L
             };
 
             Functions.EzStateEnvQueryImplCtor = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x1FD0D40,
-                GameVersion.Version1_9_1 => 0x2038340,
-                GameVersion.Version2_0_1 => 0x20386D0,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x207E850,
-                GameVersion.Version2_6_0 => 0x207E820,
-                GameVersion.Version2_6_1 => 0x207E880,
+                Version1_2_0 => 0x1FD0D40,
+                Version1_2_1 => 0x1FD0D90,
+                Version1_8_0 => 0x2035560,
+                Version1_8_1 => 0x2035540,
+                Version1_9_0 => 0x2038230,
+                Version1_9_1 => 0x2038340,
+                Version2_0_1 => 0x20386D0,
+                Version2_2_0 => 0x207DF50,
+                Version2_2_3 => 0x207DF70,
+                Version2_3_0 => 0x207E810,
+                Version2_4_0 or Version2_5_0 => 0x207E850,
+                Version2_6_0 => 0x207E820,
+                Version2_6_1 => 0x207E880,
                 _ => 0L
             };
 
             Functions.ExternalEventTempCtor = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0x1FFAAE0,
-                GameVersion.Version2_0_1 => 0x1FFAE70,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x2040FF0,
-                GameVersion.Version2_6_0 => 0x2040FC0,
-                GameVersion.Version2_6_1 => 0x2041020,
+                Version1_2_0 => 0x0,
+                Version1_2_1 => 0x1F93530,
+                Version1_8_0 => 0x1FF7D00,
+                Version1_8_1 => 0x1FF7CE0,
+                Version1_9_0 => 0x1FFA9D0,
+                Version1_9_1 => 0x1FFAAE0,
+                Version2_0_1 => 0x1FFAE70,
+                Version2_2_0 => 0x20406F0,
+                Version2_2_3 => 0x2040710,
+                Version2_3_0 => 0x2040FB0,
+                Version2_4_0 or Version2_5_0 => 0x2040FF0,
+                Version2_6_0 => 0x2040FC0,
+                Version2_6_1 => 0x2041020,
                 _ => 0L
             };
 
             Functions.ExecuteTalkCommand = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0xE65470,
-                GameVersion.Version2_0_1 => 0xE65800,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0xEA5280,
-                GameVersion.Version2_6_0 => 0xEA5250,
-                GameVersion.Version2_6_1 => 0xEA52B0,
+                Version1_2_0 => 0x0,
+                Version1_2_1 => 0xE1E370,
+                Version1_8_0 => 0xE628C0,
+                Version1_8_1 => 0xE628A0,
+                Version1_9_0 => 0xE65360,
+                Version1_9_1 => 0xE65470,
+                Version2_0_1 => 0xE65800,
+                Version2_2_0 => 0xEA4E10,
+                Version2_2_3 => 0xEA4E30,
+                Version2_3_0 => 0xEA5320,
+                Version2_4_0 or Version2_5_0 => 0xEA5280,
+                Version2_6_0 => 0xEA5250,
+                Version2_6_1 => 0xEA52B0,
                 _ => 0L
             };
-            
+
             // Hooks
             Hooks.UpdateCoords = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x45E3C9,
-                GameVersion.Version1_9_1 => 0x4648E9,
-                GameVersion.Version2_0_1 => 0x464A89,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x4679C9,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x467999,
+                Version1_2_0 => 0x45E3C9,
+                Version1_2_1 => 0x45E439,
+                Version1_8_0 or Version1_8_1 => 0x4647A9,
+                Version1_9_0 or Version1_9_1 => 0x4648E9,
+                Version2_0_1 => 0x464A89,
+                Version2_2_0 or Version2_2_3 => 0x467879,
+                Version2_3_0 => 0x467989,
+                Version2_4_0 or Version2_5_0 => 0x4679C9,
+                Version2_6_0 or Version2_6_1 => 0x467999,
                 _ => 0L
             };
 
             Hooks.InAirTimer = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x444CA8,
-                GameVersion.Version1_9_1 => 0x44B1C8,
-                GameVersion.Version2_0_1 => 0x44B368,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x44E2A8,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x44E278,
+                Version1_2_0 => 0x444CA8,
+                Version1_2_1 => 0x444D18,
+                Version1_8_0 or Version1_8_1 => 0x44B088,
+                Version1_9_0 or Version1_9_1 => 0x44B1C8,
+                Version2_0_1 => 0x44B368,
+                Version2_2_0 or Version2_2_3 => 0x44E158,
+                Version2_3_0 => 0x44E268,
+                Version2_4_0 or Version2_5_0 => 0x44E2A8,
+                Version2_6_0 or Version2_6_1 => 0x44E278,
                 _ => 0L
             };
 
             Hooks.NoClipKb = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x1EBF67F,
-                GameVersion.Version1_9_1 => 0x1F26BAF,
-                GameVersion.Version2_0_1 => 0x1F26F3F,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x5D1954,
-                GameVersion.Version2_6_0 => 0x1F6D09F,
-                GameVersion.Version2_6_1 => 0x1F6D0FF,
+                Version1_2_0 => 0x1EBF67F,
+                Version1_2_1 => 0x1EBF6CF,
+                Version1_8_0 => 0x1F23DCF,
+                Version1_8_1 => 0x1F23DAF,
+                Version1_9_0 => 0x1F26A9F,
+                Version1_9_1 => 0x1F26BAF,
+                Version2_0_1 => 0x1F26F3F,
+                Version2_2_0 => 0x1F6C7CF,
+                Version2_2_3 => 0x1F6C7EF,
+                Version2_3_0 => 0x1F6D08F,
+                Version2_4_0 => 0x1F6D0CF,
+                Version2_5_0 => 0x5D1954, //TODO recheck??
+                Version2_6_0 => 0x1F6D09F,
+                Version2_6_1 => 0x1F6D0FF,
                 _ => 0L
             };
 
             Hooks.NoClipTriggers = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x1EBE79E,
-                GameVersion.Version1_9_1 => 0x1F25C6F,
-                GameVersion.Version2_0_1 => 0x1F25FFF,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x1F6C14F,
-                GameVersion.Version2_6_0 => 0x1F6C11F,
-                GameVersion.Version2_6_1 => 0x1F6C17F,
+                Version1_2_0 => 0x1EBE79E,
+                Version1_2_1 => 0x1EBE7EE,
+                Version1_8_0 => 0x1F22E8F,
+                Version1_8_1 => 0x1F22E6F,
+                Version1_9_0 => 0x1F25B5F,
+                Version1_9_1 => 0x1F25C6F,
+                Version2_0_1 => 0x1F25FFF,
+                Version2_2_0 => 0x1F6B88F,
+                Version2_2_3 => 0x1F6B8AF,
+                Version2_3_0 or Version2_4_0 or Version2_5_0 => 0x1F6C14F,
+                Version2_6_0 => 0x1F6C11F,
+                Version2_6_1 => 0x1F6C17F,
                 _ => 0L
             };
 
             Hooks.HasSpEffect = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x4E99C0,
-                GameVersion.Version1_9_1 => 0x4F60A0,
-                GameVersion.Version2_0_1 => 0x4F62E0,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x4F9A40,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x4F9A10,
+                Version1_2_0 => 0x4E99C0,
+                Version1_2_1 => 0x4E9A30,
+                Version1_8_0 or Version1_8_1 => 0x4F5E10,
+                Version1_9_0 => 0x4F6070,
+                Version1_9_1 => 0x4F60A0,
+                Version2_0_1 => 0x4F62E0,
+                Version2_2_0 or Version2_2_3 => 0x4F9880,
+                Version2_3_0 => 0x4F9A00,
+                Version2_4_0 or Version2_5_0 => 0x4F9A40,
+                Version2_6_0 or Version2_6_1 => 0x4F9A10,
                 _ => 0L
             };
 
             Hooks.BlueTargetView = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3382C3,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x33CA43,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x33E293,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x33E263,
+                Version1_2_0 => 0x3382C3,
+                Version1_2_1 => 0x338333,
+                Version1_8_0 or Version1_8_1 => 0x33C913,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x33CA43,
+                Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0 => 0x33E293,
+                Version2_6_0 or Version2_6_1 => 0x33E263,
                 _ => 0L
             };
 
             Hooks.LockedTargetPtr = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x6F0A16,
-                GameVersion.Version1_9_1 => 0x7089C6,
-                GameVersion.Version2_0_1 => 0x708C56,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x7171F2,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x717372,
+                Version1_2_0 => 0x6F0A16,
+                Version1_2_1 => 0x6F0A86,
+                Version1_8_0 or Version1_8_1 => 0x7078C6,
+                Version1_9_0 => 0x708966,
+                Version1_9_1 => 0x7089C6,
+                Version2_0_1 => 0x708C56,
+                Version2_2_0 or Version2_2_3 => 0x716FA2,
+                Version2_3_0 => 0x717192,
+                Version2_4_0 or Version2_5_0 => 0x7171F2,
+                Version2_6_0 or Version2_6_1 => 0x717372,
                 _ => 0L
             };
 
             Hooks.InfinitePoise = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x5E885CB0,
-                GameVersion.Version1_9_1 => 0x442CF0,
-                GameVersion.Version2_0_1 => 0x442DC0,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x445CE0,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x445CB0,
+                Version1_2_0 => 0x5E885CB0,
+                Version1_8_0 or Version1_8_1 => 0x442BB0,
+                Version1_9_0 or Version1_9_1 => 0x442CF0,
+                Version2_0_1 => 0x442DC0,
+                Version2_2_0 or Version2_2_3 => 0x445B90,
+                Version2_3_0 => 0x445CA0,
+                Version2_4_0 or Version2_5_0 => 0x445CE0,
+                Version2_6_0 or Version2_6_1 => 0x445CB0,
                 _ => 0L
             };
 
             Hooks.ShouldUpdateAi = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3C09F0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3C5A30,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x3C7940,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3C7910,
+                Version1_2_0 => 0x3C09F0,
+                Version1_8_0 or Version1_8_1 => 0x3C5900,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3C5A30,
+                Version2_2_0 or Version2_2_3 or Version2_3_0 => 0x3C7920,
+                Version2_4_0 or Version2_5_0 => 0x3C7940,
+                Version2_6_0 or Version2_6_1 => 0x3C7910,
                 _ => 0L
             };
 
             Hooks.GetForceActIdx = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x6402D8C4,
-                GameVersion.Version1_9_1 => 0x17B5923,
-                GameVersion.Version2_0_1 => 0x55611FB,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x123846F,
-                GameVersion.Version2_6_0 => 0x53C8D9,
-                GameVersion.Version2_6_1 => 0x5BED8C4,
+                Version1_2_0 => 0x6402D8C4,
+                Version1_8_0 => 0x5757732,
+                Version1_8_1 => 0x56BA77E,
+                Version1_9_0 => 0x5679CFE,
+                Version1_9_1 => 0x17B5923,
+                Version2_0_1 => 0x55611FB,
+                Version2_2_0 => 0x5AA1B87,
+                Version2_2_3 => 0x5A454DB,
+                Version2_3_0 => 0x57D2875,
+                Version2_4_0 => 0x1F7F940,
+                Version2_5_0 => 0x123846F,
+                Version2_6_0 => 0x53C8D9,
+                Version2_6_1 => 0x5BED8C4,
                 _ => 0L
             };
 
-            Hooks.TargetNoStagger = moduleBase.ToInt64() + Version switch
-            {
-                GameVersion.Version1_2_0 => 0x5E8BE3C7,
-                GameVersion.Version1_9_1 => 0x47B225,
-                GameVersion.Version2_0_1 => 0x47B3C5,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x47E3F7,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x47E3C7,
-                _ => 0L
-            };
 
             Hooks.AttackInfo = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x5E8BE22B,
-                GameVersion.Version1_9_1 => 0x47B09A,
-                GameVersion.Version2_0_1 => 0x47B23A,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x47E25B,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x47E22B,
+                Version1_2_0 => 0x5E8BE22B,
+                Version1_8_0 or Version1_8_1 => 0x47AF5A,
+                Version1_9_0 or Version1_9_1 => 0x47B09A,
+                Version2_0_1 => 0x47B23A,
+                Version2_2_0 or Version2_2_3 => 0x47E10B,
+                Version2_3_0 => 0x47E21B,
+                Version2_4_0 or Version2_5_0 => 0x47E25B,
+                Version2_6_0 or Version2_6_1 => 0x47E22B,
                 _ => 0L
             };
 
             Hooks.WarpCoordWrite = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x657AFA,
-                GameVersion.Version1_9_1 => 0x66D26A,
-                GameVersion.Version2_0_1 => 0x66D4DA,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x67A93A,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x67AABA,
+                Version1_2_0 => 0x657AFA,
+                Version1_8_0 or Version1_8_1 => 0x66C2AA,
+                Version1_9_0 => 0x66D20A,
+                Version1_9_1 => 0x66D26A,
+                Version2_0_1 => 0x66D4DA,
+                Version2_2_0 or Version2_2_3 => 0x67A75A,
+                Version2_3_0 => 0x67A8DA,
+                Version2_4_0 or Version2_5_0 => 0x67A93A,
+                Version2_6_0 or Version2_6_1 => 0x67AABA,
                 _ => 0L
             };
 
             Hooks.WarpAngleWrite = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x657ADA,
-                GameVersion.Version1_9_1 => 0x66D24A,
-                GameVersion.Version2_0_1 => 0x66D4BA,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x67A91A,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x67AA9A,
+                Version1_2_0 => 0x657ADA,
+                Version1_8_0 or Version1_8_1 => 0x66C28A,
+                Version1_9_0 => 0x66D1EA,
+                Version1_9_1 => 0x66D24A,
+                Version2_0_1 => 0x66D4BA,
+                Version2_2_0 or Version2_2_3 => 0x67A73A,
+                Version2_3_0 => 0x67A8BA,
+                Version2_4_0 or Version2_5_0 => 0x67A91A,
+                Version2_6_0 or Version2_6_1 => 0x67AA9A,
                 _ => 0L
+            };
+
+            Hooks.NoTimePassOnDeath = moduleBase + Version switch
+            {
+                Version1_2_0 => 0x0,
+                Version1_8_0 or Version1_8_1 => 0x5EFB77,
+                Version1_9_0 => 0x5F0897,
+                Version1_9_1 => 0x5F08F9,
+                Version2_0_1 => 0x5F0B39,
+                Version2_2_0 or Version2_2_3 => 0x5FC09F,
+                Version2_3_0 => 0x5FC21F,
+                Version2_4_0 or Version2_5_0 => 0x5FC27F,
+                Version2_6_0 or Version2_6_1 => 0x5FC3FF,
+                _ => 0
             };
 
             Hooks.LionCooldownHook = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0L,
-                GameVersion.Version2_0_1 => 0x0L,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x4FF13A,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x4FF10A,
+                Version2_2_0 or Version2_2_3 => 0x4FEF7A,
+                Version2_3_0 => 0x4FF0FA,
+                Version2_4_0 or Version2_5_0 => 0x4FF13A,
+                Version2_6_0 or Version2_6_1 => 0x4FF10A,
                 _ => 0L
             };
 
             Hooks.SetActionRequested = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x3FF362,
-                GameVersion.Version1_9_1 => 0x4050D2,
-                GameVersion.Version2_0_1 => 0x4050C2,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x407BE2,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x407BB2,
-                _ => 0L
-            };
-
-            Hooks.NoMapAcquiredPopup = moduleBase.ToInt64() + Version switch
-            {
-                GameVersion.Version1_2_0 => 0x0L,
-                GameVersion.Version1_9_1 => 0x9A5851,
-                GameVersion.Version2_0_1 => 0x9A5AE1,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x9C6251,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x9C63D1,
+                Version1_2_0 => 0x3FF362,
+                Version1_8_0 or Version1_8_1 => 0x404F92,
+                Version1_9_0 or Version1_9_1 => 0x4050D2,
+                Version2_0_1 => 0x4050C2,
+                Version2_2_0 or Version2_2_3 => 0x407B82,
+                Version2_3_0 => 0x407BA2,
+                Version2_4_0 or Version2_5_0 => 0x407BE2,
+                Version2_6_0 or Version2_6_1 => 0x407BB2,
                 _ => 0L
             };
 
             Hooks.NoGrab = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x4402FB,
-                GameVersion.Version1_9_1 => 0x4468DB,
-                GameVersion.Version2_0_1 => 0x446A7B,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0x4499BB,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x44998B,
+                Version1_2_0 => 0x4402FB,
+                Version1_8_0 or Version1_8_1 => 0x44679B,
+                Version1_9_0 or Version1_9_1 => 0x4468DB,
+                Version2_0_1 => 0x446A7B,
+                Version2_2_0 or Version2_2_3 => 0x44986B,
+                Version2_3_0 => 0x44997B,
+                Version2_4_0 or Version2_5_0 => 0x4499BB,
+                Version2_6_0 or Version2_6_1 => 0x44998B,
                 _ => 0L
             };
 
             Hooks.LoadScreenMsgLookup = moduleBase.ToInt64() + Version switch
             {
-                GameVersion.Version1_2_0 => 0x5F15093C,
-                GameVersion.Version1_9_1 => 0xCDD97C,
-                GameVersion.Version2_0_1 => 0x446A7B,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_5_0 => 0xD1075C,
-                GameVersion.Version2_6_0 => 0xD108DC,
-                GameVersion.Version2_6_1 => 0xD1093C,
+                Version1_2_0 => 0x5F15093C,
+                Version1_8_0 => 0xCDACFC,
+                Version1_8_1 => 0xCDACDC,
+                Version1_9_0 => 0xCDD91C,
+                Version1_9_1 => 0xCDD97C,
+                Version2_0_1 => 0x446A7B,
+                Version2_2_0 or Version2_2_3 => 0xD0FE9C,
+                Version2_3_0 => 0xD1038C,
+                Version2_4_0 or Version2_5_0 => 0xD1075C,
+                Version2_6_0 => 0xD108DC,
+                Version2_6_1 => 0xD1093C,
                 _ => 0L
             };
-            
+
+            Hooks.TargetNoStagger = moduleBase.ToInt64() + Version switch
+            {
+                Version1_2_0 => 0x5E8BE3C7,
+                Version1_8_0 or Version1_8_1 => 0x47B0E5,
+                Version1_9_0 or Version1_9_1 => 0x47B225,
+                Version2_0_1 => 0x47B3C5,
+                Version2_2_0 or Version2_2_3 => 0x47E2A7,
+                Version2_3_0 => 0x47E3B7,
+                Version2_4_0 or Version2_5_0 => 0x47E3F7,
+                Version2_6_0 or Version2_6_1 => 0x47E3C7,
+                _ => 0L
+            };
+
+            Hooks.NoMapAcquiredPopup = moduleBase.ToInt64() + Version switch
+            {
+                Version1_2_0 => 0x0L,
+                Version1_8_0 or Version1_8_1 => 0x9A37A1,
+                Version1_9_0 => 0x9A57F1,
+                Version1_9_1 => 0x9A5851,
+                Version2_0_1 => 0x9A5AE1,
+                Version2_2_0 or Version2_2_3 => 0x9C6071,
+                Version2_3_0 => 0x9C61F1,
+                Version2_4_0 or Version2_5_0 => 0x9C6251,
+                Version2_6_0 or Version2_6_1 => 0x9C63D1,
+                _ => 0L
+            };
+
             // Patches
-            
+
             Patches.NoLogo = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0xADDCED,
-                GameVersion.Version2_0_1 => 0xADDF7D,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0xB0C26D,
-                GameVersion.Version2_6_0 => 0xB0C3ED,
-                GameVersion.Version2_6_1 => 0xB0C44D,
+                Version1_2_0 => 0x0,
+                Version1_8_0 or Version1_8_1 => 0xADB0FD,
+                Version1_9_0 => 0xADDC8D,
+                Version1_9_1 => 0xADDCED,
+                Version2_0_1 => 0xADDF7D,
+                Version2_2_0 or Version2_2_3 => 0xB0BD7D,
+                Version2_3_0 => 0xB0C0ED,
+                Version2_4_0 or Version2_5_0 => 0xB0C26D,
+                Version2_6_0 => 0xB0C3ED,
+                Version2_6_1 => 0xB0C44D,
                 _ => 0
             };
 
-            
+
             Patches.NoRunesFromEnemies = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x49456E,
-                GameVersion.Version1_9_1 => 0x64541F,
-                GameVersion.Version2_0_1 => 0x64568F,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0x65196F,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x651AEF,
+                Version1_2_0 => 0x49456E,
+                Version1_8_0 or Version1_8_1 => 0x64463F,
+                Version1_9_0 => 0x6453BF,
+                Version1_9_1 => 0x64541F,
+                Version2_0_1 => 0x64568F,
+                Version2_2_0 or Version2_2_3 => 0x65178F,
+                Version2_3_0 => 0x65190F,
+                Version2_4_0 or Version2_5_0 => 0x65196F,
+                Version2_6_0 or Version2_6_1 => 0x651AEF,
                 _ => 0
             };
 
             Patches.NoRuneArcLoss = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x258347,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x25C887,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x25E297,
+                Version1_2_0 => 0x258347,
+                Version1_8_0 or Version1_8_1 => 0x25C757,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x25C887,
+                Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 => 0x25E297,
                 _ => 0
             };
 
             Patches.NoRuneLossOnDeath = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x5EA3C215,
-                GameVersion.Version1_9_1 => 0x5F0715,
-                GameVersion.Version2_0_1 => 0x5F0955,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0x5FC095,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x5FC215,
+                Version1_2_0 => 0x5EA3C215,
+                Version1_8_0 or Version1_8_1 => 0x5EF995,
+                Version1_9_0 => 0x5F06B5,
+                Version1_9_1 => 0x5F0715,
+                Version2_0_1 => 0x5F0955,
+                Version2_2_0 or Version2_2_3 => 0x5FBEB5,
+                Version2_3_0 => 0x5FC035,
+                Version2_4_0 or Version2_5_0 => 0x5FC095,
+                Version2_6_0 or Version2_6_1 => 0x5FC215,
                 _ => 0
             };
-            
+
             Patches.CanFastTravel = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x798300,
-                GameVersion.Version1_9_1 => 0x7B3210,
-                GameVersion.Version2_0_1 => 0x7B34A0,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0x7C4CE0,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x7C4E60,
+                Version1_2_0 => 0x798300,
+                Version1_8_0 or Version1_8_1 => 0x7B2110,
+                Version1_9_0 => 0x7B31B0,
+                Version1_9_1 => 0x7B3210,
+                Version2_0_1 => 0x7B34A0,
+                Version2_2_0 or Version2_2_3 => 0x7C4A90,
+                Version2_3_0 => 0x7C4C80,
+                Version2_4_0 or Version2_5_0 => 0x7C4CE0,
+                Version2_6_0 or Version2_6_1 => 0x7C4E60,
                 _ => 0
             };
 
 
             Patches.OpenMap = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x7C4CDA,
-                GameVersion.Version1_9_1 => 0x7DD01A,
-                GameVersion.Version2_0_1 => 0x7DD2AA,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0x7EEBCA,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x7EED4A,
+                Version1_2_0 => 0x7C4CDA,
+                Version1_8_0 or Version1_8_1 => 0x7DBEBA,
+                Version1_9_0 => 0x7DCFBA,
+                Version1_9_1 => 0x7DD01A,
+                Version2_0_1 => 0x7DD2AA,
+                Version2_2_0 or Version2_2_3 => 0x7EE97A,
+                Version2_3_0 => 0x7EEB6A,
+                Version2_4_0 or Version2_5_0 => 0x7EEBCA,
+                Version2_6_0 or Version2_6_1 => 0x7EED4A,
                 _ => 0
             };
 
             Patches.CloseMap = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x5EE0392E,
-                GameVersion.Version1_9_1 => 0x9A35AA,
-                GameVersion.Version2_0_1 => 0x9A383A,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0x9C37AE,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x9C392E,
+                Version1_2_0 => 0x5EE0392E,
+                Version1_8_0 or Version1_8_1 => 0x9A14FA,
+                Version1_9_0 => 0x9A354A,
+                Version1_9_1 => 0x9A35AA,
+                Version2_0_1 => 0x9A383A,
+                Version2_2_0 or Version2_2_3 => 0x9C35AE,
+                Version2_3_0 => 0x9C374E,
+                Version2_4_0 or Version2_5_0 => 0x9C37AE,
+                Version2_6_0 or Version2_6_1 => 0x9C392E,
                 _ => 0
             };
 
             Patches.EnableFreeCam = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0xDC0D60,
-                GameVersion.Version1_9_1 => 0xE056E0,
-                GameVersion.Version2_0_1 => 0xE05A70,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0xE43330,
-                GameVersion.Version2_6_0 => 0xE43300,
-                GameVersion.Version2_6_1 => 0xE43360,
+                Version1_2_0 => 0xDC0D60,
+                Version1_8_0 => 0xE028C0,
+                Version1_8_1 => 0xE028A0,
+                Version1_9_0 => 0xE055D0,
+                Version1_9_1 => 0xE056E0,
+                Version2_0_1 => 0xE05A70,
+                Version2_2_0 => 0xE42EC0,
+                Version2_2_3 => 0xE42EE0,
+                Version2_3_0 => 0xE433D0,
+                Version2_4_0 or Version2_5_0 => 0xE43330,
+                Version2_6_0 => 0xE43300,
+                Version2_6_1 => 0xE43360,
                 _ => 0
             };
 
             Patches.CanDrawEvents1 = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0xDD0810,
-                GameVersion.Version1_9_1 => 0xE15600,
-                GameVersion.Version2_0_1 => 0xE15990,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0xE53600,
-                GameVersion.Version2_6_0 => 0xE535D0,
-                GameVersion.Version2_6_1 => 0xE53630,
+                Version1_2_0 => 0xDD0810,
+                Version1_8_0 => 0xE127E0,
+                Version1_8_1 => 0xE127C0,
+                Version1_9_0 => 0xE154F0,
+                Version1_9_1 => 0xE15600,
+                Version2_0_1 => 0xE15990,
+                Version2_2_0 => 0xE53190,
+                Version2_2_3 => 0xE531B0,
+                Version2_3_0 => 0xE536A0,
+                Version2_4_0 or Version2_5_0 => 0xE53600,
+                Version2_6_0 => 0xE535D0,
+                Version2_6_1 => 0xE53630,
                 _ => 0
             };
 
             Patches.CanDrawEvents2 = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0xDD07F0,
-                GameVersion.Version1_9_1 => 0xE155E0,
-                GameVersion.Version2_0_1 => 0xE15970,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0xE535E0,
-                GameVersion.Version2_6_0 => 0xE535B0,
-                GameVersion.Version2_6_1 => 0xE53610,
+                Version1_2_0 => 0xDD07F0,
+                Version1_8_0 => 0xE127C0,
+                Version1_8_1 => 0xE127A0,
+                Version1_9_0 => 0xE154D0,
+                Version1_9_1 => 0xE155E0,
+                Version2_0_1 => 0xE15970,
+                Version2_2_0 => 0xE53170,
+                Version2_2_3 => 0xE53190,
+                Version2_3_0 => 0xE53680,
+                Version2_4_0 or Version2_5_0 => 0xE535E0,
+                Version2_6_0 => 0xE535B0,
+                Version2_6_1 => 0xE53610,
                 _ => 0
             };
 
             Patches.DebugFont = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0x2647C00,
-                GameVersion.Version2_0_1 => 0x2647F90,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0x268D360,
-                GameVersion.Version2_6_0 => 0x268D330,
-                GameVersion.Version2_6_1 => 0x268D390,
+                Version1_2_0 => 0x0,
+                Version1_8_0 => 0x2644E30,
+                Version1_8_1 => 0x2644E10,
+                Version1_9_0 => 0x2647AF0,
+                Version1_9_1 => 0x2647C00,
+                Version2_0_1 => 0x2647F90,
+                Version2_2_0 => 0x268CA70,
+                Version2_2_3 => 0x268CA90,
+                Version2_3_0 => 0x268D330,
+                Version2_4_0 or Version2_5_0 => 0x268D360,
+                Version2_6_0 => 0x268D330,
+                Version2_6_1 => 0x268D390,
                 _ => 0
             };
 
 
             Patches.PlayerSound = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x33CD76,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0x33E5C6,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x33E596,
+                Version1_2_0 => 0x0,
+                Version1_8_0 or Version1_8_1 => 0x33CC46,
+                Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x33CD76,
+                Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0 => 0x33E5C6,
+                Version2_6_0 or Version2_6_1 => 0x33E596,
                 _ => 0
             };
 
             Patches.IsTorrentDisabledInUnderworld = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0xCBCF7A,
-                GameVersion.Version2_0_1 => 0xCBD20A,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0xCEF9AA,
-                GameVersion.Version2_6_0 => 0xCEFB2A,
-                GameVersion.Version2_6_1 => 0xCEFB8A,
+                Version1_2_0 => 0x0,
+                Version1_8_0 => 0xCBA2FA,
+                Version1_8_1 => 0xCBA2DA,
+                Version1_9_0 => 0xCBCF1A,
+                Version1_9_1 => 0xCBCF7A,
+                Version2_0_1 => 0xCBD20A,
+                Version2_2_0 or Version2_2_3 => 0xCEF0EA,
+                Version2_3_0 => 0xCEF5DA,
+                Version2_4_0 or Version2_5_0 => 0xCEF9AA,
+                Version2_6_0 => 0xCEFB2A,
+                Version2_6_1 => 0xCEFB8A,
                 _ => 0
             };
 
             Patches.IsWhistleDisabled = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0x6F7BBF,
-                GameVersion.Version2_0_1 => 0x6F7E4F,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0x7060EF,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x70626F,
+                Version1_2_0 => 0x0,
+                Version1_8_0 or Version1_8_1 => 0x6F6ABF,
+                Version1_9_0 => 0x6F7B5F,
+                Version1_9_1 => 0x6F7BBF,
+                Version2_0_1 => 0x6F7E4F,
+                Version2_2_0 or Version2_2_3 => 0x705E9F,
+                Version2_3_0 => 0x70608F,
+                Version2_4_0 or Version2_5_0 => 0x7060EF,
+                Version2_6_0 or Version2_6_1 => 0x70626F,
                 _ => 0
             };
 
             Patches.IsWorldPaused = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0xACA4D5,
-                GameVersion.Version2_0_1 => 0xACA765,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0xAF8335,
-                GameVersion.Version2_6_0 => 0xAF84B5,
-                GameVersion.Version2_6_1 => 0xAF8515,
+                Version1_2_0 => 0x0,
+                Version1_8_0 or Version1_8_1 => 0xAC78E5,
+                Version1_9_0 => 0xACA475,
+                Version1_9_1 => 0xACA4D5,
+                Version2_0_1 => 0xACA765,
+                Version2_2_0 or Version2_2_3 => 0xAF7E05,
+                Version2_3_0 => 0xAF8175,
+                Version2_4_0 or Version2_5_0 => 0xAF8335,
+                Version2_6_0 => 0xAF84B5,
+                Version2_6_1 => 0xAF8515,
                 _ => 0
             };
 
             Patches.GetItemChance = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0xD0776E,
-                GameVersion.Version2_0_1 => 0xD079DE,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0xD3BD6E,
-                GameVersion.Version2_6_0 => 0xD3BEEE,
-                GameVersion.Version2_6_1 => 0xD3BF4E,
+                Version1_2_0 => 0x0,
+                Version1_8_0 => 0xD04AEE,
+                Version1_8_1 => 0xD04ACE,
+                Version1_9_0 => 0xD0770E,
+                Version1_9_1 => 0xD0776E,
+                Version2_0_1 => 0xD079DE,
+                Version2_2_0 => 0xD3B48E,
+                Version2_2_3 => 0xD3B4AE,
+                Version2_3_0 => 0xD3B99E,
+                Version2_4_0 or Version2_5_0 => 0xD3BD6E,
+                Version2_6_0 => 0xD3BEEE,
+                Version2_6_1 => 0xD3BF4E,
                 _ => 0
             };
 
             Patches.GetShopEvent = moduleBase + Version switch
             {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0xD15540,
-                GameVersion.Version2_0_1 => 0xD157B0,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0xD49B10,
-                GameVersion.Version2_6_0 => 0xD49C90,
-                GameVersion.Version2_6_1 => 0xD49CF0,
-                _ => 0
-            };
-
-
-            Hooks.NoTimePassOnDeath = moduleBase + Version switch
-            {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0x5F08F9,
-                GameVersion.Version2_0_1 => 0x5F0B39,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_5_0 => 0x5FC27F,
-                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x5FC3FF,
+                Version1_2_0 => 0x0,
+                Version1_8_0 => 0xD12840,
+                Version1_8_1 => 0xD12820,
+                Version1_9_0 => 0xD15460,
+                Version1_9_1 => 0xD15540,
+                Version2_0_1 => 0xD157B0,
+                Version2_2_0 => 0xD49230,
+                Version2_2_3 => 0xD49250,
+                Version2_3_0 => 0xD49740,
+                Version2_4_0 or Version2_5_0 => 0xD49B10,
+                Version2_6_0 => 0xD49C90,
+                Version2_6_1 => 0xD49CF0,
                 _ => 0
             };
 
