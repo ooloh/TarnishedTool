@@ -34,15 +34,15 @@ public class ReminderService : IReminderService
     public void TrySetReminder()
     {
         if (_hasDoneReminder) return;
-        
+
         var (fmg, stringTable, count) = GetFmgData(0, MessageCategory);
         if (fmg == 0 || ReminderEntryIndex >= count) return;
-        
+
         var offset = _memoryService.ReadInt64(stringTable + ReminderEntryIndex * 8);
         if (offset == 0) return;
 
         InstallHook();
-        
+
         _memoryService.WriteString((IntPtr)(fmg + offset), ReminderText, ReminderText.Length * 2);
         _hasDoneReminder = true;
     }
@@ -66,7 +66,7 @@ public class ReminderService : IReminderService
 
         var stringTable = _memoryService.ReadInt64((IntPtr)(fmg + 0x18));
         var rangeCount = _memoryService.ReadInt32((IntPtr)(fmg + 0x0C));
-        
+
         if (rangeCount <= 0) return (fmg, (IntPtr)stringTable, 0);
 
         var lastDescBase = fmg + (rangeCount - 1) * 0x10;
@@ -80,10 +80,10 @@ public class ReminderService : IReminderService
 
     private void InstallHook()
     {
-
         switch (Offsets.Version)
         {
-            case Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2:
+            case Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0
+                or Version1_4_1 or Version1_5_0 or Version1_6_0:
                 DoEarlyPatchesHook();
                 break;
             case Version1_7_0:
@@ -116,7 +116,7 @@ public class ReminderService : IReminderService
         _memoryService.WriteBytes(code, bytes);
         _hookManager.InstallHook(code.ToInt64(), hook, [0x44, 0x8B, 0xCA, 0x33, 0xD2]);
     }
-    
+
     private void DoEarlyPatchesHook()
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.LoadScreenForce;

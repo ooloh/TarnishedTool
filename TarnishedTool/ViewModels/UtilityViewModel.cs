@@ -594,6 +594,25 @@ namespace TarnishedTool.ViewModels
                     _spEffectService.RemoveSpEffect(playerIns, disableGraceWarpId);
                 }
             }
+            
+            if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
+            if (IsDrawPoiseBarsEnabled)
+            {
+                _utilityService.PatchDebugFont();
+                _utilityService.ToggleDrawPoiseBars(true);
+            }
+            
+            if (IsDrawMapTiles1Enabled) _utilityService.ToggleDrawMapTiles1(true);
+            if (IsDrawMapTiles2Enabled)
+            {
+                _utilityService.PatchDebugFont();
+                _utilityService.ToggleDrawMapTiles2(true);
+            }
+            if (IsHideCharactersEnabled) _utilityService.ToggleHideChr(true);
+            if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
+            if (IsDrawRagdollsEnabled) _utilityService.ToggleDrawRagdolls(true);
+            if (IsDrawLowHitEnabled) _utilityService.ToggleDrawLowHit(true);
+            if (IsDrawHighHitEnabled) _utilityService.ToggleDrawHighHit(true);
         }
 
         private void OnGameNotLoaded()
@@ -608,24 +627,13 @@ namespace TarnishedTool.ViewModels
             if (IsCombatMapEnabled) _utilityService.ToggleCombatMap(true);
             if (IsDungeonWarpEnabled) _utilityService.ToggleDungeonWarp(true);
             if (IsGuaranteedDropEnabled) _utilityService.ToggleGuaranteedDrop(true);
-            if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
             if (IsShowFullShopLineupEnabled) _utilityService.ToggleFullShopLineup(true);
             if (IsDrawPlayerSoundEnabled)
             {
                 _utilityService.PatchDebugFont();
                 _utilityService.TogglePlayerSound(true);
             }
-
-            if (IsDrawRagdollsEnabled) _utilityService.ToggleDrawRagdolls(true);
-            if (IsDrawLowHitEnabled) _utilityService.ToggleDrawLowHit(true);
-            if (IsDrawHighHitEnabled) _utilityService.ToggleDrawHighHit(true);
-            if (IsDrawMapTiles1Enabled) _utilityService.ToggleDrawMapTiles1(true);
-            if (IsDrawMapTiles2Enabled)
-            {
-                _utilityService.PatchDebugFont();
-                _utilityService.ToggleDrawMapTiles2(true);
-            }
-
+            
             if (IsDrawMiniMapEnabled)
             {
                 _utilityService.PatchDebugFont();
@@ -636,15 +644,6 @@ namespace TarnishedTool.ViewModels
             {
                 _utilityService.PatchDebugFont();
                 _utilityService.ToggleDrawTilesOnMap(true);
-            }
-
-            if (IsHideCharactersEnabled) _utilityService.ToggleHideChr(true);
-            if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
-
-            if (IsDrawPoiseBarsEnabled)
-            {
-                _utilityService.PatchDebugFont();
-                _utilityService.ToggleDrawPoiseBars(true);
             }
             
             IsDlcAvailable = _dlcService.IsDlcAvailable;

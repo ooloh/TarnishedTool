@@ -10,6 +10,9 @@ public enum GameVersion
     Version1_2_3, //1.2.3
     Version1_3_1, // 1.3.1
     Version1_3_2, // 1.3.2 + 1.3.3
+    Version1_4_0, // 1.4.0
+    Version1_4_1, // 1.4.1
+    Version1_5_0, // 1.5.0
     Version1_6_0, // 1.6.0
     Version1_7_0, // 1.7.1 + 1.7.0
     Version1_8_0, // 1.8.0
