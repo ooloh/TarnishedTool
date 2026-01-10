@@ -1,5 +1,6 @@
 using System;
 using TarnishedTool.Enums;
+using TarnishedTool.Utilities;
 using static TarnishedTool.Enums.GameVersion;
 
 namespace TarnishedTool.Memory
@@ -42,7 +43,11 @@ namespace TarnishedTool.Memory
             };
 
             if (!_version.HasValue)
+            {
+                MsgBox.Show($@"Unknown patch version: {_version}, please report it on GitHub. Scanning for addresses instead.", "Unknown patch version");
                 return false;
+            }
+
 
             InitializeBaseAddresses(moduleBase);
             return true;
@@ -54,7 +59,8 @@ namespace TarnishedTool.Memory
 
             public static int ChrSetPool => Version switch
             {
-                Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0
+                Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2
+                    or Version1_4_0
                     or Version1_4_1 or Version1_5_0 or Version1_6_0 => 0x18038,
                 _ => 0x1DED8,
             };
@@ -321,7 +327,8 @@ namespace TarnishedTool.Memory
 
             public static int DrawTiles1 => Version switch
             {
-                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0 or Version1_4_1 or Version1_5_0
+                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0
+                    or Version1_4_1 or Version1_5_0
                     or Version1_6_0
                     or Version1_7_0
                     or Version1_8_0
@@ -333,7 +340,8 @@ namespace TarnishedTool.Memory
 
             public static int DrawTiles2 => Version switch
             {
-                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0 or Version1_4_1 or Version1_5_0
+                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0
+                    or Version1_4_1 or Version1_5_0
                     or Version1_6_0
                     or Version1_7_0
                     or Version1_8_0
@@ -347,7 +355,8 @@ namespace TarnishedTool.Memory
 
             public static int ShouldDrawMiniMap => Version switch
             {
-                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0 or Version1_4_1 or Version1_5_0
+                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0
+                    or Version1_4_1 or Version1_5_0
                     or Version1_6_0 => 0x7F098,
                 Version1_7_0 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0xB3918,
                 _ => 0xB3368,
@@ -486,7 +495,8 @@ namespace TarnishedTool.Memory
 
             public static int TorrentHandle => Version switch
             {
-                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0 or Version1_4_1 or Version1_5_0
+                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0
+                    or Version1_4_1 or Version1_5_0
                     or Version1_6_0
                     or Version1_7_0
                     or Version1_8_0
@@ -540,7 +550,8 @@ namespace TarnishedTool.Memory
 
             public static int StoredTime => Version switch
             {
-                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0 or Version1_4_1 or Version1_5_0
+                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0
+                    or Version1_4_1 or Version1_5_0
                     or Version1_6_0
                     or Version1_7_0
                     or Version1_8_0
@@ -552,7 +563,8 @@ namespace TarnishedTool.Memory
 
             public static int ForceSave => Version switch
             {
-                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0 or Version1_4_1 or Version1_5_0
+                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0
+                    or Version1_4_1 or Version1_5_0
                     or Version1_6_0
                     or Version1_7_0
                     or Version1_8_0
@@ -564,7 +576,8 @@ namespace TarnishedTool.Memory
 
             public static int ShouldStartNewGame => Version switch
             {
-                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0 or Version1_4_1 or Version1_5_0
+                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0
+                    or Version1_4_1 or Version1_5_0
                     or Version1_6_0
                     or Version1_7_0
                     or Version1_8_0
@@ -615,7 +628,8 @@ namespace TarnishedTool.Memory
 
             public static int GameSpeed => Version switch
             {
-                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0 or Version1_4_1 or Version1_5_0
+                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0
+                    or Version1_4_1 or Version1_5_0
                     or Version1_6_0
                     or Version1_7_0
                     or Version1_8_0
@@ -634,7 +648,8 @@ namespace TarnishedTool.Memory
 
             public static int ShowMapTiles => Version switch
             {
-                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0 or Version1_4_1 or Version1_5_0
+                Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_1 or Version1_3_2 or Version1_4_0
+                    or Version1_4_1 or Version1_5_0
                     or Version1_6_0
                     or Version1_7_0
                     or Version1_8_0
