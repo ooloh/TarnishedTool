@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using TarnishedTool.Enums;
 using TarnishedTool.Models;
@@ -12,6 +13,8 @@ public class ItemSelectionViewModel : BaseViewModel
     private readonly Dictionary<string, List<Item>> _itemsByCategory;
     private readonly List<Item> _allItems;
     private readonly List<AshOfWar> _allAshesOfWar;
+    
+    private static readonly CompareInfo _compareInfo = CultureInfo.InvariantCulture.CompareInfo;
 
     private bool _hasDlc;
     private string _preSearchCategory;
@@ -284,9 +287,9 @@ public class ItemSelectionViewModel : BaseViewModel
 
     private void ApplyFilter()
     {
-        var searchLower = _searchText.ToLower();
-        var filtered = _allItems.Where(i => i.Name.ToLower().Contains(searchLower));
-
+        var filtered = _allItems.Where(i => 
+            _compareInfo.IndexOf(i.Name, _searchText, CompareOptions.IgnoreCase | CompareOptions.IgnoreNonSpace) >= 0);
+        
         if (!_hasDlc)
             filtered = filtered.Where(i => !i.IsDlc);
 

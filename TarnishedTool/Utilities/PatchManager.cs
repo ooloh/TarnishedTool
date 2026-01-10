@@ -15,7 +15,7 @@ public static class PatchManager
         var fileVersion = module?.FileVersionInfo.FileVersion;
         var moduleBase = memoryService.BaseAddress;
         
-        Console.WriteLine(fileVersion);
+        Console.WriteLine($@"Patch: {fileVersion}");
 
         return Offsets.Initialize(fileVersion, moduleBase);
     }

@@ -12,7 +12,7 @@ namespace TarnishedTool.Memory
     {
         
 
-        public void Scan()
+        public void DoFallbackScan()
         {
             string appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "TarnishedTool");
@@ -397,6 +397,11 @@ namespace TarnishedTool.Memory
             }
 
             return currentAddress;
+        }
+
+        public void Scan()
+        {
+           // Add new features here
         }
     }
 }

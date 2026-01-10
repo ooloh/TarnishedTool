@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -112,10 +111,6 @@ namespace TarnishedTool
 
             _stateService.Publish(State.AppStart);
 
-            var versionInfo = FileVersionInfo.GetVersionInfo(ExeManager.GetExePath());
-            var fileVersion = versionInfo.FileVersion;
-            Console.WriteLine($"Version: {fileVersion}");
-
             Closing += MainWindow_Closing;
 
             _gameLoadedTimer = new DispatcherTimer
@@ -154,33 +149,20 @@ namespace TarnishedTool
                 {
                     if (!PatchManager.Initialize(_memoryService))
                     {
-                        _aobScanner.Scan();
-#if DEBUG
-                        Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
-#endif
-                        _hasCheckedPatch = true;
+                        _aobScanner.DoFallbackScan();
                     }
                     
 #if DEBUG
                     Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
 #endif
-                    
                     _hasCheckedPatch = true;
                 }
 
-                // if (!_hasScanned)
-//                 {
-//                     var sw = Stopwatch.StartNew();
-//                     _aobScanner.Scan();
-//                     sw.Stop();
-//                     Console.WriteLine($"AoBScanner.Scan (fallback): {sw.ElapsedMilliseconds}ms");
-//     
-//                     _hasScanned = true;
-//                     _stateService.Publish(State.Attached);
-// #if DEBUG
-//                     Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
-// #endif
-//                 }
+                if (!_hasScanned)
+                {
+                    _aobScanner.Scan();
+                    _hasScanned = true;
+                }
 
 
                 if (!_hasAllocatedMemory)
@@ -188,8 +170,8 @@ namespace TarnishedTool
                     _memoryService.AllocCodeCave();
 #if DEBUG
                     Console.WriteLine($@"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
-                    _stateService.Publish(State.Attached);
 #endif
+                    _stateService.Publish(State.Attached);
                     _hasAllocatedMemory = true;
                 }
 
@@ -222,6 +204,7 @@ namespace TarnishedTool
             else
             {
                 _hasScanned = false;
+                _hasCheckedPatch = false;
                 _loaded = false;
                 _hasAllocatedMemory = false;
                 _appliedOneTimeFeatures = false;
