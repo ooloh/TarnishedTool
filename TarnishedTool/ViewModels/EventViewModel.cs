@@ -6,6 +6,7 @@ using TarnishedTool.Core;
 using TarnishedTool.Enums;
 using TarnishedTool.GameIds;
 using TarnishedTool.Interfaces;
+using TarnishedTool.Models;
 using TarnishedTool.Utilities;
 using TarnishedTool.Views.Windows;
 
@@ -224,7 +225,7 @@ namespace TarnishedTool.ViewModels
                 if (value)
                 {
                     OpenEventLogWindow();
-                    _eventLogViewModel.Clear();
+                    _eventLogViewModel.Reset();
                     _eventLogReader.Start();
                 }
                 else
@@ -386,7 +387,7 @@ namespace TarnishedTool.ViewModels
             _eventLogWindow.Show();
         }
 
-        private void OnLogEntriesReceived(List<(uint eventId, bool value)> events) =>
+        private void OnLogEntriesReceived(List<EventLogEntry> events) =>
             _eventLogViewModel.RefreshEventLogs(events);
 
         #endregion
