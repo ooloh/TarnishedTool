@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -28,14 +27,6 @@ public class ItemViewModel : BaseViewModel
     private readonly List<Item> _allItems;
 
     private readonly Dictionary<string, LoadoutTemplate> _customLoadoutTemplates;
-    public ObservableCollection<KeyValuePair<string, uint>> EquipTypes { get; } = new()
-    {
-        new("Accessory", 0x20000000),
-        new("Gem", 0x80000000),
-        new("Goods", 0x40000000),
-        new("Protector", 0x10000000),
-        new("Weapon", 0x00000000)
-    };
 
     public ItemSelectionViewModel ItemSelection { get; }
 
@@ -77,19 +68,14 @@ public class ItemViewModel : BaseViewModel
         MassSpawnCommand = new DelegateCommand(MassSpawn);
         OpenCreateLoadoutCommand = new DelegateCommand(OpenCreateLoadoutWindow);
         SpawnLoadoutCommand = new DelegateCommand(SpawnLoadout);
-        SpawnWithEquipIdCommand = new DelegateCommand(SpawnWithEquipId);
-
-        SelectedEquipType = EquipTypes.FirstOrDefault().Value;
     }
 
-    
     #region Commands
 
     public ICommand SpawnItemCommand { get; set; }
     public ICommand MassSpawnCommand { get; set; }
     public ICommand OpenCreateLoadoutCommand { get; set; }
     public ICommand SpawnLoadoutCommand { get; set; }
-    public ICommand SpawnWithEquipIdCommand { get; set; }
 
     #endregion
 
@@ -128,50 +114,35 @@ public class ItemViewModel : BaseViewModel
     }
 
     private bool _autoSpawnEnabled;
-    
+
     public bool AutoSpawnEnabled
     {
         get => _autoSpawnEnabled;
         set => SetProperty(ref _autoSpawnEnabled, value);
     }
-    
+
     private Item _selectedAutoSpawnWeapon;
-    
+
     public Item SelectedAutoSpawnWeapon
     {
         get => _selectedAutoSpawnWeapon;
         set => SetProperty(ref _selectedAutoSpawnWeapon, value);
     }
-    
+
     private bool _autoLoadoutSpawnEnabled;
-    
+
     public bool AutoLoadoutSpawnEnabled
     {
         get => _autoLoadoutSpawnEnabled;
         set => SetProperty(ref _autoLoadoutSpawnEnabled, value);
-    }    
-    
+    }
+
     private List<Item> _weaponList;
 
     public List<Item> WeaponList
     {
         get => _weaponList;
         private set => SetProperty(ref _weaponList, value);
-    }
-    
-    private uint _selectedEquipType;
-    public uint SelectedEquipType
-    {
-        get => _selectedEquipType;
-        set { _selectedEquipType = value; OnPropertyChanged(); }
-    }
-    
-    private string _equipId;
-    
-    public string EquipId
-    {
-        get => _equipId;
-        set => SetProperty(ref _equipId, value);
     }
 
     #endregion
@@ -193,14 +164,14 @@ public class ItemViewModel : BaseViewModel
         var hasDlc = _dlcService.IsDlcAvailable;
         ItemSelection.SetDlcAvailable(hasDlc);
     }
-    
+
     private void OnNewGameStart()
     {
         if (AutoSpawnEnabled && SelectedAutoSpawnWeapon != null)
         {
             _itemService.SpawnItem(SelectedAutoSpawnWeapon.Id, 1, -1, false, 1);
         }
-        
+
         if (!AutoLoadoutSpawnEnabled || string.IsNullOrEmpty(SelectedLoadoutName)) return;
         SpawnLoadout();
     }
@@ -245,7 +216,7 @@ public class ItemViewModel : BaseViewModel
         {
             if (ItemSelection.CanUpgrade) itemId += ItemSelection.SelectedUpgrade;
 
-            if (weapon.CanApplyAow && ItemSelection.SelectedAshOfWar != null 
+            if (weapon.CanApplyAow && ItemSelection.SelectedAshOfWar != null
                                    && ItemSelection.SelectedAshOfWar != AshOfWar.None)
             {
                 itemId += ItemSelection.SelectedAffinity.GetIdOffset();
@@ -279,12 +250,12 @@ public class ItemViewModel : BaseViewModel
             foreach (var item in items)
             {
                 if (needsDelay) await Task.Delay(50);
-                
+
                 if (item is EventItem eventItem && eventItem.NeedsEvent)
                 {
                     _eventService.SetEvent(eventItem.EventId, true);
                 }
-                
+
                 int itemId = item.Id;
                 int quantity = item.StackSize;
                 int aowId = -1;
@@ -348,7 +319,7 @@ public class ItemViewModel : BaseViewModel
                     itemId += template.Upgrade;
                 }
 
-                if (weapon.CanApplyAow && !string.IsNullOrEmpty(template.AshOfWarName) 
+                if (weapon.CanApplyAow && !string.IsNullOrEmpty(template.AshOfWarName)
                                        && template.AshOfWarName != "None")
                 {
                     var aow = _allAshesOfWar.FirstOrDefault(a => a.Name == template.AshOfWarName);
@@ -372,18 +343,6 @@ public class ItemViewModel : BaseViewModel
 
             _itemService.SpawnItem(itemId, quantity, aowId, shouldQuantityAdjust, maxQuantity);
         }
-    }
-    
-    private void SpawnWithEquipId()
-    {
-        if (!uint.TryParse(EquipId.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out uint equipId))
-        {
-            MsgBox.Show("Invalid Equip ID");
-            return;
-        }
-
-        uint itemId = equipId + SelectedEquipType;
-        _itemService.SpawnItem((int)itemId, 1, -1, false, 1);
     }
 
     #endregion
