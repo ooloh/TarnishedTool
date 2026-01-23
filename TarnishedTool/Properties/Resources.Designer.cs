@@ -1238,33 +1238,6 @@ namespace TarnishedTool.Properties {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
-        ///    &quot;InternalName&quot;: &quot;baseRec_mp&quot;,
-        ///    &quot;Description&quot;: &quot;Time until MP recovers 1 point (first decimal place)&quot;,
-        ///    &quot;DataType&quot;: &quot;f32&quot;,
-        ///    &quot;ArrayLength&quot;: null,
-        ///    &quot;BitWidth&quot;: null,
-        ///    &quot;DisplayName&quot;: &quot;Base FP Recovery Time&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
-        ///    &quot;Minimum&quot;: 0.0,
-        ///    &quot;Maximum&quot;: 999.0
-        ///  },
-        ///  {
-        ///    &quot;InternalName&quot;: &quot;baseRec_sp&quot;,
-        ///    &quot;Description&quot;: &quot;Time to recover 1 point of stamina (first decimal place)&quot;,
-        ///    &quot;DataType&quot;: &quot;f32&quot;,
-        ///    &quot;ArrayLength&quot;: null,
-        ///    &quot;BitWidth&quot;: null,
-        ///    &quot;Disp [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Param_CharaInitParam {
-            get {
-                return ResourceManager.GetString("Param_CharaInitParam", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to [
-        ///  {
         ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
         ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
         ///    &quot;DataType&quot;: &quot;u8&quot;,
@@ -1570,28 +1543,22 @@ namespace TarnishedTool.Properties {
         ///   Looks up a localized string similar to [
         ///  {
         ///    &quot;InternalName&quot;: &quot;iconId&quot;,
-        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;Description&quot;: &quot;Icon ID (When -1, no icon is required)&quot;,
         ///    &quot;DataType&quot;: &quot;s32&quot;,
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
-        ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;DisplayName&quot;: &quot;Icon ID&quot;,
+        ///    &quot;DefaultValue&quot;: -1,
         ///    &quot;Minimum&quot;: -1.0,
         ///    &quot;Maximum&quot;: 999999.0
         ///  },
         ///  {
         ///    &quot;InternalName&quot;: &quot;conditionHp&quot;,
-        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;Description&quot;: &quot;Set what percentage of maxHP the remaining HP will be activated&quot;,
         ///    &quot;DataType&quot;: &quot;f32&quot;,
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
-        ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
-        ///    &quot;Minimum&quot;: -1.0,
-        ///    &quot;Maximum&quot;: 100.0
-        ///  },
-        ///  {
-        ///    &quot;InternalName&quot;: &quot;effectEnduran [rest of string was truncated]&quot;;.
+        ///    &quot;DisplayName&quot;: &quot;Trigger  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_SpEffectParam {
             get {
@@ -2047,42 +2014,6 @@ namespace TarnishedTool.Properties {
         internal static string ParamEntries_CalcCorrectGraph {
             get {
                 return ResourceManager.GetString("ParamEntries_CalcCorrectGraph", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ID,Name
-        ///10,
-        ///11,
-        ///12,
-        ///13,
-        ///20,
-        ///21,
-        ///22,
-        ///23,
-        ///2400,Gift - None
-        ///2401,Gift - Crimson Amber Medallion
-        ///2402,Gift - Lands Between Rune
-        ///2403,Gift - Golden Seed
-        ///2404,Gift - Fanged Imp Ashes
-        ///2405,Gift - Cracked Pot
-        ///2406,Gift - Stonesword Key
-        ///2407,Gift - Bewitching Branch
-        ///2408,Gift - Boiled Prawn
-        ///2409,Gift - Shabriri&apos;s Woe
-        ///3000,Class - Vagabond
-        ///3001,Class - Warrior
-        ///3002,Class - Hero
-        ///3003,Class - Bandit
-        ///3004,Class - Astrologer
-        ///3005,Class - Prophet
-        ///3006,Class - Confessor
-        ///3007,Class - Samurai
-        ///3008, [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string ParamEntries_CharaInitParam {
-            get {
-                return ResourceManager.GetString("ParamEntries_CharaInitParam", resourceCulture);
             }
         }
         
