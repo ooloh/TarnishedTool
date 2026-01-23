@@ -13,6 +13,9 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
     private TGroup _preSearchGroup;
     private readonly Dictionary<TGroup, List<TItem>> _groupedItems;
     
+    private Func<TItem, bool> _additionalFilter;
+
+    
     
     public SearchableGroupedCollection(
         Dictionary<TGroup, List<TItem>> data,
@@ -111,6 +114,8 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
         }
     }
 
+    #region Private Methods
+
     private void UpdateItemsList()
     {
         if (SelectedGroup == null || !_groupedItems.ContainsKey(SelectedGroup))
@@ -119,20 +124,50 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
             return;
         }
 
-        Items = new ObservableCollection<TItem>(_groupedItems[SelectedGroup]);
-        SelectedItem = Items.FirstOrDefault();
-    }
+        var items = _groupedItems[SelectedGroup].AsEnumerable();
+    
+        if (_additionalFilter != null)
+            items = items.Where(_additionalFilter);
 
-    private void ApplyFilter()
-    {
-        var searchLower = SearchText.ToLower();
-        Items = new ObservableCollection<TItem>(
-            _allItems.Where(item => _matchesSearch(item, searchLower)));
+        Items = new ObservableCollection<TItem>(items);
         SelectedItem = Items.FirstOrDefault();
     }
     
-    public void Initialize()
+    
+    private void ApplyFilter()
     {
-        SelectedGroup = _groups.FirstOrDefault();
+        var searchLower = SearchText.ToLower();
+        var items = _allItems.Where(item => _matchesSearch(item, searchLower));
+    
+        if (_additionalFilter != null)
+            items = items.Where(_additionalFilter);
+    
+        Items = new ObservableCollection<TItem>(items);
+        SelectedItem = Items.FirstOrDefault();
     }
+
+    #endregion
+
+    #region Public Methods
+    
+    public void SetAdditionalFilter(Func<TItem, bool> filter)
+    {
+        _additionalFilter = filter;
+        if (_isSearchActive)
+            ApplyFilter();
+        else
+            UpdateItemsList();
+    }
+
+    public void ClearAdditionalFilter()
+    {
+        _additionalFilter = null;
+        if (_isSearchActive)
+            ApplyFilter();
+        else
+            UpdateItemsList();
+    }
+    
+    #endregion
+    
 }

@@ -17,7 +17,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private readonly IParamService _paramService;
     
     private readonly Dictionary<(Param, uint), byte[]> _vanillaData = new();
-    
+    private readonly HashSet<(Param, uint)> _modifiedEntries = new();
     
     private LoadedParam _currentParam;
     private List<FieldValueViewModel> _fields;
@@ -63,6 +63,22 @@ public sealed class ParamEditorViewModel : BaseViewModel
         {
             if (SetProperty(ref _fieldSearchText, value))
                 _fieldsView?.Refresh();
+        }
+    }
+    
+    private bool _showModifiedEntriesOnly;
+    public bool ShowModifiedEntriesOnly
+    {
+        get => _showModifiedEntriesOnly;
+        set
+        {
+            if (SetProperty(ref _showModifiedEntriesOnly, value))
+            {
+                if (value)
+                    ParamEntries.SetAdditionalFilter(entry => IsEntryModified(entry.Parent, entry.Id));
+                else
+                    ParamEntries.ClearAdditionalFilter();
+            }
         }
     }
 
@@ -141,6 +157,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
         return field.DisplayName.ToLower().Contains(FieldSearchText) ||
                field.InternalName.ToLower().Contains(FieldSearchText);
     }
+    
 
     #endregion
     
@@ -155,9 +172,19 @@ public sealed class ParamEditorViewModel : BaseViewModel
     public void WriteFieldValue(ParamFieldDef field, object value)
     {
         if (_currentRowPtr == IntPtr.Zero) return;
-        
+    
         _paramService.WriteField(_currentRowPtr, field, value);
         _currentRowData = _paramService.ReadRow(_currentRowPtr, _currentParam.RowSize);
+    
+        var key = (ParamEntries.SelectedGroup, ParamEntries.SelectedItem.Id);
+    
+        if (_vanillaData.TryGetValue(key, out var vanilla))
+        {
+            if (_currentRowData.SequenceEqual(vanilla))
+                _modifiedEntries.Remove(key);
+            else
+                _modifiedEntries.Add(key);
+        }
     }
     
     public object ReadVanillaFieldValue(ParamFieldDef field)
@@ -168,6 +195,11 @@ public sealed class ParamEditorViewModel : BaseViewModel
             return _paramService.ReadFieldFromBytes(vanillaBytes, field);
         }
         return null;
+    }
+    
+    public bool IsEntryModified(Param param, uint entryId)
+    {
+        return _modifiedEntries.Contains((param, entryId));
     }
 
     #endregion

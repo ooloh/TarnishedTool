@@ -77,67 +77,74 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-
-                <TextBox Grid.Row="0"
-                         Text="{Binding ParamEntries.SearchText, UpdateSourceTrigger=PropertyChanged}"
-                         Height="25"
-                         Width="200"
-                         Margin="0,0,0,5">
-                    <TextBox.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="3" />
-                        </Style>
-                    </TextBox.Resources>
-                    <TextBox.Template>
-                        <ControlTemplate TargetType="TextBox">
-                            <Border x:Name="border"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="3">
-                                <Grid>
-                                    <ScrollViewer x:Name="PART_ContentHost"
-                                                  Focusable="false"
-                                                  HorizontalScrollBarVisibility="Hidden"
-                                                  VerticalScrollBarVisibility="Hidden"
-                                                  VerticalAlignment="Center"
-                                                  Margin="5,0,0,0" />
-                                    <TextBlock Text="Search params..."
-                                               VerticalAlignment="Center"
-                                               Margin="5,0,0,0"
-                                               Foreground="Gray"
-                                               IsHitTestVisible="False">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                <Style.Triggers>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition
-                                                                Binding="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=TextBox}}"
-                                                                Value="" />
-                                                            <Condition
-                                                                Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource AncestorType=TextBox}}"
-                                                                Value="False" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </Grid>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsKeyboardFocused" Value="True">
-                                    <Setter TargetName="border" Property="BorderBrush"
-                                            Value="{StaticResource AccentBrush}" />
-                                    <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </TextBox.Template>
-                </TextBox>
+                <Grid Grid.Row="0">
+                    <TextBox
+                        Text="{Binding ParamEntries.SearchText, UpdateSourceTrigger=PropertyChanged}"
+                        Height="25"
+                        Width="200"
+                        Margin="0,0,0,5">
+                        <TextBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="3" />
+                            </Style>
+                        </TextBox.Resources>
+                        <TextBox.Template>
+                            <ControlTemplate TargetType="TextBox">
+                                <Border x:Name="border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="3">
+                                    <Grid>
+                                        <ScrollViewer x:Name="PART_ContentHost"
+                                                      Focusable="false"
+                                                      HorizontalScrollBarVisibility="Hidden"
+                                                      VerticalScrollBarVisibility="Hidden"
+                                                      VerticalAlignment="Center"
+                                                      Margin="5,0,0,0" />
+                                        <TextBlock Text="Search params..."
+                                                   VerticalAlignment="Center"
+                                                   Margin="5,0,0,0"
+                                                   Foreground="Gray"
+                                                   IsHitTestVisible="False">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition
+                                                                    Binding="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                                    Value="" />
+                                                                <Condition
+                                                                    Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                                    Value="False" />
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                        <Setter TargetName="border" Property="BorderBrush"
+                                                Value="{StaticResource AccentBrush}" />
+                                        <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </TextBox.Template>
+                    </TextBox>
+                    <CheckBox 
+                        Margin="0,0,10,5"
+                        Content="Show Modified Only"
+                        HorizontalAlignment="Right"
+                        IsChecked="{Binding ShowModifiedEntriesOnly}"
+                        ></CheckBox>
+                </Grid>
 
                 <Border Grid.Row="1" BorderThickness="1" BorderBrush="#333">
                     <ListView ItemsSource="{Binding ParamEntries.Items}"
@@ -293,7 +300,7 @@
                         <ColumnDefinition Width="150" />
                         <ColumnDefinition Width="150" />
                     </Grid.ColumnDefinitions>
-                
+
                     <TextBlock Grid.Column="0" Text="Name" FontWeight="SemiBold" Padding="8,4" />
                     <TextBlock Grid.Column="1" Text="Current Value" FontWeight="SemiBold" Padding="8,4" />
                     <TextBlock Grid.Column="2" Text="Vanilla Value" FontWeight="SemiBold" Padding="8,4" />
