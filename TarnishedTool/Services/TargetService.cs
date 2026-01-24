@@ -229,6 +229,10 @@ namespace TarnishedTool.Services
         public int GetNpcChrId() => 
             memoryService.ReadInt32((IntPtr)GetTargetChrIns() + ChrIns.ChrId);
 
+        public uint GetNpcParamId() => 
+            memoryService.ReadUInt32((IntPtr)GetTargetChrIns() + ChrIns.NpcParamId);
+        
+        
         public void ToggleNoHeal(bool isNoHealEnabled)
         {
             var code = CodeCaveOffsets.Base + CodeCaveOffsets.NoHeal;

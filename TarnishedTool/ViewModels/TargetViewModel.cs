@@ -917,6 +917,12 @@ namespace TarnishedTool.ViewModels
             {
 #if DEBUG
                 Console.WriteLine($@"Locked on target chrIns: 0x{chrIns:X}");
+                uint entityId = _targetService.GetEntityId();
+                int npcThinkParamId = _targetService.GetNpcThinkParamId();
+                int chrId = _targetService.GetNpcChrId();
+                uint npcParamId = _targetService.GetNpcParamId();
+                Console.WriteLine($@"EntityId: {entityId} NpcThinkParamId: {npcThinkParamId} NpcParamId: {npcParamId} ChrId: {chrId}");
+                
 #endif
                 IsFreezeAiEnabled = _targetService.IsAiDisabled();
                 IsTargetingViewEnabled = _targetService.IsTargetViewEnabled();
