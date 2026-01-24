@@ -1,5 +1,6 @@
 ﻿// 
 
+using System.Diagnostics;
 using TarnishedTool.Core;
 using TarnishedTool.Models;
 
@@ -12,8 +13,8 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
     public string DisplayName => field.DisplayName;
     public string InternalName => field.InternalName;
     public string DataType => field.DataType;
-    public float? Minimum => field.Minimum;
-    public float? Maximum => field.Maximum;
+    public double? Minimum => field.Minimum;
+    public double? Maximum => field.Maximum;
     public bool IsBitfield => field.BitWidth.HasValue;
     public int Offset => field.Offset;
     public string VanillaValueText => FormatValue(_vanillaValue);
@@ -50,7 +51,7 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
 
         return field.DataType switch
         {
-            "f32" => ((float)val).Clamp(field.Minimum ?? float.MinValue, field.Maximum ?? float.MaxValue),
+            "f32" => ((float)val).Clamp((float?)field.Minimum ?? float.MinValue, (float?)field.Maximum ?? float.MaxValue),
             "s32" => ((int)val).Clamp((int?)field.Minimum ?? int.MinValue, (int?)field.Maximum ?? int.MaxValue),
             "u32" => ((uint)val).Clamp((uint?)field.Minimum ?? uint.MinValue, (uint?)field.Maximum ?? uint.MaxValue),
             "s16" => ((short)val).Clamp((short?)field.Minimum ?? short.MinValue, (short?)field.Maximum ?? short.MaxValue),
@@ -79,7 +80,7 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
         return field.DataType switch
         {
             "f32" => $"{val:F2}",
-            _ => val.ToString()
+            _ => $"{val:0}"
         };
     }
     
@@ -113,8 +114,10 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
 
     public void RefreshValue()
     {
+        
         _value = parent.ReadFieldValue(field);
         _vanillaValue = parent.ReadVanillaFieldValue(field);
+        
         OnPropertyChanged(nameof(Value));
         OnPropertyChanged(nameof(ValueText));
         OnPropertyChanged(nameof(VanillaValue));

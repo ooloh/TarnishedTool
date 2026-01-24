@@ -11,6 +11,7 @@ public enum Param
     BuddyParam,
     Bullet,
     CalcCorrectGraph,
+    CharaInitParam,
     EquipParamAccessory,
     EquipParamGem,
     EquipParamGoods,

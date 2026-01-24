@@ -27,6 +27,7 @@ public class ParamRepository : IParamRepository
         [BuddyParam] = (128, 0),
         [Bullet] = (10, 0),
         [CalcCorrectGraph] = (30, 0),
+        [CharaInitParam] = (23, 0),
         [EquipParamAccessory] = (2, 0),
         [EquipParamGem] = (154, 0),
         [EquipParamGoods] = (3, 0),
