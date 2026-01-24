@@ -11,11 +11,39 @@
                        Style="{StaticResource DefaultWindowStyle}"
                        WindowStyle="None"
                        AllowsTransparency="True"
-                       Height="700" Width="1500">
+                       Height="700" Width="1600">
 
     <windows:TopmostWindow.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:ParamEntryToDisplayTextConverter x:Key="ParamEntryToDisplayTextConverter" />
+        <Style TargetType="ContextMenu">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#333"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="MenuItem">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+            <Setter Property="Padding" Value="20,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="Border" 
+                                Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}"
+                                MinWidth="120">
+                            <ContentPresenter ContentSource="Header"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </windows:TopmostWindow.Resources>
     <Grid>
 
@@ -28,63 +56,19 @@
         <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="600" />
+                <ColumnDefinition Width="700" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" Margin="0,0,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Expander Grid.Row="0" Header="📌 Pinned" IsExpanded="True"
-                          Visibility="{Binding HasPinnedEntries, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <ListView x:Name="PinnedListView"
-                              ItemsSource="{Binding PinnedEntries}"
-                              MaxHeight="150"
-                              BorderThickness="0">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="ListViewItem">
-                                            <Border x:Name="Border" Background="Transparent" Padding="4,2">
-                                                <ContentPresenter />
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="Border" Property="Background"
-                                                            Value="{StaticResource AccentBrush}" />
-                                                </Trigger>
-                                                <Trigger Property="IsSelected" Value="True">
-                                                    <Setter TargetName="Border" Property="Background"
-                                                            Value="{StaticResource HoverBrush}" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <EventSetter Event="MouseDoubleClick" Handler="PinnedItem_MouseDoubleClick" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Converter={StaticResource ParamEntryToDisplayTextConverter}}" />
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <ListView.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Unpin" Click="UnpinMenuItem_Click" />
-                            </ContextMenu>
-                        </ListView.ContextMenu>
-                    </ListView>
-                </Expander>
+                <TextBlock Grid.Row="0" Text="Params" Margin="0,0,0,5" />
 
-                <TextBlock Grid.Row="1" Text="Params" Margin="0,0,0,5" />
-
-                <ListBox Grid.Row="2"
+                <ListBox Grid.Row="1"
                          ItemsSource="{Binding ParamEntries.Groups}"
                          SelectedItem="{Binding ParamEntries.SelectedGroup}"
                          BorderThickness="1"
@@ -120,78 +104,133 @@
             <Grid Grid.Column="1" Margin="0,0,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+
                 <Grid Grid.Row="0">
-                    <TextBox
-                        Text="{Binding ParamEntries.SearchText, UpdateSourceTrigger=PropertyChanged}"
-                        Height="25"
-                        Width="200"
-                        Margin="0,0,0,5">
-                        <TextBox.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="3" />
-                            </Style>
-                        </TextBox.Resources>
-                        <TextBox.Template>
-                            <ControlTemplate TargetType="TextBox">
-                                <Border x:Name="border"
-                                        Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="3">
-                                    <Grid>
-                                        <ScrollViewer x:Name="PART_ContentHost"
-                                                      Focusable="false"
-                                                      HorizontalScrollBarVisibility="Hidden"
-                                                      VerticalScrollBarVisibility="Hidden"
-                                                      VerticalAlignment="Center"
-                                                      Margin="5,0,0,0" />
-                                        <TextBlock Text="Search params..."
-                                                   VerticalAlignment="Center"
-                                                   Margin="5,0,0,0"
-                                                   Foreground="Gray"
-                                                   IsHitTestVisible="False">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                    <Style.Triggers>
-                                                        <MultiDataTrigger>
-                                                            <MultiDataTrigger.Conditions>
-                                                                <Condition
-                                                                    Binding="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=TextBox}}"
-                                                                    Value="" />
-                                                                <Condition
-                                                                    Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource AncestorType=TextBox}}"
-                                                                    Value="False" />
-                                                            </MultiDataTrigger.Conditions>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </Grid>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsKeyboardFocused" Value="True">
-                                        <Setter TargetName="border" Property="BorderBrush"
-                                                Value="{StaticResource AccentBrush}" />
-                                        <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </TextBox.Template>
-                    </TextBox>
-                    <CheckBox
-                        Margin="0,0,10,5"
-                        Content="Show Modified Only"
-                        HorizontalAlignment="Right"
-                        IsChecked="{Binding ShowModifiedEntriesOnly}">
-                    </CheckBox>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox
+                            Text="{Binding ParamEntries.SearchText, UpdateSourceTrigger=PropertyChanged}"
+                            Height="25"
+                            Width="200"
+                            Margin="20,0,0,5">
+                            <TextBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </TextBox.Resources>
+                            <TextBox.Template>
+                                <ControlTemplate TargetType="TextBox">
+                                    <Border x:Name="border"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="3">
+                                        <Grid>
+                                            <ScrollViewer x:Name="PART_ContentHost"
+                                                          Focusable="false"
+                                                          HorizontalScrollBarVisibility="Hidden"
+                                                          VerticalScrollBarVisibility="Hidden"
+                                                          VerticalAlignment="Center"
+                                                          Margin="5,0,0,0" />
+                                            <TextBlock Text="Search params..."
+                                                       VerticalAlignment="Center"
+                                                       Margin="5,0,0,0"
+                                                       Foreground="Gray"
+                                                       IsHitTestVisible="False">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Style.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition
+                                                                        Binding="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                                        Value="" />
+                                                                    <Condition
+                                                                        Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                                        Value="False" />
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                            </MultiDataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsKeyboardFocused" Value="True">
+                                            <Setter TargetName="border" Property="BorderBrush"
+                                                    Value="{StaticResource AccentBrush}" />
+                                            <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </TextBox.Template>
+                        </TextBox>
+
+                        <CheckBox
+                            Margin="15,0,0,5"
+                            Content="Show Modified Only"
+                            IsChecked="{Binding ShowModifiedEntriesOnly}" />
+                        <CheckBox
+                            Margin="15,0,0,5"
+                            Content="Search All Params"
+                            IsChecked="{Binding IsSearchAllParamsEnabled}" />
+
+                        <Button Content="Restore All Params" Margin="15,0,0,5" />
+                    </StackPanel>
+
                 </Grid>
 
-                <Border Grid.Row="1" BorderThickness="1" BorderBrush="#333">
+                <Expander Header="📌 Pinned" IsExpanded="True"
+                          Grid.Row="1" Margin="0,0,0,5">
+                    <ListView x:Name="PinnedListView"
+                              ItemsSource="{Binding PinnedEntries}"
+                              MaxHeight="80"
+                              BorderThickness="0">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <Border x:Name="Border" Background="Transparent" Padding="4,2">
+                                                <ContentPresenter />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Border" Property="Background"
+                                                            Value="{StaticResource AccentBrush}" />
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Border" Property="Background"
+                                                            Value="{StaticResource HoverBrush}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <EventSetter Event="MouseDoubleClick" Handler="PinnedItem_MouseDoubleClick" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Text="{Binding Converter={StaticResource ParamEntryToDisplayTextConverter}}" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Unpin" Click="UnpinMenuItem_Click" />
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
+                </Expander>
+
+
+                <Border Grid.Row="2" BorderThickness="1" BorderBrush="#333">
                     <ListView ItemsSource="{Binding ParamEntries.Items}"
                               SelectedItem="{Binding ParamEntries.SelectedItem}"
                               VirtualizingPanel.IsVirtualizing="True"
@@ -203,7 +242,8 @@
                             <ContextMenu>
                                 <MenuItem Header="Pin"
                                           Command="{Binding TogglePinCommand}"
-                                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
+ />
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.ItemContainerStyle>
@@ -293,9 +333,9 @@
 
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="350"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="350" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBox Grid.Column="0"
                              Text="{Binding FieldSearchText, UpdateSourceTrigger=PropertyChanged}"
@@ -354,8 +394,7 @@
                     <Button Grid.Column="1" Content="Restore vanilla values"
                             Margin="15,0,0,5"
                             IsEnabled="{Binding IsSelectedEntryModified}"
-                            Command="{Binding RestoreSelectedEntryCommand}">
-                    </Button>
+                            Command="{Binding RestoreSelectedEntryCommand}" />
 
                     <CheckBox Grid.Column="2"
                               x:Name="AlwaysOnTopCheckBox"

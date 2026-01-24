@@ -9,13 +9,14 @@ namespace TarnishedTool.ViewModels;
 
 public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
 {
+    
+    public enum SearchScopes { SelectedGroup, AllGroups }
+    
     private readonly Func<TItem, string, bool> _matchesSearch;
     private TGroup _preSearchGroup;
     private readonly Dictionary<TGroup, List<TItem>> _groupedItems;
     
     private Func<TItem, bool> _additionalFilter;
-
-    
     
     public SearchableGroupedCollection(
         Dictionary<TGroup, List<TItem>> data,
@@ -114,6 +115,17 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
             }
         }
     }
+    
+    private SearchScopes _searchScope = SearchScopes.AllGroups;
+    public SearchScopes SearchScope
+    {
+        get => _searchScope;
+        set
+        {
+            if (!SetProperty(ref _searchScope, value)) return;
+            if (_isSearchActive) ApplyFilter();
+        }
+    }
 
     #region Private Methods
 
@@ -138,7 +150,10 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
     private void ApplyFilter()
     {
         var searchLower = SearchText.ToLower();
-        var items = _allItems.Where(item => _matchesSearch(item, searchLower));
+        
+        var source = _searchScope == SearchScopes.AllGroups ? _allItems : _groupedItems[SelectedGroup];
+        
+        var items = source.Where(item => _matchesSearch(item, searchLower));
     
         if (_additionalFilter != null)
             items = items.Where(_additionalFilter);
@@ -168,6 +183,8 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
         else
             UpdateItemsList();
     }
+    
+    public void SetSearchScope(SearchScopes scope) => SearchScope = scope;
     
     
     
