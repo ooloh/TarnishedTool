@@ -55,6 +55,7 @@ namespace TarnishedTool.ViewModels
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
             stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
+            stateService.Subscribe(State.FadedIn, OnFadedIn);
 
             SaveCommand = new DelegateCommand(Save);
             TriggerNgCycleCommand = new DelegateCommand(TriggerNgCycle);
@@ -83,7 +84,7 @@ namespace TarnishedTool.ViewModels
             RegisterHotkeys();
             ApplyPrefs();
         }
-
+        
         #region Commands
 
         public ICommand SaveCommand { get; set; }
@@ -609,17 +610,7 @@ namespace TarnishedTool.ViewModels
             if (IsHideCharactersEnabled) _utilityService.ToggleHideChr(true);
             if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
             if (IsDrawRagdollsEnabled) _utilityService.ToggleDrawRagdolls(true);
-            if (IsDrawLowHitEnabled)
-            {
-                _utilityService.ToggleDrawLowHit(true);
-                _utilityService.SetColDrawMode(ColDrawMode);
-            }
-
-            if (IsDrawHighHitEnabled)
-            {
-                _utilityService.ToggleDrawHighHit(true);
-                _utilityService.SetColDrawMode(ColDrawMode);
-            }
+            
             _ezStateService.RequestNewNpcTalk();
         }
 
@@ -665,6 +656,21 @@ namespace TarnishedTool.ViewModels
             }
             
             IsDlcAvailable = _dlcService.IsDlcAvailable;
+        }
+        
+        private void OnFadedIn()
+        {
+            if (IsDrawLowHitEnabled)
+            {
+                _utilityService.ToggleDrawLowHit(true);
+                _utilityService.SetColDrawMode(ColDrawMode);
+            }
+            
+            if (IsDrawHighHitEnabled)
+            {
+                _utilityService.ToggleDrawHighHit(true);
+                _utilityService.SetColDrawMode(ColDrawMode);
+            }
         }
 
         private void RegisterHotkeys()
