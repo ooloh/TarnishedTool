@@ -1,6 +1,13 @@
+using System.ComponentModel;
+
 namespace TarnishedTool.Enums.ParamEnums.CharaInitParam;
 
 public enum NpcDrawType : sbyte
 {
-    Type = 0
+    Normal = 0,
+    [Description("White Phantom")]
+    WhitePhantom = 1,
+    [Description("Black Phantom")]
+    BlackPhantom = 2,
+    Intruder = 3
 }
