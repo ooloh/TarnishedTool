@@ -67,6 +67,12 @@ public class SettingsManager
         "TarnishedTool",
         "settings.txt");
 
+    // Adding Custom Row Entries for Param Patcher
+    private static string CustomRowNamesPath => Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "TarnishedTool",
+        "CustomRowNamesPath.json");
+
     public void Save()
     {
         try

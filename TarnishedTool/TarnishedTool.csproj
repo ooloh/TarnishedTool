@@ -296,6 +296,7 @@
         <Compile Include="Models\Weapon.cs" />
         <Compile Include="Models\Weather.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
+        <Compile Include="Services\CustomRowNamesService.cs" />
         <Compile Include="Services\DlcService.cs" />
         <Compile Include="Services\EmevdService.cs" />
         <Compile Include="Services\EnemyService.cs" />
@@ -320,6 +321,7 @@
         <Compile Include="Utilities\AsmHelper.cs" />
         <Compile Include="Utilities\AsmLoader.cs" />
         <Compile Include="Utilities\EnumUtil.cs" />
+        <Compile Include="Utilities\InputBox.cs" />
         <Compile Include="Utilities\PatchManager.cs" />
         <Compile Include="Utilities\PositionUtils.cs" />
         <Compile Include="Utilities\DataLoader.cs" />
@@ -385,6 +387,9 @@
         <Compile Include="Views\Windows\CreateLoadoutWindow.xaml.cs">
           <DependentUpon>CreateLoadoutWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\CustomInputBox.xaml.cs">
+          <DependentUpon>CustomInputBox.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\CustomMessageBox.xaml.cs">
           <DependentUpon>CustomMessageBox.xaml</DependentUpon>
         </Compile>
@@ -438,6 +443,7 @@
         <Page Include="Views\Tabs\UtilityTab.xaml" />
         <Page Include="Views\Windows\AttackInfoWindow.xaml" />
         <Page Include="Views\Windows\CreateLoadoutWindow.xaml" />
+        <Page Include="Views\Windows\CustomInputBox.xaml" />
         <Page Include="Views\Windows\CustomMessageBox.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />
         <Page Include="Views\Windows\EventLogWindow.xaml" />

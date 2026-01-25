@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Data;
@@ -15,6 +16,7 @@ using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
 using static TarnishedTool.ViewModels.SearchableGroupedCollection<TarnishedTool.Enums.Param,TarnishedTool.Models.ParamEntry>;
+using TarnishedTool.Services;
 
 namespace TarnishedTool.ViewModels;
 
@@ -23,6 +25,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private readonly IParamRepository _paramRepository;
     private readonly IParamService _paramService;
     private readonly IReminderService _reminderService;
+    private CustomRowNamesService _customRowNamesService;
     private readonly Dictionary<string, Type> _enumTypes = new();
     private readonly Dictionary<(Param, uint), byte[]> _vanillaData = new();
     private readonly HashSet<(Param, uint)> _modifiedEntries = new();
@@ -30,20 +33,42 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private List<FieldValueViewModel> _fields;
     private IntPtr _currentRowPtr;
     private byte[] _currentRowData;
+    
 
     public ParamEditorViewModel(IParamRepository paramRepository, IParamService paramService,
-        IReminderService reminderService)
+        IReminderService reminderService, CustomRowNamesService customRowNamesService)
     {
         _paramRepository = paramRepository;
         _paramService = paramService;
         _reminderService = reminderService;
+        
+        // new stuff I added
+        _customRowNamesService = customRowNamesService; // load service
+        _customRowNamesService.Load(); // read the json derulo file
+
+        var entriesByParam = _paramRepository.GetAllEntriesByParam(); // get all entries from the params
+
+        foreach (var paramsAndEntries in entriesByParam) // loop through every param category
+        {
+            var paramName = paramsAndEntries.Key.ToString(); // get the param name
+            foreach (var entry in paramsAndEntries.Value) //loop through the rows (I hope)
+            {
+                var customName = _customRowNamesService.GetCustomRowNames(paramName, entry.Id); // custom name check
+                if (customName != null) // if it has one use it
+                {
+                    entry.CustomName =  customName;
+                }
+            }
+        }
 
         ParamEntries = new SearchableGroupedCollection<Param, ParamEntry>(
-            _paramRepository.GetAllEntriesByParam(),
+            entriesByParam,
+            //_paramRepository.GetAllEntriesByParam(), [Noting down original stuff in case I majorly fucked up]
             (entry, search) =>
                 entry.Id.ToString().Contains(search) ||
                 entry.Parent.ToString().Contains(search) ||
-                (entry.Name?.ToLower().Contains(search) ?? false)
+                (entry.DisplayName?.ToLower().Contains(search) ?? false)
+                //(entry.Name?.ToLower().Contains(search) ?? false) [Noting down original stuff in case I majorly fucked up]
         );
 
         ParamEntries.PropertyChanged += OnParamEntriesPropertyChanged;
@@ -52,6 +77,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
         RestoreAllEntriesCommand = new DelegateCommand(RestoreAllEntries);
         TogglePinCommand = new DelegateCommand<ParamEntry>(TogglePin);
         NavigateToPinnedCommand = new DelegateCommand<ParamEntry>(NavigateToEntry);
+        RenameRowCommand = new DelegateCommand<ParamEntry>(RenameRow);
         PopulateEnumTypes();
             
      //   PrintEnums();
@@ -61,6 +87,27 @@ public sealed class ParamEditorViewModel : BaseViewModel
         OnParamChanged();
     }
 
+    // Renaming command
+    private ParamEntry _entryToRename;
+    public ParamEntry EntryToRename
+    {
+        get => _entryToRename;
+        set => SetProperty(ref _entryToRename, value);
+    }
+
+    private void RenameRow(ParamEntry entry)
+    {
+        if (entry == null) return;
+        var newName = InputBox.Show(
+                $"Rename Row {entry.Id}",
+                entry.CustomName ?? entry.DisplayName
+            );
+        if (newName != null)
+        {
+            ApplyCustomName(entry, newName);
+        }
+    }
+
 
     #region Commands
 
@@ -68,6 +115,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
     public ICommand RestoreAllEntriesCommand { get; set; }
     public ICommand TogglePinCommand { get; set; }
     public ICommand NavigateToPinnedCommand { get; set; }
+    public ICommand RenameRowCommand { get; set; }
 
     #endregion
 
@@ -117,6 +165,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
             }
         }
     }
+
+    
+
 
     private bool _isSearchAllParamsEnabled;
 
@@ -387,6 +438,32 @@ public sealed class ParamEditorViewModel : BaseViewModel
     public bool IsPinned(ParamEntry entry)
     {
         return _pinnedEntries.Any(e => e.Parent == entry.Parent && e.Id == entry.Id);
+    }
+
+    public void ApplyCustomName(ParamEntry entry, string newName)
+    {
+        if (entry == null) return; // safety check
+
+        var paramName = entry.Parent.ToString(); // get param  category name
+
+        if (string.IsNullOrWhiteSpace(newName)) // check if anything was written
+        {
+            if (_customRowNamesService.HasCustomRowNames(paramName,
+                    entry.Id)) // if nothing was written restore original name instead 
+            {
+                _customRowNamesService.SetCustomRowNames(paramName, entry.Id, null);
+            }
+
+            entry.CustomName = null;
+        }
+        else // if user did input something
+        {
+            _customRowNamesService.SetCustomRowNames(paramName, entry.Id, newName); // save new name and reload view
+            entry.CustomName = newName;
+        }
+
+        _customRowNamesService.Save();
+        OnPropertyChanged(nameof(ParamEntries.SelectedItem)); // refresh UI on change
     }
 
     #endregion

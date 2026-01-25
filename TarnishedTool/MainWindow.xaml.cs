@@ -47,6 +47,7 @@ namespace TarnishedTool
 
             var hookManager = new HookManager(_memoryService, _stateService);
             var hotkeyManager = new HotkeyManager(_memoryService);
+            var customRowNamesService = new CustomRowNamesService(); // this is so confusing I love it
 
             IReminderService reminderService = new ReminderService(_memoryService, hookManager, _stateService);
             ITravelService travelService = new TravelService(_memoryService, hookManager);
@@ -88,7 +89,7 @@ namespace TarnishedTool
                 flaskService);
             ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService, eventService);
             AdvancedViewModel advancedViewModel = new AdvancedViewModel(itemService, _stateService, eventService,
-                paramService, paramRepository, spEffectService, playerService, hotkeyManager, gameTickService, reminderService);
+                paramService, paramRepository, spEffectService, playerService, hotkeyManager, gameTickService, reminderService, customRowNamesService);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService);
             
             var playerTab = new PlayerTab(playerViewModel);

@@ -8,6 +8,7 @@ using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Utilities;
 using TarnishedTool.Views.Windows;
+using TarnishedTool.Services;
 
 namespace TarnishedTool.ViewModels;
 
@@ -20,6 +21,7 @@ public class AdvancedViewModel : BaseViewModel
     private SpEffectsWindow _spEffectsWindow;
     private readonly HotkeyManager _hotkeyManager;
     private readonly IGameTickService _gameTickService;
+    private readonly CustomRowNamesService _customRowNamesService; // maybe it's fine to keep it as readonly, but it's writing stuff so maybe not, simply gamba and find out
 
     private ParamEditorWindow _paramEditorWindow;
 
@@ -28,7 +30,7 @@ public class AdvancedViewModel : BaseViewModel
     public AdvancedViewModel(IItemService itemService, IStateService stateService, IEventService eventService,
         IParamService paramService, IParamRepository paramRepository, ISpEffectService spEffectService,
         IPlayerService playerService, HotkeyManager hotkeyManager, IGameTickService gameTickService,
-        IReminderService reminderService)
+        IReminderService reminderService, CustomRowNamesService customRowNamesService)
     {
         _itemService = itemService;
         _spEffectService = spEffectService;
@@ -49,7 +51,8 @@ public class AdvancedViewModel : BaseViewModel
 
         SelectedEquipType = EquipTypes[0].Value;
 
-        _paramEditorViewModel = new ParamEditorViewModel(paramRepository, paramService, reminderService);
+        _paramEditorViewModel = new ParamEditorViewModel(paramRepository, paramService, reminderService, customRowNamesService);
+        _customRowNamesService = new CustomRowNamesService();  // idk if this is right, I feel like it isn't 
     }
 
     #region Commands

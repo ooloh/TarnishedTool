@@ -238,11 +238,15 @@
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               BorderThickness="0">
+                        <!-- Surely this time!! -->
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Pin"
                                           Command="{Binding TogglePinCommand}"
-                                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                                          CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                <MenuItem Header="Rename Row"
+                                          Command="{Binding RenameRowCommand}"
+                                          CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.ItemContainerStyle>
@@ -298,7 +302,8 @@
                                                             <Setter.Value>
                                                                 <MultiBinding StringFormat="{}{0}: {1}">
                                                                     <Binding Path="Id" />
-                                                                    <Binding Path="Name" />
+                                                                    <Binding Path="DisplayName" />
+                                                                    <!-- come back text in case I fuck up -->
                                                                 </MultiBinding>
                                                             </Setter.Value>
                                                         </Setter>
