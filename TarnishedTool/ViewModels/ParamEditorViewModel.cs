@@ -63,8 +63,6 @@ public sealed class ParamEditorViewModel : BaseViewModel
         //   PrintEnums();
 
         ParamEntries.SetSearchScope(SearchScopes.SelectedGroup);
-
-        OnParamChanged();
     }
 
     
@@ -426,6 +424,12 @@ public sealed class ParamEditorViewModel : BaseViewModel
     public bool IsPinned(ParamEntry entry)
     {
         return _pinnedEntries.Any(e => e.Parent == entry.Parent && e.Id == entry.Id);
+    }
+
+    public void NotifyInitialWindowOpened()
+    {
+        OnParamChanged();
+        OnEntryChanged();
     }
 
     #endregion
