@@ -22,7 +22,8 @@ namespace TarnishedTool.ViewModels
         private readonly IEmevdService _emevdService;
 
         public SearchableGroupedCollection<string, Grace> Graces { get; }
-        public SearchableGroupedCollection<string, BossWarp> Bosses { get; }
+        public SearchableGroupedCollection<string, BlockWarp> Bosses { get; }
+        public SearchableGroupedCollection<string, BlockWarp> CustomWarps { get; }
 
         private SearchableGroupedCollection<string, Grace> _gracesForPresetWindow;
         private Dictionary<string, GracePresetTemplate> _customGracePresets;
@@ -49,10 +50,15 @@ namespace TarnishedTool.ViewModels
                 DataLoader.GetGraces(),
                 (grace, search) => grace.Name.ToLower().Contains(search) ||
                                    grace.MainArea.ToLower().Contains(search));
-            Bosses = new SearchableGroupedCollection<string, BossWarp>(
+            Bosses = new SearchableGroupedCollection<string, BlockWarp>(
                 DataLoader.GetBossWarps(),
                 (bossWarp, search) => bossWarp.Name.ToLower().Contains(search) ||
                                       bossWarp.MainArea.ToLower().Contains(search));
+            
+            CustomWarps = new SearchableGroupedCollection<string, BlockWarp>(
+                DataLoader.LoadCustomWarps(),
+                (customWarp, search) => customWarp.Name.ToLower().Contains(search) ||
+                                        customWarp.MainArea.ToLower().Contains(search));
 
             _gracesForPresetWindow = new SearchableGroupedCollection<string, Grace>(
                 Graces.AllItems
@@ -72,6 +78,7 @@ namespace TarnishedTool.ViewModels
             UnlockDlcArGracesCommand = new DelegateCommand(UnlockDlcArGraces);
             OpenGracePresetWindowCommand = new DelegateCommand(OpenGracePresetWindow);
             UnlockPresetGracesCommand = new DelegateCommand(UnlockGracePreset);
+            CustomWarpCommand = new DelegateCommand(CustomWarp);
 
             _customGracePresets = DataLoader.LoadGracePresets();
             _gracePresets = new ObservableCollection<string>(_customGracePresets.Keys);
@@ -97,6 +104,7 @@ namespace TarnishedTool.ViewModels
         public ICommand UnlockDlcArGracesCommand { get; set; }
         public ICommand OpenGracePresetWindowCommand { get; set; }
         public ICommand UnlockPresetGracesCommand { get; set; }
+        public ICommand CustomWarpCommand { get; set; }
 
         #endregion
 
@@ -124,6 +132,14 @@ namespace TarnishedTool.ViewModels
         {
             get => _isRestOnWarpEnabled;
             set => SetProperty(ref _isRestOnWarpEnabled, value);
+        }
+        
+        private bool _isRestOnCustomWarpEnabled;
+
+        public bool IsRestOnCustomWarpEnabled
+        {
+            get => _isRestOnCustomWarpEnabled;
+            set => SetProperty(ref _isRestOnCustomWarpEnabled, value);
         }
 
         private bool _isShowAllGracesEnabled;
@@ -217,6 +233,16 @@ namespace TarnishedTool.ViewModels
             {
                 _travelService.WarpToBlockId(Bosses.SelectedItem.Position);
                 if (IsRestOnWarpEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+            });
+        }
+        
+        private void CustomWarp()
+        {
+            if (CustomWarps.SelectedItem.IsDlc && !IsDlcAvailable) return;
+            _ = Task.Run(() =>
+            {
+                _travelService.WarpToBlockId(CustomWarps.SelectedItem.Position);
+                if (IsRestOnCustomWarpEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
             });
         }
 

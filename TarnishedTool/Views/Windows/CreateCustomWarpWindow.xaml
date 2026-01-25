@@ -1,0 +1,71 @@
+﻿<local:TopmostWindow x:Class="TarnishedTool.Views.Windows.CreateCustomWarpWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:local="clr-namespace:TarnishedTool.Views.Windows"
+                     xmlns:controls="clr-namespace:TarnishedTool.Controls"
+                     mc:Ignorable="d"
+                     Title="GracePresetWindow" Height="500" Width="900"
+                     Background="{StaticResource BackgroundBrush}"
+                     Foreground="{StaticResource TextBrush}"
+                     BorderBrush="{StaticResource BorderBrush}"
+                     WindowStyle="None"
+                     AllowsTransparency="True"
+                     ResizeMode="NoResize">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <controls:TitleBar Title="Create Custom Warp" />
+
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0"
+                    BorderThickness="1"
+                    BorderBrush="#333"
+                    CornerRadius="3"
+                    Margin="0,0,0,10"
+                    Padding="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+
+                    <Button Grid.Column="0"
+                            Content="Save Current Position as Warp"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Command="{Binding SavePositionCommand}"
+                            Margin="0,0,5,0"
+                            Padding="10,3" />
+
+                    <Button Grid.Column="2"
+                            Content="Import Custom Warps"
+                            Command="{Binding ImportWarpsCommand}"
+                            Padding="10,3"
+                            Margin="0,0,5,0" />
+
+
+                    <CheckBox Grid.Column="3"
+                              x:Name="AlwaysOnTopCheckBox"
+                              Content="Always on Top"
+                              HorizontalAlignment="Right"
+                              Margin="10,0,0,0"
+                              Checked="AlwaysOnTopCheckBox_Checked"
+                              Unchecked="AlwaysOnTopCheckBox_Unchecked" />
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</local:TopmostWindow>

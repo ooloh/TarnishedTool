@@ -162,7 +162,7 @@
         <Compile Include="Models\AttackInfoEntry.cs" />
         <Compile Include="Models\BossFlag.cs" />
         <Compile Include="Models\BossRevive.cs" />
-        <Compile Include="Models\BossWarp.cs" />
+        <Compile Include="Models\BlockWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
         <Compile Include="Models\EventItem.cs" />
         <Compile Include="Models\EventLogEntry.cs" />
@@ -261,6 +261,9 @@
         <Compile Include="Views\Windows\AttackInfoWindow.xaml.cs">
           <DependentUpon>AttackInfoWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\CreateCustomWarpWindow.xaml.cs">
+          <DependentUpon>CreateCustomWarpWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\CreateLoadoutWindow.xaml.cs">
           <DependentUpon>CreateLoadoutWindow.xaml</DependentUpon>
         </Compile>
@@ -313,6 +316,7 @@
         <Page Include="Views\Tabs\TravelTab.xaml" />
         <Page Include="Views\Tabs\UtilityTab.xaml" />
         <Page Include="Views\Windows\AttackInfoWindow.xaml" />
+        <Page Include="Views\Windows\CreateCustomWarpWindow.xaml" />
         <Page Include="Views\Windows\CreateLoadoutWindow.xaml" />
         <Page Include="Views\Windows\CustomMessageBox.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />

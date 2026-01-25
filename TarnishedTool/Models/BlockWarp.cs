@@ -2,7 +2,7 @@
 
 namespace TarnishedTool.Models;
 
-public class BossWarp
+public class BlockWarp
 {
     public bool IsDlc { get; set; }
     public string MainArea { get; set; }

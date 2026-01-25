@@ -15,6 +15,23 @@ namespace TarnishedTool.Utilities
 {
     public static class DataLoader
     {
+        
+        private static readonly string GracePresetsPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "TarnishedTool",
+            "GracePresets.json");
+        
+        private static readonly string LoadoutsPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "TarnishedTool",
+            "CustomLoadouts.json");
+        
+        private static readonly string CustomWarpsPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "TarnishedTool",
+            "CustomWarps.json");
+        
+        
         public static Dictionary<string, List<Grace>> GetGraces()
         {
             Dictionary<string, List<Grace>> graceDict = new Dictionary<string, List<Grace>>();
@@ -59,9 +76,9 @@ namespace TarnishedTool.Utilities
             return graceDict;
         }
 
-        public static Dictionary<string, List<BossWarp>> GetBossWarps()
+        public static Dictionary<string, List<BlockWarp>> GetBossWarps()
         {
-            Dictionary<string, List<BossWarp>> warpDict = new Dictionary<string, List<BossWarp>>();
+            Dictionary<string, List<BlockWarp>> warpDict = new Dictionary<string, List<BlockWarp>>();
             string csvData = Resources.BossWarps;
 
             if (string.IsNullOrWhiteSpace(csvData)) return warpDict;
@@ -89,7 +106,7 @@ namespace TarnishedTool.Utilities
 
                     float angle = float.Parse(parts[5], CultureInfo.InvariantCulture);
 
-                    BossWarp bossWarp = new BossWarp
+                    BlockWarp blockWarp = new BlockWarp
                     {
                         IsDlc = isDlc,
                         MainArea = mainArea,
@@ -99,10 +116,10 @@ namespace TarnishedTool.Utilities
 
                     if (!warpDict.ContainsKey(mainArea))
                     {
-                        warpDict[mainArea] = new List<BossWarp>();
+                        warpDict[mainArea] = new List<BlockWarp>();
                     }
 
-                    warpDict[mainArea].Add(bossWarp);
+                    warpDict[mainArea].Add(blockWarp);
                 }
             }
 
@@ -446,11 +463,6 @@ namespace TarnishedTool.Utilities
             return items;
         }
         
-        private static readonly string LoadoutsPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "TarnishedTool",
-            "CustomLoadouts.json");
-
         public static Dictionary<string, LoadoutTemplate> LoadCustomLoadouts()
         {
             try
@@ -486,12 +498,7 @@ namespace TarnishedTool.Utilities
                 // Silent fail or log
             }
         }
-
-        private static readonly string GracePresetsPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "TarnishedTool",
-            "GracePresets.json");
-
+        
         public static Dictionary<string, GracePresetTemplate> LoadGracePresets()
         {
             try
@@ -544,5 +551,47 @@ namespace TarnishedTool.Utilities
                 }
                 return weathers;
             }
+
+        public static Dictionary<string, List<BlockWarp>> LoadCustomWarps()
+        {
+            try
+            {
+                if (!File.Exists(CustomWarpsPath))
+                    return new Dictionary<string, List<BlockWarp>>();
+
+                string json = File.ReadAllText(CustomWarpsPath);
+                var options = new JsonSerializerOptions { IncludeFields = true };
+        
+                return JsonSerializer.Deserialize<Dictionary<string, List<BlockWarp>>>(json, options) 
+                       ?? new Dictionary<string, List<BlockWarp>>();
+            }
+            catch
+            {
+                return new Dictionary<string, List<BlockWarp>>();
+            }
+        }
+
+        public static void SaveCustomWarps(Dictionary<string, List<BlockWarp>> warps)
+        {
+            try
+            {
+                string directory = Path.GetDirectoryName(CustomWarpsPath);
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+
+                var options = new JsonSerializerOptions 
+                { 
+                    WriteIndented = true,
+                    IncludeFields = true 
+                };
+                
+                string json = JsonSerializer.Serialize(warps, options);
+                File.WriteAllText(CustomWarpsPath, json);
+            }
+            catch
+            {
+                // Silent fail or log
+            }
+        }
     }
 }

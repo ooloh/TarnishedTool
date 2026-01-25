@@ -58,6 +58,9 @@ public class SettingsManager
     public double GracePresetWindowLeft { get; set; }
     public double GracePresetWindowTop { get; set; }
     public bool GracePresetWindowAlwaysOnTop { get; set; }
+    public double CreateCustomWarpWindowLeft { get; set; }
+    public double CreateCustomWarpWindowTop { get; set; }
+    public bool CreateCustomWarpWindowAlwaysOnTop { get; set; }
 
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
