@@ -218,6 +218,8 @@
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\CreateCustomWarpViewModel.cs" />
         <Compile Include="ViewModels\CreateLoadoutViewModel.cs" />
+        <Compile Include="ViewModels\CustomWarpImportItem.cs" />
+        <Compile Include="ViewModels\CustomWarpImportSelectionViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
         <Compile Include="ViewModels\EventLogViewModel.cs" />
         <Compile Include="ViewModels\GraceImportItem.cs" />
@@ -273,6 +275,9 @@
         <Compile Include="Views\Windows\CustomMessageBox.xaml.cs">
           <DependentUpon>CustomMessageBox.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\CustomWarpImportSelectionWindow.xaml.cs">
+          <DependentUpon>CustomWarpImportSelectionWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\DefensesWindow.xaml.cs">
           <DependentUpon>DefensesWindow.xaml</DependentUpon>
         </Compile>
@@ -325,6 +330,7 @@
         <Page Include="Views\Windows\CreateCustomWarpWindow.xaml" />
         <Page Include="Views\Windows\CreateLoadoutWindow.xaml" />
         <Page Include="Views\Windows\CustomMessageBox.xaml" />
+        <Page Include="Views\Windows\CustomWarpImportSelectionWindow.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />
         <Page Include="Views\Windows\EventLogWindow.xaml" />
         <Page Include="Views\Windows\GraceImportPresentSelectionWindow.xaml" />

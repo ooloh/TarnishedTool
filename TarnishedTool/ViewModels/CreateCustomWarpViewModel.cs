@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
@@ -35,7 +37,7 @@ public class CreateCustomWarpViewModel : BaseViewModel
         _playerService = playerService;
         _gameTickService = gameTickService;
         _onWarpCreated = onWarpCreated;
-        
+
         CustomWarps = new SearchableGroupedCollection<string, BlockWarp>(
             customWarps,
             (customWarp, search) => customWarp.Name.ToLower().Contains(search) ||
@@ -49,11 +51,13 @@ public class CreateCustomWarpViewModel : BaseViewModel
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
 
         SavePositionCommand = new DelegateCommand(SavePosition);
+        ImportWarpsCommand = new DelegateCommand(ImportWarps);
     }
 
     #region Commands
 
     public ICommand SavePositionCommand { get; }
+    public ICommand ImportWarpsCommand { get; }
 
     #endregion
 
@@ -104,7 +108,7 @@ public class CreateCustomWarpViewModel : BaseViewModel
         }, "New Custom Warp");
 
 
-        if (results == null) return; 
+        if (results == null) return;
 
         if (string.IsNullOrWhiteSpace(results["category"]) || string.IsNullOrWhiteSpace(results["name"]))
         {
@@ -128,7 +132,7 @@ public class CreateCustomWarpViewModel : BaseViewModel
                 MapLocation.Angle
             )
         };
-        
+
         CustomWarps.Add(category, warp);
         _onWarpCreated?.Invoke(warp);
     }
@@ -136,9 +140,120 @@ public class CreateCustomWarpViewModel : BaseViewModel
     private bool IsCurrentBlockDlc()
     {
         if (MapLocation.Area == DlcOverworld) return true;
-        if (MapLocation.Area >=  DlcDungeonStart && MapLocation.Area <= DlcDungeonEnd ) return true;
-        if (MapLocation.Area >= DlcCatacombsStart && MapLocation.Area <= DlcCatacombsEnd ) return true;
+        if (MapLocation.Area >= DlcDungeonStart && MapLocation.Area <= DlcDungeonEnd) return true;
+        if (MapLocation.Area >= DlcCatacombsStart && MapLocation.Area <= DlcCatacombsEnd) return true;
         return false;
+    }
+
+    private void ImportWarps()
+    {
+        var dialog = new Microsoft.Win32.OpenFileDialog
+        {
+            Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+            Title = "Import Custom Warps"
+        };
+
+        if (dialog.ShowDialog() != true) return;
+
+        try
+        {
+            string json = File.ReadAllText(dialog.FileName);
+            var importedWarps = JsonSerializer.Deserialize<Dictionary<string, List<BlockWarp>>>(json);
+
+            if (importedWarps == null || importedWarps.Count == 0)
+            {
+                MsgBox.Show("No warps found in file.");
+                return;
+            }
+
+            var existingWarps = CustomWarps.GroupedItems;
+
+            var selectionWindow = new CustomWarpImportSelectionWindow(importedWarps, existingWarps);
+            if (selectionWindow.ShowDialog() != true) return;
+
+            var selectedCategories = selectionWindow.ViewModel.GetSelectedCategories();
+            var conflictResolution = selectionWindow.ViewModel.SelectedConflictResolution;
+
+            int imported = 0;
+            int skipped = 0;
+
+            foreach (var kvp in selectedCategories)
+            {
+                var category = kvp.Key;
+                var warps = kvp.Value;
+
+                if (CustomWarps.GroupedItems.ContainsKey(category))
+                {
+                    switch (conflictResolution)
+                    {
+                        case ConflictResolution.Skip:
+                            skipped++;
+                            continue;
+
+                        case ConflictResolution.Overwrite:
+                            CustomWarps.RemoveGroup(category);
+                            CustomWarps.AddRange(category, warps);
+                            foreach (var warp in warps)
+                            {
+                                _onWarpCreated?.Invoke(warp);
+                            }
+
+                            imported++;
+                            break;
+
+                        case ConflictResolution.Rename:
+                            string newName = GenerateUniqueCategoryName(category);
+                            foreach (var warp in warps)
+                            {
+                                warp.MainArea = newName;
+                            }
+
+                            CustomWarps.AddRange(newName, warps);
+                            foreach (var warp in warps)
+                            {
+                                _onWarpCreated?.Invoke(warp);
+                            }
+
+                            imported++;
+                            break;
+                    }
+                }
+                else
+                {
+                    CustomWarps.AddRange(category, warps);
+                    foreach (var warp in warps)
+                    {
+                        _onWarpCreated?.Invoke(warp);
+                    }
+
+                    imported++;
+                }
+            }
+
+            string message = $"Imported {imported} category{(imported != 1 ? "s" : "")}";
+            if (skipped > 0)
+                message += $" ({skipped} skipped)";
+
+            MsgBox.Show(message);
+        }
+        catch (Exception ex)
+        {
+            MsgBox.Show($"Failed to import warps: {ex.Message}");
+        }
+    }
+
+    private string GenerateUniqueCategoryName(string baseName)
+    {
+        string newName = baseName;
+        int counter = 2;
+
+        while (CustomWarps.GroupedItems.ContainsKey(newName))
+        {
+            newName = $"{baseName} ({counter})";
+            counter++;
+        }
+
+        return newName;
     }
 
     #endregion
