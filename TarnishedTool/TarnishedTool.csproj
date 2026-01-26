@@ -163,8 +163,9 @@
         <Compile Include="Models\AttackInfoEntry.cs" />
         <Compile Include="Models\BossFlag.cs" />
         <Compile Include="Models\BossRevive.cs" />
-        <Compile Include="Models\BossWarp.cs" />
+        <Compile Include="Models\BlockWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
+        <Compile Include="Models\CustomWarpChange.cs" />
         <Compile Include="Models\EventItem.cs" />
         <Compile Include="Models\EventLogEntry.cs" />
         <Compile Include="Models\Grace.cs" />
@@ -216,7 +217,10 @@
         <Compile Include="ViewModels\AdvancedViewModel.cs" />
         <Compile Include="ViewModels\AttackInfoViewModel.cs" />
         <Compile Include="ViewModels\BaseViewModel.cs" />
+        <Compile Include="ViewModels\CreateCustomWarpViewModel.cs" />
         <Compile Include="ViewModels\CreateLoadoutViewModel.cs" />
+        <Compile Include="ViewModels\CustomWarpImportItem.cs" />
+        <Compile Include="ViewModels\CustomWarpImportSelectionViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
         <Compile Include="ViewModels\EventLogViewModel.cs" />
         <Compile Include="ViewModels\GraceImportItem.cs" />
@@ -263,11 +267,17 @@
         <Compile Include="Views\Windows\AttackInfoWindow.xaml.cs">
           <DependentUpon>AttackInfoWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\CreateCustomWarpWindow.xaml.cs">
+          <DependentUpon>CreateCustomWarpWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\CreateLoadoutWindow.xaml.cs">
           <DependentUpon>CreateLoadoutWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\Windows\CustomMessageBox.xaml.cs">
           <DependentUpon>CustomMessageBox.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\CustomWarpImportSelectionWindow.xaml.cs">
+          <DependentUpon>CustomWarpImportSelectionWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\Windows\DefensesWindow.xaml.cs">
           <DependentUpon>DefensesWindow.xaml</DependentUpon>
@@ -280,6 +290,9 @@
         </Compile>
         <Compile Include="Views\Windows\GracePresetWindow.xaml.cs">
           <DependentUpon>GracePresetWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\InputBox.xaml.cs">
+          <DependentUpon>InputBox.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\Windows\ResistancesWindow.xaml.cs">
           <DependentUpon>ResistancesWindow.xaml</DependentUpon>
@@ -315,12 +328,15 @@
         <Page Include="Views\Tabs\TravelTab.xaml" />
         <Page Include="Views\Tabs\UtilityTab.xaml" />
         <Page Include="Views\Windows\AttackInfoWindow.xaml" />
+        <Page Include="Views\Windows\CreateCustomWarpWindow.xaml" />
         <Page Include="Views\Windows\CreateLoadoutWindow.xaml" />
         <Page Include="Views\Windows\CustomMessageBox.xaml" />
+        <Page Include="Views\Windows\CustomWarpImportSelectionWindow.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />
         <Page Include="Views\Windows\EventLogWindow.xaml" />
         <Page Include="Views\Windows\GraceImportPresentSelectionWindow.xaml" />
         <Page Include="Views\Windows\GracePresetWindow.xaml" />
+        <Page Include="Views\Windows\InputBox.xaml" />
         <Page Include="Views\Windows\ResistancesWindow.xaml" />
         <Page Include="Views\Windows\ShopSelectorWindow.xaml" />
         <Page Include="Views\Windows\SpEffectsWindow.xaml" />

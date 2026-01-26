@@ -27,5 +27,13 @@ namespace TarnishedTool.Views.Tabs
                 vm.BossWarpCommand.Execute(null);
             }
         }
+
+        private void CustomItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is TravelViewModel vm && vm.CustomWarpCommand.CanExecute(null))
+            {
+                vm.CustomWarpCommand.Execute(null);
+            }
+        }
     }
 }

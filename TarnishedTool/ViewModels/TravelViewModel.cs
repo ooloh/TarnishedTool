@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
@@ -18,14 +19,20 @@ namespace TarnishedTool.ViewModels
     {
         private readonly ITravelService _travelService;
         private readonly IEventService _eventService;
+        private readonly IStateService _stateService;
         private readonly IDlcService _dlcService;
         private readonly IEmevdService _emevdService;
+        private readonly IPlayerService _playerService;
+        private readonly IGameTickService _gameTickService;
 
         public SearchableGroupedCollection<string, Grace> Graces { get; }
-        public SearchableGroupedCollection<string, BossWarp> Bosses { get; }
+        public SearchableGroupedCollection<string, BlockWarp> Bosses { get; }
+        public SearchableGroupedCollection<string, BlockWarp> CustomWarps { get; }
 
         private SearchableGroupedCollection<string, Grace> _gracesForPresetWindow;
         private Dictionary<string, GracePresetTemplate> _customGracePresets;
+
+        CreateCustomWarpWindow _createCustomWarpWindow;
 
         private readonly List<long> _baseGameMaps;
         private readonly List<long> _dlcMaps;
@@ -33,12 +40,16 @@ namespace TarnishedTool.ViewModels
         private readonly List<long> _dlcArGraces;
 
         public TravelViewModel(ITravelService travelService, IEventService eventService, IStateService stateService,
-            IDlcService dlcService, IEmevdService emevdService)
+            IDlcService dlcService, IEmevdService emevdService, IPlayerService playerService,
+            IGameTickService gameTickService)
         {
             _travelService = travelService;
             _eventService = eventService;
+            _stateService = stateService;
             _dlcService = dlcService;
             _emevdService = emevdService;
+            _playerService = playerService;
+            _gameTickService = gameTickService;
 
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -49,10 +60,15 @@ namespace TarnishedTool.ViewModels
                 DataLoader.GetGraces(),
                 (grace, search) => grace.Name.ToLower().Contains(search) ||
                                    grace.MainArea.ToLower().Contains(search));
-            Bosses = new SearchableGroupedCollection<string, BossWarp>(
+            Bosses = new SearchableGroupedCollection<string, BlockWarp>(
                 DataLoader.GetBossWarps(),
                 (bossWarp, search) => bossWarp.Name.ToLower().Contains(search) ||
                                       bossWarp.MainArea.ToLower().Contains(search));
+
+            CustomWarps = new SearchableGroupedCollection<string, BlockWarp>(
+                DataLoader.LoadCustomWarps(),
+                (customWarp, search) => customWarp.Name.ToLower().Contains(search) ||
+                                        customWarp.MainArea.ToLower().Contains(search));
 
             _gracesForPresetWindow = new SearchableGroupedCollection<string, Grace>(
                 Graces.AllItems
@@ -72,6 +88,9 @@ namespace TarnishedTool.ViewModels
             UnlockDlcArGracesCommand = new DelegateCommand(UnlockDlcArGraces);
             OpenGracePresetWindowCommand = new DelegateCommand(OpenGracePresetWindow);
             UnlockPresetGracesCommand = new DelegateCommand(UnlockGracePreset);
+            CustomWarpCommand = new DelegateCommand(CustomWarp);
+            OpenCreateCustomWarpCommand = new DelegateCommand(OpenCreateCustomWarp);
+
 
             _customGracePresets = DataLoader.LoadGracePresets();
             _gracePresets = new ObservableCollection<string>(_customGracePresets.Keys);
@@ -84,7 +103,6 @@ namespace TarnishedTool.ViewModels
             _dlcArGraces = DataLoader.GetSimpleList("ArDlcGraces", s => long.Parse(s, CultureInfo.InvariantCulture));
         }
 
-        
         #region Commands
 
         public ICommand GraceWarpCommand { get; set; }
@@ -97,6 +115,8 @@ namespace TarnishedTool.ViewModels
         public ICommand UnlockDlcArGracesCommand { get; set; }
         public ICommand OpenGracePresetWindowCommand { get; set; }
         public ICommand UnlockPresetGracesCommand { get; set; }
+        public ICommand CustomWarpCommand { get; set; }
+        public ICommand OpenCreateCustomWarpCommand { get; set; }
 
         #endregion
 
@@ -124,6 +144,14 @@ namespace TarnishedTool.ViewModels
         {
             get => _isRestOnWarpEnabled;
             set => SetProperty(ref _isRestOnWarpEnabled, value);
+        }
+
+        private bool _isRestOnCustomWarpEnabled;
+
+        public bool IsRestOnCustomWarpEnabled
+        {
+            get => _isRestOnCustomWarpEnabled;
+            set => SetProperty(ref _isRestOnCustomWarpEnabled, value);
         }
 
         private bool _isShowAllGracesEnabled;
@@ -177,7 +205,7 @@ namespace TarnishedTool.ViewModels
             get => _selectedGracePreset;
             set => SetProperty(ref _selectedGracePreset, value);
         }
-        
+
         private bool _isAutoUnlockPresetEnabled;
 
         public bool IsAutoUnlockPresetEnabled
@@ -217,6 +245,16 @@ namespace TarnishedTool.ViewModels
             {
                 _travelService.WarpToBlockId(Bosses.SelectedItem.Position);
                 if (IsRestOnWarpEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+            });
+        }
+
+        private void CustomWarp()
+        {
+            if (CustomWarps.SelectedItem.IsDlc && !IsDlcAvailable) return;
+            _ = Task.Run(() =>
+            {
+                _travelService.WarpToBlockId(CustomWarps.SelectedItem.Position);
+                if (IsRestOnCustomWarpEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
             });
         }
 
@@ -305,21 +343,74 @@ namespace TarnishedTool.ViewModels
         private void UnlockGracePreset()
         {
             var preset = _customGracePresets[SelectedGracePreset];
-            
+
             foreach (var gracePresetEntry in preset.Graces)
             {
                 if (gracePresetEntry.IsDlc && !IsDlcAvailable) continue;
                 _eventService.SetEvent(gracePresetEntry.FlagId, true);
             }
-            
+
             _eventService.SetEvent(Event.SeeUndergroundGraces, true);
             if (IsDlcAvailable) _eventService.SetEvent(Event.SeeDlcGraces, true);
         }
-        
+
         private void OnNewGameStart()
         {
             if (!IsAutoUnlockPresetEnabled || SelectedGracePreset == null) return;
             UnlockGracePreset();
+        }
+
+        private void OpenCreateCustomWarp()
+        {
+            if (_createCustomWarpWindow != null && _createCustomWarpWindow.IsVisible)
+            {
+                _createCustomWarpWindow.Activate();
+                return;
+            }
+
+            var clonedWarps = CustomWarps.GroupedItems.ToDictionary(
+                kvp => kvp.Key,
+                kvp => kvp.Value.Select(w => new BlockWarp
+                {
+                    IsDlc = w.IsDlc,
+                    MainArea = w.MainArea,
+                    Name = w.Name,
+                    Position = new Position(w.Position.BlockId, w.Position.Coords, w.Position.Angle)
+                }).ToList()
+            );
+
+            _createCustomWarpWindow = new CreateCustomWarpWindow(
+                clonedWarps,
+                AreOptionsEnabled,
+                _stateService,
+                _playerService,
+                _gameTickService,
+                OnCustomWarpChanged
+            );
+
+            _createCustomWarpWindow.Closed += (_, _) => _createCustomWarpWindow = null;
+            _createCustomWarpWindow.Show();
+        }
+
+        private void OnCustomWarpChanged(CustomWarpChange change)
+        {
+            switch (change)
+            {
+                case WarpAdded(var warp):
+                    CustomWarps.Add(warp.MainArea, warp);
+                    break;
+                case WarpDeleted(var category, var warp):
+                    var original = CustomWarps.GroupedItems[category]
+                        .FirstOrDefault(w => w.Name == warp.Name && w.MainArea == warp.MainArea);
+                    if (original != null)
+                        CustomWarps.Remove(category, original);
+                    break;
+                case CategoryDeleted(var category):
+                    CustomWarps.RemoveGroup(category);
+                    break;
+            }
+
+            DataLoader.SaveCustomWarps(CustomWarps.GroupedItems);
         }
 
         #endregion

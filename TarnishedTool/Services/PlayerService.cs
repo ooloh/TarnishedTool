@@ -35,11 +35,12 @@ namespace TarnishedTool.Services
             var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
 
-            var blockId = memoryService.ReadUInt32(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentBlockId);
-            var mapCoords = memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
+            var blockId = memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+            var mapCoords = memoryService.ReadVector3(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
+            var angle = memoryService.ReadFloat(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
             var localCoords = memoryService.ReadVector3(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords);
 
-            return new MapLocation(blockId, localCoords, mapCoords);
+            return new MapLocation(blockId, localCoords, mapCoords, angle);
         }
 
         public Vector3 GetPlayerPos() =>
