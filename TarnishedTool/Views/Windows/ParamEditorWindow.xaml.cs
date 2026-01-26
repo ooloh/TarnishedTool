@@ -86,4 +86,12 @@ public partial class ParamEditorWindow : TopmostWindow
             }
         }
     }
+
+    private void EntriesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (EntriesListView.SelectedItem != null)
+        {
+            EntriesListView.ScrollIntoView(EntriesListView.SelectedItem);
+        }
+    }
 }

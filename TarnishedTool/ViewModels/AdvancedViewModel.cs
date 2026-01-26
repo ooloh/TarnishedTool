@@ -24,6 +24,8 @@ public class AdvancedViewModel : BaseViewModel
     private ParamEditorWindow _paramEditorWindow;
 
     private readonly IPlayerService _playerService;
+    
+    private bool _hasNotifiedInitialOpen;
 
     public AdvancedViewModel(IItemService itemService, IStateService stateService, IEventService eventService,
         IParamService paramService, IParamRepository paramRepository, ISpEffectService spEffectService,
@@ -114,7 +116,7 @@ public class AdvancedViewModel : BaseViewModel
     }
     
     private bool _isSpEffectWindowOpen;
-
+    
     public bool IsSpEffectWindowOpen
     {
         get => _isSpEffectWindowOpen;
@@ -190,6 +192,11 @@ public class AdvancedViewModel : BaseViewModel
 
         _paramEditorWindow.Closed += (_, _) => _paramEditorWindow = null;
         _paramEditorWindow.Show();
+        if (!_hasNotifiedInitialOpen)
+        {
+            _paramEditorViewModel.NotifyInitialWindowOpened();
+            _hasNotifiedInitialOpen = true;
+        }
     }
     
     private void OpenSpEffectsWindow()
