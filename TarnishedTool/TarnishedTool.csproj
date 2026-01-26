@@ -216,6 +216,7 @@
         <Compile Include="ViewModels\AdvancedViewModel.cs" />
         <Compile Include="ViewModels\AttackInfoViewModel.cs" />
         <Compile Include="ViewModels\BaseViewModel.cs" />
+        <Compile Include="ViewModels\CreateCustomWarpViewModel.cs" />
         <Compile Include="ViewModels\CreateLoadoutViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
         <Compile Include="ViewModels\EventLogViewModel.cs" />
@@ -284,6 +285,9 @@
         <Compile Include="Views\Windows\GracePresetWindow.xaml.cs">
           <DependentUpon>GracePresetWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\InputBox.xaml.cs">
+          <DependentUpon>InputBox.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\ResistancesWindow.xaml.cs">
           <DependentUpon>ResistancesWindow.xaml</DependentUpon>
         </Compile>
@@ -325,6 +329,7 @@
         <Page Include="Views\Windows\EventLogWindow.xaml" />
         <Page Include="Views\Windows\GraceImportPresentSelectionWindow.xaml" />
         <Page Include="Views\Windows\GracePresetWindow.xaml" />
+        <Page Include="Views\Windows\InputBox.xaml" />
         <Page Include="Views\Windows\ResistancesWindow.xaml" />
         <Page Include="Views\Windows\ShopSelectorWindow.xaml" />
         <Page Include="Views\Windows\SpEffectsWindow.xaml" />

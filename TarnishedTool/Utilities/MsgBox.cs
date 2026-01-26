@@ -1,5 +1,6 @@
 ﻿// 
 
+using System.Collections.Generic;
 using TarnishedTool.Views.Windows;
 
 namespace TarnishedTool.Utilities;
@@ -31,5 +32,26 @@ public static class MsgBox
         var box = new CustomMessageBox(message, showCancel: true, title);
         box.ShowDialog();
         return box.Result;
+    }
+    
+    /// <summary>
+    /// Shows a single input dialog.
+    /// </summary>
+    public static string ShowInput(string prompt, string defaultValue = "", string title = "Input")
+    {
+        var box = new InputBox(prompt, defaultValue, title);
+        box.ShowDialog();
+        return box.Result ? box.InputValue : string.Empty;
+    }
+
+    /// <summary>
+    /// Shows a multi-input dialog.
+    /// </summary>
+    /// <returns>Dictionary of key-value pairs, or null if cancelled.</returns>
+    public static Dictionary<string, string>? ShowInputs(InputField[] fields, string title = "Input")
+    {
+        var box = new InputBox(fields, title);
+        box.ShowDialog();
+        return box.Result ? box.GetValues() : null;
     }
 }

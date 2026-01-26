@@ -791,12 +791,16 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
                             <CheckBox Grid.Column="0" Content="Rest on Warp"
                                       IsChecked="{Binding IsRestOnCustomWarpEnabled}"
                                       Margin="0,2" />
+                            
+                            <Button Grid.Column="1"
+                                    Content="Create Custom Warp"
+                                    Command="{Binding OpenCreateCustomWarpCommand}"
+                                    ></Button>
 
 
                         </Grid>

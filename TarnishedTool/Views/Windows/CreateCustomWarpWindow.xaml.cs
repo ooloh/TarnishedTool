@@ -1,15 +1,36 @@
 ﻿// 
 
+using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
+using TarnishedTool.Interfaces;
+using TarnishedTool.Models;
 using TarnishedTool.Utilities;
+using TarnishedTool.ViewModels;
 
 namespace TarnishedTool.Views.Windows;
 
 public partial class CreateCustomWarpWindow : TopmostWindow
 {
-    public CreateCustomWarpWindow()
+
+    public CreateCustomWarpWindow(Dictionary<string, List<BlockWarp>> customWarps,
+        bool areOptionsEnabled,
+        IStateService stateService,
+        IPlayerService playerService, IGameTickService gameTickService, Action<BlockWarp> onWarpCreated)
     {
         InitializeComponent();
+
+        var viewModel = new CreateCustomWarpViewModel(
+            customWarps,
+            areOptionsEnabled,
+            stateService,
+            playerService,
+            gameTickService,
+            onWarpCreated
+        );
+        
+        DataContext = viewModel;
         
         
         if (Application.Current.MainWindow != null)
@@ -27,5 +48,15 @@ public partial class CreateCustomWarpWindow : TopmostWindow
             
             AlwaysOnTopCheckBox.IsChecked = SettingsManager.Default.CreateCustomWarpWindowAlwaysOnTop;
         };
+    }
+
+    private void SaveButton_Click(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        throw new System.NotImplementedException();
     }
 }

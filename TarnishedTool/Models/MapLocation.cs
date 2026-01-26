@@ -4,13 +4,14 @@ using System.Numerics;
 
 namespace TarnishedTool.Models;
 
-public class MapLocation(uint blockId, Vector3 localCoords, Vector3 mapCoords)
+public class MapLocation(uint blockId, Vector3 localCoords, Vector3 mapCoords, float angle)
 {
     public const int GridSize = 256;
     
     public uint BlockId { get; } = blockId;
     public Vector3 LocalCoords { get; } = localCoords;
     public Vector3 MapCoords { get; } = mapCoords;
+    public float Angle { get; } = angle;
 
     public byte Area => (byte)((BlockId >> 24) & 0xFF);
     public byte Block => (byte)((BlockId >> 16) & 0xFF);

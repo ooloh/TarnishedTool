@@ -15,18 +15,16 @@ namespace TarnishedTool.ViewModels;
 public class GracePresetViewModel : BaseViewModel
 {
     private readonly Dictionary<string, GracePresetTemplate> _customPresetTemplates;
-    private readonly Func<string, string, string> _showInputDialog;
 
     public SearchableGroupedCollection<string, Grace> Graces { get; }
 
     public GracePresetViewModel(
         SearchableGroupedCollection<string, Grace> graces,
-        Dictionary<string, GracePresetTemplate> customPresetTemplates,
-        Func<string, string, string> showInputDialog)
+        Dictionary<string, GracePresetTemplate> customPresetTemplates
+        )
     {
         Graces = graces;
         _customPresetTemplates = customPresetTemplates;
-        _showInputDialog = showInputDialog;
 
         _customLoadouts = new ObservableCollection<GracePresetTemplate>(customPresetTemplates.Values);
 
@@ -127,7 +125,7 @@ public class GracePresetViewModel : BaseViewModel
 
     private void CreateLoadout()
     {
-        string name = _showInputDialog("Enter name for new preset:", "");
+        string name = MsgBox.ShowInput("Enter name for new preset:");
 
         if (string.IsNullOrWhiteSpace(name)) return;
 
@@ -148,7 +146,7 @@ public class GracePresetViewModel : BaseViewModel
     {
         if (SelectedLoadout == null) return;
 
-        string newName = _showInputDialog("Enter new name for preset:", SelectedLoadout.Name);
+        string newName = MsgBox.ShowInput("Enter new name for preset:", SelectedLoadout.Name);
 
         if (string.IsNullOrWhiteSpace(newName)) return;
         if (newName == SelectedLoadout.Name) return;

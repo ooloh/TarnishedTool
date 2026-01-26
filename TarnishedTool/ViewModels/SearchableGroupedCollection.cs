@@ -9,10 +9,14 @@ namespace TarnishedTool.ViewModels;
 
 public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
 {
+    
+    public enum SearchScopes { SelectedGroup, AllGroups }
+    
     private readonly Func<TItem, string, bool> _matchesSearch;
     private TGroup _preSearchGroup;
     private readonly Dictionary<TGroup, List<TItem>> _groupedItems;
     
+    private Func<TItem, bool> _additionalFilter;
     
     public SearchableGroupedCollection(
         Dictionary<TGroup, List<TItem>> data,
@@ -25,12 +29,15 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
         _items = new ObservableCollection<TItem>();
         
         SelectedGroup = _groups.FirstOrDefault();
+        UpdateItemsList();
     }
 
     private ObservableCollection<TGroup> _groups;
     public ObservableCollection<TGroup> Groups => _groups;
     private ObservableCollection<TItem> _items;
     public List<TItem> this[TGroup group] => _groupedItems[group];
+    
+    public Dictionary<TGroup, List<TItem>> GroupedItems => _groupedItems;
 
     public ObservableCollection<TItem> Items
     {
@@ -110,8 +117,21 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
             }
         }
     }
+    
+    private SearchScopes _searchScope = SearchScopes.AllGroups;
+    public SearchScopes SearchScope
+    {
+        get => _searchScope;
+        set
+        {
+            if (!SetProperty(ref _searchScope, value)) return;
+            if (_isSearchActive) ApplyFilter();
+        }
+    }
 
-    private void UpdateItemsList()
+    #region Private Methods
+
+    public void UpdateItemsList()
     {
         if (SelectedGroup == null || !_groupedItems.ContainsKey(SelectedGroup))
         {
@@ -119,15 +139,72 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
             return;
         }
 
-        Items = new ObservableCollection<TItem>(_groupedItems[SelectedGroup]);
+        var items = _groupedItems[SelectedGroup].AsEnumerable();
+    
+        if (_additionalFilter != null)
+            items = items.Where(_additionalFilter);
+
+        Items = new ObservableCollection<TItem>(items);
         SelectedItem = Items.FirstOrDefault();
     }
-
+    
+    
     private void ApplyFilter()
     {
         var searchLower = SearchText.ToLower();
-        Items = new ObservableCollection<TItem>(
-            _allItems.Where(item => _matchesSearch(item, searchLower)));
+        
+        var source = _searchScope == SearchScopes.AllGroups ? _allItems : _groupedItems[SelectedGroup];
+        
+        var items = source.Where(item => _matchesSearch(item, searchLower));
+    
+        if (_additionalFilter != null)
+            items = items.Where(_additionalFilter);
+    
+        Items = new ObservableCollection<TItem>(items);
         SelectedItem = Items.FirstOrDefault();
     }
+
+    #endregion
+
+    #region Public Methods
+    
+    public void SetAdditionalFilter(Func<TItem, bool> filter)
+    {
+        _additionalFilter = filter;
+        if (_isSearchActive)
+            ApplyFilter();
+        else
+            UpdateItemsList();
+    }
+
+    public void ClearAdditionalFilter()
+    {
+        _additionalFilter = null;
+        if (_isSearchActive)
+            ApplyFilter();
+        else
+            UpdateItemsList();
+    }
+    
+    public void SetSearchScope(SearchScopes scope) => SearchScope = scope;
+    
+    public void Add(TGroup group, TItem item)
+    {
+        if (!_groupedItems.ContainsKey(group))
+        {
+            _groupedItems[group] = new List<TItem>();
+            _groups.Add(group);
+        }
+    
+        _groupedItems[group].Add(item);
+        _allItems.Add(item);
+    
+        if (EqualityComparer<TGroup>.Default.Equals(SelectedGroup, group))
+        {
+            Items.Add(item);
+        }
+    }
+    
+    #endregion
+    
 }
