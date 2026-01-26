@@ -250,8 +250,9 @@
 
 
                 <Border Grid.Row="2" BorderThickness="1" BorderBrush="#333">
-                    <ListView ItemsSource="{Binding ParamEntries.Items}"
+                    <ListView x:Name="EntriesListView" ItemsSource="{Binding ParamEntries.Items}"
                               SelectedItem="{Binding ParamEntries.SelectedItem}"
+                              SelectionChanged="EntriesListView_SelectionChanged"
                               VirtualizingPanel.IsVirtualizing="True"
                               VirtualizingPanel.VirtualizationMode="Recycling"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
