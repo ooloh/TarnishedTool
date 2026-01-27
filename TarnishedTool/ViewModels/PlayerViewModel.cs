@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
@@ -919,15 +920,17 @@ namespace TarnishedTool.ViewModels
         
         private void SetRuneLevelOne()
         {
-            foreach (var statOffset in EnumUtil.GetValues<GameDataMan.PlayerGameDataOffsets>())
+            foreach (var statOffset in EnumUtil.GetValues<GameDataMan.PlayerGameDataOffsets>()
+                         .Where(o => o >= GameDataMan.PlayerGameDataOffsets.Vigor && o <= GameDataMan.PlayerGameDataOffsets.Arcane))
             {
-                _playerService.SetStat((int) statOffset, 10);
+                _playerService.SetStat((int)statOffset, 10);
             }
         }
 
         private void SetMaxLevel()
         {
-            foreach (var statOffset in EnumUtil.GetValues<GameDataMan.PlayerGameDataOffsets>())
+            foreach (var statOffset in EnumUtil.GetValues<GameDataMan.PlayerGameDataOffsets>()
+                         .Where(o => o >= GameDataMan.PlayerGameDataOffsets.Vigor && o <= GameDataMan.PlayerGameDataOffsets.Arcane))
             {
                 _playerService.SetStat((int) statOffset, 99);
             }
