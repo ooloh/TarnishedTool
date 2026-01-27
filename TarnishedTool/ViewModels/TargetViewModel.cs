@@ -910,8 +910,9 @@ namespace TarnishedTool.ViewModels
                 int npcThinkParamId = _targetService.GetNpcThinkParamId();
                 int chrId = _targetService.GetNpcChrId();
                 uint npcParamId = _targetService.GetNpcParamId();
-                Console.WriteLine($@"EntityId: {entityId} NpcThinkParamId: {npcThinkParamId} NpcParamId: {npcParamId} ChrId: {chrId}");
-                
+                Console.WriteLine(
+                    $@"EntityId: {entityId} NpcThinkParamId: {npcThinkParamId} NpcParamId: {npcParamId} ChrId: {chrId}");
+
 #endif
                 IsFreezeAiEnabled = _targetService.IsAiDisabled();
                 IsTargetingViewEnabled = _targetService.IsTargetViewEnabled();
