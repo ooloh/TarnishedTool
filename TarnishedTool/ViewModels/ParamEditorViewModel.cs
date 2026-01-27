@@ -30,12 +30,11 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private List<FieldValueViewModel> _fields;
     private IntPtr _currentRowPtr;
     private byte[] _currentRowData;
-    
+
     private NavigationHistory<(Param, uint)> _history;
     private bool _isNavigatingHistory;
 
     private Dictionary<string, Dictionary<uint, string>> _customNames;
-
 
     public ParamEditorViewModel(IParamRepository paramRepository, IParamService paramService,
         IReminderService reminderService)
@@ -63,6 +62,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
                 }
             }
         }
+
         ParamEntries = new SearchableGroupedCollection<Param, ParamEntry>(
             entriesByParam,
             (entry, search) =>
@@ -84,12 +84,10 @@ public sealed class ParamEditorViewModel : BaseViewModel
         CycleParamFieldDisplayModeCommand = new DelegateCommand(CycleParamFieldDisplayMode);
         PopulateEnumTypes();
 
-        //   PrintEnums();
-
         ParamEntries.SetSearchScope(SearchScopes.SelectedGroup);
 
         OnParamChanged();
-        
+
         if (Enum.TryParse<ParamFieldDisplayMode>(SettingsManager.Default.ParamFieldDisplayMode, out var savedMode))
         {
             _paramFieldDisplayMode = savedMode;
@@ -99,28 +97,6 @@ public sealed class ParamEditorViewModel : BaseViewModel
             _paramFieldDisplayMode = ParamFieldDisplayMode.OffsetNameInternal;
         }
     }
-
-    // Renaming command
-    private ParamEntry _entryToRename;
-    public ParamEntry EntryToRename
-    {
-        get => _entryToRename;
-        set => SetProperty(ref _entryToRename, value);
-    }
-
-    private void RenameRow(ParamEntry entry)
-    {
-        if (entry == null) return;
-        var newName = InputBox.Show(
-            $"Rename Row {entry.Id}",
-            entry.CustomName ?? entry.DisplayName
-        );
-        if (newName != null)
-        {
-            ApplyCustomName(entry, newName);
-        }
-    }
-
 
     #region Commands
 
@@ -191,7 +167,6 @@ public sealed class ParamEditorViewModel : BaseViewModel
         set => SetProperty(ref _showVanillaValues, value);
     }
 
-
     private bool _isSearchAllParamsEnabled;
 
     public bool IsSearchAllParamsEnabled
@@ -211,7 +186,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
     public ObservableCollection<ParamEntry> PinnedEntries => _pinnedEntries;
 
     public bool HasPinnedEntries => _pinnedEntries.Count > 0;
-    
+
     public bool CanGoBack => _history?.CanGoBack ?? false;
     public bool CanGoForward => _history?.CanGoForward ?? false;
 
@@ -230,6 +205,15 @@ public sealed class ParamEditorViewModel : BaseViewModel
             }
         }
     }
+
+    private ParamEntry _entryToRename;
+
+    public ParamEntry EntryToRename
+    {
+        get => _entryToRename;
+        set => SetProperty(ref _entryToRename, value);
+    }
+
     #endregion
 
     #region Private Methods
@@ -268,6 +252,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
                             Value = Convert.ChangeType(enumValue, Enum.GetUnderlyingType(enumType))
                         });
                     }
+
                     vm.SetEnumValues(enumValues);
                 }
 
@@ -317,7 +302,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
         IsSelectedEntryModified = IsEntryModified(ParamEntries.SelectedGroup, ParamEntries.SelectedItem.Id);
 
-        
+
         if (!_isNavigatingHistory)
         {
             if (_history == null)
@@ -425,45 +410,28 @@ public sealed class ParamEditorViewModel : BaseViewModel
         foreach (var type in enumTypes)
             _enumTypes.Add(type.Name, type);
     }
-    /* Debugging
-        private void PrintEnums()
-        {
-            Console.WriteLine("Enums");
-            foreach (var enumType in _enumTypes)
-            {
-                Console.WriteLine($"{enumType.Key}:");
 
-                foreach (var enumVal in Enum.GetValues(enumType.Value))
-                {
-                    Console.WriteLine($"{enumVal}");
-                }
-            }
-            Console.WriteLine();
-        }
-
-*/    
-    
     private void NavigateBack()
     {
         if (_history == null || !_history.CanGoBack) return;
-    
+
         _isNavigatingHistory = true;
         var (param, id) = _history.GoBack();
         NavigateToParamEntry(param, id);
         _isNavigatingHistory = false;
-        
+
         NotifyNavigationChanged();
     }
 
     private void NavigateForward()
     {
         if (_history == null || !_history.CanGoForward) return;
-    
+
         _isNavigatingHistory = true;
         var (param, id) = _history.GoForward();
         NavigateToParamEntry(param, id);
         _isNavigatingHistory = false;
-        
+
         NotifyNavigationChanged();
     }
 
@@ -490,6 +458,18 @@ public sealed class ParamEditorViewModel : BaseViewModel
         };
     }
 
+    private void RenameRow(ParamEntry entry)
+    {
+        if (entry == null) return;
+        var newName = InputBox.Show(
+            $"Rename Row {entry.Id}",
+            entry.CustomName ?? entry.DisplayName
+        );
+        if (newName != null)
+        {
+            ApplyCustomName(entry, newName);
+        }
+    }
 
     #endregion
 
@@ -549,7 +529,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
         OnEntryChanged();
     }
 
-        public void ApplyCustomName(ParamEntry entry, string newName)
+    public void ApplyCustomName(ParamEntry entry, string newName)
     {
         if (entry == null) return;
 
@@ -563,6 +543,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
                 if (dict.Count == 0)
                     _customNames.Remove(paramName);
             }
+
             entry.CustomName = null;
         }
         else
@@ -572,6 +553,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
                 dict = new Dictionary<uint, string>();
                 _customNames[paramName] = dict;
             }
+
             dict[entry.Id] = newName;
             entry.CustomName = newName;
         }
@@ -587,5 +569,6 @@ public sealed class ParamEditorViewModel : BaseViewModel
             _pinnedEntries.Insert(index, pinnedEntry);
         }
     }
+
     #endregion
 }
