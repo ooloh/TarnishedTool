@@ -280,6 +280,7 @@
         <Compile Include="Models\BlockWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
         <Compile Include="Models\CustomWarpChange.cs" />
+        <Compile Include="Models\EnumValueItem.cs" />
         <Compile Include="Models\EventItem.cs" />
         <Compile Include="Models\EventLogEntry.cs" />
         <Compile Include="Models\Grace.cs" />
@@ -416,6 +417,7 @@
         <Compile Include="Views\Windows\InputBox.xaml.cs">
           <DependentUpon>InputBox.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\ParamEditorWindow.xaml.cs" />
         <Compile Include="Views\Windows\ResistancesWindow.xaml.cs">
           <DependentUpon>ResistancesWindow.xaml</DependentUpon>
         </Compile>
@@ -459,6 +461,7 @@
         <Page Include="Views\Windows\GraceImportPresentSelectionWindow.xaml" />
         <Page Include="Views\Windows\GracePresetWindow.xaml" />
         <Page Include="Views\Windows\InputBox.xaml" />
+        <Page Include="Views\Windows\ParamEditorWindow.xaml" />
         <Page Include="Views\Windows\ResistancesWindow.xaml" />
         <Page Include="Views\Windows\ShopSelectorWindow.xaml" />
         <Page Include="Views\Windows\SpEffectsWindow.xaml" />

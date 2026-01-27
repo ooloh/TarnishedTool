@@ -461,7 +461,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private void RenameRow(ParamEntry entry)
     {
         if (entry == null) return;
-        var newName = InputBox.Show(
+        var newName = MsgBox.ShowInput(
             $"Rename Row {entry.Id}",
             entry.CustomName ?? entry.DisplayName
         );
