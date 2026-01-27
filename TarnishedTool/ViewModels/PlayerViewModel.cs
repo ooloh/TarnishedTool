@@ -69,10 +69,14 @@ namespace TarnishedTool.ViewModels
             GiveRunesCommand = new DelegateCommand(GiveRunes);
             ApplyRuneArcCommand = new DelegateCommand(ApplyRuneArc);
             RestCommand = new DelegateCommand(Rest);
+
+            SetMaxLevelCommand = new DelegateCommand(SetMaxLevel);
+            SetRuneLevelOneCommand = new DelegateCommand(SetRuneLevelOne);
             
 
             ApplyPrefs();
         }
+        
 
         #region Commands
 
@@ -87,6 +91,9 @@ namespace TarnishedTool.ViewModels
         public ICommand GiveRunesCommand { get; set; }
         public ICommand ApplyRuneArcCommand { get; set; }
         public ICommand RestCommand { get; set; }
+        
+        public ICommand SetMaxLevelCommand { get; set; }
+        public ICommand SetRuneLevelOneCommand { get; set; }
 
 
 
@@ -907,6 +914,22 @@ namespace TarnishedTool.ViewModels
             for (var i = 0; i < NewGameEventIds.Length; i++)
             {
                 _eventService.SetEvent(NewGameEventIds[i], i == activeIndex);
+            }
+        }
+        
+        private void SetRuneLevelOne()
+        {
+            foreach (var statOffset in EnumUtil.GetValues<GameDataMan.PlayerGameDataOffsets>())
+            {
+                _playerService.SetStat((int) statOffset, 10);
+            }
+        }
+
+        private void SetMaxLevel()
+        {
+            foreach (var statOffset in EnumUtil.GetValues<GameDataMan.PlayerGameDataOffsets>())
+            {
+                _playerService.SetStat((int) statOffset, 99);
             }
         }
         
