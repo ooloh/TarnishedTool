@@ -68,7 +68,8 @@ public class SettingsViewModel : BaseViewModel
                 new("Apply Special Effect", HotkeyActions.ApplySpEffect),
                 new("Remove Special Effect", HotkeyActions.RemoveSpEffect),
                 new("Rune Arc", HotkeyActions.RuneArc),
-                new("Rest Character", HotkeyActions.Rest)
+                new("Rest Character", HotkeyActions.Rest),
+                new("Faster Death", HotkeyActions.FasterDeath)
             ],
             ["Enemies"] =
             [
@@ -155,6 +156,7 @@ public class SettingsViewModel : BaseViewModel
                 new("Set 120 FPS", HotkeyActions.Set120Fps),
                 new("Set 180 FPS", HotkeyActions.Set180Fps),
                 new("Set 240 FPS", HotkeyActions.Set240Fps),
+                new("No Upgrades Cost", HotkeyActions.NoUpgradeCost)
             ],
 
             ["Event"] =

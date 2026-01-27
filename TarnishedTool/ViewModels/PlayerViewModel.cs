@@ -22,8 +22,14 @@ namespace TarnishedTool.ViewModels
         private const float Epsilon = 0.0001f;
 
         private bool _pauseUpdates = true;
-        
+
         private readonly IPlayerService _playerService;
+        private readonly IParamService _paramService;
+        
+        private float _originalDeathTimeOffset0;
+        private float _originalDeathTimeOffset4;
+        private bool _hasDeathTimeOrigin;
+
 
         private readonly CharacterState _saveState1 = new();
         private readonly CharacterState _saveState2 = new();
@@ -40,7 +46,8 @@ namespace TarnishedTool.ViewModels
 
         public PlayerViewModel(IPlayerService playerService, IStateService stateService, HotkeyManager hotkeyManager,
             IEventService eventService, ISpEffectService spEffectService, IEmevdService emevdService,
-            IDlcService dlcService, IEzStateService ezStateService, IGameTickService gameTickService)
+            IDlcService dlcService, IEzStateService ezStateService, IGameTickService gameTickService,
+            IParamService paramService)
         {
             _playerService = playerService;
             _hotkeyManager = hotkeyManager;
@@ -50,6 +57,7 @@ namespace TarnishedTool.ViewModels
             _dlcService = dlcService;
             _ezStateService = ezStateService;
             _gameTickService = gameTickService;
+            _paramService = paramService;
 
             RegisterHotkeys();
 
@@ -74,10 +82,10 @@ namespace TarnishedTool.ViewModels
             SetMaxLevelCommand = new DelegateCommand(SetMaxLevel);
             SetRuneLevelOneCommand = new DelegateCommand(SetRuneLevelOne);
             
+            ToggleFasterDeathCommand = new DelegateCommand(() => IsFasterDeathEnabled = !IsFasterDeathEnabled);
 
             ApplyPrefs();
         }
-        
 
         #region Commands
 
@@ -92,11 +100,10 @@ namespace TarnishedTool.ViewModels
         public ICommand GiveRunesCommand { get; set; }
         public ICommand ApplyRuneArcCommand { get; set; }
         public ICommand RestCommand { get; set; }
-        
+
         public ICommand SetMaxLevelCommand { get; set; }
         public ICommand SetRuneLevelOneCommand { get; set; }
-
-
+        public ICommand ToggleFasterDeathCommand { get; set; }
 
         #endregion
 
@@ -133,9 +140,8 @@ namespace TarnishedTool.ViewModels
             get => _currentMaxHp;
             set => SetProperty(ref _currentMaxHp, value);
         }
-        
         private string _customHp = SettingsManager.Default.SaveCustomHp;
-        
+
         public string CustomHp
         {
             get => _customHp;
@@ -144,11 +150,10 @@ namespace TarnishedTool.ViewModels
                 if (SetProperty(ref _customHp, value))
                 {
                     _customHpHasBeenSet = true;
-                    
                 }
             }
         }
-        
+
         private bool _isHotEnabled;
 
         public bool IsHotEnabled
@@ -586,7 +591,7 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
-        
+
 
         private bool _isRememberSpeedEnabled;
 
@@ -647,6 +652,17 @@ namespace TarnishedTool.ViewModels
             set => SetProperty(ref _showPlayerLocation, value);
         }
 
+        private bool _isFasterDeathEnabled;
+
+        public bool IsFasterDeathEnabled
+        {
+            get => _isFasterDeathEnabled;
+            set
+            {
+                if (!SetProperty(ref _isFasterDeathEnabled, value)) return;
+                ApplyFasterDeath(value);
+            }
+        }
         #endregion
 
         #region Public Methods
@@ -674,7 +690,7 @@ namespace TarnishedTool.ViewModels
         private void OnGameLoaded()
         {
             AreOptionsEnabled = true;
-            
+
             LoadStats();
             _gameTickService.Subscribe(PlayerTick);
             _pauseUpdates = false;
@@ -754,6 +770,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.Rest, () => SafeExecute(Rest));
             _hotkeyManager.RegisterAction(HotkeyActions.PlayerSetCustomHp, SetCustomHp);
             _hotkeyManager.RegisterAction(HotkeyActions.NoHit, () => { IsNoHitEnabled = !IsNoHitEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.FasterDeath,() => { IsFasterDeathEnabled = !IsFasterDeathEnabled; });
         }
 
         private void SafeExecute(Action action)
@@ -827,7 +844,7 @@ namespace TarnishedTool.ViewModels
 
             _playerService.SetHp(customHp.Value);
             SettingsManager.Default.SaveCustomHp = CustomHp;
-            SettingsManager.Default.Save();            
+            SettingsManager.Default.Save();
         }
 
         private (int? value, string error) ParseCustomHp()
@@ -838,7 +855,8 @@ namespace TarnishedTool.ViewModels
 
             if (input.EndsWith("%"))
             {
-                if (double.TryParse(input.TrimEnd('%'), NumberStyles.Float, CultureInfo.InvariantCulture, out var percent))
+                if (double.TryParse(input.TrimEnd('%'), NumberStyles.Float, CultureInfo.InvariantCulture,
+                        out var percent))
                     return ((int)(percent / 100.0 * CurrentMaxHp), null);
                 return (null, "Invalid percentage format");
             }
@@ -918,7 +936,7 @@ namespace TarnishedTool.ViewModels
             if (IsResetWorldIncluded) _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.FadeOutAndPassTime(true));
             else _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
         }
-        
+
 
         private void ApplyPrefs()
         {
@@ -936,11 +954,12 @@ namespace TarnishedTool.ViewModels
                 _eventService.SetEvent(NewGameEventIds[i], i == activeIndex);
             }
         }
-        
+
         private void SetRuneLevelOne()
         {
             foreach (var statOffset in EnumUtil.GetValues<GameDataMan.PlayerGameDataOffsets>()
-                         .Where(o => o >= GameDataMan.PlayerGameDataOffsets.Vigor && o <= GameDataMan.PlayerGameDataOffsets.Arcane))
+                         .Where(o => o >= GameDataMan.PlayerGameDataOffsets.Vigor &&
+                                     o <= GameDataMan.PlayerGameDataOffsets.Arcane))
             {
                 _playerService.SetStat((int)statOffset, 10);
             }
@@ -949,12 +968,63 @@ namespace TarnishedTool.ViewModels
         private void SetMaxLevel()
         {
             foreach (var statOffset in EnumUtil.GetValues<GameDataMan.PlayerGameDataOffsets>()
-                         .Where(o => o >= GameDataMan.PlayerGameDataOffsets.Vigor && o <= GameDataMan.PlayerGameDataOffsets.Arcane))
+                         .Where(o => o >= GameDataMan.PlayerGameDataOffsets.Vigor &&
+                                     o <= GameDataMan.PlayerGameDataOffsets.Arcane))
             {
-                _playerService.SetStat((int) statOffset, 99);
+                _playerService.SetStat((int)statOffset, 99);
             }
         }
-        
+
+        private void ApplyFasterDeath(bool enabled)
+        {
+            var (menuCommonParamTableIndex, menuCommonParamSlotIndex) =
+                ParamIndices.All["MenuCommonParam"];
+
+            const uint MenuCommonParamRowId = 0;
+            const int DeathTimeOffset0 = 0x0; 
+            const int DeathTimeOffset4 = 0x4; 
+
+            IntPtr rowPtr = _paramService.GetParamRow(
+                menuCommonParamTableIndex,
+                menuCommonParamSlotIndex,
+                MenuCommonParamRowId
+            );
+
+            if (rowPtr == IntPtr.Zero) return;
+
+            var field1 = new ParamFieldDef { Offset = DeathTimeOffset0, DataType = "f32" };
+            var field2 = new ParamFieldDef { Offset = DeathTimeOffset4, DataType = "f32" };
+
+            if (enabled)
+            {
+                
+                if (!_hasDeathTimeOrigin)
+                {
+                    var rowData = _paramService.ReadRow(rowPtr, 0x8); 
+                    _originalDeathTimeOffset0 = BitConverter.ToSingle(rowData, DeathTimeOffset0);
+                    _originalDeathTimeOffset4 = BitConverter.ToSingle(rowData, DeathTimeOffset4);
+                    _hasDeathTimeOrigin = true;
+                }
+                
+                _paramService.WriteField(rowPtr, field1, 0f);
+                _paramService.WriteField(rowPtr, field2, 0f);
+            }
+            else
+            {
+                
+                if (_hasDeathTimeOrigin)
+                {
+                    _paramService.WriteField(rowPtr, field1, _originalDeathTimeOffset0);
+                    _paramService.WriteField(rowPtr, field2, _originalDeathTimeOffset4);
+                }
+                else
+                {
+                    // backup restore values
+                    _paramService.WriteField(rowPtr, field1, 3.8f);
+                    _paramService.WriteField(rowPtr, field2, 3.3f);
+                }
+            }
+        }
 
         #endregion
     }

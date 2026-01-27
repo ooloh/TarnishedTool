@@ -74,7 +74,7 @@ namespace TarnishedTool
             PlayerViewModel playerViewModel = new PlayerViewModel(
                 playerService, _stateService, hotkeyManager,
                 eventService, spEffectService, emevdService,
-                _dlcService, ezStateService, gameTickService
+                _dlcService, ezStateService, gameTickService, paramService
             );
 
             TravelViewModel travelViewModel = new TravelViewModel(

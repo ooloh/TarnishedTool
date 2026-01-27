@@ -109,4 +109,6 @@ public enum HotkeyActions
     Set180Fps,
     Set240Fps,
     DrawEvent,
+    FasterDeath,
+    NoUpgradeCost,
 }
