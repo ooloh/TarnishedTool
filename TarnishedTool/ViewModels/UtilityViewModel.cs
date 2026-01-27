@@ -243,6 +243,20 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
+        
+        private int _fps;
+
+        public int Fps
+        {
+            get => _fps;
+            set
+            {
+                if (SetProperty(ref _fps, value))
+                {
+                    _utilityService.SetFps(_fps);
+                }
+            }
+        }
 
         private bool _isRememberSpeedEnabled;
 
@@ -593,6 +607,7 @@ namespace TarnishedTool.ViewModels
         {
             AreOptionsEnabled = true;
             GameSpeed = _utilityService.GetSpeed();
+            Fps = _utilityService.GetFps();
             if (IsDungeonWarpEnabled)
             {
                 var playerIns = _playerService.GetPlayerIns();
@@ -743,6 +758,12 @@ namespace TarnishedTool.ViewModels
             });
             _hotkeyManager.RegisterAction(HotkeyActions.DrawPoiseBars,
                 () => IsDrawPoiseBarsEnabled = !IsDrawPoiseBarsEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.Set30Fps,() => SafeExecute(() => Fps = 30));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set60Fps,() => SafeExecute(() => Fps = 60));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set90Fps,() => SafeExecute(() => Fps = 90));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set120Fps,() => SafeExecute(() => Fps = 120));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set180Fps,() => SafeExecute(() => Fps = 180));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set240Fps,() => SafeExecute(() => Fps = 240));
             
         }
 
