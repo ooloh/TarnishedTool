@@ -26,10 +26,6 @@ namespace TarnishedTool.ViewModels
         private readonly IPlayerService _playerService;
         private readonly IParamService _paramService;
         
-        
-        private bool _hasDeathTimeOrigin;
-
-
         private readonly CharacterState _saveState1 = new();
         private readonly CharacterState _saveState2 = new();
 
