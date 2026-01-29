@@ -224,7 +224,7 @@ namespace TarnishedTool.Services
         }
 
         public int GetNpcThinkParamId() =>
-            memoryService.ReadInt32(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.NpcThinkParamId);
+            memoryService.ReadInt32(GetAiThinkPtr() + ChrIns.AiThinkOffsets.NpcThinkParamId);
 
         public int GetNpcChrId() => 
             memoryService.ReadInt32((IntPtr)GetTargetChrIns() + ChrIns.ChrId);

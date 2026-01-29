@@ -248,6 +248,7 @@
         <Compile Include="GameIds\EzState.cs" />
         <Compile Include="GameIds\ParamIndicies.cs" />
         <Compile Include="GameIds\SpEffect.cs" />
+        <Compile Include="Interfaces\IAiService.cs" />
         <Compile Include="Interfaces\IAttackInfoService.cs" />
         <Compile Include="Interfaces\IDlcService.cs" />
         <Compile Include="Interfaces\IEmevdService.cs" />
@@ -280,6 +281,7 @@
         <Compile Include="Models\BossRevive.cs" />
         <Compile Include="Models\BlockWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
+        <Compile Include="Models\ChrInsEntry.cs" />
         <Compile Include="Models\CustomWarpChange.cs" />
         <Compile Include="Models\EnumValueItem.cs" />
         <Compile Include="Models\EventItem.cs" />
@@ -301,6 +303,7 @@
         <Compile Include="Models\Stats.cs" />
         <Compile Include="Models\Weapon.cs" />
         <Compile Include="Models\Weather.cs" />
+        <Compile Include="Services\AiService.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
         <Compile Include="Services\DlcService.cs" />
         <Compile Include="Services\EmevdService.cs" />
@@ -337,6 +340,7 @@
         <Compile Include="Utilities\User32.cs" />
         <Compile Include="Utilities\VersionChecker.cs" />
         <Compile Include="ViewModels\AdvancedViewModel.cs" />
+        <Compile Include="ViewModels\AiWindowViewModel.cs" />
         <Compile Include="ViewModels\AttackInfoViewModel.cs" />
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\CreateCustomWarpViewModel.cs" />
@@ -387,6 +391,9 @@
         </Compile>
         <Compile Include="Views\Tabs\UtilityTab.xaml.cs">
           <DependentUpon>UtilityTab.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\AiWindow.xaml.cs">
+          <DependentUpon>AiWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\Windows\AttackInfoWindow.xaml.cs">
           <DependentUpon>AttackInfoWindow.xaml</DependentUpon>
@@ -452,6 +459,7 @@
         <Page Include="Views\Tabs\PlayerTab.xaml" />
         <Page Include="Views\Tabs\TravelTab.xaml" />
         <Page Include="Views\Tabs\UtilityTab.xaml" />
+        <Page Include="Views\Windows\AiWindow.xaml" />
         <Page Include="Views\Windows\AttackInfoWindow.xaml" />
         <Page Include="Views\Windows\CreateCustomWarpWindow.xaml" />
         <Page Include="Views\Windows\CreateLoadoutWindow.xaml" />

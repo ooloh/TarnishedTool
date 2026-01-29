@@ -14,12 +14,19 @@ namespace TarnishedTool.ViewModels;
 public class AdvancedViewModel : BaseViewModel
 {
     private readonly IItemService _itemService;
+    
     private readonly ParamEditorViewModel _paramEditorViewModel;
+    
     private readonly ISpEffectService _spEffectService;
     private readonly SpEffectViewModel _spEffectViewModel = new();
     private SpEffectsWindow _spEffectsWindow;
+    
     private readonly HotkeyManager _hotkeyManager;
     private readonly IGameTickService _gameTickService;
+    
+    private readonly IAiService _aiService;
+    private readonly AiWindowViewModel _aiWindowViewModel;
+    private AiWindow _aiWindow;
 
     private ParamEditorWindow _paramEditorWindow;
 
@@ -30,13 +37,14 @@ public class AdvancedViewModel : BaseViewModel
     public AdvancedViewModel(IItemService itemService, IStateService stateService, IEventService eventService,
         IParamService paramService, IParamRepository paramRepository, ISpEffectService spEffectService,
         IPlayerService playerService, HotkeyManager hotkeyManager, IGameTickService gameTickService,
-        IReminderService reminderService)
+        IReminderService reminderService, IAiService aiService)
     {
         _itemService = itemService;
         _spEffectService = spEffectService;
         _playerService = playerService;
         _hotkeyManager = hotkeyManager;
         _gameTickService = gameTickService;
+        _aiService = aiService;
 
         RegisterHotkeys();
 
@@ -48,12 +56,15 @@ public class AdvancedViewModel : BaseViewModel
         ApplySpEffectCommand = new DelegateCommand(ApplySpEffect);
         RemoveSpEffectCommand = new DelegateCommand(RemoveSpEffect);
         AboutSpEffectsCommand = new DelegateCommand(ShowAboutSpEffects);
+        OpenAiWindowCommand = new DelegateCommand(OpenAiWindow);
 
         SelectedEquipType = EquipTypes[0].Value;
 
         _paramEditorViewModel = new ParamEditorViewModel(paramRepository, paramService, reminderService);
+        _aiWindowViewModel = new AiWindowViewModel(aiService, stateService, gameTickService);
     }
 
+    
     #region Commands
 
     public ICommand SpawnWithEquipIdCommand { get; set; }
@@ -61,6 +72,7 @@ public class AdvancedViewModel : BaseViewModel
     public ICommand ApplySpEffectCommand { get; set; }
     public ICommand RemoveSpEffectCommand { get; set; }
     public ICommand AboutSpEffectsCommand { get; set; }
+    public ICommand OpenAiWindowCommand { get; set; }
 
     #endregion
 
@@ -145,6 +157,7 @@ public class AdvancedViewModel : BaseViewModel
     {
         AreOptionsEnabled = true;
         if (IsSpEffectWindowOpen) _gameTickService.Subscribe(SpEffectsTick);
+        
     }
 
     private void RegisterHotkeys()
@@ -242,6 +255,23 @@ public class AdvancedViewModel : BaseViewModel
                 out uint spEffectId)) return;
         var playerIns = _playerService.GetPlayerIns();
         _spEffectService.ApplySpEffect(playerIns, spEffectId);
+    }
+    
+    private void OpenAiWindow()
+    {
+        _aiWindow = new AiWindow
+        {
+            DataContext = _aiWindowViewModel,
+            Title = "AI"
+        };
+        _aiWindow.Closed += (s, e) =>
+        {
+            _aiWindow = null;
+            _aiWindowViewModel.NotifyWindowClosed();
+        };
+
+        _aiWindow.Show();
+        _aiWindowViewModel.NotifyWindowOpen();
     }
 
     #endregion

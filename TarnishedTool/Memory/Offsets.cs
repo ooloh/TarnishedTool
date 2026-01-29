@@ -100,7 +100,7 @@ namespace TarnishedTool.Memory
                 Version1_7_0 or Version2_0_0 => 0x1F1B8,
                 _ => 0x1F1C0
             };
-
+            
             public static class PlayerInsOffsets
             {
                 public const int Handle = 0x8;
@@ -133,9 +133,11 @@ namespace TarnishedTool.Memory
 
         public static class ChrIns
         {
+            public const int Handle = 0x8;
             public const int ChrCtrl = 0x58;
             public const int NpcParamId = 0x60;
             public const int ChrId = 0x64;
+            public const int TeamType = 0x6C;
             public const int SpecialEffect = 0x178;
 
             public static int EntityId => Version switch

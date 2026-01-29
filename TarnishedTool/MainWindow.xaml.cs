@@ -68,6 +68,7 @@ namespace TarnishedTool
             IEventLogReader eventLogReader = new EventLogReader(_memoryService);
             IParamRepository paramRepository = new ParamRepository();
             IGameTickService gameTickService = new GameTickService(_stateService);
+            IAiService aiService = new AiService(_memoryService);
 
             _dlcService = new DlcService(_memoryService);
 
@@ -114,7 +115,7 @@ namespace TarnishedTool
             AdvancedViewModel advancedViewModel = new AdvancedViewModel(
                 itemService, _stateService, eventService,
                 paramService, paramRepository, spEffectService, playerService,
-                hotkeyManager, gameTickService, reminderService
+                hotkeyManager, gameTickService, reminderService, aiService
             );
 
             SettingsViewModel settingsViewModel = new SettingsViewModel(
