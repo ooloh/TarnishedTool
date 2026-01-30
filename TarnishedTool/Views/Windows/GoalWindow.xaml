@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
         <controls:TitleBar Grid.Row="0" Title="Goals TBD" />
         
-        <ItemsControl ItemsSource="{Binding FlatGoals}">
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding FlatGoals}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="{Binding IndentLevel, Converter={StaticResource IndentConverter}}">

@@ -24,7 +24,6 @@ public class AdvancedViewModel : BaseViewModel
     private readonly HotkeyManager _hotkeyManager;
     private readonly IGameTickService _gameTickService;
     
-    private readonly IAiService _aiService;
     private readonly IUtilityService _utilityService;
     private readonly AiWindowViewModel _aiWindowViewModel;
     private AiWindow _aiWindow;
@@ -45,7 +44,6 @@ public class AdvancedViewModel : BaseViewModel
         _playerService = playerService;
         _hotkeyManager = hotkeyManager;
         _gameTickService = gameTickService;
-        _aiService = aiService;
         _utilityService = utilityService;
 
         RegisterHotkeys();
