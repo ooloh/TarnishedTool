@@ -16,7 +16,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
-        <controls:TitleBar Grid.Row="0" Title="Attack Information" />
+        <controls:TitleBar Grid.Row="0" Title="TBD" />
 
         <ListBox Grid.Row="1"
                  ItemsSource="{Binding ChrInsEntries}"

@@ -1,5 +1,6 @@
 ﻿// 
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -8,18 +9,20 @@ using TarnishedTool.Models;
 
 namespace TarnishedTool.ViewModels;
 
-public class GoalWindowViewModel : BaseViewModel
+public class GoalWindowViewModel : BaseViewModel, IDisposable
 {
     #region Properties
 
     private GoalViewModel _topGoal;
     private readonly IAiService _aiService;
+    private readonly IGameTickService _gameTickService;
     private readonly Dictionary<int, GoalInfo> _goalDict;
     private readonly nint _chrIns;
 
     public GoalWindowViewModel(IAiService aiService, IGameTickService gameTickService, Dictionary<int, GoalInfo> goalDict, nint chrIns)
     {
         _aiService = aiService;
+        _gameTickService = gameTickService;
         _goalDict = goalDict;
         _chrIns = chrIns;
         
@@ -156,6 +159,15 @@ public class GoalWindowViewModel : BaseViewModel
         foreach (var child in goal.Children)
         foreach (var descendant in FlattenTree(child))
             yield return descendant;
+    }
+
+    #endregion
+
+    #region Public Methods
+
+    public void Dispose()
+    {
+        _gameTickService.Unsubscribe(GoalTick);
     }
 
     #endregion

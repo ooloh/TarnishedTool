@@ -650,5 +650,30 @@ namespace TarnishedTool.Utilities
 
             return goalInfos;
         }
+        
+        public static Dictionary<TKey, TValue> GetSimpleDict<TKey, TValue>(
+            string resourceName, 
+            Func<string, TKey> keyParser, 
+            Func<string, TValue> valueParser,
+            char delimiter = ',')
+        {
+            var dict = new Dictionary<TKey, TValue>();
+            string csvData = Resources.ResourceManager.GetString(resourceName);
+
+            if (string.IsNullOrWhiteSpace(csvData)) return dict;
+
+            using StringReader reader = new StringReader(csvData);
+            reader.ReadLine();
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#")) continue;
+        
+                string[] parts = line.Split(delimiter);
+                dict[keyParser(parts[0])] = valueParser(parts[1]);
+            }
+
+            return dict;
+        }
     }
 }

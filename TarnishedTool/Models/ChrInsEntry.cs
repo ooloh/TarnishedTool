@@ -9,8 +9,9 @@ public class ChrInsEntry(nint chrIns)
     public uint NpcParamId { get; set; }
     public int NpcThinkParamId { get; set; }
     public long Handle { get; set; }
+    public string Name { get; set; }
 
     public string Display =>
-        $@"ChrId: {ChrId} NpcParamId: {NpcParamId} NpcThinkParamId: {NpcThinkParamId}";
+        $@"{Name}   ChrId: {ChrId} NpcParamId: {NpcParamId} NpcThinkParamId: {NpcThinkParamId}";
     
 }

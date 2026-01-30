@@ -25,6 +25,7 @@ public class AdvancedViewModel : BaseViewModel
     private readonly IGameTickService _gameTickService;
     
     private readonly IAiService _aiService;
+    private readonly IUtilityService _utilityService;
     private readonly AiWindowViewModel _aiWindowViewModel;
     private AiWindow _aiWindow;
 
@@ -37,7 +38,7 @@ public class AdvancedViewModel : BaseViewModel
     public AdvancedViewModel(IItemService itemService, IStateService stateService, IEventService eventService,
         IParamService paramService, IParamRepository paramRepository, ISpEffectService spEffectService,
         IPlayerService playerService, HotkeyManager hotkeyManager, IGameTickService gameTickService,
-        IReminderService reminderService, IAiService aiService)
+        IReminderService reminderService, IAiService aiService, IUtilityService utilityService)
     {
         _itemService = itemService;
         _spEffectService = spEffectService;
@@ -45,6 +46,7 @@ public class AdvancedViewModel : BaseViewModel
         _hotkeyManager = hotkeyManager;
         _gameTickService = gameTickService;
         _aiService = aiService;
+        _utilityService = utilityService;
 
         RegisterHotkeys();
 
@@ -270,6 +272,7 @@ public class AdvancedViewModel : BaseViewModel
             _aiWindowViewModel.NotifyWindowClosed();
         };
 
+        _utilityService.PatchDebugFont();
         _aiWindow.Show();
         _aiWindowViewModel.NotifyWindowOpen();
     }

@@ -404,6 +404,41 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ChrId,Name
+        ///0000,Player
+        ///2010,Blaidd
+        ///2030,Rennala
+        ///2031,Rennala
+        ///2040,Juvenile Scholar
+        ///2041,Larva of Rot
+        ///2050,Ranni the Witch
+        ///2051,Ranni the Witch
+        ///2060,The Two Fingers
+        ///2070,The Three Fingers
+        ///2100,Black Knife Assassin
+        ///2110,Beast Clergyman
+        ///2120,Malenia Blade of Miquella
+        ///2130,Morgott
+        ///2131,Morgott (Dead)
+        ///2140,Omen
+        ///2150,Lightning Ball
+        ///2160,Finger Reader Crone
+        ///2170,Finger Reader Crone
+        ///2180,Melina
+        ///2190,Radagon
+        ///2191,Radagon (Crucified)
+        ///2200,Elden Beast
+        ///2270,Giant Crab
+        ///2271,Crab
+        ///2272,Giant Blac [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ChrNames {
+            get {
+                return ResourceManager.GetString("ChrNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 1,401E8CB4,Ancient Dragon&apos;s Blessing,1,0
         ///0,40000D20,Baldachin&apos;s Blessing,1,0
         ///0,40000D16,Bewitching Branch,10,600

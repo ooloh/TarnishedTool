@@ -115,7 +115,8 @@ namespace TarnishedTool
             AdvancedViewModel advancedViewModel = new AdvancedViewModel(
                 itemService, _stateService, eventService,
                 paramService, paramRepository, spEffectService, playerService,
-                hotkeyManager, gameTickService, reminderService, aiService
+                hotkeyManager, gameTickService, reminderService, aiService,
+                utilityService
             );
 
             SettingsViewModel settingsViewModel = new SettingsViewModel(

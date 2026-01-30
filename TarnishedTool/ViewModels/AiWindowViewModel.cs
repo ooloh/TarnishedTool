@@ -20,8 +20,12 @@ internal class AiWindowViewModel : BaseViewModel
     private readonly IGameTickService _gameTickService;
     private readonly IPlayerService _playerService;
 
+    private readonly Dictionary<int, string> _chrNames;
     private readonly Dictionary<long, ChrInsEntry> _entriesByHandle = new();
     private readonly Dictionary<int, GoalInfo> _goalInfos;
+    
+    private readonly Dictionary<nint, GoalWindow> _openGoalWindows = new();
+    private const int MaxGoalWindows = 4;
 
     public AiWindowViewModel(IAiService aiService, IStateService stateService, IGameTickService gameTickService,
         IPlayerService playerService)
@@ -32,6 +36,7 @@ internal class AiWindowViewModel : BaseViewModel
         _playerService = playerService;
 
         _goalInfos = DataLoader.LoadGoalInfo();
+        _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
 
         WarpToSelectedCommand = new DelegateCommand(WarpToSelected);
         OpenGoalWindowForSelectedCommand = new DelegateCommand(OpenGoalWindow);
@@ -109,9 +114,12 @@ internal class AiWindowViewModel : BaseViewModel
             entry.NpcThinkParamId = _aiService.GetNpcThinkParamIdByChrIns(entry.ChrIns);
 
             if (entry.NpcThinkParamId == 0) continue;
+            
+            entry.ChrId = _aiService.GetChrIdByChrIns(entry.ChrIns);
+
+            entry.Name = _chrNames.TryGetValue(entry.ChrId, out var chrName) ? chrName : "Unknown";
 
             entry.Handle = handle;
-            entry.ChrId = _aiService.GetChrIdByChrIns(entry.ChrIns);
             entry.NpcParamId = _aiService.GetNpcParamIdByChrIns(entry.ChrIns);
 
             _entriesByHandle[handle] = entry;
@@ -136,9 +144,25 @@ internal class AiWindowViewModel : BaseViewModel
     
     private void OpenGoalWindow()
     {
+        var chrIns = SelectedChrInsEntry.ChrIns;
+    
+        if (_openGoalWindows.TryGetValue(chrIns, out var existing))
+        {
+            existing.Activate();
+            return;
+        }
+
+        if (_openGoalWindows.Count >= MaxGoalWindows)
+        {
+            MsgBox.Show("Only four Goal windows can be open at once, close one to open another", "Too many Goal windows");
+            return;
+        }
+        
         var window = new GoalWindow();
-        var vm = new GoalWindowViewModel(_aiService, _gameTickService, _goalInfos, SelectedChrInsEntry.ChrIns);
+        var vm = new GoalWindowViewModel(_aiService, _gameTickService, _goalInfos, chrIns);
         window.DataContext = vm;
+        window.Closed += (_, _) => _openGoalWindows.Remove(chrIns);
+        _openGoalWindows[chrIns] = window;
         window.Show();
     }
 
@@ -149,12 +173,14 @@ internal class AiWindowViewModel : BaseViewModel
     public void NotifyWindowOpen()
     {
         _stateService.Subscribe(State.Loaded, OnGameLoaded);
+        _stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
         _gameTickService.Subscribe(ChrInsEntriesTick);
     }
 
     public void NotifyWindowClosed()
     {
-        _stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
+        _stateService.Unsubscribe(State.Loaded, OnGameLoaded);
+        _stateService.Unsubscribe(State.NotLoaded, OnGameNotLoaded);
         _gameTickService.Unsubscribe(ChrInsEntriesTick);
     }
     
