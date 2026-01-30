@@ -3,25 +3,35 @@ using System.Windows.Input;
 
 namespace TarnishedTool.Core;
 
-internal class DelegateCommand(Action<object> execute, Predicate<object>? canExecute = null)
-    : ICommand
+internal class DelegateCommand : ICommand
 {
+    private readonly Action<object>? _execute;
     private readonly Action? _executeWithoutParam;
+    private readonly Predicate<object>? _canExecute;
+    private readonly Func<bool>? _canExecuteWithoutParam;
 
-    public DelegateCommand(Action execute, Predicate<object>? canExecute = null) : this(default(Action<object>), canExecute)
+    public DelegateCommand(Action<object> execute, Predicate<object>? canExecute = null)
+    {
+        _execute = execute;
+        _canExecute = canExecute;
+    }
+
+    public DelegateCommand(Action execute, Func<bool>? canExecute = null)
     {
         _executeWithoutParam = execute;
+        _canExecuteWithoutParam = canExecute;
     }
 
     public event EventHandler? CanExecuteChanged;
 
-    public void RaiseCanExecuteChange() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+    public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
-    public bool CanExecute(object? parameter) => canExecute?.Invoke(parameter ?? new()) ?? true;
+    public bool CanExecute(object? parameter) =>
+        _canExecuteWithoutParam?.Invoke() ?? _canExecute?.Invoke(parameter ?? new object()) ?? true;
 
     public void Execute(object? parameter)
     {
-        execute?.Invoke(parameter ?? new());
+        _execute?.Invoke(parameter ?? new object());
         _executeWithoutParam?.Invoke();
     }
 }
@@ -51,6 +61,3 @@ internal class DelegateCommand<T> : ICommand
             _execute(default);
     }
 }
-
-
-

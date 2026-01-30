@@ -49,7 +49,7 @@ public class AiService(MemoryService memoryService) : IAiService
     public void SetSelected(nint chrIns, bool isSelected) =>
         memoryService.SetBitValue(GetChrInsFlagsPtr(chrIns), (int)ChrIns.ChrInsFlags.SelectedEntity, isSelected);
 
-    public Position GetChrInsPos(IntPtr chrIns)
+    public Position GetChrInsMapCoords(IntPtr chrIns)
     {
         var blockId = memoryService.Read<uint>(chrIns + ChrIns.BlockId);
 

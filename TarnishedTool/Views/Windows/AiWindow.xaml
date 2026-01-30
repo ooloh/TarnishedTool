@@ -13,12 +13,24 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <controls:TitleBar Grid.Row="0" Title="TBD" />
-
-        <ListBox Grid.Row="1"
+        <Grid Grid.Row="1">
+            <CheckBox 
+                x:Name="AlwaysOnTopCheckBox"
+                HorizontalAlignment="Right"
+                Margin="0,0,10,0"
+                Checked="AlwaysOnTopCheckBox_Checked"
+                Unchecked="AlwaysOnTopCheckBox_Unchecked">
+                Always on Top
+            </CheckBox>
+            
+        </Grid>
+        
+        <ListBox Grid.Row="2"
                  ItemsSource="{Binding ChrInsEntries}"
                  SelectedItem="{Binding SelectedChrInsEntry}"
                  VirtualizingPanel.IsVirtualizing="True"
@@ -31,7 +43,7 @@
             
         </ListBox>
         
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
             <Button Content="Warp to selected enemy" Command="{Binding WarpToSelectedCommand}"></Button>
             <Button Content="Test Open Goal Window for selected" Command="{Binding OpenGoalWindowForSelectedCommand}"></Button>
         </StackPanel>

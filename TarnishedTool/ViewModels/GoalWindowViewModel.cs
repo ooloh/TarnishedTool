@@ -11,23 +11,25 @@ namespace TarnishedTool.ViewModels;
 
 public class GoalWindowViewModel : BaseViewModel, IDisposable
 {
-    #region Properties
-
-    private GoalViewModel _topGoal;
     private readonly IAiService _aiService;
     private readonly IGameTickService _gameTickService;
     private readonly Dictionary<int, GoalInfo> _goalDict;
     private readonly nint _chrIns;
 
-    public GoalWindowViewModel(IAiService aiService, IGameTickService gameTickService, Dictionary<int, GoalInfo> goalDict, nint chrIns)
+    public GoalWindowViewModel(IAiService aiService, IGameTickService gameTickService,
+        Dictionary<int, GoalInfo> goalDict, nint chrIns)
     {
         _aiService = aiService;
         _gameTickService = gameTickService;
         _goalDict = goalDict;
         _chrIns = chrIns;
-        
+
         gameTickService.Subscribe(GoalTick);
     }
+
+    #region Properties
+
+    private GoalViewModel _topGoal;
 
     public GoalViewModel TopGoal
     {
@@ -69,8 +71,8 @@ public class GoalWindowViewModel : BaseViewModel, IDisposable
         }
 
         UpdateChildren(TopGoal, goalPtr);
-        
-        OnPropertyChanged(nameof(FlatGoals)); 
+
+        OnPropertyChanged(nameof(FlatGoals));
     }
 
     private GoalViewModel CreateGoalViewModel(GoalIns ins, int indentLevel = 0)

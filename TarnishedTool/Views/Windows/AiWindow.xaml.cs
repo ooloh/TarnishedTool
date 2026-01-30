@@ -19,13 +19,13 @@ public partial class AiWindow : TopmostWindow
         
         Loaded += (s, e) =>
         {
-            // if (SettingsManager.Default.AttackInfoWindowLeft > 0)
-            //     Left = SettingsManager.Default.AttackInfoWindowLeft;
-            //
-            // if (SettingsManager.Default.AttackInfoWindowTop > 0)
-            //     Top = SettingsManager.Default.AttackInfoWindowTop;
-            //
-            // AlwaysOnTopCheckBox.IsChecked = SettingsManager.Default.AtkInfoAlwaysOnTop;
+            if (SettingsManager.Default.AiWindowWindowLeft > 0)
+                Left = SettingsManager.Default.AiWindowWindowLeft;
+            
+            if (SettingsManager.Default.AiWindowWindowTop > 0)
+                Top = SettingsManager.Default.AiWindowWindowTop;
+            
+            AlwaysOnTopCheckBox.IsChecked = SettingsManager.Default.AiWindowAlwaysOnTop;
         };
         
     }
@@ -36,9 +36,9 @@ public partial class AiWindow : TopmostWindow
         var vm = (AiWindowViewModel)DataContext;
         vm.ClearSelected();
 
-        // SettingsManager.Default.AttackInfoWindowLeft = Left;
-        // SettingsManager.Default.AttackInfoWindowTop = Top;
-        // SettingsManager.Default.AtkInfoAlwaysOnTop = AlwaysOnTopCheckBox.IsChecked ?? false;
-        // SettingsManager.Default.Save();
+        SettingsManager.Default.AiWindowWindowLeft = Left;
+        SettingsManager.Default.AiWindowWindowTop = Top;
+        SettingsManager.Default.AiWindowAlwaysOnTop = AlwaysOnTopCheckBox.IsChecked ?? false;
+        SettingsManager.Default.Save();
     }
 }

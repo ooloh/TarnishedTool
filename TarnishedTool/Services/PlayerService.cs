@@ -150,7 +150,7 @@ namespace TarnishedTool.Services
             var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
 
-            return memoryService.ReadUInt32(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+            return memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
         }
 
         public void SetHp(int hp) =>
@@ -411,7 +411,7 @@ namespace TarnishedTool.Services
         {
             var playerIns =
                 memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(WorldChrMan.Base) + WorldChrMan.PlayerIns);
-            return memoryService.ReadInt64((IntPtr)playerIns + (int)WorldChrMan.PlayerInsOffsets.Handle);
+            return memoryService.ReadInt64((IntPtr)playerIns + WorldChrMan.PlayerInsOffsets.Handle);
         }
 
         public void ToggleNoGravity(bool isEnabled)

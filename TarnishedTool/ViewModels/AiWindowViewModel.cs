@@ -38,8 +38,8 @@ internal class AiWindowViewModel : BaseViewModel
         _goalInfos = DataLoader.LoadGoalInfo();
         _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
 
-        WarpToSelectedCommand = new DelegateCommand(WarpToSelected);
-        OpenGoalWindowForSelectedCommand = new DelegateCommand(OpenGoalWindow);
+        WarpToSelectedCommand = new DelegateCommand(WarpToSelected, () => SelectedChrInsEntry != null);
+        OpenGoalWindowForSelectedCommand = new DelegateCommand(OpenGoalWindow, () => SelectedChrInsEntry != null);
     }
     
     #region Commands
@@ -79,6 +79,9 @@ internal class AiWindowViewModel : BaseViewModel
                 _aiService.SetSelected(_selectedChrInsEntry.ChrIns, true);
             }
             
+            (WarpToSelectedCommand as DelegateCommand)?.RaiseCanExecuteChanged();
+            (OpenGoalWindowForSelectedCommand as DelegateCommand)?.RaiseCanExecuteChanged();
+            
         } 
     }
 
@@ -94,6 +97,11 @@ internal class AiWindowViewModel : BaseViewModel
     private void OnGameNotLoaded()
     {
         _gameTickService.Unsubscribe(ChrInsEntriesTick);
+        foreach (var window in _openGoalWindows.Values.ToList())
+        {
+            window.Close();
+        }
+        
     }
 
     private void ChrInsEntriesTick()
@@ -138,12 +146,13 @@ internal class AiWindowViewModel : BaseViewModel
     
     private void WarpToSelected()
     {
-        var targetPosition = _aiService.GetChrInsPos(SelectedChrInsEntry.ChrIns);
+        var targetPosition = _aiService.GetChrInsMapCoords(SelectedChrInsEntry.ChrIns);
         _playerService.MoveToPosition(targetPosition);
     }
     
     private void OpenGoalWindow()
     {
+        if (SelectedChrInsEntry == null) return;
         var chrIns = SelectedChrInsEntry.ChrIns;
     
         if (_openGoalWindows.TryGetValue(chrIns, out var existing))

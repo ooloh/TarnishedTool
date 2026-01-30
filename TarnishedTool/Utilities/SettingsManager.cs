@@ -66,7 +66,12 @@ public class SettingsManager
     public bool ParamEditorWindowAlwaysOnTop { get; set; }
     [DefaultValue("OffsetNameInternal")]
     public string ParamFieldDisplayMode { get; set; }
+    public double AiWindowWindowLeft { get; set; }
+    public double AiWindowWindowTop { get; set; }
+    public bool AiWindowAlwaysOnTop { get; set; }
 
+    
+    
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "TarnishedTool",

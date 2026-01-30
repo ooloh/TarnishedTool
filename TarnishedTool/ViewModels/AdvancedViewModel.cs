@@ -214,6 +214,13 @@ public class AdvancedViewModel : BaseViewModel
     
     private void OpenSpEffectsWindow()
     {
+        if (_spEffectsWindow != null && _spEffectsWindow.IsVisible)
+        {
+            _spEffectsWindow.Activate();
+            return;
+        }
+        
+        
         _spEffectsWindow = new SpEffectsWindow
         {
             DataContext = _spEffectViewModel,
@@ -259,6 +266,12 @@ public class AdvancedViewModel : BaseViewModel
     
     private void OpenAiWindow()
     {
+        if (_aiWindow != null && _aiWindow.IsVisible)
+        {
+            _aiWindow.Activate();
+            return;
+        }
+        
         _aiWindow = new AiWindow
         {
             DataContext = _aiWindowViewModel,
