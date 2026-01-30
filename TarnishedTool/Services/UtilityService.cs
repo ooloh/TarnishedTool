@@ -287,7 +287,7 @@ namespace TarnishedTool.Services
         public void ToggleDrawMiniMap(bool isEnabled)
         {
             var ptr = memoryService.FollowPointers(FieldArea.Base,
-                [FieldArea.WorldInfoOwner, FieldArea.ShouldDrawMiniMap], false);
+                [FieldArea.WorldInfoOwner, FieldArea.WorldInfoOwnerOffsets.ShouldDrawMiniMap], false);
             memoryService.WriteUInt8(ptr, isEnabled ? 1 : 0);
         }
 

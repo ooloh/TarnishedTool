@@ -60,31 +60,31 @@ namespace TarnishedTool.Services
             var posToSave = _positions[index];
             var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
-            posToSave.BlockId = memoryService.ReadUInt32(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+            posToSave.BlockId = memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
             posToSave.Coords =
-                memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
+                memoryService.ReadVector3(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
             posToSave.Angle =
-                memoryService.ReadFloat(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
+                memoryService.ReadFloat(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
         }
 
-        public void RestorePos(int index)
-        {
-            var savedPos = _positions[index];
+        public void RestorePos(int index) => MoveToPosition(_positions[index]);
 
+        public void MoveToPosition(Position targetPosition)
+        {
             var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
 
             uint currentBlockId =
-                memoryService.ReadUInt32(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+                memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
             uint currentArea = (currentBlockId >> 24) & 0xFF;
-            uint savedArea = (savedPos.BlockId >> 24) & 0xFF;
+            uint savedArea = (targetPosition.BlockId >> 24) & 0xFF;
 
             if (currentArea == savedArea)
             {
                 var currentCoords =
-                    memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
+                    memoryService.ReadVector3(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
                 var currentAbsolute = PositionUtils.ToAbsolute(currentCoords, currentBlockId);
-                var savedAbsolute = PositionUtils.ToAbsolute(savedPos.Coords, savedPos.BlockId);
+                var savedAbsolute = PositionUtils.ToAbsolute(targetPosition.Coords, targetPosition.BlockId);
                 var delta = savedAbsolute - currentAbsolute;
 
                 var chrRideModule = GetChrRidePtr();
@@ -97,8 +97,8 @@ namespace TarnishedTool.Services
                     memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 1);
 
                 memoryService.WriteVector3(coordsPtr, memoryService.ReadVector3(coordsPtr) + delta);
-                memoryService.WriteFloat(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentMapAngle,
-                    savedPos.Angle);
+                memoryService.WriteFloat(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle,
+                    targetPosition.Angle);
 
                 if (isLongDistance)
                 {
@@ -112,7 +112,7 @@ namespace TarnishedTool.Services
 
             else
             {
-                _ = Task.Run(() => travelService.WarpToBlockId(savedPos));
+                _ = Task.Run(() => travelService.WarpToBlockId(targetPosition));
             }
         }
 
@@ -243,7 +243,7 @@ namespace TarnishedTool.Services
             var hook = Hooks.NoGrab;
             var skipGrabJmpLoc = hook + 0x95;
             var codeBytes = AsmLoader.GetAsmBytes("NoGrab");
-            
+
             AsmHelper.WriteImmediateDwords(codeBytes, new[] { (WorldChrMan.PlayerIns, 0x8 + 3) });
 
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]

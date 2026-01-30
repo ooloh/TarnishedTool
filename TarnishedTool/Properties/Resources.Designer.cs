@@ -774,6 +774,23 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GoalId,Name,ParamNames
+        ///1,Normal,Life
+        ///3,WalkAround,Life;Radius;Walk;EnemyReactDist;IsWalkAroundFreePoint
+        ///4,BackToHome,Life;EnemyReactDist;ForceBattleGoalOnHit;Unused_3;Unused_4;MoveTarget
+        ///5,NonBattleAct,Life;EnemyReactDist;ReactToEnemy;Run;TurnTarget;HomeStopDist;StandbyGoalId;ForceBattleGoalOnHit
+        ///100,TopGoal,Life
+        ///2000,Wait,Life;Target
+        ///2001,Turn,Life;TurnTarget;StopAngleWidth;GuardStateId;OnGuardResult;GuardSuccessOnEnd
+        ///2002,TurnAround,Life;MoveTarget;DirectionStart;StopAngleWidth;Walk;SuccessOnEnd;G [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GoalInfo {
+            get {
+                return ResourceManager.GetString("GoalInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,Roundtable Hold,Table of Lost Grace,11101950,71190
         ///0,Limgrave,The First Step,1042361951,76101
         ///0,Limgrave,Church of Elleh,1042361950,76100

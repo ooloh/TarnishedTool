@@ -286,6 +286,8 @@
         <Compile Include="Models\EnumValueItem.cs" />
         <Compile Include="Models\EventItem.cs" />
         <Compile Include="Models\EventLogEntry.cs" />
+        <Compile Include="Models\GoalInfo.cs" />
+        <Compile Include="Models\GoalIns.cs" />
         <Compile Include="Models\Grace.cs" />
         <Compile Include="Models\GracePresetEntry.cs" />
         <Compile Include="Models\GracePresetTemplate.cs" />
@@ -350,6 +352,9 @@
         <Compile Include="ViewModels\EnemyViewModel.cs" />
         <Compile Include="ViewModels\EventLogViewModel.cs" />
         <Compile Include="ViewModels\FieldValueViewModel.cs" />
+        <Compile Include="ViewModels\GoalParamViewModel.cs" />
+        <Compile Include="ViewModels\GoalViewModel.cs" />
+        <Compile Include="ViewModels\GoalWindowViewModel.cs" />
         <Compile Include="ViewModels\GraceImportItem.cs" />
         <Compile Include="ViewModels\GraceImportPresetSelectionViewModel.cs" />
         <Compile Include="ViewModels\GracePresetViewModel.cs" />
@@ -416,6 +421,9 @@
         <Compile Include="Views\Windows\EventLogWindow.xaml.cs">
           <DependentUpon>EventLogWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\GoalWindow.xaml.cs">
+          <DependentUpon>GoalWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\GraceImportPresentSelectionWindow.xaml.cs">
           <DependentUpon>GraceImportPresentSelectionWindow.xaml</DependentUpon>
         </Compile>
@@ -467,6 +475,7 @@
         <Page Include="Views\Windows\CustomWarpImportSelectionWindow.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />
         <Page Include="Views\Windows\EventLogWindow.xaml" />
+        <Page Include="Views\Windows\GoalWindow.xaml" />
         <Page Include="Views\Windows\GraceImportPresentSelectionWindow.xaml" />
         <Page Include="Views\Windows\GracePresetWindow.xaml" />
         <Page Include="Views\Windows\InputBox.xaml" />

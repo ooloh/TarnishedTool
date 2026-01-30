@@ -14,6 +14,7 @@ public interface IPlayerService
     void SetTorrentPos(Vector3 pos);
     void SavePos(int index);
     void RestorePos(int index);
+    void MoveToPosition(Position targetPosition);
     PosWithHurtbox GetPosWithHurtbox();
     long GetPlayerIns();
     uint GetBlockId();

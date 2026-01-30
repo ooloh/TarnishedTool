@@ -617,5 +617,37 @@ namespace TarnishedTool.Utilities
                 // Silent fail or log
             }
         }
+
+        public static Dictionary<int, GoalInfo> LoadGoalInfo()
+        {
+            Dictionary<int, GoalInfo> goalInfos = new Dictionary<int, GoalInfo>();
+            string csvData = Resources.GoalInfo;
+            
+            using StringReader reader = new StringReader(csvData);
+            
+            reader.ReadLine();
+    
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#")) continue;
+
+                string[] parts = line.Split(',');
+                if (parts.Length < 3) continue;
+
+                int goalId = int.Parse(parts[0], CultureInfo.InvariantCulture);
+                string name = parts[1];
+        
+                List<string> paramNames = parts[2].Split(';').ToList();
+
+                goalInfos[goalId] = new GoalInfo
+                {
+                    GoalName = name,
+                    ParamNames = paramNames
+                };
+            }
+
+            return goalInfos;
+        }
     }
 }

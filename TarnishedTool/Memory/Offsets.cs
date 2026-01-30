@@ -134,6 +134,7 @@ namespace TarnishedTool.Memory
         public static class ChrIns
         {
             public const int Handle = 0x8;
+            public const int BlockId = 0x30;
             public const int ChrCtrl = 0x58;
             public const int NpcParamId = 0x60;
             public const int ChrId = 0x64;
@@ -179,6 +180,7 @@ namespace TarnishedTool.Memory
 
             public enum ChrInsFlags
             {
+                SelectedEntity = 1 << 2,
                 NoHit = 1 << 3,
                 NoAttack = 1 << 4,
                 NoMove = 1 << 5,
@@ -411,16 +413,23 @@ namespace TarnishedTool.Memory
 
             public const int WorldInfoOwner = 0x10;
 
-            public static int ShouldDrawMiniMap => Version switch
+            public static class WorldInfoOwnerOffsets
             {
-                Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_0 or Version1_3_1
-                    or Version1_3_2 or Version1_4_0
-                    or Version1_4_1 or Version1_5_0
-                    or Version1_6_0 => 0x7F098,
-                Version1_7_0 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_0
-                    or Version2_0_1 => 0xB3918,
-                _ => 0xB3368,
-            };
+                public const int AreaCount = 0x28;
+                public const int AreaArrayBase = 0x30;
+                
+                public static int ShouldDrawMiniMap => Version switch
+                {
+                    Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_0 or Version1_3_1
+                        or Version1_3_2 or Version1_4_0
+                        or Version1_4_1 or Version1_5_0
+                        or Version1_6_0 => 0x7F098,
+                    Version1_7_0 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_0
+                        or Version2_0_1 => 0xB3918,
+                    _ => 0xB3368,
+                };
+            }
+            
         }
 
         public static class FD4PadManager

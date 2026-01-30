@@ -1,7 +1,5 @@
 ﻿// 
 
-using TarnishedTool.ViewModels;
-
 namespace TarnishedTool.Models;
 
 public class ChrInsEntry(nint chrIns)
