@@ -1,5 +1,6 @@
 ﻿// 
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -39,6 +40,8 @@ internal class AiWindowViewModel : BaseViewModel
 
         _goalInfos = DataLoader.LoadGoalInfo();
         _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
+        
+        
 
         WarpToSelectedCommand = new DelegateCommand(WarpToSelected, () => SelectedChrInsEntry != null);
         OpenGoalWindowForSelectedCommand = new DelegateCommand(OpenGoalWindow, () => SelectedChrInsEntry != null);
@@ -94,6 +97,23 @@ internal class AiWindowViewModel : BaseViewModel
     private void OnGameLoaded()
     {
         _gameTickService.Subscribe(ChrInsEntriesTick);
+        var entries = _chrInsService.GetNearbyChrInsEntries()
+            .Where(e => _aiService.GetNpcThinkParamIdByChrIns(e.ChrIns) != 0)
+            .ToList();
+        
+        foreach (var entry in entries)
+        {
+            var position =  _chrInsService.GetChrInsMapCoords(entry.ChrIns);
+           Console.WriteLine(position.Coords);
+            
+            entry.NpcThinkParamId = _aiService.GetNpcThinkParamIdByChrIns(entry.ChrIns);
+            
+            
+            entry.ChrId = _chrInsService.GetChrIdByChrIns(entry.ChrIns);
+        
+            entry.Name = _chrNames.TryGetValue(entry.ChrId, out var chrName) ? chrName : "Unknown";
+        }
+        
     }
 
     private void OnGameNotLoaded()
@@ -148,7 +168,7 @@ internal class AiWindowViewModel : BaseViewModel
     
     private void WarpToSelected()
     {
-        var targetPosition = _chrInsService.GetChrInsPos(SelectedChrInsEntry.ChrIns);
+        var targetPosition = _chrInsService.GetChrInsMapCoords(SelectedChrInsEntry.ChrIns);
         _playerService.MoveToPosition(targetPosition);
     }
     

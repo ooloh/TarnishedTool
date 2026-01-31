@@ -13,4 +13,6 @@ public interface IAiService
     GoalIns GetGoalInfo(nint goalPtr);
     bool HasSubGoals(nint topGoal);
     List<nint> GetSubGoals(nint goalPtr);
+    float[] GetLuaTimers(nint chrIns);
+    float[] GetLuaNumbers(nint chrIns);
 }

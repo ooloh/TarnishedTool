@@ -983,6 +983,21 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 8d 0d 00 00 00 00    lea    rcx,[rip+0x0]        # 7 &lt;_main+0x7&gt;
+        ///48 8d 15 00 00 00 00    lea    rdx,[rip+0x0]        # e &lt;_main+0xe&gt;
+        ///4c 8d 05 00 00 00 00    lea    r8,[rip+0x0]        # 15 &lt;_main+0x15&gt;
+        ///48 83 ec 28             sub    rsp,0x28
+        ///e8 00 00 00 00          call   1e &lt;_main+0x1e&gt;
+        ///48 83 c4 28             add    rsp,0x28
+        ///c3                      ret.
+        /// </summary>
+        internal static string LocalToMapCoords {
+            get {
+                return ResourceManager.GetString("LocalToMapCoords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 8b 8f 88 00 00 00    mov    rcx,QWORD PTR [rdi+0x88]
         ///48 89 05 00 00 00 00    mov    QWORD PTR [rip+0x0],rax        # e &lt;_main+0xe&gt;
         ///e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;.

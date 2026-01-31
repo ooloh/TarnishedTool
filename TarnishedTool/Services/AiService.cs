@@ -10,6 +10,9 @@ namespace TarnishedTool.Services;
 
 public class AiService(MemoryService memoryService) : IAiService
 {
+    public const int NumOfLuaTimers = 16;
+    public const int NumOfLuaNumbers = 64;
+    
     #region Public Methods
 
     public int GetNpcThinkParamIdByChrIns(IntPtr chrIns) =>
@@ -73,6 +76,12 @@ public class AiService(MemoryService memoryService) : IAiService
 
         return childGoals;
     }
+
+    public float[] GetLuaTimers(nint chrIns) =>
+        memoryService.ReadArray<float>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.LuaTimersArray, NumOfLuaTimers); 
+    
+    public float[] GetLuaNumbers(nint chrIns) =>
+        memoryService.ReadArray<float>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.LuaNumbersArray, NumOfLuaNumbers); 
 
     #endregion
 

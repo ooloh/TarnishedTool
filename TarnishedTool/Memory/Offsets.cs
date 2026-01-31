@@ -287,6 +287,8 @@ namespace TarnishedTool.Memory
             {
                 public const int NpcThinkParamId = 0x28;
                 public const int TopGoal = 0x60;
+                public const int LuaTimersArray = 0x8C;
+                public const int LuaNumbersArray = 0x6CC;
                 public const int AnimationRequest = 0xC428;
                 public const int TargetingSystem = 0xC480;
 
@@ -348,7 +350,7 @@ namespace TarnishedTool.Memory
             {
                 DebugDrawFlags = 0xC8
             }
-
+            // 1 << 0 Draw current target
             public static readonly BitFlag BlueTargetView = new(0x1, 1 << 3);
             public static readonly BitFlag YellowTargetView = new(0xC8, 1 << 5);
             public static readonly BitFlag WhiteLineToPlayer = new(0xC8, 1 << 6);
@@ -411,7 +413,7 @@ namespace TarnishedTool.Memory
                 _ => 0x61E,
             };
 
-            public const int WorldInfoOwner = 0x10;
+            public const int WorldInfoOwner = 0x10;  
 
             public static class WorldInfoOwnerOffsets
             {
@@ -827,6 +829,7 @@ namespace TarnishedTool.Memory
             public static long GetChrInsByEntityId;
             public static long NpcEzStateTalkCtor;
             public static long EzStateEnvQueryImplCtor;
+            public static long LocalToMapCoords;
         }
 
         public static class Patches
@@ -1860,6 +1863,30 @@ namespace TarnishedTool.Memory
                 Version2_6_1 => 0xEA52B0,
                 _ => 0L
             };
+            
+            Functions.LocalToMapCoords = moduleBase.ToInt64() + Version switch
+            {
+                Version1_2_0 => 0x5FDCA0,
+                Version1_2_1 or Version1_2_2 => 0x5FDD10,
+                Version1_2_3 => 0x5FDE30,
+                Version1_3_0 or Version1_3_1 => 0x5FEEE0,
+                Version1_3_2 => 0x5FEEC0,
+                Version1_4_0 => 0x601C20,
+                Version1_4_1 => 0x601B30,
+                Version1_5_0 => 0x602610,
+                Version1_6_0 => 0x603DC0,
+                Version1_7_0 => 0x604C40,
+                Version1_8_0 or Version1_8_1 => 0x611590,
+                Version1_9_0 => 0x612310,
+                Version1_9_1 => 0x612370,
+                Version2_0_0 or Version2_0_1 => 0x6125E0,
+                Version2_2_0 or Version2_2_3 => 0x61DFF0,
+                Version2_3_0 => 0x61E170,
+                Version2_4_0 or Version2_5_0 => 0x61E1D0,
+                Version2_6_0 or Version2_6_1 => 0x61E350,
+                _ => 0
+            };
+
 
             // Hooks
             Hooks.UpdateCoords = moduleBase.ToInt64() + Version switch
@@ -2889,6 +2916,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Funcs.EzStateEnvQueryImplCtor: 0x{Functions.EzStateEnvQueryImplCtor:X}");
             Console.WriteLine($@"Funcs.ExternalEventTempCtor: 0x{Functions.ExternalEventTempCtor:X}");
             Console.WriteLine($@"Funcs.ExecuteTalkCommand: 0x{Functions.ExecuteTalkCommand:X}");
+            Console.WriteLine($@"Funcs.ExecuteTalkCommand: 0x{Functions.LocalToMapCoords:X}");
 #endif
         }
     }

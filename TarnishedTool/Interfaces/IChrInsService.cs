@@ -14,6 +14,6 @@ public interface IChrInsService
     uint GetNpcParamIdByChrIns(IntPtr chrIns);
     long GetHandleByChrIns(IntPtr chrIns);
     void SetSelected(nint chrIns, bool isSelected);
-    Position GetChrInsPos(IntPtr chrIns);
+    Position GetChrInsMapCoords(IntPtr chrIns);
     Vector3 GetChrInsLocalPos(IntPtr chrIns);
 }

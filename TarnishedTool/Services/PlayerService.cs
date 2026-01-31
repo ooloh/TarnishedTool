@@ -77,16 +77,16 @@ namespace TarnishedTool.Services
             uint currentBlockId =
                 memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
             uint currentArea = (currentBlockId >> 24) & 0xFF;
-            uint savedArea = (targetPosition.BlockId >> 24) & 0xFF;
+            uint targetArea = (targetPosition.BlockId >> 24) & 0xFF;
 
-            if (currentArea == savedArea)
+            if (currentArea == targetArea)
             {
                 var currentCoords =
                     memoryService.ReadVector3(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
                 var currentAbsolute = PositionUtils.ToAbsolute(currentCoords, currentBlockId);
-                var savedAbsolute = PositionUtils.ToAbsolute(targetPosition.Coords, targetPosition.BlockId);
-                var delta = savedAbsolute - currentAbsolute;
-
+                var targetAbsolute = PositionUtils.ToAbsolute(targetPosition.Coords, targetPosition.BlockId);
+                var delta = targetAbsolute - currentAbsolute;
+                
                 var chrRideModule = GetChrRidePtr();
                 var isRiding = IsRidingInternal(chrRideModule);
                 var physicsPtr = isRiding ? GetTorrentPhysicsPtr() : GetChrPhysicsPtr();

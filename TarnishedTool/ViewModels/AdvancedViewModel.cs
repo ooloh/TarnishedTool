@@ -6,6 +6,7 @@ using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
+using TarnishedTool.Models;
 using TarnishedTool.Utilities;
 using TarnishedTool.Views.Windows;
 
@@ -160,7 +161,6 @@ public class AdvancedViewModel : BaseViewModel
     {
         AreOptionsEnabled = true;
         if (IsSpEffectWindowOpen) _gameTickService.Subscribe(SpEffectsTick);
-        
     }
 
     private void RegisterHotkeys()
