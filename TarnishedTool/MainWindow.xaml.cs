@@ -48,10 +48,11 @@ namespace TarnishedTool
             var hookManager = new HookManager(_memoryService, _stateService);
             var hotkeyManager = new HotkeyManager(_memoryService);
 
+            IParamService paramService = new ParamService(_memoryService);
             IReminderService reminderService = new ReminderService(_memoryService, hookManager, _stateService);
             ITravelService travelService = new TravelService(_memoryService, hookManager);
             IPlayerService playerService =
-                new PlayerService(_memoryService, hookManager, travelService, reminderService);
+                new PlayerService(_memoryService, hookManager, travelService, reminderService, paramService);
             IUtilityService utilityService = new UtilityService(_memoryService, hookManager, playerService);
             IEventService eventService = new EventService(_memoryService, hookManager, reminderService);
             IAttackInfoService attackInfoService = new AttackInfoService(_memoryService, hookManager);
@@ -64,7 +65,6 @@ namespace TarnishedTool
             ISpEffectService spEffectService = new SpEffectService(_memoryService, reminderService);
             IEmevdService emevdService = new EmevdService(_memoryService);
             IFlaskService flaskService = new FlaskService(ezStateService, _memoryService);
-            IParamService paramService = new ParamService(_memoryService);
             IEventLogReader eventLogReader = new EventLogReader(_memoryService);
             IParamRepository paramRepository = new ParamRepository();
             IGameTickService gameTickService = new GameTickService(_stateService);

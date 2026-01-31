@@ -35,7 +35,27 @@ public class ParamService(MemoryService memoryService) : IParamService
 
         return IntPtr.Zero;
     }
-    
+
+    public IntPtr GetParamRowByMatchingBytes(int tableIndex, int slotIndex, byte[] bytes, int offset)
+    {
+        var data = GetParamData(tableIndex, slotIndex);
+        if (data is not var (paramData, rowCount, descriptorBase)) return IntPtr.Zero;
+
+        var descriptors = memoryService.ReadBytes((IntPtr)descriptorBase, rowCount * 0x18);
+
+        for (int i = 0; i < rowCount; i++)
+        {
+            var dataOffset = BitConverter.ToInt64(descriptors, i * 0x18 + 0x08);
+            var row = paramData + (int)dataOffset;
+            var rowBytes = memoryService.ReadBytes(row + offset, bytes.Length);
+        
+            if (rowBytes.AsSpan().SequenceEqual(bytes))
+                return row;
+        }
+
+        return IntPtr.Zero;
+    }
+
     public T Read<T>(IntPtr row, int offset) where T : unmanaged 
         => memoryService.Read<T>(row + offset);
 
