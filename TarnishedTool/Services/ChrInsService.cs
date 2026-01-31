@@ -67,6 +67,12 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
     public Vector3 GetChrInsLocalPos(IntPtr chrIns) =>
         memoryService.Read<Vector3>(GetChrPhysicsPtr(chrIns) + (int)ChrIns.ChrPhysicsOffsets.Coords);
 
+    public void ToggleTargetAi(IntPtr chrIns, bool isDisableTargetAiEnabled) =>
+        memoryService.SetBitValue(GetChrCtrlFlagsPtr(chrIns) + ChrIns.DisableAi.Offset, ChrIns.DisableAi.Bit,
+            isDisableTargetAiEnabled);
+
+    public bool IsAiDisabled(IntPtr chrIns) =>
+        memoryService.IsBitSet(GetChrCtrlFlagsPtr(chrIns) + ChrIns.DisableAi.Offset, ChrIns.DisableAi.Bit);
     #endregion
 
     #region Private Methods
@@ -83,6 +89,9 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
 
     private IntPtr GetChrPhysicsPtr(IntPtr chrIns) =>
         memoryService.FollowPointers(chrIns, [..ChrIns.ChrPhysicsModule], true, false);
+    
+    private IntPtr GetChrCtrlFlagsPtr(IntPtr chrIns) =>
+        memoryService.FollowPointers(chrIns, [ChrIns.ChrCtrl, ..ChrIns.ChrCtrlFlags], false, false);
 
     private Vector3 ConvertHavokCoordsToMapCoords(Vector3 localPos, uint blockId)
     {

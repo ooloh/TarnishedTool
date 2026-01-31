@@ -15,4 +15,5 @@ public interface IAiService
     List<nint> GetSubGoals(nint goalPtr);
     float[] GetLuaTimers(nint chrIns);
     float[] GetLuaNumbers(nint chrIns);
+    List<SpEffectObserve> GetSpEffectObserveList(nint chrIns);
 }

@@ -15,7 +15,6 @@
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <controls:TitleBar Grid.Row="0" Title="TBD" />
         <Grid Grid.Row="1">
@@ -37,22 +36,24 @@
                  VirtualizingPanel.VirtualizationMode="Recycling">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Expander Header="{Binding Display}">
+                    <Expander Header="{Binding Display}"  IsExpanded="{Binding IsExpanded}">
                         <StackPanel Margin="20,5,0,5">
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <CheckBox Content="Some Option 1"
-                                          IsChecked="{Binding todo}" />
-                                <CheckBox Content="Some Option 2"
-                                          IsChecked="{Binding todo2}" />
+                                <CheckBox Content="Disable AI"
+                                          IsChecked="{Binding IsAiDisabled}" />
+                                <CheckBox Content="Targeting View"
+                                          IsChecked="{Binding IsTargetViewEnabled}" />
+                                <CheckBox Content="No Attack"
+                                          IsChecked="{Binding IsNoAttackEnabled}" />
+                                <CheckBox Content="No Move"
+                                          IsChecked="{Binding IsNoMoveEnabled}" />
+                                <CheckBox Content="No Damage"
+                                          IsChecked="{Binding IsNoDamageEnabled}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <Button Content="Warp"
-                                        Command="{Binding DataContext.WarpToEntryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                        CommandParameter="{Binding}"
+                                <Button Content="Warp" Command="{Binding WarpCommand}"
                                         Margin="0,0,5,0" />
-                                <Button Content="Open Goals"
-                                        Command="{Binding DataContext.OpenGoalWindowForEntryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                        CommandParameter="{Binding}" />
+                                <Button Content="Open Goals" Command="{Binding OpenAiWindowCommand}"/>
                             </StackPanel>
                         </StackPanel>
                     </Expander>
@@ -60,10 +61,6 @@
             </ListBox.ItemTemplate>
 
         </ListBox>
-
-        <StackPanel Grid.Row="3" Orientation="Horizontal">
-            <Button Content="Warp to selected enemy" Command="{Binding WarpToSelectedCommand}"></Button>
-            <Button Content="Test Open Goal Window for selected" Command="{Binding OpenGoalWindowForSelectedCommand}"></Button>
-        </StackPanel>
+        
     </Grid>
 </windows:TopmostWindow>

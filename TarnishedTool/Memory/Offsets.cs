@@ -291,6 +291,7 @@ namespace TarnishedTool.Memory
                 public const int LuaNumbersArray = 0x6CC;
                 public const int AnimationRequest = 0xC428;
                 public const int TargetingSystem = 0xC480;
+                public const int SpEffectObserveComp = 0xDBF0;
 
                 public static int ForceAct => Version switch
                 {
@@ -342,6 +343,19 @@ namespace TarnishedTool.Memory
                 {
                     public const int GoalName = 0x10;
                     public const int GoalNameCapacity = 0x28;
+                }
+
+                public static class SpEffectObserve
+                {
+                    public const int Head = 0x10;
+                }
+                
+                public static class SpEffectObserveEntry
+                {
+                    public const int Next = 0x0;
+                    public const int Prev = 0x8;
+                    public const int Target = 0x18;
+                    public const int SpEffectId = 0x1C;
                 }
                 
             }

@@ -81,7 +81,27 @@ public class AiService(MemoryService memoryService) : IAiService
         memoryService.ReadArray<float>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.LuaTimersArray, NumOfLuaTimers); 
     
     public float[] GetLuaNumbers(nint chrIns) =>
-        memoryService.ReadArray<float>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.LuaNumbersArray, NumOfLuaNumbers); 
+        memoryService.ReadArray<float>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.LuaNumbersArray, NumOfLuaNumbers);
+
+    public List<SpEffectObserve> GetSpEffectObserveList(nint chrIns)
+    {
+        List<SpEffectObserve> spEffectObserveList = [];
+        var spEffectObserveComponent = GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.SpEffectObserveComp;
+        var head = memoryService.Read<nint>(spEffectObserveComponent + ChrIns.AiThinkOffsets.SpEffectObserve.Head);
+        var next = memoryService.Read<nint>(head + ChrIns.AiThinkOffsets.SpEffectObserveEntry.Next);
+
+        while (next != head)
+        {
+            var target = memoryService.Read<int>(next + ChrIns.AiThinkOffsets.SpEffectObserveEntry.Target);
+            var spEffectId = memoryService.Read<int>(next + ChrIns.AiThinkOffsets.SpEffectObserveEntry.SpEffectId);
+            
+            spEffectObserveList.Add(new SpEffectObserve(target, spEffectId));
+            
+            next = memoryService.Read<nint>(next);
+        }
+
+        return spEffectObserveList;
+    }
 
     #endregion
 

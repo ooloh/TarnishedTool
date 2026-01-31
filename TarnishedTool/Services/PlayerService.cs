@@ -136,17 +136,36 @@ namespace TarnishedTool.Services
             var physicsPtr = isRiding ? GetTorrentPhysicsPtr() : GetChrPhysicsPtr();
             var coordsPtr = physicsPtr + (int)ChrIns.ChrPhysicsOffsets.Coords;
 
+            bool wasPlayerNoDeathEnabled = IsChrDbgFlagEnabled(ChrDbgFlags.PlayerNoDeath);
+            bool wasTorrentNoDeathEnabled = IsTorrentNoDeathEnabled();
+            ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, true);
+            ToggleTorrentNoDeath(true);
+
             memoryService.Write<byte>(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 1);
 
             memoryService.Write(coordsPtr, memoryService.ReadVector3(coordsPtr) + delta);
             memoryService.Write((IntPtr)GetPlayerIns() + WorldChrMan.PlayerInsOffsets.CurrentMapAngle,
                 targetPosition.Angle);
-            
+
             _ = Task.Run(async () =>
             {
                 await Task.Delay(1000);
                 memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 0);
             });
+
+            ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, wasPlayerNoDeathEnabled);
+            ToggleTorrentNoDeath(wasTorrentNoDeathEnabled);
+        }
+
+        private bool IsChrDbgFlagEnabled(int offset) => memoryService.Read<byte>(ChrDbgFlags.Base + offset) == 1;
+
+        private bool IsTorrentNoDeathEnabled()
+        {
+            var torrentChrIns = GetTorrentChrIns();
+            var bitFlags = memoryService.FollowPointers(torrentChrIns,
+                [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags],
+                false, false);
+            return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath);
         }
 
         private Vector3 LegacyConv(Position targetPosition)
@@ -190,12 +209,17 @@ namespace TarnishedTool.Services
 
         private IntPtr GetTorrentPhysicsPtr()
         {
+            var torrentChrIns = GetTorrentChrIns();
+            return memoryService.FollowPointers(torrentChrIns, [..ChrIns.ChrPhysicsModule], true, false);
+        }
+
+        private IntPtr GetTorrentChrIns()
+        {
             var playerGameData =
                 memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.PlayerGameData);
             var handle =
                 memoryService.ReadInt32((IntPtr)playerGameData + GameDataMan.TorrentHandle);
-            var torrentChrIns = ChrInsLookup(handle);
-            return memoryService.FollowPointers(torrentChrIns, [..ChrIns.ChrPhysicsModule], true, false);
+            return ChrInsLookup(handle);
         }
 
         public PosWithHurtbox GetPosWithHurtbox()
@@ -487,11 +511,7 @@ namespace TarnishedTool.Services
 
         public void ToggleTorrentNoDeath(bool isEnabled)
         {
-            var playerGameData =
-                memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.PlayerGameData);
-            var handle =
-                memoryService.ReadInt32((IntPtr)playerGameData + GameDataMan.TorrentHandle);
-            var torrentChrIns = ChrInsLookup(handle);
+            var torrentChrIns = GetTorrentChrIns();
             var bitFlags = memoryService.FollowPointers(torrentChrIns,
                 [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags],
                 false, false);
