@@ -60,6 +60,68 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Value,Name
+        ///0,INTERUPT_First
+        ///0,INTERUPT_FindEnemy
+        ///1,INTERUPT_FindAttack
+        ///2,INTERUPT_Damaged
+        ///3,INTERUPT_Damaged_Stranger
+        ///4,INTERUPT_FindMissile
+        ///5,INTERUPT_SuccessGuard
+        ///6,INTERUPT_MissSwing
+        ///7,INTERUPT_GuardBegin
+        ///8,INTERUPT_GuardFinish
+        ///9,INTERUPT_GuardBreak
+        ///10,INTERUPT_Shoot
+        ///11,INTERUPT_ShootReady
+        ///12,INTERUPT_UseItem
+        ///13,INTERUPT_EnterBattleArea
+        ///14,INTERUPT_LeaveBattleArea
+        ///15,INTERUPT_CANNOT_MOVE
+        ///16,INTERUPT_Inside_ObserveArea
+        ///17,INTERUPT_ReboundByOpponentGuard
+        ///18,INTERUPT_ForgetTarget
+        ///19,INT [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AiInterruptEnum {
+            get {
+                return ResourceManager.GetString("AiInterruptEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value,Name
+        ///-2,TARGET_NONE
+        ///-1,TARGET_SELF
+        ///0,TARGET_ENE_0
+        ///10,TARGET_FRI_0
+        ///20,TARGET_EVENT
+        ///21,TARGET_LOCALPLAYER
+        ///22,TARGET_LowHp_Friend
+        ///23,TARGET_INTERMEDIATE_POINT
+        ///24,TARGET_TEAM_FORMATION
+        ///25,TARGET_TEAM_LEADER
+        ///26,TARGET_MEMORIED_RELATIVE_TARGET
+        ///50,TARGET_ENEMY_AVATOR_HOME
+        ///51,TARGET_PERSONAL_AVATOR_HOME
+        ///60,TARGET_TYPE_BOIDS_COMMAND
+        ///70,TARGET_RIDE_0
+        ///80,TARGET_SEARCH
+        ///81,TARGET_SOUND
+        ///82,TARGET_HOSTPLAYER
+        ///100,POINT_INITIAL
+        ///101,POINT_SNIPE
+        ///102,POINT_EVENT
+        ///103,POINT_MOVE_POINT
+        ///104,POINT_NEAR_ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AiTargetEnum {
+            get {
+                return ResourceManager.GetString("AiTargetEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 200100,Aspects of the Crucible: Wings,cf00,ff8306008006
         ///60200,Assassin&apos;s Gambit,0f1c,c30100008002
         ///65000,Barbaric Roar,ff1f,fefcbe00100e
@@ -979,6 +1041,21 @@ namespace TarnishedTool.Properties {
         internal static string LionCooldownHook {
             get {
                 return ResourceManager.GetString("LionCooldownHook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 8d 0d 00 00 00 00    lea    rcx,[rip+0x0]        # 7 &lt;_main+0x7&gt;
+        ///48 8d 15 00 00 00 00    lea    rdx,[rip+0x0]        # e &lt;_main+0xe&gt;
+        ///4c 8d 05 00 00 00 00    lea    r8,[rip+0x0]        # 15 &lt;_main+0x15&gt;
+        ///48 83 ec 28             sub    rsp,0x28
+        ///e8 00 00 00 00          call   1e &lt;_main+0x1e&gt;
+        ///48 83 c4 28             add    rsp,0x28
+        ///c3                      ret.
+        /// </summary>
+        internal static string LocalToMapCoords {
+            get {
+                return ResourceManager.GetString("LocalToMapCoords", resourceCulture);
             }
         }
         

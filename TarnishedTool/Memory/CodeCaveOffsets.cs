@@ -83,8 +83,17 @@ namespace TarnishedTool.Memory
         public const int EventLogCode = 0x1E40; //0x39
         public const int EventLogBuffer = 0x1E80; //0x1000
         
-        public const int NoHeal = 0x2F00;
+        public const int NoHeal = 0x2F00; //0x1B
 
+        public enum LocalToMap
+        {
+            Output = 0x2F40,
+            Input = 0x2F50,
+            BlockId = 0x2F60,
+            Code = 0x2F70, // 0x22
+        }
+
+        
 
     }
 }

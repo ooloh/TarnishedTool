@@ -9,6 +9,7 @@ namespace TarnishedTool.Interfaces;
 public interface IParamService
 {
     IntPtr GetParamRow(int tableIndex, int slotIndex, uint rowId);
+    IntPtr GetParamRowByMatchingBytes(int tableIndex, int slotIndex, byte[] bytes, int offset);
     T Read<T>(IntPtr row, int offset) where T : unmanaged;
     void Write<T>(IntPtr row, int offset, T value) where T : unmanaged;
     void PrintAllParamTableNames();
@@ -20,4 +21,5 @@ public interface IParamService
     void WriteFieldToAllRows(int tableIndex, int slotIndex, int offset, byte[] value);
     List<byte[]> ReadFieldFromAllRows(int tableIndex, int slotIndex, int offset, int size);
     void RestoreFieldToAllRows(int tableIndex, int slotIndex, int offset, List<byte[]>? values);
+    
 }

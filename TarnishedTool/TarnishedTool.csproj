@@ -304,6 +304,7 @@
         <Compile Include="Models\PosWithHurtbox.cs" />
         <Compile Include="Models\ShopCommand.cs" />
         <Compile Include="Models\SpEffectEntry.cs" />
+        <Compile Include="Models\SpEffectObserve.cs" />
         <Compile Include="Models\Stats.cs" />
         <Compile Include="Models\Weapon.cs" />
         <Compile Include="Models\Weather.cs" />
@@ -345,7 +346,7 @@
         <Compile Include="Utilities\User32.cs" />
         <Compile Include="Utilities\VersionChecker.cs" />
         <Compile Include="ViewModels\AdvancedViewModel.cs" />
-        <Compile Include="ViewModels\AiWindowViewModel.cs" />
+        <Compile Include="ViewModels\ChrInsWindowViewModel.cs" />
         <Compile Include="ViewModels\AttackInfoViewModel.cs" />
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\CreateCustomWarpViewModel.cs" />
@@ -357,13 +358,15 @@
         <Compile Include="ViewModels\FieldValueViewModel.cs" />
         <Compile Include="ViewModels\GoalParamViewModel.cs" />
         <Compile Include="ViewModels\GoalViewModel.cs" />
-        <Compile Include="ViewModels\GoalWindowViewModel.cs" />
+        <Compile Include="ViewModels\AiWindowViewModel.cs" />
         <Compile Include="ViewModels\GraceImportItem.cs" />
         <Compile Include="ViewModels\GraceImportPresetSelectionViewModel.cs" />
         <Compile Include="ViewModels\GracePresetViewModel.cs" />
         <Compile Include="ViewModels\HotkeyBindingViewModel.cs" />
         <Compile Include="ViewModels\ItemSelectionViewModel.cs" />
         <Compile Include="ViewModels\ItemViewModel.cs" />
+        <Compile Include="ViewModels\LuaNumberViewModel.cs" />
+        <Compile Include="ViewModels\LuaTimerViewModel.cs" />
         <Compile Include="ViewModels\ParamEditorViewModel.cs" />
         <Compile Include="ViewModels\SearchableGroupedCollection.cs" />
         <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -400,8 +403,8 @@
         <Compile Include="Views\Tabs\UtilityTab.xaml.cs">
           <DependentUpon>UtilityTab.xaml</DependentUpon>
         </Compile>
-        <Compile Include="Views\Windows\AiWindow.xaml.cs">
-          <DependentUpon>AiWindow.xaml</DependentUpon>
+        <Compile Include="Views\Windows\ChrInsWindow.xaml.cs">
+          <DependentUpon>ChrInsWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\Windows\AttackInfoWindow.xaml.cs">
           <DependentUpon>AttackInfoWindow.xaml</DependentUpon>
@@ -424,8 +427,8 @@
         <Compile Include="Views\Windows\EventLogWindow.xaml.cs">
           <DependentUpon>EventLogWindow.xaml</DependentUpon>
         </Compile>
-        <Compile Include="Views\Windows\GoalWindow.xaml.cs">
-          <DependentUpon>GoalWindow.xaml</DependentUpon>
+        <Compile Include="Views\Windows\AiWindow.xaml.cs">
+          <DependentUpon>AiWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\Windows\GraceImportPresentSelectionWindow.xaml.cs">
           <DependentUpon>GraceImportPresentSelectionWindow.xaml</DependentUpon>
@@ -470,7 +473,7 @@
         <Page Include="Views\Tabs\PlayerTab.xaml" />
         <Page Include="Views\Tabs\TravelTab.xaml" />
         <Page Include="Views\Tabs\UtilityTab.xaml" />
-        <Page Include="Views\Windows\AiWindow.xaml" />
+        <Page Include="Views\Windows\ChrInsWindow.xaml" />
         <Page Include="Views\Windows\AttackInfoWindow.xaml" />
         <Page Include="Views\Windows\CreateCustomWarpWindow.xaml" />
         <Page Include="Views\Windows\CreateLoadoutWindow.xaml" />
@@ -478,7 +481,7 @@
         <Page Include="Views\Windows\CustomWarpImportSelectionWindow.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />
         <Page Include="Views\Windows\EventLogWindow.xaml" />
-        <Page Include="Views\Windows\GoalWindow.xaml" />
+        <Page Include="Views\Windows\AiWindow.xaml" />
         <Page Include="Views\Windows\GraceImportPresentSelectionWindow.xaml" />
         <Page Include="Views\Windows\GracePresetWindow.xaml" />
         <Page Include="Views\Windows\InputBox.xaml" />

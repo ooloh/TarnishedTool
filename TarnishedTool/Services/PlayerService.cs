@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using TarnishedTool.GameIds;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Models;
@@ -14,7 +15,8 @@ namespace TarnishedTool.Services
         MemoryService memoryService,
         HookManager hookManager,
         ITravelService travelService,
-        IReminderService reminderService) : IPlayerService
+        IReminderService reminderService,
+        IParamService paramService) : IPlayerService
     {
         private const float LongDistanceRestore = 500f;
 
@@ -67,24 +69,18 @@ namespace TarnishedTool.Services
                 memoryService.ReadFloat(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
         }
 
-        public void RestorePos(int index) => MoveToPosition(_positions[index]);
-
-        public void MoveToPosition(Position targetPosition)
+        public void RestorePos(int index)
         {
-            var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
-            var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
+            var savedPos = _positions[index];
+            var currentPos = GetPlayerPosition();
 
-            uint currentBlockId =
-                memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
-            uint currentArea = (currentBlockId >> 24) & 0xFF;
-            uint savedArea = (targetPosition.BlockId >> 24) & 0xFF;
+            uint currentArea = (currentPos.BlockId >> 24) & 0xFF;
+            uint savedArea = (savedPos.BlockId >> 24) & 0xFF;
 
             if (currentArea == savedArea)
             {
-                var currentCoords =
-                    memoryService.ReadVector3(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
-                var currentAbsolute = PositionUtils.ToAbsolute(currentCoords, currentBlockId);
-                var savedAbsolute = PositionUtils.ToAbsolute(targetPosition.Coords, targetPosition.BlockId);
+                var currentAbsolute = PositionUtils.ToAbsolute(currentPos.Coords, currentPos.BlockId);
+                var savedAbsolute = PositionUtils.ToAbsolute(savedPos.Coords, savedPos.BlockId);
                 var delta = savedAbsolute - currentAbsolute;
 
                 var chrRideModule = GetChrRidePtr();
@@ -97,8 +93,8 @@ namespace TarnishedTool.Services
                     memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 1);
 
                 memoryService.WriteVector3(coordsPtr, memoryService.ReadVector3(coordsPtr) + delta);
-                memoryService.WriteFloat(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle,
-                    targetPosition.Angle);
+                memoryService.WriteFloat((IntPtr)GetPlayerIns() + WorldChrMan.PlayerInsOffsets.CurrentMapAngle,
+                    savedPos.Angle);
 
                 if (isLongDistance)
                 {
@@ -112,8 +108,95 @@ namespace TarnishedTool.Services
 
             else
             {
-                _ = Task.Run(() => travelService.WarpToBlockId(targetPosition));
+                _ = Task.Run(() => travelService.WarpToBlockId(savedPos));
             }
+        }
+
+        public void MoveToPosition(Position targetPosition)
+        {
+            var currentPos = GetPlayerPosition();
+
+            uint currentArea = (currentPos.BlockId >> 24) & 0xFF;
+            uint savedArea = (targetPosition.BlockId >> 24) & 0xFF;
+
+            Vector3 targetAbsolute;
+            if (currentArea == savedArea)
+            {
+                targetAbsolute = PositionUtils.ToAbsolute(targetPosition.Coords, targetPosition.BlockId);
+            }
+            else
+            {
+                targetAbsolute = LegacyConv(targetPosition);
+            }
+
+            var currentAbsolute = PositionUtils.ToAbsolute(currentPos.Coords, currentPos.BlockId);
+            var delta = targetAbsolute - currentAbsolute;
+            var chrRideModule = GetChrRidePtr();
+            var isRiding = IsRidingInternal(chrRideModule);
+            var physicsPtr = isRiding ? GetTorrentPhysicsPtr() : GetChrPhysicsPtr();
+            var coordsPtr = physicsPtr + (int)ChrIns.ChrPhysicsOffsets.Coords;
+
+            bool wasPlayerNoDeathEnabled = IsChrDbgFlagEnabled(ChrDbgFlags.PlayerNoDeath);
+            bool wasTorrentNoDeathEnabled = IsTorrentNoDeathEnabled();
+            ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, true);
+            ToggleTorrentNoDeath(true);
+
+            memoryService.Write<byte>(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 1);
+
+            memoryService.Write(coordsPtr, memoryService.ReadVector3(coordsPtr) + delta);
+            memoryService.Write((IntPtr)GetPlayerIns() + WorldChrMan.PlayerInsOffsets.CurrentMapAngle,
+                targetPosition.Angle);
+
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(1000);
+                memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 0);
+            });
+
+            ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, wasPlayerNoDeathEnabled);
+            ToggleTorrentNoDeath(wasTorrentNoDeathEnabled);
+        }
+
+        private bool IsChrDbgFlagEnabled(int offset) => memoryService.Read<byte>(ChrDbgFlags.Base + offset) == 1;
+
+        private bool IsTorrentNoDeathEnabled()
+        {
+            var torrentChrIns = GetTorrentChrIns();
+            var bitFlags = memoryService.FollowPointers(torrentChrIns,
+                [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags],
+                false, false);
+            return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath);
+        }
+
+        private Vector3 LegacyConv(Position targetPosition)
+        {
+            var src = new byte[]
+            {
+                (byte)((targetPosition.BlockId >> 24) & 0xFF),
+                (byte)((targetPosition.BlockId >> 16) & 0xFF),
+                (byte)((targetPosition.BlockId >> 8) & 0xFF)
+            };
+
+            (int tableIndex, int slotIndex) = ParamIndices.All["WorldMapLegacyConvParam"];
+            var row = paramService.GetParamRowByMatchingBytes(
+                tableIndex, slotIndex, src, 0x4);
+
+
+            var srcPosX = memoryService.Read<float>(row + 0x08);
+            var srcPosY = memoryService.Read<float>(row + 0x0C);
+            var srcPosZ = memoryService.Read<float>(row + 0x10);
+            var dstGridXNo = memoryService.Read<byte>(row + 0x15);
+            var dstGridZNo = memoryService.Read<byte>(row + 0x16);
+            var dstPosX = memoryService.Read<float>(row + 0x18);
+            var dstPosY = memoryService.Read<float>(row + 0x1C);
+            var dstPosZ = memoryService.Read<float>(row + 0x20);
+
+
+            return new Vector3(
+                targetPosition.Coords.X + (dstPosX - srcPosX) + (dstGridXNo * 256),
+                targetPosition.Coords.Y + (dstPosY - srcPosY),
+                targetPosition.Coords.Z + (dstPosZ - srcPosZ) + (dstGridZNo * 256)
+            );
         }
 
         public bool IsRiding() => IsRidingInternal(GetChrRidePtr());
@@ -126,12 +209,17 @@ namespace TarnishedTool.Services
 
         private IntPtr GetTorrentPhysicsPtr()
         {
+            var torrentChrIns = GetTorrentChrIns();
+            return memoryService.FollowPointers(torrentChrIns, [..ChrIns.ChrPhysicsModule], true, false);
+        }
+
+        private IntPtr GetTorrentChrIns()
+        {
             var playerGameData =
                 memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.PlayerGameData);
             var handle =
                 memoryService.ReadInt32((IntPtr)playerGameData + GameDataMan.TorrentHandle);
-            var torrentChrIns = ChrInsLookup(handle);
-            return memoryService.FollowPointers(torrentChrIns, [..ChrIns.ChrPhysicsModule], true, false);
+            return ChrInsLookup(handle);
         }
 
         public PosWithHurtbox GetPosWithHurtbox()
@@ -150,7 +238,7 @@ namespace TarnishedTool.Services
             var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
 
-            return memoryService.ReadUInt32(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+            return memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
         }
 
         public void SetHp(int hp) =>
@@ -411,7 +499,7 @@ namespace TarnishedTool.Services
         {
             var playerIns =
                 memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(WorldChrMan.Base) + WorldChrMan.PlayerIns);
-            return memoryService.ReadInt64((IntPtr)playerIns + (int)WorldChrMan.PlayerInsOffsets.Handle);
+            return memoryService.ReadInt64((IntPtr)playerIns + WorldChrMan.PlayerInsOffsets.Handle);
         }
 
         public void ToggleNoGravity(bool isEnabled)
@@ -423,11 +511,7 @@ namespace TarnishedTool.Services
 
         public void ToggleTorrentNoDeath(bool isEnabled)
         {
-            var playerGameData =
-                memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.PlayerGameData);
-            var handle =
-                memoryService.ReadInt32((IntPtr)playerGameData + GameDataMan.TorrentHandle);
-            var torrentChrIns = ChrInsLookup(handle);
+            var torrentChrIns = GetTorrentChrIns();
             var bitFlags = memoryService.FollowPointers(torrentChrIns,
                 [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags],
                 false, false);
@@ -498,6 +582,20 @@ namespace TarnishedTool.Services
 
         private IntPtr GetChrInsFlagsPtr() =>
             memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ChrIns.Flags], false);
+
+        private Position GetPlayerPosition()
+        {
+            var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
+            var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
+
+            uint currentBlockId =
+                memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+
+            var coords = memoryService.ReadVector3(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
+            var angle = memoryService.ReadFloat(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
+
+            return new Position(currentBlockId, coords, angle);
+        }
 
         private IntPtr ChrInsLookup(int handle)
         {

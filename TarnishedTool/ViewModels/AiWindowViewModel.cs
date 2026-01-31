@@ -1,197 +1,274 @@
 ﻿// 
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
-using TarnishedTool.Core;
-using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
-using TarnishedTool.Utilities;
-using TarnishedTool.Views.Windows;
 
 namespace TarnishedTool.ViewModels;
 
-internal class AiWindowViewModel : BaseViewModel
+public class AiWindowViewModel : BaseViewModel, IDisposable
 {
     private readonly IAiService _aiService;
-    private readonly IStateService _stateService;
     private readonly IGameTickService _gameTickService;
-    private readonly IPlayerService _playerService;
-    private readonly IChrInsService _chrInsService;
+    private readonly Dictionary<int, GoalInfo> _goalDict;
+    private readonly Dictionary<int, string> _aiTargetEnums;
+    private readonly Dictionary<int, string> _aiInterruptEnums;
+    private readonly nint _chrIns;
+    private readonly nint _aiThink;
 
-    private readonly Dictionary<int, string> _chrNames;
-    private readonly Dictionary<long, ChrInsEntry> _entriesByHandle = new();
-    private readonly Dictionary<int, GoalInfo> _goalInfos;
-    
-    private readonly Dictionary<nint, GoalWindow> _openGoalWindows = new();
-    private const int MaxGoalWindows = 4;
-
-    public AiWindowViewModel(IAiService aiService, IStateService stateService, IGameTickService gameTickService,
-        IPlayerService playerService, IChrInsService chrInsService)
+    public AiWindowViewModel(IAiService aiService, IGameTickService gameTickService,
+        Dictionary<int, GoalInfo> goalDict, nint chrIns, Dictionary<int, string> aiTargetEnums,
+        Dictionary<int, string> aiInterruptEnums, nint aiThink)
     {
         _aiService = aiService;
-        _stateService = stateService;
         _gameTickService = gameTickService;
-        _playerService = playerService;
-        _chrInsService = chrInsService;
+        _goalDict = goalDict;
+        _chrIns = chrIns;
+        _aiTargetEnums = aiTargetEnums;
+        _aiInterruptEnums = aiInterruptEnums;
+        _aiThink = aiThink;
 
-        _goalInfos = DataLoader.LoadGoalInfo();
-        _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
-
-        WarpToSelectedCommand = new DelegateCommand(WarpToSelected);
-        OpenGoalWindowForSelectedCommand = new DelegateCommand(OpenGoalWindow);
+        _gameTickService.Subscribe(UpdateTick);
     }
-    
-    #region Commands
-    
-    public ICommand WarpToSelectedCommand { get; set; }
-    public ICommand OpenGoalWindowForSelectedCommand { get; set; }
-
-    #endregion
 
     #region Properties
 
-    private ObservableCollection<ChrInsEntry> _chrInsEntries = new();
+    private GoalViewModel _topGoal;
 
-    public ObservableCollection<ChrInsEntry> ChrInsEntries
-
+    public GoalViewModel TopGoal
     {
-        get => _chrInsEntries;
-        set => SetProperty(ref _chrInsEntries, value);
+        get => _topGoal;
+        set => SetProperty(ref _topGoal, value);
     }
 
-    private ChrInsEntry _selectedChrInsEntry;
-
-    public ChrInsEntry SelectedChrInsEntry
+    public IEnumerable<GoalViewModel> FlatGoals
     {
-        get => _selectedChrInsEntry;
+        get
+        {
+            if (TopGoal == null) yield break;
+            foreach (var goal in FlattenTree(TopGoal))
+                yield return goal;
+        }
+    }
+
+    private bool _isShowGoalsEnabled;
+
+    public bool IsShowGoalsEnabled
+    {
+        get => _isShowGoalsEnabled;
+        set => SetProperty(ref _isShowGoalsEnabled, value);
+    }
+
+    private bool _isShowLuaNumbersEnabled;
+
+    public bool IsShowLuaNumbersEnabled
+    {
+        get => _isShowLuaNumbersEnabled;
+        set => SetProperty(ref _isShowLuaNumbersEnabled, value);
+    }
+
+    public LuaNumberViewModel[] LuaNumbers { get; } = Enumerable.Range(0, 64)
+        .Select(i => new LuaNumberViewModel { Index = i })
+        .ToArray();
+
+    private bool _isShowLuaTimersEnabled;
+
+    public bool IsShowLuaTimersEnabled
+    {
+        get => _isShowLuaTimersEnabled;
+        set => SetProperty(ref _isShowLuaTimersEnabled, value);
+    }
+
+    public LuaTimerViewModel[] LuaTimers { get; } = Enumerable.Range(0, 16)
+        .Select(i => new LuaTimerViewModel { Index = i })
+        .ToArray();
+
+    private bool _isShowInterruptsEnabled;
+
+    public bool IsShowInterruptsEnabled
+    {
+        get => _isShowInterruptsEnabled;
         set
         {
-            var previousSelectedChrInsEntry = _selectedChrInsEntry;
-            SetProperty(ref _selectedChrInsEntry, value);
-            if (previousSelectedChrInsEntry != null)
-            {
-                _chrInsService.SetSelected(previousSelectedChrInsEntry.ChrIns, false);
-            }
-
-            if (value != null)
-            {
-                _chrInsService.SetSelected(_selectedChrInsEntry.ChrIns, true);
-            }
-            
-        } 
+            if (!SetProperty(ref _isShowInterruptsEnabled, value)) return;
+            if (_isShowInterruptsEnabled) _aiService.RegisterInterruptListener(UpdateInterrupt);
+            else _aiService.UnregisterInterruptListener(UpdateInterrupt);
+           
+        }
     }
-
+    
+    public ObservableCollection<string> InterruptHistory { get; } = new();
+    
     #endregion
 
     #region Private Methods
 
-    private void OnGameLoaded()
+    private void UpdateTick()
     {
-        _gameTickService.Subscribe(ChrInsEntriesTick);
-    }
-
-    private void OnGameNotLoaded()
-    {
-        _gameTickService.Unsubscribe(ChrInsEntriesTick);
-    }
-
-    private void ChrInsEntriesTick()
-    {
-        var entries = _chrInsService.GetNearbyChrInsEntries();
-        var seenHandles = new HashSet<long>();
-
-        foreach (var entry in entries)
+        if (IsShowGoalsEnabled)
         {
-            long handle = _chrInsService.GetHandleByChrIns(entry.ChrIns);
+            var goalPtr = _aiService.GetTopGoal(_chrIns);
+            UpdateGoalTree(goalPtr);
+        }
 
-            seenHandles.Add(handle);
-            if (_entriesByHandle.TryGetValue(handle, out _))
+        if (IsShowLuaNumbersEnabled) UpdateLuaNumbers();
+        if (IsShowLuaTimersEnabled) UpdateLuaTimers();
+    }
+
+    private void UpdateGoalTree(nint goalPtr)
+    {
+        var topGoal = _aiService.GetGoalInfo(goalPtr);
+
+        if (TopGoal == null || TopGoal.GoalId != topGoal.GoalId)
+        {
+            TopGoal = CreateGoalViewModel(topGoal);
+        }
+        else
+        {
+            UpdateGoalViewModel(TopGoal, topGoal);
+        }
+
+        UpdateChildren(TopGoal, goalPtr);
+
+        OnPropertyChanged(nameof(FlatGoals));
+    }
+
+    private GoalViewModel CreateGoalViewModel(GoalIns ins, int indentLevel = 0)
+    {
+        var vm = new GoalViewModel
+        {
+            GoalId = ins.GoalId,
+            Life = ins.Life,
+            TurnTime = ins.TurnTime,
+            Name = GetGoalName(ins.GoalId),
+            Params = BuildParamViewModels(ins).ToList(),
+            IndentLevel = indentLevel,
+            Children = new ObservableCollection<GoalViewModel>()
+        };
+        return vm;
+    }
+
+    private void UpdateGoalViewModel(GoalViewModel vm, GoalIns ins)
+    {
+        vm.Life = ins.Life;
+        vm.TurnTime = ins.TurnTime;
+        vm.Params = BuildParamViewModels(ins).ToList();
+    }
+
+    private void UpdateChildren(GoalViewModel parent, nint goalPtr)
+    {
+        if (!_aiService.HasSubGoals(goalPtr))
+        {
+            parent.Children.Clear();
+            return;
+        }
+
+        var subGoalPtrs = _aiService.GetSubGoals(goalPtr);
+
+        while (parent.Children.Count > subGoalPtrs.Count)
+            parent.Children.RemoveAt(parent.Children.Count - 1);
+
+        for (int i = 0; i < subGoalPtrs.Count; i++)
+        {
+            var childPtr = subGoalPtrs[i];
+            var childIns = _aiService.GetGoalInfo(childPtr);
+
+            if (i < parent.Children.Count)
             {
-                continue;
+                var existing = parent.Children[i];
+                if (existing.GoalId == childIns.GoalId)
+                {
+                    UpdateGoalViewModel(existing, childIns);
+                }
+                else
+                {
+                    parent.Children[i] = CreateGoalViewModel(childIns, parent.IndentLevel + 1);
+                }
+            }
+            else
+            {
+                parent.Children.Add(CreateGoalViewModel(childIns, parent.IndentLevel + 1));
             }
 
-            entry.NpcThinkParamId = _aiService.GetNpcThinkParamIdByChrIns(entry.ChrIns);
+            UpdateChildren(parent.Children[i], childPtr);
+        }
+    }
 
-            if (entry.NpcThinkParamId == 0) continue;
-            
-            entry.ChrId = _chrInsService.GetChrIdByChrIns(entry.ChrIns);
+    private string GetGoalName(int goalId) =>
+        _goalDict.TryGetValue(goalId, out var info) ? info.GoalName : $"Goal_{goalId}";
 
-            entry.Name = _chrNames.TryGetValue(entry.ChrId, out var chrName) ? chrName : "Unknown";
+    private IEnumerable<GoalParamViewModel> BuildParamViewModels(GoalIns goal)
+    {
+        _goalDict.TryGetValue(goal.GoalId, out var info);
 
-            entry.Handle = handle;
-            entry.NpcParamId = _chrInsService.GetNpcParamIdByChrIns(entry.ChrIns);
+        for (int i = 0; i < goal.Params.Length; i++)
+        {
+            if (goal.Params[i] == 0) continue;
 
-            _entriesByHandle[handle] = entry;
-            ChrInsEntries.Add(entry);
+            var label = (info != null && i < info.ParamNames.Count && !string.IsNullOrEmpty(info.ParamNames[i]))
+                ? info.ParamNames[i]
+                : $"param{i}";
+
+            yield return new GoalParamViewModel { Label = label, Value = goal.Params[i] };
+        }
+    }
+
+    private IEnumerable<GoalViewModel> FlattenTree(GoalViewModel goal)
+    {
+        yield return goal;
+        foreach (var child in goal.Children)
+        foreach (var descendant in FlattenTree(child))
+            yield return descendant;
+    }
+
+    private void UpdateLuaNumbers()
+    {
+        var numbers = _aiService.GetLuaNumbers(_chrIns);
+        for (int i = 0; i < 64; i++)
+        {
+            LuaNumbers[i].Value = numbers[i];
         }
 
+        _aiService.GetSpEffectObserveList(_chrIns);
+    }
 
-        var toRemove = _entriesByHandle.Keys.Where(h => !seenHandles.Contains(h)).ToList();
-        foreach (var handle in toRemove)
+    private void UpdateLuaTimers()
+    {
+        var timers = _aiService.GetLuaTimers(_chrIns);
+        for (int i = 0; i < 16; i++)
         {
-            var entry = _entriesByHandle[handle];
-            _entriesByHandle.Remove(handle);
-            ChrInsEntries.Remove(entry);
+            LuaTimers[i].Value = timers[i];
         }
     }
     
-    private void WarpToSelected()
-    {
-        var targetPosition = _chrInsService.GetChrInsPos(SelectedChrInsEntry.ChrIns);
-        _playerService.MoveToPosition(targetPosition);
-    }
     
-    private void OpenGoalWindow()
+    private ulong _lastInterrupts;
+    private void UpdateInterrupt()
     {
-        var chrIns = SelectedChrInsEntry.ChrIns;
-    
-        if (_openGoalWindows.TryGetValue(chrIns, out var existing))
-        {
-            existing.Activate();
-            return;
-        }
-
-        if (_openGoalWindows.Count >= MaxGoalWindows)
-        {
-            MsgBox.Show("Only four Goal windows can be open at once, close one to open another", "Too many Goal windows");
-            return;
-        }
+        ulong interrupts = _aiService.GetInterrupts(_aiThink);
+        var newInterrupts = interrupts & ~_lastInterrupts; 
+        _lastInterrupts = interrupts;
         
-        var window = new GoalWindow();
-        var vm = new GoalWindowViewModel(_aiService, _gameTickService, _goalInfos, chrIns);
-        window.DataContext = vm;
-        window.Closed += (_, _) => _openGoalWindows.Remove(chrIns);
-        _openGoalWindows[chrIns] = window;
-        window.Show();
+        for (int i = 0; i < 64; i++)
+        {
+            if ((newInterrupts & (1UL << i)) != 0 && _aiInterruptEnums.TryGetValue(i, out var name))
+                InterruptHistory.Add(name);
+        }
     }
 
     #endregion
 
     #region Public Methods
 
-    public void NotifyWindowOpen()
+    public void Dispose()
     {
-        _stateService.Subscribe(State.Loaded, OnGameLoaded);
-        _stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
-        _gameTickService.Subscribe(ChrInsEntriesTick);
-    }
-
-    public void NotifyWindowClosed()
-    {
-        _stateService.Unsubscribe(State.Loaded, OnGameLoaded);
-        _stateService.Unsubscribe(State.NotLoaded, OnGameNotLoaded);
-        _gameTickService.Unsubscribe(ChrInsEntriesTick);
-    }
-    
-    public void ClearSelected()
-    {
-        SelectedChrInsEntry = null;
+        _gameTickService.Unsubscribe(UpdateTick);
+        if (_isShowInterruptsEnabled)
+            _aiService.UnregisterInterruptListener(UpdateInterrupt);
     }
 
     #endregion
-
-    
 }
