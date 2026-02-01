@@ -53,7 +53,7 @@ namespace TarnishedTool
             IChrInsService chrInsService = new ChrInsService(_memoryService);
             ITravelService travelService = new TravelService(_memoryService, hookManager);
             IPlayerService playerService =
-                new PlayerService(_memoryService, hookManager, travelService, reminderService, paramService);
+                new PlayerService(_memoryService, hookManager, travelService, reminderService, paramService, chrInsService);
             IUtilityService utilityService = new UtilityService(_memoryService, hookManager, playerService);
             IEventService eventService = new EventService(_memoryService, hookManager, reminderService);
             IAttackInfoService attackInfoService = new AttackInfoService(_memoryService, hookManager);
@@ -88,7 +88,7 @@ namespace TarnishedTool
             EnemyViewModel enemyViewModel = new EnemyViewModel(
                 enemyService, _stateService, hotkeyManager, emevdService,
                 _dlcService, spEffectService, paramService, playerService,
-                eventService, reminderService, travelService
+                eventService, reminderService, travelService, chrInsService
             );
 
             TargetViewModel targetViewModel = new TargetViewModel(

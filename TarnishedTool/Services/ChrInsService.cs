@@ -185,6 +185,58 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
     public int GetCurrentAnimation(nint chrIns) =>
         memoryService.Read<int>(GetChrTimeActPtr(chrIns) + (int)ChrIns.ChrTimeActOffsets.AnimationId);
 
+    public void SetLocalCoords(nint chrIns, Vector3 pos) =>
+        memoryService.Write(GetChrPhysicsPtr(chrIns) + (int)ChrIns.ChrPhysicsOffsets.Coords, pos);
+
+    public bool IsNoDeathEnabled(nint chrIns)
+    {
+        var bitFlags = memoryService.FollowPointers(chrIns,
+            [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags],
+            false, false);
+        return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath);
+    }
+
+    public IntPtr ChrInsByHandle(int handle)
+    {
+        int poolIndex = (handle >> 20) & 0xFF;
+        int slotIndex = handle & 0xFFFFF;
+
+        var worldChrMan = (IntPtr)memoryService.ReadInt64(WorldChrMan.Base);
+        var chrSet = (IntPtr)memoryService.ReadInt64(worldChrMan + WorldChrMan.ChrSetPool + poolIndex * 8);
+        var entriesBase = (IntPtr)memoryService.ReadInt64(chrSet + (int)WorldChrMan.ChrSetOffsets.ChrSetEntries);
+        var chrIns = (IntPtr)memoryService.ReadInt64(entriesBase + slotIndex * 16);
+
+#if DEBUG
+
+        Console.WriteLine($@"ChrIns looked up by handle: 0x{chrIns.ToInt64():X}");
+#endif
+
+        return chrIns;
+    }
+
+    public nint ChrInsByEntityId(uint entityId)
+    {
+        var lookedUpChrIns = CodeCaveOffsets.Base + CodeCaveOffsets.LookedUpChrIns;
+        var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
+        var bytes = AsmLoader.GetAsmBytes("GetChrIns");
+        AsmHelper.WriteAbsoluteAddresses(bytes, [
+            (worldChrMan, 0x0 + 2),
+            (Functions.GetChrInsByEntityId, 0x19 + 2),
+            (lookedUpChrIns.ToInt64(), 0x25 + 2)
+        ]);
+        Array.Copy(BitConverter.GetBytes(entityId), 0, bytes, 0x13 + 2, 4);
+        memoryService.AllocateAndExecute(bytes);
+        return (IntPtr)memoryService.ReadInt64(lookedUpChrIns);
+    }
+
+    public void ToggleNoDeath(nint chrIns, bool isEnabled)
+    {
+        var bitFlags = memoryService.FollowPointers(chrIns,
+            [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags],
+            false, false);
+        memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
+    }
+
     #endregion
 
     #region Private Methods
@@ -222,10 +274,10 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
 
     private nint GetChrResistPtr(nint chrIns) =>
         memoryService.FollowPointers(chrIns, [..ChrIns.ChrResistModule], true, false);
-    
+
     private nint GetChrTimeActPtr(nint chrIns) =>
         memoryService.FollowPointers(chrIns, [..ChrIns.ChrTimeActModule], true, false);
-    
+
     private PosWithHurtbox GetPosWithHurtbox(nint chrIns)
     {
         var physPtr = GetChrPhysicsPtr(chrIns);

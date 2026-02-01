@@ -30,7 +30,7 @@ public interface IPlayerService
     void SetSpeed(float speed);
     void ToggleInfinitePoise(bool isInfinitePoiseEnabled);
     void ToggleDebugFlag(int offset, bool isEnabled, bool needsReminder = false);
-    void ToggleNoDamage(bool isFreezeHealthEnabled);
+    void ToggleNoDamage(bool isNoDamageEnabled);
     void ToggleNoHit(bool isNoHitEnabled);
     void ToggleNoRuneGain(bool isNoRuneGainEnabled);
     void ToggleNoRuneArcLoss(bool isNoRuneArcLossEnabled);

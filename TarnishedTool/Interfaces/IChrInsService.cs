@@ -42,4 +42,9 @@ public interface IChrInsService
     int GetNpcThinkParamId(nint chrIns);
     float GetDistBetweenChrs(nint chrIns1, nint chrIns2);
     int GetCurrentAnimation(nint chrIns);
+    void SetLocalCoords(nint chrIns, Vector3 pos);
+    bool IsNoDeathEnabled(nint chrIns);
+    nint ChrInsByHandle(int handle);
+    nint ChrInsByEntityId(uint entityId);
+    void ToggleNoDeath(nint chrIns, bool isEnabled);
 }
