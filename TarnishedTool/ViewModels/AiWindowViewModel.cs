@@ -16,17 +16,16 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
     private readonly Dictionary<int, GoalInfo> _goalDict;
     private readonly Dictionary<int, string> _aiTargetEnums;
     private readonly Dictionary<int, string> _aiInterruptEnums;
-    private readonly nint _chrIns;
     private readonly nint _aiThink;
 
     public AiWindowViewModel(IAiService aiService, IGameTickService gameTickService,
-        Dictionary<int, GoalInfo> goalDict, nint chrIns, Dictionary<int, string> aiTargetEnums,
+        Dictionary<int, GoalInfo> goalDict, ChrInsEntry chrIns, Dictionary<int, string> aiTargetEnums,
         Dictionary<int, string> aiInterruptEnums, nint aiThink)
     {
         _aiService = aiService;
         _gameTickService = gameTickService;
         _goalDict = goalDict;
-        _chrIns = chrIns;
+        ChrIns = chrIns;
         _aiTargetEnums = aiTargetEnums;
         _aiInterruptEnums = aiInterruptEnums;
         _aiThink = aiThink;
@@ -35,6 +34,8 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
     }
 
     #region Properties
+    
+    public ChrInsEntry ChrIns { get; }
 
     private GoalViewModel _topGoal;
 
@@ -61,7 +62,17 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         get => _isShowGoalsEnabled;
         set => SetProperty(ref _isShowGoalsEnabled, value);
     }
+    
+    private bool _isShowCoolTimesEnabled;
 
+    public bool IsShowCoolTimesEnabled
+    {
+        get => _isShowCoolTimesEnabled;
+        set => SetProperty(ref _isShowCoolTimesEnabled, value);
+    }
+    
+    public ObservableCollection<CoolTimeEntry> CoolTimes { get; } = new();
+    
     private bool _isShowLuaNumbersEnabled;
 
     public bool IsShowLuaNumbersEnabled
@@ -85,6 +96,16 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
     public LuaTimerViewModel[] LuaTimers { get; } = Enumerable.Range(0, 16)
         .Select(i => new LuaTimerViewModel { Index = i })
         .ToArray();
+    
+    private bool _isShowSpEffectObservesEnabled;
+
+    public bool IsShowSpEffectObservesEnabled
+    {
+        get => _isShowSpEffectObservesEnabled;
+        set => SetProperty(ref _isShowSpEffectObservesEnabled, value);
+    }
+    
+    public ObservableCollection<SpEffectObserve> SpEffectObserves { get; } = new();
 
     private bool _isShowInterruptsEnabled;
 
@@ -114,10 +135,12 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
             UpdateGoalTree(goalPtr);
         }
 
+        if (IsShowCoolTimesEnabled) UpdateCoolTimes();
         if (IsShowLuaNumbersEnabled) UpdateLuaNumbers();
         if (IsShowLuaTimersEnabled) UpdateLuaTimers();
+        if (IsShowSpEffectObservesEnabled) UpdateSpEffectObserves();
     }
-
+    
     private void UpdateGoalTree(nint goalPtr)
     {
         var topGoal = _aiService.GetGoalInfo(goalPtr);
@@ -224,6 +247,28 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
             yield return descendant;
     }
 
+    private void UpdateCoolTimes()
+    {
+        var entries = _aiService.GetCoolTimeItemList(_aiThink);
+        
+        while (CoolTimes.Count > entries.Count)
+            CoolTimes.RemoveAt(CoolTimes.Count - 1);
+        
+        for (int i = 0; i < entries.Count; i++)
+        {
+            if (i < CoolTimes.Count)
+            {
+                CoolTimes[i].AnimationId = entries[i].AnimationId;
+                CoolTimes[i].TimeSinceLastAttack = entries[i].TimeSinceLastAttack;
+                CoolTimes[i].Cooldown = entries[i].Cooldown;
+            }
+            else
+            {
+                CoolTimes.Add(entries[i]);
+            }
+        }
+    }
+    
     private void UpdateLuaNumbers()
     {
         var numbers = _aiService.GetLuaNumbers(_aiThink);
@@ -242,6 +287,32 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         }
     }
     
+    
+    private void UpdateSpEffectObserves()
+    {
+        var entries = _aiService.GetSpEffectObserveList(_aiThink);
+        
+        while (SpEffectObserves.Count > entries.Count)
+            SpEffectObserves.RemoveAt(SpEffectObserves.Count - 1);
+    
+        for (int i = 0; i < entries.Count; i++)
+        {
+            var targetName = _aiTargetEnums.TryGetValue(entries[i].Target, out var name) ? name : null;
+        
+            if (i < SpEffectObserves.Count)
+            {
+                SpEffectObserves[i].Target = entries[i].Target;
+                SpEffectObserves[i].SpEffectId = entries[i].SpEffectId;
+                SpEffectObserves[i].TargetName = targetName;
+            }
+            else
+            {
+                var entry = entries[i];
+                entry.TargetName = targetName;
+                SpEffectObserves.Add(entry);
+            }
+        }
+    }
     
     private ulong _lastInterrupts;
     private void UpdateInterrupt()

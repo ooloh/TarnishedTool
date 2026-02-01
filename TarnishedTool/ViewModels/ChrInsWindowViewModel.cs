@@ -173,7 +173,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
         }
 
         var window = new AiWindow();
-        var vm = new AiWindowViewModel(_aiService, _gameTickService, _goalInfos, chrIns, _aiTargetEnums,
+        var vm = new AiWindowViewModel(_aiService, _gameTickService, _goalInfos, entry, _aiTargetEnums,
             _aiInterruptEnums, _aiService.GetAiThinkPtr(chrIns));
         window.DataContext = vm;
         window.Closed += (_, _) => _openAiWindows.Remove(chrIns);
