@@ -42,10 +42,10 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
         return entries;
     }
 
-    public int GetChrIdByChrIns(IntPtr chrIns) =>
+    public int GetChrId(IntPtr chrIns) =>
         memoryService.Read<int>(chrIns + ChrIns.ChrId);
 
-    public uint GetNpcParamIdByChrIns(IntPtr chrIns) =>
+    public uint GetNpcParamId(IntPtr chrIns) =>
         memoryService.Read<uint>(chrIns + ChrIns.NpcParamId);
 
     public long GetHandleByChrIns(IntPtr chrIns) =>
@@ -58,14 +58,14 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
     {
         var blockId = memoryService.Read<uint>(chrIns + ChrIns.BlockId);
 
-        Vector3 localPos = GetChrInsLocalPos(chrIns);
+        Vector3 localPos = GetLocalCoords(chrIns);
 
         Vector3 mapCoords = ConvertHavokCoordsToMapCoords(localPos, blockId);
 
         return new Position(blockId, mapCoords, 0);
     }
 
-    public Vector3 GetChrInsLocalPos(IntPtr chrIns) =>
+    public Vector3 GetLocalCoords(IntPtr chrIns) =>
         memoryService.Read<Vector3>(GetChrPhysicsPtr(chrIns) + (int)ChrIns.ChrPhysicsOffsets.Coords);
 
     public void ToggleTargetAi(IntPtr chrIns, bool isDisableTargetAiEnabled) =>
@@ -117,6 +117,74 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
         return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage);
     }
 
+    public void SetHp(nint chrIns, int health) =>
+        memoryService.Write(GetChrDataPtr(chrIns) + (int)ChrIns.ChrDataOffsets.Health, health);
+
+    public int GetCurrentHp(nint chrIns) =>
+        memoryService.Read<int>(GetChrDataPtr(chrIns) + (int)ChrIns.ChrDataOffsets.Health);
+
+    public int GetMaxHp(nint chrIns) =>
+        memoryService.Read<int>(GetChrDataPtr(chrIns) + (int)ChrIns.ChrDataOffsets.MaxHealth);
+
+    public float GetCurrentPoise(nint chrIns) =>
+        memoryService.Read<float>(GetChrSuperArmorPtr(chrIns) + (int)ChrIns.ChrSuperArmorOffsets.CurrentPoise);
+
+    public float GetMaxPoise(nint chrIns) =>
+        memoryService.Read<float>(GetChrSuperArmorPtr(chrIns) + (int)ChrIns.ChrSuperArmorOffsets.MaxPoise);
+
+    public float GetPoiseTimer(nint chrIns) =>
+        memoryService.Read<float>(GetChrSuperArmorPtr(chrIns) + (int)ChrIns.ChrSuperArmorOffsets.PoiseTimer);
+
+    public float GetSpeed(nint chrIns) =>
+        memoryService.Read<float>(GetChrBehaviorPtr(chrIns) + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed);
+
+    public void SetSpeed(nint chrIns, float speed) =>
+        memoryService.Write(GetChrDataPtr(chrIns) + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed, speed);
+
+    public float[] GetDefenses(nint chrIns)
+    {
+        var ptr = GetNpcParamPtr(chrIns);
+        var defenses = new float[8];
+        defenses[0] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.StandardAbsorption);
+        defenses[1] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.SlashAbsorption);
+        defenses[2] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.StrikeAbsorption);
+        defenses[3] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.ThrustAbsorption);
+        defenses[4] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.MagicAbsorption);
+        defenses[5] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.FireAbsorption);
+        defenses[6] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.LightningAbsorption);
+        defenses[7] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.HolyAbsorption);
+        return defenses;
+    }
+
+    public bool[] GetImmunities(nint chrIns)
+    {
+        var ptr = GetNpcParamPtr(chrIns);
+        var immunities = new bool[5];
+        immunities[0] = memoryService.ReadInt32(ptr + (int)ChrIns.NpcParamOffsets.SleepImmune) == 90300;
+        immunities[1] = memoryService.ReadInt32(ptr + (int)ChrIns.NpcParamOffsets.PoisonImmune) == 90000;
+        immunities[2] = memoryService.ReadInt32(ptr + (int)ChrIns.NpcParamOffsets.RotImmune) == 90010;
+        immunities[4] = memoryService.ReadInt32(ptr + (int)ChrIns.NpcParamOffsets.FrostImmune) == 90040;
+        immunities[3] = memoryService.ReadInt32(ptr + (int)ChrIns.NpcParamOffsets.BleedImmune) == 90020;
+        return immunities;
+    }
+
+    public int GetResistance(nint chrIns, int offset) => memoryService.Read<int>(GetChrResistPtr(chrIns) + offset);
+    public uint GetEntityId(nint chrIns) => memoryService.Read<uint>(chrIns + ChrIns.EntityId);
+
+    public int GetNpcThinkParamId(nint chrIns) =>
+        memoryService.Read<int>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.NpcThinkParamId);
+
+    public float GetDistBetweenChrs(nint chrIns1, nint chrIns2)
+    {
+        PosWithHurtbox pos1 = GetPosWithHurtbox(chrIns1);
+        PosWithHurtbox pos2 = GetPosWithHurtbox(chrIns2);
+        float distance = Vector3.Distance(pos1.position, pos2.position);
+        return distance - pos1.capsuleRadius - pos2.capsuleRadius;
+    }
+
+    public int GetCurrentAnimation(nint chrIns) =>
+        memoryService.Read<int>(GetChrTimeActPtr(chrIns) + (int)ChrIns.ChrTimeActOffsets.AnimationId);
+
     #endregion
 
     #region Private Methods
@@ -139,9 +207,32 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
 
     private IntPtr GetChrDataPtr(IntPtr chrIns) =>
         memoryService.FollowPointers(chrIns, [..ChrIns.ChrDataModule], true, false);
-    
+
     private IntPtr GetAiThinkPtr(IntPtr chrIns) =>
         memoryService.FollowPointers(chrIns, [..ChrIns.AiThink], true, false);
+
+    private nint GetChrSuperArmorPtr(nint chrIns) =>
+        memoryService.FollowPointers(chrIns, [..ChrIns.ChrSuperArmorModule], true, false);
+
+    private nint GetChrBehaviorPtr(nint chrIns) =>
+        memoryService.FollowPointers(chrIns, [..ChrIns.ChrBehaviorModule], true, false);
+
+    private nint GetNpcParamPtr(nint chrIns) =>
+        memoryService.FollowPointers(chrIns, [..ChrIns.NpcParam], true, false);
+
+    private nint GetChrResistPtr(nint chrIns) =>
+        memoryService.FollowPointers(chrIns, [..ChrIns.ChrResistModule], true, false);
+    
+    private nint GetChrTimeActPtr(nint chrIns) =>
+        memoryService.FollowPointers(chrIns, [..ChrIns.ChrTimeActModule], true, false);
+    
+    private PosWithHurtbox GetPosWithHurtbox(nint chrIns)
+    {
+        var physPtr = GetChrPhysicsPtr(chrIns);
+        var position = memoryService.ReadVector3(physPtr + (int)ChrIns.ChrPhysicsOffsets.Coords);
+        var capsuleRadius = memoryService.ReadFloat(physPtr + (int)ChrIns.ChrPhysicsOffsets.HurtCapsuleRadius);
+        return new PosWithHurtbox(position, capsuleRadius);
+    }
 
     private Vector3 ConvertHavokCoordsToMapCoords(Vector3 localPos, uint blockId)
     {

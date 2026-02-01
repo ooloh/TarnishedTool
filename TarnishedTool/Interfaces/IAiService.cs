@@ -8,7 +8,6 @@ namespace TarnishedTool.Interfaces;
 
 public interface IAiService
 {
-    int GetNpcThinkParamIdByChrIns(IntPtr chrIns);
     nint GetTopGoal(nint aiThink);
     GoalIns GetGoalInfo(nint goalPtr);
     bool HasSubGoals(nint topGoal);

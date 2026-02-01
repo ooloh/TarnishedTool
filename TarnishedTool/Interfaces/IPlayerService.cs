@@ -15,8 +15,7 @@ public interface IPlayerService
     void SavePos(int index);
     void RestorePos(int index);
     void MoveToPosition(Position targetPosition);
-    PosWithHurtbox GetPosWithHurtbox();
-    long GetPlayerIns();
+    nint GetPlayerIns();
     uint GetBlockId();
     void SetHp(int hp);
     int GetCurrentHp();

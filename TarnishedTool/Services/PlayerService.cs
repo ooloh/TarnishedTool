@@ -221,17 +221,9 @@ namespace TarnishedTool.Services
                 memoryService.ReadInt32((IntPtr)playerGameData + GameDataMan.TorrentHandle);
             return ChrInsLookup(handle);
         }
-
-        public PosWithHurtbox GetPosWithHurtbox()
-        {
-            var physPtr = GetChrPhysicsPtr();
-            var position = memoryService.ReadVector3(physPtr + (int)ChrIns.ChrPhysicsOffsets.Coords);
-            var capsuleRadius = memoryService.ReadFloat(physPtr + (int)ChrIns.ChrPhysicsOffsets.HurtCapsuleRadius);
-            return new PosWithHurtbox(position, capsuleRadius);
-        }
-
-        public long GetPlayerIns() =>
-            memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(WorldChrMan.Base) + WorldChrMan.PlayerIns);
+        
+        public nint GetPlayerIns() =>
+            memoryService.Read<nint>((IntPtr)memoryService.ReadInt64(WorldChrMan.Base) + WorldChrMan.PlayerIns);
 
         public uint GetBlockId()
         {

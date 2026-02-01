@@ -108,7 +108,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
     {
         _gameTickService.Subscribe(ChrInsEntriesTick);
         var entries = _chrInsService.GetNearbyChrInsEntries()
-            .Where(e => _aiService.GetNpcThinkParamIdByChrIns(e.ChrIns) != 0)
+            .Where(e => _chrInsService.GetNpcThinkParamId(e.ChrIns) != 0)
             .ToList();
 
         foreach (var entry in entries)
@@ -116,10 +116,10 @@ internal class ChrInsWindowViewModel : BaseViewModel
             var position = _chrInsService.GetChrInsMapCoords(entry.ChrIns);
             Console.WriteLine(position.Coords);
 
-            entry.NpcThinkParamId = _aiService.GetNpcThinkParamIdByChrIns(entry.ChrIns);
+            entry.NpcThinkParamId = _chrInsService.GetNpcThinkParamId(entry.ChrIns);
 
 
-            entry.ChrId = _chrInsService.GetChrIdByChrIns(entry.ChrIns);
+            entry.ChrId = _chrInsService.GetChrId(entry.ChrIns);
 
             entry.Name = _chrNames.TryGetValue(entry.ChrId, out var chrName) ? chrName : "Unknown";
         }
@@ -146,16 +146,16 @@ internal class ChrInsWindowViewModel : BaseViewModel
             seenHandles.Add(handle);
             if (_entriesByHandle.TryGetValue(handle, out _)) continue;
             
-            entry.ChrId = _chrInsService.GetChrIdByChrIns(entry.ChrIns);
+            entry.ChrId = _chrInsService.GetChrId(entry.ChrIns);
             if (entry.ChrId == DummyChrId) continue;
             
             entry.OnOptionChanged = HandleEntryOptionChanged;
             entry.OnCommandExecuted = HandleEntryCommand;
             entry.OnExpanded = HandleEntryExpanded;
-            entry.NpcThinkParamId = _aiService.GetNpcThinkParamIdByChrIns(entry.ChrIns);
+            entry.NpcThinkParamId = _chrInsService.GetNpcThinkParamId(entry.ChrIns);
             entry.Name = _chrNames.TryGetValue(entry.ChrId, out var chrName) ? chrName : "Unknown";
             entry.Handle = handle;
-            entry.NpcParamId = _chrInsService.GetNpcParamIdByChrIns(entry.ChrIns);
+            entry.NpcParamId = _chrInsService.GetNpcParamId(entry.ChrIns);
             
             _entriesByHandle[handle] = entry;
             ChrInsEntries.Add(entry);

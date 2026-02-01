@@ -27,9 +27,7 @@ public class AiService : IAiService
 
     #region Public Methods
 
-    public int GetNpcThinkParamIdByChrIns(IntPtr chrIns) =>
-        _memoryService.Read<int>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.NpcThinkParamId);
-
+    
     public nint GetTopGoal(nint aiThink) =>
         _memoryService.Read<nint>(aiThink + ChrIns.AiThinkOffsets.TopGoal);
 
