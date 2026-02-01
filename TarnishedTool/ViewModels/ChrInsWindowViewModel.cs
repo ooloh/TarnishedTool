@@ -21,8 +21,15 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private readonly IChrInsService _chrInsService;
 
     private readonly Dictionary<int, string> _chrNames;
-    private readonly Dictionary<int, string> _aiTargetEnums;
     private readonly Dictionary<int, string> _aiInterruptEnums;
+    private readonly Dictionary<int, string> _aiTargetEnums;
+    private readonly Dictionary<int, string> _aiGoalResulEnums;
+    private readonly Dictionary<int, string> _aiGuardGoalEnums;
+    private readonly Dictionary<int, string> _aiDirTypeEnums;
+
+    private readonly Dictionary<string, Dictionary<int, string>> _enumDicts;
+    
+    
     private readonly Dictionary<int, GoalInfo> _goalInfos;
 
     private readonly Dictionary<long, ChrInsEntry> _entriesByHandle = new();
@@ -45,6 +52,17 @@ internal class ChrInsWindowViewModel : BaseViewModel
         _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
         _aiTargetEnums = DataLoader.GetSimpleDict("AiTargetEnum", int.Parse, s => s);
         _aiInterruptEnums = DataLoader.GetSimpleDict("AiInterruptEnum", int.Parse, s => s);
+        _aiGoalResulEnums = DataLoader.GetSimpleDict("AiGoalResultEnum", int.Parse, s => s);
+        _aiGuardGoalEnums = DataLoader.GetSimpleDict("AiGuardGoalEnum", int.Parse, s => s);
+        _aiDirTypeEnums = DataLoader.GetSimpleDict("AiDirTypeEnum", int.Parse, s => s);
+
+        _enumDicts = new Dictionary<string, Dictionary<int, string>>
+        {
+            ["target"] = _aiTargetEnums,
+            ["dirtype"] = _aiDirTypeEnums,
+            ["goalresult"] = _aiGoalResulEnums,
+            ["guardresult"] = _aiGuardGoalEnums
+        };
     }
 
     #region Commands
@@ -170,7 +188,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
         }
 
         var window = new AiWindow();
-        var vm = new AiWindowViewModel(_aiService, _gameTickService, _goalInfos, entry, _aiTargetEnums,
+        var vm = new AiWindowViewModel(_aiService, _gameTickService, _goalInfos, entry, _enumDicts,
             _aiInterruptEnums, _aiService.GetAiThinkPtr(chrIns));
         window.DataContext = vm;
         window.Closed += (_, _) => _openAiWindows.Remove(chrIns);

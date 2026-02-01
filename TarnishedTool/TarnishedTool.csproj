@@ -290,6 +290,7 @@
         <Compile Include="Models\EventLogEntry.cs" />
         <Compile Include="Models\GoalInfo.cs" />
         <Compile Include="Models\GoalIns.cs" />
+        <Compile Include="Models\GoalParamDef.cs" />
         <Compile Include="Models\Grace.cs" />
         <Compile Include="Models\GracePresetEntry.cs" />
         <Compile Include="Models\GracePresetTemplate.cs" />

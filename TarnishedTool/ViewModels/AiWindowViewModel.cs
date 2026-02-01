@@ -14,21 +14,29 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
     private readonly IAiService _aiService;
     private readonly IGameTickService _gameTickService;
     private readonly Dictionary<int, GoalInfo> _goalDict;
+    private readonly Dictionary<string, Dictionary<int, string>> _enumDicts;
     private readonly Dictionary<int, string> _aiTargetEnums;
     private readonly Dictionary<int, string> _aiInterruptEnums;
     private readonly nint _aiThink;
+    
+    
 
     public AiWindowViewModel(IAiService aiService, IGameTickService gameTickService,
-        Dictionary<int, GoalInfo> goalDict, ChrInsEntry chrIns, Dictionary<int, string> aiTargetEnums,
+        Dictionary<int, GoalInfo> goalDict, ChrInsEntry chrIns, Dictionary<string, Dictionary<int, string>> enumDicts,
         Dictionary<int, string> aiInterruptEnums, nint aiThink)
     {
         _aiService = aiService;
         _gameTickService = gameTickService;
         _goalDict = goalDict;
         ChrIns = chrIns;
-        _aiTargetEnums = aiTargetEnums;
+        _enumDicts = enumDicts;
         _aiInterruptEnums = aiInterruptEnums;
         _aiThink = aiThink;
+
+        _enumDicts.TryGetValue("target", out var targetEnums);
+        _aiTargetEnums = targetEnums; 
+        
+        
 
         _gameTickService.Subscribe(UpdateTick);
     }
@@ -231,13 +239,39 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         {
             if (goal.Params[i] == 0) continue;
 
-            var label = (info != null && i < info.ParamNames.Count && !string.IsNullOrEmpty(info.ParamNames[i]))
+            var paramDef = (info != null && i < info.ParamNames.Count)
                 ? info.ParamNames[i]
-                : $"param{i}";
+                : new GoalParamDef($"param{i}", ParamType.Float, null);
 
-            yield return new GoalParamViewModel { Label = label, Value = goal.Params[i] };
+            var displayValue = FormatParamValue(paramDef, goal.Params[i]);
+
+            yield return new GoalParamViewModel { Label = paramDef.Name, Value = displayValue };
         }
     }
+    
+    private string FormatParamValue(GoalParamDef def, float rawValue)
+    {
+        return def.ParamType switch
+        {
+            ParamType.Int => ((int)rawValue).ToString(),
+            ParamType.UInt => ((uint)rawValue).ToString(),
+            ParamType.Bool => (rawValue != 0).ToString(),
+            ParamType.Enum => FormatEnum(def.EnumDictName, (int)rawValue),
+            _ => rawValue.ToString("F2")
+        };
+    }
+
+    private string FormatEnum(string dictName, int value)
+    {
+        if (dictName == null || !_enumDicts.TryGetValue(dictName, out var dict))
+            return value.ToString();
+    
+        return dict.TryGetValue(value, out var name) 
+            ? $"{name} ({value})" 
+            : value.ToString();
+    }
+    
+    
 
     private IEnumerable<GoalViewModel> FlattenTree(GoalViewModel goal)
     {
