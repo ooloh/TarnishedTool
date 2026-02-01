@@ -284,6 +284,7 @@
         <Compile Include="Models\BlockWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
         <Compile Include="Models\ChrInsEntry.cs" />
+        <Compile Include="Models\CoolTimeEntry.cs" />
         <Compile Include="Models\CustomWarpChange.cs" />
         <Compile Include="Models\EnumValueItem.cs" />
         <Compile Include="Models\EventItem.cs" />

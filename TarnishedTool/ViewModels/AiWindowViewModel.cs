@@ -110,7 +110,7 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
     {
         if (IsShowGoalsEnabled)
         {
-            var goalPtr = _aiService.GetTopGoal(_chrIns);
+            var goalPtr = _aiService.GetTopGoal(_aiThink);
             UpdateGoalTree(goalPtr);
         }
 
@@ -226,18 +226,16 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
 
     private void UpdateLuaNumbers()
     {
-        var numbers = _aiService.GetLuaNumbers(_chrIns);
+        var numbers = _aiService.GetLuaNumbers(_aiThink);
         for (int i = 0; i < 64; i++)
         {
             LuaNumbers[i].Value = numbers[i];
         }
-
-        _aiService.GetSpEffectObserveList(_chrIns);
     }
 
     private void UpdateLuaTimers()
     {
-        var timers = _aiService.GetLuaTimers(_chrIns);
+        var timers = _aiService.GetLuaTimers(_aiThink);
         for (int i = 0; i < 16; i++)
         {
             LuaTimers[i].Value = timers[i];
