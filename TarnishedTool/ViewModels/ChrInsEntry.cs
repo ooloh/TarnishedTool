@@ -13,12 +13,21 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
     public uint NpcParamId { get; set; }
     public int NpcThinkParamId { get; set; }
     public long Handle { get; set; }
+    public uint EntityId { get; set; }
     public string Name { get; set; }
+    public string InternalName { get; set; }
     public Action<ChrInsEntry, string, bool> OnOptionChanged { get; set; }
     public Action<ChrInsEntry, string> OnCommandExecuted { get; set; }
     public Action<ChrInsEntry> OnExpanded { get; set; }
 
-    public string Display =>
+    public string ChrInsHeader =>
+        $@"{Name}    {InternalName}";
+    
+    public string ChrInsIds => 
+        $"ChrId: {ChrId}\nNpcParamId: {NpcParamId}\nNpcThinkParamId: {NpcThinkParamId}\nEntityId: {EntityId}\nChrIns: {(long)ChrIns:X}";
+        
+
+    public string AiWindowDisplay =>
         $@"{Name}   ChrId: {ChrId} NpcParamId: {NpcParamId} NpcThinkParamId: {NpcThinkParamId}";
     
     private bool _isExpanded;
@@ -110,6 +119,12 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
     public ICommand OpenAiWindowCommand => _openGoalWindowCommand ??= new DelegateCommand(() =>
     {
         OnCommandExecuted?.Invoke(this, nameof(OpenAiWindowCommand));
+    });
+    
+    private ICommand _killChrCommand;
+    public ICommand KillChrCommand => _killChrCommand ??= new DelegateCommand(() =>
+    {
+        OnCommandExecuted?.Invoke(this, nameof(KillChrCommand));
     });
 
 }
