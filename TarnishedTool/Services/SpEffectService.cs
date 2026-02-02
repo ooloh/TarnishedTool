@@ -44,7 +44,7 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
         
         while (current != IntPtr.Zero)
         {
-            if (memoryService.ReadUInt32(current + (int)ChrIns.SpEffectEntry.Id) == spEffectId) return true;
+            if (memoryService.Read<uint>(current + (int)ChrIns.SpEffectEntry.Id) == spEffectId) return true;
             current = (IntPtr)memoryService.ReadInt64(current + (int)ChrIns.SpEffectEntry.Next);
         }
         return false;
@@ -59,11 +59,11 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
         
         while (current != IntPtr.Zero)
         {
-            int id = memoryService.ReadInt32(current + (int)ChrIns.SpEffectEntry.Id);
-            float timeLeft = memoryService.ReadFloat(current + (int)ChrIns.SpEffectEntry.TimeLeft);
-            float duration = memoryService.ReadFloat(current + (int)ChrIns.SpEffectEntry.Duration);
+            int id = memoryService.Read<int>(current + (int)ChrIns.SpEffectEntry.Id);
+            float timeLeft = memoryService.Read<float>(current + (int)ChrIns.SpEffectEntry.TimeLeft);
+            float duration = memoryService.Read<float>(current + (int)ChrIns.SpEffectEntry.Duration);
             var paramData = memoryService.ReadInt64(current);
-            ushort stateInfo = memoryService.ReadUInt16((IntPtr) paramData + (int)ChrIns.SpEffectParamData.StateInfo);
+            ushort stateInfo = memoryService.Read<ushort>((IntPtr) paramData + (int)ChrIns.SpEffectParamData.StateInfo);
             spEffectList.Add(new SpEffectEntry(id, timeLeft, duration, stateInfo));
             current = (IntPtr)memoryService.ReadInt64(current + (int)ChrIns.SpEffectEntry.Next);
         }

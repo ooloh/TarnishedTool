@@ -19,7 +19,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
         while (low <= high)
         {
             int mid = (low + high) >> 1;
-            var id = memoryService.ReadUInt32((IntPtr)(descriptorBase + mid * 0x18));
+            var id = memoryService.Read<uint>((IntPtr)(descriptorBase + mid * 0x18));
 
             if (id == rowId)
             {
@@ -70,7 +70,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
         {
             var tableBase = soloParamRepo + tableIndex * 0x48;
 
-            var capacity = memoryService.ReadInt32((IntPtr)(tableBase + 0x80));
+            var capacity = memoryService.Read<int>((IntPtr)(tableBase + 0x80));
             if (capacity <= 0) continue;
             
             var paramResCap = memoryService.ReadInt64((IntPtr)(tableBase + 0x88));
@@ -92,7 +92,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
 
         if (field.BitWidth.HasValue)
         {
-            byte current = memoryService.ReadUInt8(addr);
+            byte current = memoryService.Read<byte>(addr);
             int mask = (1 << field.BitWidth.Value) - 1;
             int shifted = mask << field.BitPos.Value;
             
@@ -203,7 +203,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
 
         var tableBase = soloParamRepo + tableIndex * 0x48;
 
-        var capacity = memoryService.ReadInt32((IntPtr)(tableBase + 0x80));
+        var capacity = memoryService.Read<int>((IntPtr)(tableBase + 0x80));
         if (slotIndex < 0 || slotIndex >= capacity) return null;
 
         var paramResCap = memoryService.ReadInt64((IntPtr)(tableBase + 0x88 + slotIndex * 8));
@@ -215,7 +215,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
         var paramData = memoryService.ReadInt64((IntPtr)(ptr1 + 0x80));
         if (paramData == 0) return null;
 
-        var rowCount = memoryService.ReadUInt16((IntPtr)(paramData + 0x0A));
+        var rowCount = memoryService.Read<ushort>((IntPtr)(paramData + 0x0A));
         var descriptorBase = paramData + 0x40;
 
         return ((IntPtr)paramData, rowCount, descriptorBase);

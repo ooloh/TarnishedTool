@@ -135,7 +135,7 @@ public class FlaskService(IEzStateService ezStateService, IMemoryService memoryS
 
             while (!cts.IsCancellationRequested)
             {
-                var value = memoryService.ReadInt32(ptr);
+                var value = memoryService.Read<int>(ptr);
 
                 if (value != DialogResultPending)
                 {

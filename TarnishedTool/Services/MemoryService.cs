@@ -37,47 +37,16 @@ namespace TarnishedTool.Services
         private Timer _autoAttachTimer;
 
         
-        public byte ReadUInt8(IntPtr addr)
-        {
-            var bytes = ReadBytes(addr, 1);
-            return bytes[0];
-        }
-
-        public ushort ReadUInt16(nint addr)
-        {
-            var bytes = ReadBytes(addr, 2);
-            return BitConverter.ToUInt16(bytes, 0);
-        }
-        
-        
-        public uint ReadUInt32(IntPtr addr)
-        {
-            var bytes = ReadBytes(addr, 4);
-            return BitConverter.ToUInt32(bytes, 0);
-        }
-
         public ulong ReadUInt64(IntPtr addr)
         {
             var bytes = ReadBytes(addr, 8);
             return BitConverter.ToUInt64(bytes, 0);
         }
-
-        public int ReadInt32(IntPtr addr)
-        {
-            var bytes = ReadBytes(addr, 4);
-            return BitConverter.ToInt32(bytes, 0);
-        }
-
+        
         public long ReadInt64(IntPtr addr)
         {
             var bytes = ReadBytes(addr, 8);
             return BitConverter.ToInt64(bytes, 0);
-        }
-
-        public float ReadFloat(IntPtr addr)
-        {
-            var bytes = ReadBytes(addr, 4);
-            return BitConverter.ToSingle(bytes, 0);
         }
         
         public string ReadString(IntPtr addr, int maxLength = 32)
@@ -102,16 +71,6 @@ namespace TarnishedTool.Services
             return Encoding.Unicode.GetString(bytes, 0, stringLength);
         }
         
-        public Vector3 ReadVector3(IntPtr address)
-        {
-            byte[] coordBytes = ReadBytes(address, 12);
-            return new Vector3(
-                BitConverter.ToSingle(coordBytes, 0),
-                BitConverter.ToSingle(coordBytes, 4),
-                BitConverter.ToSingle(coordBytes, 8)
-            );
-        }
-
         
         public byte[] ReadBytes(IntPtr addr, int size)
         {
@@ -128,7 +87,6 @@ namespace TarnishedTool.Services
         }
         
         public void WriteInt32(IntPtr addr, int val) => WriteBytes(addr, BitConverter.GetBytes(val));
-        public void WriteUInt32(IntPtr addr, uint val) => WriteBytes(addr, BitConverter.GetBytes(val));
         public void WriteFloat(IntPtr addr, float val) => WriteBytes(addr, BitConverter.GetBytes(val));
         
         public T Read<T>(IntPtr addr) where T : unmanaged
@@ -178,7 +136,7 @@ namespace TarnishedTool.Services
 
         public void SetBitValue(IntPtr addr, int flagMask, bool setValue)
         {
-            byte currentByte = ReadUInt8(addr);
+            byte currentByte = Read<byte>(addr);
             byte modifiedByte;
 
             if (setValue)
@@ -190,20 +148,19 @@ namespace TarnishedTool.Services
 
         public bool IsBitSet(IntPtr addr, int flagMask)
         {
-            byte currentByte = ReadUInt8(addr);
+            byte currentByte = Read<byte>(addr);
 
             return (currentByte & flagMask) != 0;
         }
 
-        public uint RunThread(IntPtr address, uint timeout = 0xFFFFFFFF)
+        public void RunThread(nint address, uint timeout = uint.MaxValue)
         {
             IntPtr thread = Kernel32.CreateRemoteThread(ProcessHandle, IntPtr.Zero, 0, address, IntPtr.Zero, 0, IntPtr.Zero);
             var ret = Kernel32.WaitForSingleObject(thread, timeout);
             Kernel32.CloseHandle(thread);
-            return ret;
         }
 
-        public bool RunThreadAndWaitForCompletion(IntPtr address, uint timeout = 0xFFFFFFFF)
+        private bool RunThreadAndWaitForCompletion(IntPtr address, uint timeout = 0xFFFFFFFF)
         {
             IntPtr thread = Kernel32.CreateRemoteThread(ProcessHandle, IntPtr.Zero, 0, address, IntPtr.Zero, 0, IntPtr.Zero);
 
@@ -269,16 +226,7 @@ namespace TarnishedTool.Services
         public nint AllocateMem(uint size) => Kernel32.VirtualAllocEx(ProcessHandle, IntPtr.Zero, size);
 
         public void FreeMem(nint addr) => Kernel32.VirtualFreeEx(ProcessHandle, addr, 0, MemRelease);
-
-        public IntPtr GetProcAddress(string moduleName, string procName)
-        {
-            IntPtr moduleHandle = Kernel32.GetModuleHandle(moduleName);
-            if (moduleHandle == IntPtr.Zero)
-                return IntPtr.Zero;
-
-            return Kernel32.GetProcAddress(moduleHandle, procName);
-        }
-
+        
         public void StartAutoAttach()
         {
             _autoAttachTimer = new Timer(AttachCheckInterval);
@@ -288,9 +236,7 @@ namespace TarnishedTool.Services
 
             _autoAttachTimer.Start();
         }
-
-        public void StopAutoAttach() => _autoAttachTimer.Stop();
-
+        
         private void TryAttachToProcess()
         {
             if (ProcessHandle != IntPtr.Zero)
@@ -333,7 +279,7 @@ namespace TarnishedTool.Services
             }
         }
 
-        public void Dispose()
+        private void Dispose()
         {
             if (!_disposed)
             {

@@ -124,13 +124,13 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
     
     private EnvQueryResult ReadResult(nint resultAddr)
     {
-        var typeTag = memoryService.ReadInt32(resultAddr + 0x08);
+        var typeTag = memoryService.Read<int>(resultAddr + 0x08);
 
         return new EnvQueryResult
         {
             TypeTag = typeTag,
-            IntValue = memoryService.ReadInt32(resultAddr),
-            FloatValue = memoryService.ReadFloat(resultAddr),
+            IntValue = memoryService.Read<int>(resultAddr),
+            FloatValue = memoryService.Read<float>(resultAddr),
             PtrValue = memoryService.ReadInt64(resultAddr)
         };
     }

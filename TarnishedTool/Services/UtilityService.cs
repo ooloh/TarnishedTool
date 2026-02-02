@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -170,7 +171,7 @@ namespace TarnishedTool.Services
             memoryService.WriteFloat(Patches.FpsCap + 0x3, 1f / fps);
 
         public int GetFps() =>
-            (int)Math.Round(1f / memoryService.ReadFloat(Patches.FpsCap + 0x3));
+            (int)Math.Round(1f / memoryService.Read<float>(Patches.FpsCap + 0x3));
             
 
         private void WriteJumpIntercept(IntPtr jumpInterceptCode)
@@ -186,7 +187,7 @@ namespace TarnishedTool.Services
         }
 
         public float GetSpeed() =>
-            memoryService.ReadFloat((IntPtr)memoryService.ReadInt64(CSFlipperImp.Base) + CSFlipperImp.GameSpeed);
+            memoryService.Read<float>((IntPtr)memoryService.ReadInt64(CSFlipperImp.Base) + CSFlipperImp.GameSpeed);
 
         public void SetSpeed(float speed) =>
             memoryService.WriteFloat((IntPtr)memoryService.ReadInt64(CSFlipperImp.Base) + CSFlipperImp.GameSpeed,
@@ -224,7 +225,7 @@ namespace TarnishedTool.Services
 
         public void MovePlayerToCam()
         {
-            var cameraLoc = memoryService.ReadVector3(GetDbgCamCoordsPtr());
+            var cameraLoc = memoryService.Read<Vector3>(GetDbgCamCoordsPtr());
 
             if (playerService.IsRiding())
             {

@@ -296,7 +296,7 @@ namespace TarnishedTool.Memory
                 }
                 else
                 {
-                    int offset = memoryService.ReadInt32(IntPtr.Add(instructionAddress, pattern.OffsetLocation));
+                    int offset = memoryService.Read<int>(IntPtr.Add(instructionAddress, pattern.OffsetLocation));
                     addresses[i] = IntPtr.Add(instructionAddress, offset + pattern.InstructionLength);
                 }
             }
@@ -360,7 +360,7 @@ namespace TarnishedTool.Memory
             {
                 var callInstructionAddr = IntPtr.Add(baseInstructionAddr, mapping.Value);
 
-                int callOffset = memoryService.ReadInt32(IntPtr.Add(callInstructionAddr, 1));
+                int callOffset = memoryService.Read<int>(IntPtr.Add(callInstructionAddr, 1));
                 var callTarget = IntPtr.Add(callInstructionAddr, callOffset + 5);
 
                 mapping.Key(callTarget.ToInt64());
@@ -388,7 +388,7 @@ namespace TarnishedTool.Memory
                 {
                     AddressJump.JumpType.Relative32 => IntPtr.Add(
                         instructionAddress,
-                        memoryService.ReadInt32(IntPtr.Add(instructionAddress, jump.ImmediatePosition)) + jump.InstructionLength),
+                        memoryService.Read<int>(IntPtr.Add(instructionAddress, jump.ImmediatePosition)) + jump.InstructionLength),
 
                     AddressJump.JumpType.Absolute64 => new IntPtr(
                         memoryService.ReadInt64(IntPtr.Add(instructionAddress, jump.ImmediatePosition))),

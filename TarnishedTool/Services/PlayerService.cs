@@ -38,10 +38,10 @@ namespace TarnishedTool.Services
             var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
 
-            var blockId = memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
-            var mapCoords = memoryService.ReadVector3(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
-            var angle = memoryService.ReadFloat(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
-            var localCoords = memoryService.ReadVector3(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords);
+            var blockId = memoryService.Read<uint>(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+            var mapCoords = memoryService.Read<Vector3>(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
+            var angle = memoryService.Read<float>(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
+            var localCoords = memoryService.Read<Vector3>(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords);
 
             return new MapLocation(blockId, localCoords, mapCoords, angle);
         }
@@ -56,11 +56,11 @@ namespace TarnishedTool.Services
             var posToSave = _positions[index];
             var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
-            posToSave.BlockId = memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+            posToSave.BlockId = memoryService.Read<uint>(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
             posToSave.Coords =
-                memoryService.ReadVector3(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
+                memoryService.Read<Vector3>(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
             posToSave.Angle =
-                memoryService.ReadFloat(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
+                memoryService.Read<float>(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
         }
 
         public void RestorePos(int index)
@@ -86,7 +86,7 @@ namespace TarnishedTool.Services
                 if (isLongDistance)
                     memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 1);
 
-                memoryService.WriteVector3(coordsPtr, memoryService.ReadVector3(coordsPtr) + delta);
+                memoryService.WriteVector3(coordsPtr, memoryService.Read<Vector3>(coordsPtr) + delta);
                 memoryService.WriteFloat((IntPtr)GetPlayerIns() + WorldChrMan.PlayerInsOffsets.CurrentMapAngle,
                     savedPos.Angle);
 
@@ -130,17 +130,23 @@ namespace TarnishedTool.Services
             var physicsPtr = isRiding ? GetTorrentPhysicsPtr() : GetChrPhysicsPtr();
             var coordsPtr = physicsPtr + (int)ChrIns.ChrPhysicsOffsets.Coords;
 
+            var playerIns = GetPlayerIns();
+            var torrentIns = GetTorrentChrIns();
+            
             bool wasPlayerNoDeathEnabled = IsChrDbgFlagEnabled(ChrDbgFlags.PlayerNoDeath);
-            bool wasPlayerNoDamageEnabled = chrInsService.IsNoDamageEnabled(GetPlayerIns());
-            bool wasTorrentNoDeathEnabled = IsTorrentNoDeathEnabled();
-            bool wasTorrentNoDamageEnabled = chrInsService.IsNoDamageEnabled(GetTorrentChrIns());
+            bool wasPlayerNoDamageEnabled = chrInsService.IsNoDamageEnabled(playerIns);
+            bool wasTorrentNoDeathEnabled = chrInsService.IsNoDeathEnabled(torrentIns);
+            bool wasTorrentNoDamageEnabled = chrInsService.IsNoDamageEnabled(torrentIns);
+            
             ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, true);
-            ToggleTorrentNoDeath(true);
+            chrInsService.ToggleNoDamage(playerIns, true);
+            chrInsService.ToggleNoDeath(torrentIns, true);
+            chrInsService.ToggleNoDamage(torrentIns, true);
 
             memoryService.Write<byte>(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 1);
 
-            memoryService.Write(coordsPtr, memoryService.ReadVector3(coordsPtr) + delta);
-            memoryService.Write((IntPtr)GetPlayerIns() + WorldChrMan.PlayerInsOffsets.CurrentMapAngle,
+            memoryService.Write(coordsPtr, memoryService.Read<Vector3>(coordsPtr) + delta);
+            memoryService.Write(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle,
                 targetPosition.Angle);
 
             _ = Task.Run(async () =>
@@ -150,13 +156,12 @@ namespace TarnishedTool.Services
             });
 
             ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, wasPlayerNoDeathEnabled);
-            chrInsService.ToggleNoDamage(GetPlayerIns(), wasPlayerNoDamageEnabled);
-            ToggleTorrentNoDeath(wasTorrentNoDeathEnabled);
-            chrInsService.ToggleNoDamage(GetTorrentChrIns(), wasTorrentNoDamageEnabled);
+            chrInsService.ToggleNoDamage(playerIns, wasPlayerNoDamageEnabled);
+            chrInsService.ToggleNoDeath(torrentIns, wasTorrentNoDeathEnabled);
+            chrInsService.ToggleNoDamage(torrentIns, wasTorrentNoDamageEnabled);
         }
 
         private bool IsChrDbgFlagEnabled(int offset) => memoryService.Read<byte>(ChrDbgFlags.Base + offset) == 1;
-        private bool IsTorrentNoDeathEnabled() => chrInsService.IsNoDeathEnabled(GetTorrentChrIns());
         
         private Vector3 LegacyConv(Position targetPosition)
         {
@@ -194,7 +199,7 @@ namespace TarnishedTool.Services
         private bool IsRidingInternal(IntPtr chrRideModule)
         {
             var rideNode = memoryService.ReadInt64(chrRideModule + (int)ChrIns.ChrRideOffsets.RideNode);
-            return memoryService.ReadInt32((IntPtr)rideNode + (int)ChrIns.RideNodeOffsets.IsRiding) != 0;
+            return memoryService.Read<int>((IntPtr)rideNode + (int)ChrIns.RideNodeOffsets.IsRiding) != 0;
         }
 
         private IntPtr GetTorrentPhysicsPtr()
@@ -220,7 +225,7 @@ namespace TarnishedTool.Services
             var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
 
-            return memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+            return memoryService.Read<uint>(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
         }
 
         public void SetHp(int hp) => chrInsService.SetHp(GetPlayerIns(), hp);
@@ -228,27 +233,29 @@ namespace TarnishedTool.Services
         public int GetMaxHp() => chrInsService.GetMaxHp(GetPlayerIns());
         public void SetFullHp()
         {
-            var full = chrInsService.GetMaxHp(GetPlayerIns());
-            chrInsService.SetHp(GetPlayerIns(), full);
+            var playerIns = GetPlayerIns();
+            var full = chrInsService.GetMaxHp(playerIns);
+            chrInsService.SetHp(playerIns, full);
         }
 
         public void SetRfbs()
         {
-            var full = chrInsService.GetMaxHp(GetPlayerIns());
-            chrInsService.SetHp(GetPlayerIns(), (full * 20) / 100 - 1);
+            var playerIns = GetPlayerIns();
+            var full = chrInsService.GetMaxHp(playerIns);
+            chrInsService.SetHp(playerIns, (full * 20) / 100 - 1);
         }
 
         public void SetFp(int fp) =>
             memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Fp, fp);
 
         public int GetCurrentFp() =>
-            memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Fp);
+            memoryService.Read<int>(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Fp);
 
         public void SetSp(int sp) =>
             memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Sp, sp);
 
         public int GetCurrentSp() =>
-            memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Sp);
+            memoryService.Read<int>(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Sp);
 
         public float GetSpeed() => chrInsService.GetSpeed(GetPlayerIns());
         public void SetSpeed(float speed) => chrInsService.SetSpeed(GetPlayerIns(), speed);
@@ -401,7 +408,7 @@ namespace TarnishedTool.Services
             memoryService.WriteInt32((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.NewGame, value);
 
         public int GetNewGame() =>
-            memoryService.ReadInt32((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.NewGame);
+            memoryService.Read<int>((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.NewGame);
 
         public void GiveRunes(int runes)
         {
@@ -420,34 +427,34 @@ namespace TarnishedTool.Services
         }
 
         public int GetRuneLevel() =>
-            memoryService.ReadInt32(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.RuneLevel);
+            memoryService.Read<int>(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.RuneLevel);
 
         public Stats GetStats()
         {
             Stats stats = new Stats();
             var gameData = GetGameDataPtr();
-            stats.Vigor = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Vigor);
-            stats.Mind = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Mind);
-            stats.Endurance = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Endurance);
-            stats.Strength = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Strength);
-            stats.Dexterity = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Dexterity);
+            stats.Vigor = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Vigor);
+            stats.Mind = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Mind);
+            stats.Endurance = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Endurance);
+            stats.Strength = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Strength);
+            stats.Dexterity = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Dexterity);
             stats.Intelligence =
-                memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Intelligence);
-            stats.Faith = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Faith);
-            stats.Arcane = memoryService.ReadInt32(gameData + (int)GameDataMan.PlayerGameDataOffsets.Arcane);
+                memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Intelligence);
+            stats.Faith = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Faith);
+            stats.Arcane = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Arcane);
             return stats;
         }
 
         public void SetStat(int offset, int newValue)
         {
             var gameData = GetGameDataPtr();
-            var currentStatVal = memoryService.ReadInt32(gameData + offset);
+            var currentStatVal = memoryService.Read<int>(gameData + offset);
 
             if (currentStatVal == newValue) return;
 
             var diff = newValue - currentStatVal;
             var levelPtr = gameData + (int)GameDataMan.PlayerGameDataOffsets.RuneLevel;
-            var currentLevel = memoryService.ReadInt32(levelPtr);
+            var currentLevel = memoryService.Read<int>(levelPtr);
 
             if (newValue > currentStatVal)
             {
@@ -458,13 +465,13 @@ namespace TarnishedTool.Services
                 }
 
                 var runeMemPtr = gameData + (int)GameDataMan.PlayerGameDataOffsets.RuneMemory;
-                var currentRuneMem = memoryService.ReadUInt32(runeMemPtr);
+                var currentRuneMem = memoryService.Read<uint>(runeMemPtr);
                 var newRuneMem = Math.Min(currentRuneMem + (ulong)runeCost, 0xFFFFFFFF);
-                memoryService.WriteUInt32(runeMemPtr, (uint)newRuneMem);
+                memoryService.Write(runeMemPtr, (uint)newRuneMem);
             }
 
-            memoryService.WriteInt32(levelPtr, currentLevel + diff);
-            memoryService.WriteInt32(gameData + offset, newValue);
+            memoryService.Write(levelPtr, currentLevel + diff);
+            memoryService.Write(gameData + offset, newValue);
         }
 
         public long GetHandle()
@@ -487,13 +494,13 @@ namespace TarnishedTool.Services
             memoryService.WriteUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.Scadutree, value);
 
         public int GetScadu() =>
-            memoryService.ReadUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.Scadutree);
+            memoryService.Read<byte>(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.Scadutree);
 
         public void SetSpiritAsh(int value) =>
             memoryService.WriteUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.SpiritAsh, value);
 
         public int GetSpiritAsh() =>
-            memoryService.ReadUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.SpiritAsh);
+            memoryService.Read<byte>(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.SpiritAsh);
 
         public int GetCurrentAnimation() => chrInsService.GetCurrentAnimation(GetPlayerIns());
 
@@ -544,10 +551,10 @@ namespace TarnishedTool.Services
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
 
             uint currentBlockId =
-                memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+                memoryService.Read<uint>(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
 
-            var coords = memoryService.ReadVector3(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
-            var angle = memoryService.ReadFloat(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
+            var coords = memoryService.Read<Vector3>(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
+            var angle = memoryService.Read<float>(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
 
             return new Position(currentBlockId, coords, angle);
         }

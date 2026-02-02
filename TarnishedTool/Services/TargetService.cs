@@ -70,19 +70,19 @@ namespace TarnishedTool.Services
             memoryService.WriteUInt8(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct, act);
 
         public int GetLastAct() =>
-            memoryService.ReadUInt8(GetAiThinkPtr() + ChrIns.AiThinkOffsets.LastAct);
+            memoryService.Read<byte>(GetAiThinkPtr() + ChrIns.AiThinkOffsets.LastAct);
 
         public int GetForceAct() =>
-            memoryService.ReadUInt8(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct);
+            memoryService.Read<byte>(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct);
 
         public void ToggleRepeatAct(bool isRepeatActEnabled)
         {
             var ptr = GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct;
-            memoryService.WriteUInt8(ptr, isRepeatActEnabled ? memoryService.ReadUInt8(ptr + 1) : 0);
+            memoryService.WriteUInt8(ptr, isRepeatActEnabled ? memoryService.Read<byte>(ptr + 1) : 0);
         }
 
         public bool IsTargetRepeating() =>
-            memoryService.ReadUInt8(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct) != 0;
+            memoryService.Read<byte>(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct) != 0;
 
         public int GetCurrentAnimation() => chrInsService.GetCurrentAnimation(GetTargetChrIns());
         

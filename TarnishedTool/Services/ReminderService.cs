@@ -52,8 +52,8 @@ public class ReminderService : IReminderService
         var msgRepo = _memoryService.ReadInt64(Offsets.MsgRepository.Base);
         if (msgRepo == 0) return (0, IntPtr.Zero, 0);
 
-        var versionCount = _memoryService.ReadUInt32((IntPtr)(msgRepo + 0x10));
-        var categoryCount = _memoryService.ReadUInt32((IntPtr)(msgRepo + 0x14));
+        var versionCount = _memoryService.Read<uint>((IntPtr)(msgRepo + 0x10));
+        var categoryCount = _memoryService.Read<uint>((IntPtr)(msgRepo + 0x14));
 
         if (version >= versionCount || category >= categoryCount) return (0, IntPtr.Zero, 0);
 
@@ -65,14 +65,14 @@ public class ReminderService : IReminderService
         if (fmg == 0) return (0, IntPtr.Zero, 0);
 
         var stringTable = _memoryService.ReadInt64((IntPtr)(fmg + 0x18));
-        var rangeCount = _memoryService.ReadInt32((IntPtr)(fmg + 0x0C));
+        var rangeCount = _memoryService.Read<int>((IntPtr)(fmg + 0x0C));
 
         if (rangeCount <= 0) return (fmg, (IntPtr)stringTable, 0);
 
         var lastDescBase = fmg + (rangeCount - 1) * 0x10;
-        var lastBaseIndex = _memoryService.ReadUInt32((IntPtr)(lastDescBase + 0x28));
-        var lastStart = _memoryService.ReadUInt32((IntPtr)(lastDescBase + 0x2C));
-        var lastEnd = _memoryService.ReadUInt32((IntPtr)(lastDescBase + 0x30));
+        var lastBaseIndex = _memoryService.Read<uint>((IntPtr)(lastDescBase + 0x28));
+        var lastStart = _memoryService.Read<uint>((IntPtr)(lastDescBase + 0x2C));
+        var lastEnd = _memoryService.Read<uint>((IntPtr)(lastDescBase + 0x30));
         var totalEntries = (int)(lastBaseIndex + (lastEnd - lastStart + 1));
 
         return (fmg, (IntPtr)stringTable, totalEntries);
