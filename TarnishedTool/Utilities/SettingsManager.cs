@@ -33,10 +33,8 @@ public class SettingsManager
     public bool DisableAchievements { get; set; }
     public bool NoLogo { get; set; }
     public bool MuteMusic { get; set; }
-    [DefaultValue(1.0)] 
-    public double ResistancesWindowScaleX { get; set; }
-    [DefaultValue(1.0)] 
-    public double ResistancesWindowScaleY { get; set; }
+    [DefaultValue(1.0)] public double ResistancesWindowScaleX { get; set; }
+    [DefaultValue(1.0)] public double ResistancesWindowScaleY { get; set; }
     public double ResistancesWindowOpacity { get; set; }
     public double ResistancesWindowWidth { get; set; }
     public double ResistancesWindowLeft { get; set; }
@@ -50,8 +48,7 @@ public class SettingsManager
     public bool IsNoClipKeyboardDisabled { get; set; }
     public bool BlockHotkeysFromGame { get; set; }
     public bool HotkeyReminder { get; set; }
-    [DefaultValue(true)] 
-    public bool EnableUpdateChecks { get; set; }
+    [DefaultValue(true)] public bool EnableUpdateChecks { get; set; }
     public string SaveCustomHp { get; set; } = "";
     public double GraceImportWindowLeft { get; set; }
     public double GraceImportWindowTop { get; set; }
@@ -64,14 +61,41 @@ public class SettingsManager
     public double ParamEditorWindowLeft { get; set; }
     public double ParamEditorWindowTop { get; set; }
     public bool ParamEditorWindowAlwaysOnTop { get; set; }
-    [DefaultValue("OffsetNameInternal")]
-    public string ParamFieldDisplayMode { get; set; }
+    [DefaultValue("OffsetNameInternal")] public string ParamFieldDisplayMode { get; set; }
     public double AiWindowWindowLeft { get; set; }
     public double AiWindowWindowTop { get; set; }
     public bool AiWindowAlwaysOnTop { get; set; }
+    public double AiOverlayToolbarLeft { get; set; }
+    public double AiOverlayToolbarTop { get; set; }
 
+    public double AiOverlayGoalsLeft { get; set; }
+    public double AiOverlayGoalsTop { get; set; }
+    public double AiOverlayGoalsOpacity { get; set; }
     
-    
+    public double AiOverlayCoolTimesLeft { get; set; }
+    public double AiOverlayCoolTimesTop { get; set; }
+    public double AiOverlayCoolTimesOpacity { get; set; }
+
+    public double AiOverlayLuaTimersLeft { get; set; }
+    public double AiOverlayLuaTimersTop { get; set; }
+    public double AiOverlayLuaTimersOpacity { get; set; }
+
+    public double AiOverlayLuaNumbersLeft { get; set; }
+    public double AiOverlayLuaNumbersTop { get; set; }
+    public double AiOverlayLuaNumbersOpacity { get; set; }
+
+    public double AiOverlaySpEffectObservesLeft { get; set; }
+    public double AiOverlaySpEffectObservesTop { get; set; }
+    public double AiOverlaySpEffectObservesOpacity { get; set; }
+
+    public double AiOverlayInterruptsLeft { get; set; }
+    public double AiOverlayInterruptsTop { get; set; }
+    public double AiOverlayInterruptsOpacity { get; set; }
+
+    public double AiOverlaySpEffectsLeft { get; set; }
+    public double AiOverlaySpEffectsTop { get; set; }
+    public double AiOverlaySpEffectsOpacity { get; set; }
+
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "TarnishedTool",

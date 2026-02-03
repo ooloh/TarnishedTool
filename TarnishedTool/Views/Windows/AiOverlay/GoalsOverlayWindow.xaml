@@ -1,0 +1,39 @@
+﻿<aiOverlay:AiOverlayWindowBase x:Class="TarnishedTool.Views.Windows.AiOverlay.GoalsOverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:TarnishedTool.Views.Windows"
+        xmlns:converters="clr-namespace:TarnishedTool.Converters"
+        xmlns:aiOverlay="clr-namespace:TarnishedTool.Views.Windows.AiOverlay"
+        mc:Ignorable="d"
+        Title="GoalsOverlayWindow" Height="300" Width="650">
+    <aiOverlay:AiOverlayWindowBase.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:IndentConverter x:Key="IndentConverter" />
+    </aiOverlay:AiOverlayWindowBase.Resources>
+    
+    <Grid>
+        <ItemsControl 
+                      ItemsSource="{Binding FlatGoals}"
+                      Visibility="{Binding IsShowGoalsEnabled, Converter={StaticResource BoolToVis}}">
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="{Binding IndentLevel, Converter={StaticResource IndentConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="14" Text="[" />
+                            <TextBlock FontSize="14" Text="{Binding Name}" />
+                            <TextBlock FontSize="14" Text="]" />
+                            <TextBlock FontSize="14" Text="{Binding Life, StringFormat=' life:{0:F2}'}" />
+                            <TextBlock FontSize="14" Text="{Binding TurnTime, StringFormat=' TurnTime:{0:F1}'}"
+                                       Visibility="{Binding HasTurnTime, Converter={StaticResource BoolToVis}}" />
+                        </StackPanel>
+                        <TextBlock FontSize="14" Text="{Binding FormattedParams}"
+                                   Visibility="{Binding HasParams, Converter={StaticResource BoolToVis}}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</aiOverlay:AiOverlayWindowBase>

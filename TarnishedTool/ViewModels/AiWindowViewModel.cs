@@ -4,8 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
+using TarnishedTool.Core;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
+using TarnishedTool.Views.Windows;
+using TarnishedTool.Views.Windows.AiOverlay;
 
 namespace TarnishedTool.ViewModels;
 
@@ -19,11 +23,14 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
     private readonly Dictionary<int, string> _aiInterruptEnums;
     private readonly nint _aiThink;
     private readonly ISpEffectService _spEffectService;
+    private readonly AiWindow _parentWindow;
+    private AiOverlayToolbar _overlayToolbar;
 
     public AiWindowViewModel(IAiService aiService, IGameTickService gameTickService,
         Dictionary<int, GoalInfo> goalDict, ChrInsEntry chrInsEntry,
         Dictionary<string, Dictionary<int, string>> enumDicts,
-        Dictionary<int, string> aiInterruptEnums, nint aiThink, ISpEffectService spEffectService)
+        Dictionary<int, string> aiInterruptEnums, nint aiThink,
+        ISpEffectService spEffectService, AiWindow window)
     {
         _aiService = aiService;
         _gameTickService = gameTickService;
@@ -33,6 +40,7 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         _aiInterruptEnums = aiInterruptEnums;
         _aiThink = aiThink;
         _spEffectService = spEffectService;
+        _parentWindow = window;
 
         _enumDicts.TryGetValue("target", out var targetEnums);
         _aiTargetEnums = targetEnums;
@@ -40,9 +48,18 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         _goalDict.TryGetValue(_aiService.GetMainScriptGoalId(aiThink), out var goalInfo);
         if (goalInfo != null) ScriptName = goalInfo.GoalName;
 
+        EnterOverlayModeCommand = new DelegateCommand(EnterOverlayMode);
+
         _gameTickService.Subscribe(UpdateTick);
     }
 
+    #region Commands
+
+    public ICommand EnterOverlayModeCommand { get; set; }
+    
+    #endregion
+
+    
     #region Properties
 
     public ChrInsEntry ChrInsEntry { get; }
@@ -150,6 +167,14 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
 
     private readonly SpEffectViewModel _spEffectViewModel = new();
     public SpEffectViewModel SpEffectViewModel => _spEffectViewModel;
+    
+    private bool _isOverlayMode;
+
+    public bool IsOverlayMode
+    {
+        get => _isOverlayMode;
+        set => SetProperty(ref _isOverlayMode, value);
+    }
 
     #endregion
 
@@ -386,13 +411,54 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         var spEffects = _spEffectService.GetActiveSpEffectList(ChrInsEntry.ChrIns);
         _spEffectViewModel.RefreshEffects(spEffects);
     }
+    
+    private void EnterOverlayMode()
+    {
+        if (IsOverlayMode) return;
+
+        IsOverlayMode = true;
+
+        _overlayToolbar = new AiOverlayToolbar(this, ChrInsEntry.Name, ExitOverlayMode);
+        _overlayToolbar.Closed += (s, e) =>
+        {
+            _overlayToolbar = null;
+            if (IsOverlayMode) ExitOverlayMode();
+        };
+        _overlayToolbar.Show();
+
+        _parentWindow?.Hide();
+    }
+
+    private void ExitOverlayMode()
+    {
+        if (!IsOverlayMode) return;
+
+        IsOverlayMode = false;
+
+        if (_overlayToolbar != null)
+        {
+            var toolbar = _overlayToolbar;
+            _overlayToolbar = null;
+            toolbar.Close();
+        }
+
+        _parentWindow?.Show();
+    }
 
     #endregion
 
     #region Public Methods
-
+    
+    
     public void Dispose()
     {
+        if (IsOverlayMode)
+        {
+            // _overlayToolbar?.Close();
+            // _overlayToolbar = null;
+            IsOverlayMode = false;
+        }
+        
         _gameTickService.Unsubscribe(UpdateTick);
         if (_isShowInterruptsEnabled)
             _aiService.UnregisterInterruptListener(UpdateInterrupt);
