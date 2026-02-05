@@ -17,7 +17,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:TitleBar Grid.Row="0" Title="TBD" />
+        <controls:TitleBar Grid.Row="0" Title="Characters" />
         <Grid Grid.Row="1">
             <CheckBox
                 x:Name="AlwaysOnTopCheckBox"

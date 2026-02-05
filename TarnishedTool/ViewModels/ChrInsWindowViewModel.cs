@@ -255,8 +255,6 @@ internal class ChrInsWindowViewModel : BaseViewModel
         {
             case nameof(ChrInsEntry.WarpCommand):
                 var targetPosition = _chrInsService.GetChrInsMapCoords(entry.ChrIns);
-
-                //TODO offset a bit to not end up inside big enemies
                 _playerService.MoveToPosition(targetPosition);
                 break;
             case nameof(ChrInsEntry.OpenAiWindowCommand):
