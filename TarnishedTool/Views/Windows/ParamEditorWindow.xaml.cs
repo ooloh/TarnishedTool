@@ -16,18 +16,16 @@ public partial class ParamEditorWindow : TopmostWindow
     public ParamEditorWindow()
     {
         InitializeComponent();
-        
-        CommandBindings.Add(new CommandBinding(ApplicationCommands.SelectAll, (s, e) =>
-        {
-            EntriesListView.SelectAll();
-        }));
-        
+
+        CommandBindings.Add(new CommandBinding(ApplicationCommands.SelectAll,
+            (s, e) => { EntriesListView.SelectAll(); }));
+
         CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, (s, e) =>
         {
             var selectedItems = EntriesListView.SelectedItems
                 .Cast<ParamEntry>()
                 .Select(x => $"{x.Id}: {x.DisplayName}");
-        
+
             Clipboard.SetText(string.Join(Environment.NewLine, selectedItems));
         }));
 
@@ -44,6 +42,12 @@ public partial class ParamEditorWindow : TopmostWindow
             if (SettingsManager.Default.ParamEditorWindowTop > 0)
                 Top = SettingsManager.Default.ParamEditorWindowTop;
 
+            if (SettingsManager.Default.ParamEditorWindowWidth > 0)
+                Width = SettingsManager.Default.ParamEditorWindowWidth;
+
+            if (SettingsManager.Default.ParamEditorWindowHeight > 0)
+                Height = SettingsManager.Default.ParamEditorWindowHeight;
+
             AlwaysOnTopCheckBox.IsChecked = SettingsManager.Default.ParamEditorWindowAlwaysOnTop;
         };
     }
@@ -52,9 +56,11 @@ public partial class ParamEditorWindow : TopmostWindow
     {
         base.OnClosing(e);
 
-
+        // Save window position and size
         SettingsManager.Default.ParamEditorWindowLeft = Left;
         SettingsManager.Default.ParamEditorWindowTop = Top;
+        SettingsManager.Default.ParamEditorWindowWidth = Width;
+        SettingsManager.Default.ParamEditorWindowHeight = Height;
         SettingsManager.Default.ParamEditorWindowAlwaysOnTop = AlwaysOnTopCheckBox.IsChecked ?? false;
         SettingsManager.Default.Save();
     }
@@ -75,30 +81,19 @@ public partial class ParamEditorWindow : TopmostWindow
         }
     }
 
-    private void EnumTextBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-    {
-        if (sender is TextBox textBox && textBox.ContextMenu != null)
-        {
-            var contextMenu = textBox.ContextMenu;
-
-            
-            contextMenu.RemoveHandler(MenuItem.ClickEvent, new RoutedEventHandler(EnumMenuItem_Click));
-            contextMenu.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler(EnumMenuItem_Click));
-        }
-    }
-
     private void EnumMenuItem_Click(object sender, RoutedEventArgs e)
     {
-        if (e.OriginalSource is MenuItem menuItem)
-        {
-            var value = menuItem.Tag;
+        if (sender is not MenuItem menuItem) return;
 
-            if (sender is ContextMenu contextMenu && contextMenu.PlacementTarget is TextBox textBox)
+        var value = menuItem.Tag;
+
+        // Navigate up to find the ContextMenu and then the TextBox
+        var contextMenu = menuItem.Parent as ContextMenu;
+        if (contextMenu?.PlacementTarget is TextBox textBox)
+        {
+            if (textBox.DataContext is FieldValueViewModel fieldVm)
             {
-                if (textBox.DataContext is FieldValueViewModel fieldVm)
-                {
-                    fieldVm.ValueText = value?.ToString() ?? "";
-                }
+                fieldVm.ValueText = value?.ToString() ?? "";
             }
         }
     }

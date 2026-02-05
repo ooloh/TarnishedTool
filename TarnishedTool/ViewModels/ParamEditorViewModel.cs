@@ -373,6 +373,12 @@ public sealed class ParamEditorViewModel : BaseViewModel
         IsSelectedEntryModified = false;
         OnPropertyChanged(nameof(HasAnyModified));
 
+        // Make Restore All Params Refresh Field view too
+        if (_currentRowPtr != IntPtr.Zero && ParamEntries.SelectedItem != null)
+        {
+            _currentRowData = _paramService.ReadRow(_currentRowPtr, _currentParam.RowSize);
+        }
+
         foreach (var field in _fields)
         {
             field.RefreshValue();
@@ -462,8 +468,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
     {
         if (entry == null) return;
         var newName = MsgBox.ShowInput(
-            $"Rename Row {entry.Id}",
-            entry.CustomName ?? entry.DisplayName
+            $"New Name",
+            entry.CustomName ?? entry.DisplayName,
+            $"Rename Row {entry.Id}"
         );
         if (newName != null)
         {
