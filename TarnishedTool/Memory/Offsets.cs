@@ -134,7 +134,7 @@ namespace TarnishedTool.Memory
         public static class ChrIns
         {
             public const int Handle = 0x8;
-            public const int BlockId = 0x30;
+            public const int BlockId = 0x38;
             public const int ChrCtrl = 0x58;
             public const int NpcParamId = 0x60;
             public const int ChrId = 0x64;
