@@ -96,6 +96,10 @@ public class SettingsManager
     public double AiOverlaySpEffectsTop { get; set; }
     public double AiOverlaySpEffectsOpacity { get; set; }
 
+    public double ParamEditorWindowWidth { get; set; }
+    public double ParamEditorWindowHeight { get; set; }
+
+
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "TarnishedTool",
