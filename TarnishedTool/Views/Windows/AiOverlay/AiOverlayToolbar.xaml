@@ -48,14 +48,6 @@
                         <DropShadowEffect ShadowDepth="1" BlurRadius="3" Color="Black" Opacity="0.7"/>
                     </TextBlock.Effect>
                 </TextBlock>
-                
-                <Button Content="✕" 
-                        Width="20" Height="20" 
-                        FontSize="10"
-                        Style="{StaticResource ToolbarButton}"
-                        HorizontalAlignment="Right"
-                        Click="Exit_Click"
-                        ToolTip="Exit Overlay Mode"/>
             </DockPanel>
             
             <WrapPanel Grid.Row="1" Orientation="Horizontal" MaxWidth="350">

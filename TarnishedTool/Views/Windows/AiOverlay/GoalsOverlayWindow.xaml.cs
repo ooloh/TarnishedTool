@@ -19,4 +19,5 @@ public partial class GoalsOverlayWindow : AiOverlayWindowBase
     
     private void CycleOpacity_Click(object sender, RoutedEventArgs e) => CycleOpacity();
     private void Close_Click(object sender, RoutedEventArgs e) => Close();
+
 }

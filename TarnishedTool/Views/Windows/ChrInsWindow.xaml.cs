@@ -1,6 +1,7 @@
 ﻿// 
 
 using System.Windows;
+using System.Windows.Controls;
 using TarnishedTool.Utilities;
 using TarnishedTool.ViewModels;
 
@@ -38,5 +39,14 @@ public partial class ChrInsWindow : TopmostWindow
         SettingsManager.Default.AiWindowWindowTop = Top;
         SettingsManager.Default.AiWindowAlwaysOnTop = AlwaysOnTopCheckBox.IsChecked ?? false;
         SettingsManager.Default.Save();
+    }
+    
+    private void Expander_Expanded(object sender, RoutedEventArgs e)
+    {
+        if (sender is Expander expander && expander.DataContext is ChrInsEntry entry)
+        {
+            if (DataContext is ChrInsWindowViewModel vm)
+                vm.SelectedChrInsEntry = entry;
+        }
     }
 }

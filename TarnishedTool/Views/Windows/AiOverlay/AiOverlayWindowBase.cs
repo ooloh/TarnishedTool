@@ -12,7 +12,7 @@ public abstract class AiOverlayWindowBase : Window
 {
     private readonly Action _onClosed;
     
-    protected double BackgroundOpacity = 0.5;
+    protected double BackgroundOpacity = 0.7;
     protected abstract string SettingsPrefix { get; }
     
     protected AiOverlayWindowBase(Action onClosed = null)

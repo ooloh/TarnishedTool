@@ -402,7 +402,11 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         for (int i = 0; i < 64; i++)
         {
             if ((newInterrupts & (1UL << i)) != 0 && _aiInterruptEnums.TryGetValue(i, out var name))
+            {
+                if (InterruptHistory.Count >= 8) InterruptHistory.RemoveAt(0);
                 InterruptHistory.Add(name);
+            }
+                
         }
     }
 
@@ -411,6 +415,7 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         var spEffects = _spEffectService.GetActiveSpEffectList(ChrInsEntry.ChrIns);
         _spEffectViewModel.RefreshEffects(spEffects);
     }
+    
     
     private void EnterOverlayMode()
     {
@@ -442,21 +447,25 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
             toolbar.Close();
         }
 
-        _parentWindow?.Show();
+        if (!_isDisposed)
+            _parentWindow?.Show();
     }
 
     #endregion
 
     #region Public Methods
     
-    
+    private bool _isDisposed;
     public void Dispose()
     {
+        _isDisposed = true;
+        
         if (IsOverlayMode)
         {
-            // _overlayToolbar?.Close();
-            // _overlayToolbar = null;
+            var toolbar = _overlayToolbar;
+            _overlayToolbar = null;
             IsOverlayMode = false;
+            toolbar?.Close();
         }
         
         _gameTickService.Unsubscribe(UpdateTick);

@@ -56,6 +56,9 @@ public partial class AiOverlayToolbar : Window
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
+        LoadSettings();
+        
+        
         IntPtr hwnd = new WindowInteropHelper(this).Handle;
         User32.SetTopmost(hwnd);
 
@@ -70,8 +73,32 @@ public partial class AiOverlayToolbar : Window
         foreach (var cb in _overlayFactories.Keys)
             if (cb.IsChecked == true)
                 OpenOverlay(cb);
+        
+        if (Application.Current.MainWindow != null)
+        {
+            Application.Current.MainWindow.Closing += (sender, args) => { Close(); };
+        }
+        
     }
 
+    private void LoadSettings()
+    {
+        if (SettingsManager.Default.AiOverlayToolbarLeft > 0)
+            Left = SettingsManager.Default.AiOverlayToolbarLeft;
+        
+        if (SettingsManager.Default.AiOverlayToolbarTop > 0)
+            Top = SettingsManager.Default.AiOverlayToolbarTop;
+    }
+    
+    protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+    {
+        base.OnClosing(e);
+        
+        SettingsManager.Default.AiOverlayToolbarLeft = Left;
+        SettingsManager.Default.AiOverlayToolbarTop = Top;
+        SettingsManager.Default.Save();
+    }
+    
     private void CheckBox_Changed(object sender, RoutedEventArgs e)
     {
         if (sender is not CheckBox cb) return;

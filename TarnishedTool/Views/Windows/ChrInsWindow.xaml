@@ -36,7 +36,7 @@
                  VirtualizingPanel.VirtualizationMode="Recycling">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Expander IsExpanded="{Binding IsExpanded}">
+                    <Expander IsExpanded="{Binding IsExpanded}" Expanded="Expander_Expanded">
                         <Expander.Header>
                             <TextBlock Text="{Binding ChrInsHeader}" />
                         </Expander.Header>
@@ -79,10 +79,15 @@
                                 
                             </StackPanel>
                             
-                            <TextBlock Grid.Column="2"
-                                       Margin="10,0,0,0"
-                                       Text="{Binding ChrInsIds}">
-                            </TextBlock>
+                            <TextBox Grid.Column="2"
+                                     Margin="10,0,0,0"
+                                     Text="{Binding ChrInsIds, Mode=OneWay}"
+                                     IsReadOnly="True"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     TextWrapping="Wrap"
+                                     IsTabStop="False"
+                                     Focusable="True"/>
                             
                         </Grid>
                     </Expander>
