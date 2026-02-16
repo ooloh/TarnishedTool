@@ -47,42 +47,45 @@ public static class Emevd
     public static class EmevdCommands
     {
         public static readonly EmevdCommand Rest = new(2004, 47);
-        public static readonly EmevdCommand ReloadArea = new(2003, 70, (byte) 1);
+        public static readonly EmevdCommand ReloadArea = new(2003, 70, (byte)1);
 
         public static readonly EmevdCommand SetMorning = new(
             2001,
             4,
             (byte)6, (byte)0, (byte)0, (byte)0, (byte)0, (byte)1, (float)0.75, (float)2.0, (float)0
         );
+
         public static readonly EmevdCommand SetNoon = new(
             2001,
             4,
             (byte)12, (byte)0, (byte)0, (byte)0, (byte)0, (byte)1, (float)0.75, (float)2.0, (float)0
         );
-        
+
         public static readonly EmevdCommand SetNight = new(
             2001,
             4,
             (byte)20, (byte)0, (byte)0, (byte)0, (byte)0, (byte)1, (float)0.75, (float)2.0, (float)0
         );
+
         public static EmevdCommand SetWeather(sbyte type) => new(
             2003,
             68,
             type,
-            (float)-1,(byte)1
-        );   
+            (float)-1, (byte)1
+        );
 
-        
         public static EmevdCommand ForcePlaybackAnimation(uint entityId, int animationId) => new(
             2003,
             18,
             entityId,
             animationId,
-            (byte)0,  // shouldLoop
-            (byte)0,  // shouldWaitForCompletion
-            (byte)0   // ignoreWaitForTransition
+            (byte)0, // shouldLoop
+            (byte)0, // shouldWaitForCompletion
+            (byte)0 // ignoreWaitForTransition
         );
 
         public static EmevdCommand ResetCharacterPosition(uint entityId) => new(2004, 81, entityId);
+        
+        public static EmevdCommand AwardItemsIncludingClients(int itemId) => new(2003, 36, itemId);
     }
 }
