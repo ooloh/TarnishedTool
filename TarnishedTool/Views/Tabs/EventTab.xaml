@@ -217,6 +217,11 @@
                                        FontSize="10" />
                         </Border>
                     </StackPanel>
+                    <Button Grid.Row="0" Grid.Column="2" 
+                            Content="Give starting flasks"
+                            Command="{Binding GiveStartingFlasksCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            ></Button>
                 </Grid>
             </StackPanel>
         </Border>

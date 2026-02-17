@@ -26,6 +26,7 @@ namespace TarnishedTool.ViewModels
         private readonly IEventLogReader _eventLogReader;
         public const int WhetstoneBladeId = 0x4000218E;
 
+        private static readonly int[] StartingFlaskIds = [201, 203, 205, 207, 209, 211, 213, 215, 217, 219, 221, 223, 225, 227, 229];
 
         private readonly List<int> _baseGameGestureIds;
         private readonly List<int> _dlcGestureIds;
@@ -68,6 +69,7 @@ namespace TarnishedTool.ViewModels
             SetNoonCommand = new DelegateCommand(SetNoon);
             SetNightCommand = new DelegateCommand(SetNight);
             SetWeatherCommand = new DelegateCommand(SetWeather);
+            GiveStartingFlasksCommand = new DelegateCommand(GiveStartingFlasks);
 
             _baseGameGestureIds =
                 DataLoader.GetSimpleList("BaseGestures", s => int.Parse(s, CultureInfo.InvariantCulture));
@@ -96,6 +98,7 @@ namespace TarnishedTool.ViewModels
         public ICommand SetNoonCommand { get; set; }
         public ICommand SetNightCommand { get; set; }
         public ICommand SetWeatherCommand { get; set; }
+        public ICommand GiveStartingFlasksCommand { get; set; }
 
         #endregion
 
@@ -412,6 +415,10 @@ namespace TarnishedTool.ViewModels
 
         private void OnLogEntriesReceived(List<EventLogEntry> events) =>
             _eventLogViewModel.RefreshEventLogs(events);
+
+        private void GiveStartingFlasks() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.AwardItemsIncludingClients(2000));
+     
+
 
         #endregion
     }
