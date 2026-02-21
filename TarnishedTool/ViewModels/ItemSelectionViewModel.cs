@@ -39,6 +39,8 @@ public class ItemSelectionViewModel : BaseViewModel
     }
 
     #region Properties
+    
+    public List<Item> SelectedItems { get; set; } = new();
 
     private ObservableCollection<string> _categories;
     public ObservableCollection<string> Categories => _categories;
