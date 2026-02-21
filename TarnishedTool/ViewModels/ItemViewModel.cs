@@ -218,15 +218,31 @@ public class ItemViewModel : BaseViewModel
 
     private void SpawnItem()
     {
-        if (ItemSelection.SelectedItem == null) return;
+        var itemsToSpawn = ItemSelection.SelectedItems.Count > 1
+            ? ItemSelection.SelectedItems
+            : ItemSelection.SelectedItem != null
+                ? new List<Item> { ItemSelection.SelectedItem }
+                : null;
 
-        int itemId = ItemSelection.SelectedItem.Id;
+        if (itemsToSpawn == null) return;
+
+        foreach (var item in itemsToSpawn)
+        {
+            SpawnSingleItem(item);
+        }
+    }
+
+    private void SpawnSingleItem(Item item)
+    {
+        if (item == null) return;
+
+        int itemId = item.Id;
         int quantity = ItemSelection.SelectedQuantity;
         int aowId = -1;
-        int maxQuantity = ItemSelection.SelectedItem.MaxStorage + ItemSelection.SelectedItem.StackSize;
-        bool shouldQuantityAdjust = ItemSelection.SelectedItem.StackSize > 1;
+        int maxQuantity = item.MaxStorage + item.StackSize;
+        bool shouldQuantityAdjust = item.StackSize > 1;
 
-        if (ItemSelection.SelectedItem is Weapon weapon)
+        if (item is Weapon weapon)
         {
             if (ItemSelection.CanUpgrade) itemId += ItemSelection.SelectedUpgrade;
 
@@ -238,12 +254,12 @@ public class ItemViewModel : BaseViewModel
             }
         }
 
-        if (ItemSelection.SelectedItem is SpiritAsh && ItemSelection.ShowSpiritAshUpgradeOptions)
+        if (item is SpiritAsh && ItemSelection.ShowUpgradeOptions)
         {
-            itemId += ItemSelection.SelectedSpiritAshUpgrade;
+            itemId += ItemSelection.SelectedUpgrade;
         }
 
-        if (ItemSelection.SelectedItem is EventItem eventItem && eventItem.NeedsEvent)
+        if (item is EventItem eventItem && eventItem.NeedsEvent)
         {
             _eventService.SetEvent(eventItem.EventId, true);
         }
