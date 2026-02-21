@@ -161,6 +161,7 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
     public bool[] GetImmunities(nint chrIns)
     {
         var ptr = GetNpcParamPtr(chrIns);
+        if (ptr == IntPtr.Zero) ptr = GetPlayerNpcParamPtr(chrIns);
         var immunities = new bool[7];
         immunities[0] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.SleepImmune) == 90300;
         immunities[1] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.PoisonImmune) == 90000;
@@ -168,11 +169,13 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
         immunities[3] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.FrostImmune) == 90040;
         immunities[4] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.BleedImmune) == 90020;
         immunities[5] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.MadnessImmune) == 90060;
-        immunities[6] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.DeathBlightImmune) == 90030; // this only affects regular npcs, player enemies use 9634 but maybe different offset?
+        var deathBlightImmune = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.DeathBlightImmune);
+        immunities[6] = deathBlightImmune == 90030 || deathBlightImmune == 9634; 
         return immunities;
     }
 
     public int GetResistance(nint chrIns, int offset) => memoryService.Read<int>(GetChrResistPtr(chrIns) + offset);
+
     public ResistanceData GetAllResistances(nint chrIns)
     {
         var ptr = GetChrResistPtr(chrIns);
@@ -275,34 +278,37 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
         memoryService.FollowPointers(chrIns, [ChrIns.Flags], false, false);
 
     private IntPtr GetChrPhysicsPtr(IntPtr chrIns) =>
-        memoryService.FollowPointers(chrIns, [..ChrIns.ChrPhysicsModule], true, false);
+        memoryService.FollowPointers(chrIns, ChrIns.ChrPhysicsModule, true, false);
 
     private IntPtr GetChrCtrlFlagsPtr(IntPtr chrIns) =>
         memoryService.FollowPointers(chrIns, [ChrIns.ChrCtrl, ..ChrIns.ChrCtrlFlags], false, false);
 
     private IntPtr GetChrDataPtr(IntPtr chrIns) =>
-        memoryService.FollowPointers(chrIns, [..ChrIns.ChrDataModule], true, false);
+        memoryService.FollowPointers(chrIns, ChrIns.ChrDataModule, true, false);
 
     private IntPtr GetAiThinkPtr(IntPtr chrIns) =>
-        memoryService.FollowPointers(chrIns, [..ChrIns.AiThink], true, false);
+        memoryService.FollowPointers(chrIns, ChrIns.AiThink, true, false);
 
     private nint GetChrSuperArmorPtr(nint chrIns) =>
-        memoryService.FollowPointers(chrIns, [..ChrIns.ChrSuperArmorModule], true, false);
+        memoryService.FollowPointers(chrIns, ChrIns.ChrSuperArmorModule, true, false);
 
     private nint GetChrBehaviorPtr(nint chrIns) =>
-        memoryService.FollowPointers(chrIns, [..ChrIns.ChrBehaviorModule], true, false);
+        memoryService.FollowPointers(chrIns, ChrIns.ChrBehaviorModule, true, false);
 
     private nint GetNpcParamPtr(nint chrIns) =>
-        memoryService.FollowPointers(chrIns, [..ChrIns.NpcParam], true, false);
+        memoryService.FollowPointers(chrIns, ChrIns.NpcParam, true, false);
 
     private nint GetChrResistPtr(nint chrIns) =>
-        memoryService.FollowPointers(chrIns, [..ChrIns.ChrResistModule], true, false);
+        memoryService.FollowPointers(chrIns, ChrIns.ChrResistModule, true, false);
 
     private nint GetChrTimeActPtr(nint chrIns) =>
-        memoryService.FollowPointers(chrIns, [..ChrIns.ChrTimeActModule], true, false);
+        memoryService.FollowPointers(chrIns, ChrIns.ChrTimeActModule, true, false);
 
     private nint GetChrDataFlags(nint chrIns) =>
         memoryService.FollowPointers(chrIns, [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags], false, false);
+
+    private nint GetPlayerNpcParamPtr(nint chrIns) =>
+        memoryService.FollowPointers(chrIns, WorldChrMan.PlayerInsOffsets.NpcParam, true, false);
 
     private PosWithHurtbox GetPosWithHurtbox(nint chrIns)
     {
