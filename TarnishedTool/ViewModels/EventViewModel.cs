@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -26,8 +26,7 @@ namespace TarnishedTool.ViewModels
         private readonly IEventLogReader _eventLogReader;
         public const int WhetstoneBladeId = 0x4000218E;
 
-        private static readonly int[] StartingFlaskIds =
-            [201, 203, 205, 207, 209, 211, 213, 215, 217, 219, 221, 223, 225, 227, 229];
+        private static readonly int[] StartingFlaskIds = [201, 203, 205, 207, 209, 211, 213, 215, 217, 219, 221, 223, 225, 227, 229];
 
         private readonly List<int> _baseGameGestureIds;
         private readonly List<int> _dlcGestureIds;
@@ -68,6 +67,7 @@ namespace TarnishedTool.ViewModels
             DeactivateMausoleumCommand = new DelegateCommand(ToggleSnowfieldMausoleum);
             SetMorningCommand = new DelegateCommand(SetMorning);
             SetNoonCommand = new DelegateCommand(SetNoon);
+            SetDuskCommand = new DelegateCommand(SetDusk);
             SetNightCommand = new DelegateCommand(SetNight);
             SetWeatherCommand = new DelegateCommand(SetWeather);
             GiveStartingFlasksCommand = new DelegateCommand(GiveStartingFlasks);
@@ -97,6 +97,7 @@ namespace TarnishedTool.ViewModels
         public ICommand DeactivateMausoleumCommand { get; set; }
         public ICommand SetMorningCommand { get; set; }
         public ICommand SetNoonCommand { get; set; }
+        public ICommand SetDuskCommand { get; set; }
         public ICommand SetNightCommand { get; set; }
         public ICommand SetWeatherCommand { get; set; }
         public ICommand GiveStartingFlasksCommand { get; set; }
@@ -119,24 +120,6 @@ namespace TarnishedTool.ViewModels
         {
             get => _isDlcAvailable;
             set => SetProperty(ref _isDlcAvailable, value);
-        }
-
-        // Surely works
-
-        private bool _preOrderBaseGesture;
-
-        public bool PreOrderBaseGesture
-        {
-            get => _preOrderBaseGesture;
-            set => SetProperty(ref _preOrderBaseGesture, value);
-        }
-
-        private bool _preOrderDlcGesture;
-
-        public bool PreOrderDlcGesture
-        {
-            get => _preOrderDlcGesture;
-            set => SetProperty(ref _preOrderDlcGesture, value);
         }
 
         private string _setFlagId;
@@ -284,8 +267,6 @@ namespace TarnishedTool.ViewModels
         {
             AreOptionsEnabled = true;
             IsDlcAvailable = _dlcService.IsDlcAvailable;
-            PreOrderBaseGesture = _dlcService.PreOrderBaseGesture;
-            PreOrderDlcGesture = _dlcService.PreOrderDlcGesture;
             UpdateEventStatus();
         }
 
@@ -323,35 +304,10 @@ namespace TarnishedTool.ViewModels
 
         private void RegisterHotkeys()
         {
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawEvents, () => IsDrawEventsEnabled = !IsDrawEventsEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.GetEvent, () => SafeExecute(GetEvent));
-            _hotkeyManager.RegisterAction(HotkeyActions.SetEvent, () => SafeExecute(SetEvent));
-            _hotkeyManager.RegisterAction(HotkeyActions.DisableEvents,
-                () => IsDisableEventsEnabled = !IsDisableEventsEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.OpenEventLogger, () => OpenEventLogWindow());
-            _hotkeyManager.RegisterAction(HotkeyActions.UnlockAffinites, () => SafeExecute(UnlockWhetblades));
-            _hotkeyManager.RegisterAction(HotkeyActions.UnlockGestures, () => SafeExecute(UnlockGestures));
-            _hotkeyManager.RegisterAction(HotkeyActions.FightEldenBeast, () => SafeExecute(FightEldenBeast));
-            _hotkeyManager.RegisterAction(HotkeyActions.FightFortissax, () => SafeExecute(FightFortissax));
-            _hotkeyManager.RegisterAction(HotkeyActions.UnlockMetyr, () => SafeExecute(UnlockMetyr));
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawEvent, () => IsDrawEventsEnabled = !IsDrawEventsEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.SetMorning, () => SafeExecute(SetMorning));
             _hotkeyManager.RegisterAction(HotkeyActions.SetNoon, () => SafeExecute(SetNoon));
             _hotkeyManager.RegisterAction(HotkeyActions.SetNight, () => SafeExecute(SetNight));
-            _hotkeyManager.RegisterAction(HotkeyActions.DefaultWeather,
-                () => SafeExecute(() => SetWeatherByType(0)));
-            _hotkeyManager.RegisterAction(HotkeyActions.RainyWeather, () => SafeExecute(() => SetWeatherByType(1)));
-            _hotkeyManager.RegisterAction(HotkeyActions.SnowyWeather, () => SafeExecute(() => SetWeatherByType(2)));
-            _hotkeyManager.RegisterAction(HotkeyActions.WindyRainWeather,
-                () => SafeExecute(() => SetWeatherByType(3)));
-            _hotkeyManager.RegisterAction(HotkeyActions.FoggyWeather, () => SafeExecute(() => SetWeatherByType(4)));
-            _hotkeyManager.RegisterAction(HotkeyActions.FlatCloudsWeather,
-                () => SafeExecute(() => SetWeatherByType(6)));
-            _hotkeyManager.RegisterAction(HotkeyActions.WindyPuffyClouds,
-                () => SafeExecute(() => SetWeatherByType(12)));
-            _hotkeyManager.RegisterAction(HotkeyActions.RainyHeavyFog,
-                () => SafeExecute(() => SetWeatherByType(15)));
-            _hotkeyManager.RegisterAction(HotkeyActions.ScatteredRain,
-                () => SafeExecute(() => SetWeatherByType(17)));
         }
 
         private void SafeExecute(Action action)
@@ -406,33 +362,17 @@ namespace TarnishedTool.ViewModels
 
         private void UnlockGestures()
         {
-            UnlockBaseGestures();
-
-            if (!IsDlcAvailable) return;
-
-            UnlockDlcGestures();
-        }
-
-        private void UnlockBaseGestures()
-        {
             foreach (var baseGameGestureId in _baseGameGestureIds)
             {
                 _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(baseGameGestureId));
             }
-            // Pre-Order Check
-            int basePreOrderGestureId = !PreOrderBaseGesture ? 109 : 108;
-            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(basePreOrderGestureId));
-        }
 
-        private void UnlockDlcGestures()
-        {
+            if (!IsDlcAvailable) return;
+
             foreach (var dlcGestureId in _dlcGestureIds)
             {
                 _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(dlcGestureId));
             }
-            // Pre-Order Check
-            int dlcPreOrderGestureId = !PreOrderDlcGesture ? 113 : 116;
-            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(dlcPreOrderGestureId));
         }
 
         private void ToggleClearDlc()
@@ -449,13 +389,11 @@ namespace TarnishedTool.ViewModels
 
         private void SetMorning() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetMorning);
         private void SetNoon() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNoon);
+        private void SetDusk() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetDusk);
         private void SetNight() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
 
         private void SetWeather() =>
             _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetWeather(SelectedWeatherType.Type));
-
-        private void SetWeatherByType(sbyte type) =>
-            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetWeather(type));
 
         private void OpenEventLogWindow()
         {
@@ -481,8 +419,9 @@ namespace TarnishedTool.ViewModels
         private void OnLogEntriesReceived(List<EventLogEntry> events) =>
             _eventLogViewModel.RefreshEventLogs(events);
 
-        private void GiveStartingFlasks() =>
-            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.AwardItemsIncludingClients(2000));
+        private void GiveStartingFlasks() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.AwardItemsIncludingClients(2000));
+     
+
 
         #endregion
     }
